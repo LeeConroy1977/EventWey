@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
+import Button from "../reuseable-components/Button";
 
 const NavBar: React.FC = () => {
   const { user } = useUser();
@@ -11,11 +12,12 @@ const NavBar: React.FC = () => {
           EventWey
         </div>
       </NavLink>
-      <div className="flex items-center gap-10 mr-12 ">
+      <div className="flex items-center gap-10 mr-12">
         <ul className="flex items-center gap-10">
           <li className="p-2 pl-4 pr-4 bg-bgPrimary border-2 border-[#2C3E50] text-textPrimary rounded-lg text-[14px] font-semibold cursor-pointer">
             Create a group
           </li>
+
           {user ? (
             <>
               <NavLink
@@ -61,9 +63,17 @@ const NavBar: React.FC = () => {
             </>
           ) : (
             <>
-              <li className="font-semibold text-textPrimary cursor-pointer">
-                Events
-              </li>
+              <NavLink
+                to="/events"
+                className={({ isActive }) =>
+                  isActive
+                    ? "font-semibold text-primary"
+                    : "font-semibold text-textPrimary"
+                }
+              >
+                <li className="cursor-pointer">Events</li>
+              </NavLink>
+
               <li className="font-semibold text-textPrimary cursor-pointer">
                 Log in
               </li>
@@ -72,14 +82,12 @@ const NavBar: React.FC = () => {
         </ul>
         {user ? (
           <img
-            src={user.profileImage} // Using user profile image
+            src={user.profileImage || "path/to/default-image.jpg"} // fallback image
             alt="User Profile"
             className="w-[48px] h-[48px] rounded-full border-[3px] border-textPrimary"
           />
         ) : (
-          <button className="p-2 pl-4 pr-4 bg-primary  text-textSecondary rounded-lg text-[14px] font-semibold">
-            Sign up
-          </button>
+          <Button>Sign up</Button>
         )}
       </div>
     </nav>

@@ -72,10 +72,10 @@ interface Group {
 }
 
 interface UserContextType {
-  user: User | null;
+  user: User | null | undefined;
   userEvents: Event[];
   events: Event[];
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  setUser: React.Dispatch<React.SetStateAction<User | null | undefined>>;
   userConnections: User[];
   userGroups: Group[];
 }
