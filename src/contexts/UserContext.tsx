@@ -105,7 +105,7 @@ interface UserProviderProps {
 }
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(defaultUser);
+  const [user, setUser] = useState<User | null | undefined>(defaultUser);
   const [users, setUsers] = useState<User[]>([]);
   const [events, setEvents] = useState<Event[]>([]);
   const [groups, setGroups] = useState<Group[]>([]);
@@ -162,7 +162,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     if (user && groups.length) {
       const matchedGroups = user.groupsId
         .map((groupId) =>
-          groups.find((group) => group.membersId.includes(groupId))
+          groups.find((group) => group.membersId?.includes(groupId))
         )
 
         .filter(Boolean) as Group[];
