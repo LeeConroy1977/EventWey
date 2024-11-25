@@ -44,31 +44,43 @@ const SelectComponent: React.FC<SelectComponentProps> = ({
     };
   }, []);
 
+  const currentSelectedOption = selectedOption
+    ? selectedOption.toLowerCase()
+    : defaultOption.toLowerCase();
+
+  const isSelectedEventOrGroup =
+    currentSelectedOption === "events" || currentSelectedOption === "groups";
+  const isSelectedOther =
+    currentSelectedOption &&
+    currentSelectedOption !== defaultOption.toLowerCase();
+
   return (
     <div className="relative flex" ref={dropdownRef}>
       <button
         onClick={toggleDropdown}
         className={`w-[110px] sm:w-[130px] p-2 pl-3 pr-3 mr-4 rounded-xl text-[12px] font-bold flex justify-between items-center ${
-          selectedOption === "Events" || selectedOption === "Groups"
+          isSelectedEventOrGroup
             ? "bg-primary text-white font-semibold"
-            : selectedOption && selectedOption !== defaultOption
+            : isSelectedOther
             ? "bg-primary text-textSecondary font-semibold"
-            : "text-[#2C3E50] bg-[#F6F7F8]"
+            : "text-textPrimary bg-bgSecondary"
         }`}
       >
-        {selectedOption
-          ? optionArray.find((opt) => opt === selectedOption) || defaultOption
+        {currentSelectedOption
+          ? optionArray.find(
+              (opt) => opt.toLowerCase() === currentSelectedOption
+            )
           : defaultOption}
         <FaChevronDown className="ml-2" />
       </button>
 
       {isOpen && (
-        <ul className="absolute left-0 top-[31px] w-[110px] sm:w-[130px] mt-1 rounded-lg bg-white dark:bg-secondaryBg shadow-lg z-10">
+        <ul className="absolute left-0 top-[31px] w-[110px] sm:w-[130px] mt-1 rounded-lg bg-bgPrimary  shadow-lg z-10">
           {optionArray.map((option, index) => (
             <li
               key={index}
               onClick={() => handleSelect(option.toLowerCase())}
-              className="p-2 text-[10px] font-bold text-primary dark:text-darkTextPrimary hover:bg-primary hover:text-white dark:hover:text-white dark:hover:bg-primary cursor-pointer"
+              className="p-2 text-[10px] font-bold text-primary  hover:bg-primary hover:text-white dark:hover:text-white cursor-pointer"
             >
               {option}
             </li>
