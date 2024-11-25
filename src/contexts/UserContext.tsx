@@ -75,7 +75,7 @@ interface UserContextType {
   user: User | null;
   userEvents: Event[];
   events: Event[];
-  setUser: React.Dispatch<React.SetStateAction<User>>;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
   userConnections: User[];
   userGroups: Group[];
 }
@@ -186,6 +186,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     <UserContext.Provider
       value={{
         user,
+        setUser,
         userEvents,
         events,
         userConnections,
