@@ -4,6 +4,8 @@ interface ButtonProps {
   py: string;
   bgColour: string;
   textColour: string;
+  fontSize: string;
+  fontWeight: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -12,10 +14,12 @@ const Button: React.FC<ButtonProps> = ({
   py,
   bgColour,
   textColour,
+  fontSize,
+  fontWeight,
 }) => {
   return (
     <button
-      className={`${px} ${py} ${bgColour} ${textColour} flex justify-center items-center`}
+      className={`px-${px} py-${py} bg-${bgColour} text-${textColour} text-${fontSize} font-${fontWeight} flex justify-center items-center rounded-lg`}
     >
       {children}
     </button>
