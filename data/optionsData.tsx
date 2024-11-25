@@ -2,9 +2,22 @@ export const eventGroupArr = ["Events", "Groups"];
 export const categoryArr = [
   "Categories",
   "Recommended",
+  "Arts",
+  "Business",
+  "Film & Media",
+  "Fitness",
+  "Food & Drink",
+  "Games",
+  "Health",
+  "Music",
+  "Nature",
+  "Performing Arts",
+  "Pets",
+  "Social",
   "Outdoors",
   "Nightlife",
-  "Sport",
+  "Sports",
+  "Technology",
 ];
 export const dateArr = [
   "Date",

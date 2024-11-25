@@ -79,7 +79,7 @@ const SelectComponent: React.FC<SelectComponentProps> = ({
           {optionArray.map((option, index) => (
             <li
               key={index}
-              onClick={() => handleSelect(option.toLowerCase())}
+              onClick={() => handleSelect(option)}
               className="p-2 text-[10px] font-bold text-primary  hover:bg-primary hover:text-white dark:hover:text-white cursor-pointer"
             >
               {option}

@@ -914,7 +914,7 @@
       "availability": 41,
       "free": true,
       "priceBands": [],
-      "category": "Technology",
+      "category": "technology",
       "tags": ["Technology", "AI", "Innovation", "Future", "Networking"],
       "description": [
         "**Join us for an in-depth exploration of Artificial Intelligence and its revolutionary impact on various industries!**",
@@ -942,7 +942,7 @@
       "availability": 31,
       "free": true,
       "priceBands": [],
-      "category": "Outdoors",
+      "category": "outdoors",
       "tags": ["Outdoor", "Adventure", "Hiking", "Exploration", "Nature"],
       "description": [
         "**Join us for a thrilling and adventurous hiking trip through the stunning landscapes of Weymouth and the surrounding areas!**",

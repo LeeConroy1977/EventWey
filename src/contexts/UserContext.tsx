@@ -6,6 +6,7 @@ import React, {
   ReactNode,
 } from "react";
 import axios from "axios";
+import { useSearchParams } from "react-router-dom";
 
 interface User {
   id: number;
@@ -73,11 +74,13 @@ interface Group {
 
 interface UserContextType {
   user: User | null | undefined;
-  userEvents: Event[];
   events: Event[];
+  userEvents: Event[];
+  allEvents: Event[];
   setUser: React.Dispatch<React.SetStateAction<User | null | undefined>>;
   userConnections: User[];
   userGroups: Group[];
+  error: string | null;
 }
 
 const defaultUser: User = {
@@ -108,6 +111,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null | undefined>(defaultUser);
   const [users, setUsers] = useState<User[]>([]);
   const [events, setEvents] = useState<Event[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [allEvents, setAllEvents] = useState<Event[]>([]);
   const [groups, setGroups] = useState<Group[]>([]);
   const [userEvents, setUserEvents] = useState<Event[]>([]);
   const [userConnections, setUserConnections] = useState<User[]>([]);
@@ -117,31 +122,70 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     baseURL: "http://localhost:3000",
   });
 
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    const type = searchParams.get("type") || "events";
+    const category = searchParams.get("category") || "";
+    const date = searchParams.get("date") || "";
+    const sortBy = searchParams.get("sortBy") || "";
+
+    const params = {
+      type,
+      category,
+      date,
+      sortBy,
+    };
+
+    console.log(params);
+
+    apiClient
+      .get<Event[]>("/events", { params })
+      .then((response) => {
+        setEvents(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching events:", error);
+        setError("Failed to fetch events");
+      });
+  }, [searchParams]);
+
   useEffect(() => {
     apiClient
       .get<Event[]>("/events")
-      .then((response) => setEvents(response.data))
-      .catch((error) => console.error("Error fetching events:", error));
+      .then((response) => setAllEvents(response.data))
+      .catch((error) => {
+        console.error("Error fetching all events:", error);
+        setError("Failed to fetch all events");
+      });
   }, []);
 
   useEffect(() => {
     apiClient
       .get<User[]>("/users")
       .then((response) => setUsers(response.data))
-      .catch((error) => console.error("Error fetching users:", error));
+      .catch((error) => {
+        console.error("Error fetching users:", error);
+        setError("Failed to fetch users");
+      });
   }, []);
 
   useEffect(() => {
     apiClient
       .get<Group[]>("/groups")
       .then((response) => setGroups(response.data))
-      .catch((error) => console.error("Error fetching groups:", error));
+      .catch((error) => {
+        console.error("Error fetching groups:", error);
+        setError("Failed to fetch groups");
+      });
   }, []);
 
   const getUserEvents = () => {
-    if (user && events.length) {
+    if (user && allEvents.length) {
       const matchedEvents = user.userEventsId
-        .map((userEventId) => events.find((event) => event.id === userEventId))
+        .map((userEventId) =>
+          allEvents.find((event) => event.id === userEventId)
+        )
         .filter(Boolean) as Event[];
       setUserEvents(matchedEvents);
     }
@@ -164,7 +208,6 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         .map((groupId) =>
           groups.find((group) => group.membersId?.includes(groupId))
         )
-
         .filter(Boolean) as Group[];
       setUserGroups(matchedGroups);
     }
@@ -172,7 +215,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
   useEffect(() => {
     getUserEvents();
-  }, [events]);
+  }, [allEvents]);
 
   useEffect(() => {
     getUserConnections();
@@ -188,9 +231,11 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         user,
         setUser,
         userEvents,
-        events,
+        allEvents,
         userConnections,
         userGroups,
+        error,
+        events,
       }}
     >
       {children}
