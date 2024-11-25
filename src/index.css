@@ -1,0 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply overflow-x-hidden;
+}
+
+:root {
+  --primary-color: #5d9b9b;
+  --secondary-color: #d66e6e;
+  --bg-primary: white;
+  --bg-secondary: #f6f7f8;
+  --text-primary: #2c3e50;
+  --text-secondary: #fff;
+  --text-tertiary: #7f8c8d;
+}
