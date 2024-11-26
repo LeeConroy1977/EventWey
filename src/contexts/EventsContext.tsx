@@ -63,10 +63,7 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({ children }) => {
     setError(null);
     try {
       const { category, date, sortBy = "date" } = params;
-      console.log("Fetching events with params:", { category, date, sortBy });
-
       const eventsData = await fetchEventData({ category, date, sortBy });
-
       setEvents(eventsData);
     } catch (err) {
       console.error("Error fetching events:", err);

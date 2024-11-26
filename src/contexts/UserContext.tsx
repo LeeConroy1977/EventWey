@@ -1,12 +1,5 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  ReactNode,
-} from "react";
-import axios from "axios";
-import { useSearchParams } from "react-router-dom";
+import React, { createContext, useContext, useState, ReactNode } from "react";
+import { fetchUserEvents } from "../../utils/api";
 
 interface User {
   id: number;
@@ -42,7 +35,7 @@ interface Event {
   image: string;
   title: string;
   date: string;
-  groupname: string;
+  groupName: string;
   groupId: number;
   duration: string;
   priceBands: PriceBand[];
@@ -73,20 +66,17 @@ interface Group {
 }
 
 interface UserContextType {
-  user: User | null | undefined;
-  events: Event[];
+  user: User | null;
   userEvents: Event[];
-  allEvents: Event[];
-  setUser: React.Dispatch<React.SetStateAction<User | null | undefined>>;
-  userConnections: User[];
-  userGroups: Group[];
+  loading: boolean;
   error: string | null;
+  getUserEvents: () => void;
 }
 
 const defaultUser: User = {
   id: 3,
   email: "emma3@gmail.com",
-  username: "Emma J",
+  username: "Freddie J",
   profileBackgroundImage: "https://picsum.photos/800/600?random=3",
   profileImage: "https://randomuser.me/api/portraits/men/3.jpg",
   bio: "Avid traveler, foodie and animal lover",
@@ -100,7 +90,7 @@ const defaultUser: User = {
   groupAdmin: [3],
   notifications: [3, 6, 8],
   showEvents: "public",
-  showconnections: "private",
+  showConnections: "private",
 };
 
 const UserContext = createContext<UserContextType | null>(null);
@@ -110,12 +100,33 @@ interface UserProviderProps {
 }
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const [user, setUser] = useState(defaultUser);
+  const [user, setUser] = useState<User | null>(defaultUser);
+  const [userEvents, setUserEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const getUserEvents = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const events = await fetchUserEvents(user!.id);
+      setUserEvents(events);
+    } catch (err) {
+      console.error("Error fetching events:", err);
+      setError("Failed to fetch events.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <UserContext.Provider
       value={{
         user,
+        userEvents,
+        loading,
+        error,
+        getUserEvents,
       }}
     >
       {children}

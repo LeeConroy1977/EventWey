@@ -36,7 +36,7 @@ export const usersData = [
   {
     id: 3,
     email: "emma3@gmail.com",
-    username: "Emma J",
+    username: "Freddie J",
     profileBackgroundImage: "https://picsum.photos/800/600?random=3",
     profileImage: "https://randomuser.me/api/portraits/men/3.jpg",
     bio: "Avid traveler, foodie and animal lover",

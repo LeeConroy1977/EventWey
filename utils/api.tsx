@@ -31,3 +31,10 @@ export const fetchEventData = (params: {
 
   return Promise.resolve(filteredData);
 };
+
+export const fetchUserEvents = async (id: number) => {
+  const allEvents = await fetchEventData({ sortBy: "date" });
+  let userEvents = allEvents.filter((event) => event.attendees.includes(id));
+
+  return Promise.resolve(userEvents);
+};
