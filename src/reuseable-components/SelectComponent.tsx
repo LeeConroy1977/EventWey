@@ -3,9 +3,9 @@ import { FaChevronDown } from "react-icons/fa";
 
 interface SelectComponentProps {
   defaultOption: string;
-  optionArray: string[];
+  optionArray: { name: string; title: string }[];
   handleChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  selectedOption: string;
+  selectedOption?: string; // Make it optional, as it could be undefined
 }
 
 const SelectComponent: React.FC<SelectComponentProps> = ({
@@ -44,45 +44,37 @@ const SelectComponent: React.FC<SelectComponentProps> = ({
     };
   }, []);
 
-  const currentSelectedOption = selectedOption
-    ? selectedOption.toLowerCase()
-    : defaultOption.toLowerCase();
+  const currentSelectedOption = selectedOption || defaultOption;
 
-  const isSelectedEventOrGroup =
-    currentSelectedOption === "events" || currentSelectedOption === "groups";
-  const isSelectedOther =
-    currentSelectedOption &&
-    currentSelectedOption !== defaultOption.toLowerCase();
+  const isSelected =
+    currentSelectedOption && currentSelectedOption !== defaultOption;
+
+  console.log(currentSelectedOption, "zzzzzzzzzzzz");
 
   return (
     <div className="relative flex" ref={dropdownRef}>
       <button
         onClick={toggleDropdown}
         className={`w-[110px] sm:w-[130px] p-2 pl-3 pr-3 mr-4 rounded-xl text-[12px] font-bold flex justify-between items-center ${
-          isSelectedEventOrGroup
-            ? "bg-primary text-white font-semibold"
-            : isSelectedOther
-            ? "bg-primary text-textSecondary font-semibold"
+          isSelected
+            ? "bg-bgSecondary text-textPrimary font-semibold border-2 border-primary "
             : "text-textPrimary bg-bgSecondary"
         }`}
       >
-        {currentSelectedOption
-          ? optionArray.find(
-              (opt) => opt.toLowerCase() === currentSelectedOption
-            )
-          : defaultOption}
+        {optionArray.find((opt) => opt.name === currentSelectedOption)?.title ||
+          defaultOption}
         <FaChevronDown className="ml-2" />
       </button>
 
       {isOpen && (
-        <ul className="absolute left-0 top-[31px] w-[110px] sm:w-[130px] mt-1 rounded-lg bg-bgPrimary  shadow-lg z-10">
+        <ul className="absolute left-0 top-[31px] w-[110px] sm:w-[130px] mt-1 rounded-lg bg-bgPrimary shadow-lg z-10">
           {optionArray.map((option, index) => (
             <li
               key={index}
-              onClick={() => handleSelect(option)}
-              className="p-2 text-[10px] font-bold text-primary  hover:bg-primary hover:text-white dark:hover:text-white cursor-pointer"
+              onClick={() => handleSelect(option.name)}
+              className="p-2 text-[10px] font-bold text-primary hover:bg-primary hover:text-white dark:hover:text-white cursor-pointer"
             >
-              {option}
+              {option.title}
             </li>
           ))}
         </ul>

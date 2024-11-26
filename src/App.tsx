@@ -7,6 +7,8 @@ import Profile from "./pages/Profile";
 import Messages from "./pages/Messages";
 import Notifications from "./pages/Notifications";
 import Events from "./pages/Events";
+import UserEvents from "./pages/UserEvents";
+import UserConnection from "./pages/UserConnection";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
             <Route path="profile" element={<Profile />} />
             <Route path="messages" element={<Messages />} />
             <Route path="notifications" element={<Notifications />} />
+            <Route path="my-events" element={<UserEvents />} />
+            <Route path="my-connections" element={<UserConnection />} />
           </Route>
         </Route>
       </Routes>

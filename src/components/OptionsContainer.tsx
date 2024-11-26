@@ -2,17 +2,16 @@ import React, { useState, useEffect } from "react";
 import SelectComponent from "../reuseable-components/SelectComponent";
 import {
   eventGroupArr,
-  categoryArr,
+  categoriesArr,
   dateArr,
   sortByArr,
-} from "../../data/optionsData";
+} from "../../data/options";
 import { useSearchParams } from "react-router-dom";
 
-const EventsOptions: React.FC = () => {
+const OptionsContainer: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [type, setType] = useState<string>(
-    searchParams.get("type") || "events"
-  );
+
+  const [type, setType] = useState<string>(searchParams.get("type") || "");
   const [category, setCategory] = useState<string>(
     searchParams.get("category") || ""
   );
@@ -20,16 +19,6 @@ const EventsOptions: React.FC = () => {
   const [sortBy, setSortBy] = useState<string>(
     searchParams.get("sortBy") || ""
   );
-
-  useEffect(() => {
-    if (!searchParams.get("type")) {
-      setSearchParams((prevParams) => {
-        const newParams = new URLSearchParams(prevParams.toString());
-        newParams.set("type", "events");
-        return newParams;
-      });
-    }
-  }, [searchParams, setSearchParams]);
 
   const handleParams = (paramOption: string, value: string | null) => {
     const newParams = new URLSearchParams(searchParams.toString());
@@ -80,7 +69,7 @@ const EventsOptions: React.FC = () => {
     const newParams = new URLSearchParams();
     setSearchParams(newParams);
     setDate("");
-    setType("Events");
+    setType("");
     setCategory("");
     setSortBy("");
   };
@@ -88,7 +77,7 @@ const EventsOptions: React.FC = () => {
   return (
     <div className="w-[100%] h-[65px] flex items-center justify-center bg-white border-t-2 border-b-2 border-gray-100 font-semibold">
       <div className="w-[80%]">
-        <div className="w-[67%] h-[100%] flex items-center mr-auto">
+        <div className="w-[67%] h-[100%] flex items mr-auto">
           <SelectComponent
             optionArray={eventGroupArr}
             defaultOption="Events"
@@ -96,27 +85,30 @@ const EventsOptions: React.FC = () => {
             selectedOption={type}
           />
           <SelectComponent
-            optionArray={categoryArr}
+            optionArray={categoriesArr}
             defaultOption="Categories"
             handleChange={handleCategoryOption}
             selectedOption={category}
           />
-          <SelectComponent
-            optionArray={dateArr}
-            defaultOption="Date"
-            handleChange={handleDateOption}
-            selectedOption={date}
-          />
-          <button
-            className="ml-8 mr-12 text-[14px] text-[#5D9B9B]"
-            onClick={handleResetParams}
-          >
-            Reset
-          </button>
-          <div className="ml-auto">
+          {type !== "Groups" && (
+            <SelectComponent
+              optionArray={dateArr}
+              defaultOption="Date"
+              handleChange={handleDateOption}
+              selectedOption={date}
+            />
+          )}
+
+          <div className=" flex  items-center ml-auto">
+            <button
+              className="mr-8  text-[14px] text-[#5D9B9B]"
+              onClick={handleResetParams}
+            >
+              Reset
+            </button>
             <SelectComponent
               optionArray={sortByArr}
-              defaultOption="Sort by"
+              defaultOption="Sort By"
               handleChange={handleSortByOption}
               selectedOption={sortBy}
             />
@@ -127,4 +119,4 @@ const EventsOptions: React.FC = () => {
   );
 };
 
-export default EventsOptions;
+export default OptionsContainer;
