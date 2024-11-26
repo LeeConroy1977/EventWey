@@ -1,8 +1,9 @@
-export const categories = [
+export const categoriesData = [
   {
     id: 1,
     name: "arts",
     title: "Arts",
+    color: "#FFCC00",
     tags: [
       "Painting",
       "Sculpture",
@@ -30,6 +31,7 @@ export const categories = [
     id: 2,
     name: "business",
     title: "Business",
+    color: "#3366CC",
     tags: [
       "Networking",
       "Entrepreneurship",
@@ -57,6 +59,7 @@ export const categories = [
     id: 3,
     name: "film & media",
     title: "Film & Media",
+    color: "#FF6633",
     tags: [
       "Film Screenings",
       "Filmmaking",
@@ -84,6 +87,7 @@ export const categories = [
     id: 4,
     name: "fitness",
     title: "Fitness",
+    color: "#33CC33",
     tags: [
       "Yoga",
       "Pilates",
@@ -111,6 +115,7 @@ export const categories = [
     id: 5,
     name: "food & drink",
     title: "Food & Drink",
+    color: "#FF3366",
     tags: [
       "Cooking Classes",
       "Wine Tasting",
@@ -138,6 +143,7 @@ export const categories = [
     id: 6,
     name: "games",
     title: "Games",
+    color: "#9966CC",
     tags: [
       "Board Games",
       "Video Games",
@@ -165,6 +171,7 @@ export const categories = [
     id: 7,
     name: "health",
     title: "Health",
+    color: "#FF9933",
     tags: [
       "Wellness",
       "Meditation",
@@ -192,6 +199,7 @@ export const categories = [
     id: 8,
     name: "music",
     title: "Music",
+    color: "#CC33CC",
     tags: [
       "Live Performances",
       "Concerts",
@@ -219,6 +227,7 @@ export const categories = [
     id: 9,
     name: "nature",
     title: "Nature",
+    color: "#6699FF",
     tags: [
       "Hiking",
       "Camping",
@@ -246,6 +255,7 @@ export const categories = [
     id: 10,
     name: "nightlife",
     title: "Nightlife",
+    color: "#FF6600",
     tags: [
       "Clubbing",
       "Cocktail Bars",
@@ -273,6 +283,7 @@ export const categories = [
     id: 11,
     name: "outdoors",
     title: "Outdoors",
+    color: "#339966",
     tags: [
       "Hiking",
       "Camping",
@@ -299,6 +310,7 @@ export const categories = [
     id: 12,
     name: "culture",
     title: "Culture",
+    color: "#9933FF",
     tags: [
       "Theater",
       "Dance",
@@ -326,6 +338,7 @@ export const categories = [
     id: 13,
     name: "pets",
     title: "Pets",
+    color: "#FF3399",
     tags: [
       "Dog Walking",
       "Pet Training",
@@ -353,6 +366,7 @@ export const categories = [
     id: 14,
     name: "social",
     title: "Social",
+    color: "#66CCFF",
     tags: [
       "Networking",
       "Community Events",
@@ -380,6 +394,7 @@ export const categories = [
     id: 15,
     name: "sports",
     title: "Sports",
+    color: "#3399FF",
     tags: [
       "Soccer",
       "Basketball",
@@ -407,6 +422,7 @@ export const categories = [
     id: 16,
     name: "technology",
     title: "Technology",
+    color: "#3333CC",
     tags: [
       "Coding",
       "AI",

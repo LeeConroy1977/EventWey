@@ -16,12 +16,12 @@ interface User {
   profileImage: string;
   bio: string;
   tags: string[];
-  connectionsId: number[];
-  groupsId: number[];
-  userEventsId: number[];
-  messagesId: number[];
-  groupAdminId: number[];
-  notificationsId: number[];
+  connections: number[];
+  groups: number[];
+  userEvents: number[];
+  messages: number[];
+  groupAdmin: number[];
+  notifications: number[];
   showEvents: "public" | "private";
   showConnections: "public" | "private";
 }
@@ -91,14 +91,16 @@ const defaultUser: User = {
   profileImage: "https://randomuser.me/api/portraits/men/3.jpg",
   bio: "Avid traveler, foodie and animal lover",
   tags: ["Gourmet Food Tours", "Animal Rescue", "Wanderlust Adventures"],
-  connectionsId: [2, 3, 6, 7, 8, 9, 10, 11],
-  groupsId: [2, 4, 5],
-  userEventsId: [8, 9, 10],
-  messagesId: [10, 12],
-  groupAdminId: [3],
-  notificationsId: [3, 6, 8],
+  connections: [
+    2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
+  ],
+  groups: [2, 4, 5, 8, 9, 10, 11],
+  userEvents: [8, 9, 10, 3, 4, 18, 19, 20, 21, 22],
+  messages: [10, 12],
+  groupAdmin: [3],
+  notifications: [3, 6, 8],
   showEvents: "public",
-  showConnections: "private",
+  showconnections: "private",
 };
 
 const UserContext = createContext<UserContextType | null>(null);

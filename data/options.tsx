@@ -87,7 +87,6 @@ export const categoriesArr = [
 ];
 
 export const dateArr = [
-  // { id: 1, name: "date", title: "Date" },
   { id: 2, name: "today", title: "Today" },
   { id: 3, name: "tomorrow", title: "Tomorrow" },
   { id: 4, name: "this week", title: "This week" },

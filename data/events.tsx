@@ -1,9 +1,9 @@
-export const events = [
+export const eventsData = [
   {
     id: 1,
     image:
       "https://cdn-az.allevents.in/events2/banners/5ba47d90-a3cb-11ef-a9ed-d71d5d988295-rimg-w1200-h685-dc222832-gmir.jpg",
-    date: 1701734400000,
+    date: 1733356800000,
     startTime: "10:00 AM",
     title: "Tech Talk: Future of AI",
     groupname: "Tech Enthusiasts",
@@ -28,8 +28,8 @@ export const events = [
   {
     id: 2,
     image:
-      "https://cdn.shopify.com/s/files/1/0666/9741/files/SHOESTRING_YOSEMITE_082016_by_JustinSullivan-6.jpg?735770903657916900",
-    date: 1701820800000,
+      "https://i2-prod.somersetlive.co.uk/incoming/article7010385.ece/ALTERNATES/s615/0_Weymouth.jpg",
+    date: 1733472000000,
     startTime: "8:00 AM",
     title: "Outdoor Adventure Meetup",
     groupName: "Weymouth Adventure Group",
@@ -59,7 +59,7 @@ export const events = [
     id: 3,
     image:
       "https://img.freepik.com/premium-photo/drawing-architectural-design-with-trees-green-building-style-transparent_921860-52616.jpg",
-    date: 1702197600000,
+    date: 1733884800000,
     startTime: "9:00 AM",
     title: "Sustainable Architecture Conference",
     groupName: "Architectural Innovators",
@@ -98,7 +98,7 @@ export const events = [
   {
     id: 4,
     image: "https://kurieta.com/wp-content/uploads/2024/02/images-67.jpeg",
-    date: 1702392000000,
+    date: 1733971200000,
     startTime: "2:00 PM",
     title: "Digital Marketing Strategies",
     groupName: "Weymouth Business Network",
@@ -142,7 +142,7 @@ export const events = [
     id: 5,
     image:
       "https://media.istockphoto.com/id/923815474/photo/cooking-class.jpg?s=612x612&w=0&k=20&c=4lwiHGS2IDKRZsd1BVpV93YIpIAMTPpd7T34xjH-Bys=",
-    date: 1702552800000,
+    date: 1734094800000,
     startTime: "11:00 AM",
     title: "Healthy Cooking Workshop",
     groupName: "Weymouth Foodies",
@@ -183,7 +183,7 @@ export const events = [
     id: 6,
     image:
       "https://bookretreats.com/assets/photo/retreat/0m/32k/32042/p_1341607/1000_1707746972.jpg",
-    date: 1702639200000,
+    date: 1734181200000,
     startTime: "8:00 AM",
     title: "Yoga Retreat in the Countryside",
     groupName: "Weymouth Wellness",
@@ -232,7 +232,7 @@ export const events = [
     id: 7,
     image:
       "https://weymouthhighstreet.co.uk/whs-uploads/2023/03/Sunset-Over-Portland-Bill-Dorset.webp",
-    date: 1702812000000,
+    date: 1734357600000,
     startTime: "10:00 AM",
     title: "Photography Nature Walk",
     groupName: "Framed Perspectives",
@@ -270,7 +270,7 @@ export const events = [
     id: 8,
     image:
       "https://www.fitbitchbootcamp.com//wp-content/uploads/2011/04/fitbitch_bootcamp_brighton_wheelbarrows.jpg",
-    date: 1702886400000,
+    date: 1735900800000,
     startTime: "9:00 AM",
     title: "Fitness Bootcamp",
     groupName: "Fitness Fanatics",
@@ -311,7 +311,7 @@ export const events = [
     id: 9,
     image:
       "https://cdn.prod.website-files.com/655bb0f485dd7676a7514632/660eba0f4d94cf69612ad2bf_Gro%C3%9F%20(20240320-urban-innovation-forum-2024-467).jpeg",
-    date: 1703078400000,
+    date: 1736097600000,
     startTime: "12:00 PM",
     title: "Startups & Innovation Forum",
     groupName: "Weymouth Business Network",
@@ -353,7 +353,7 @@ export const events = [
     id: 10,
     image:
       "https://www.dorsetecho.co.uk/resources/images/18616540/?type=responsive-gallery-fullscreen",
-    date: 1703241600000,
+    date: 1736184000000,
     startTime: "10:00 AM",
     title: "Weymouth Pirate Festival",
     groupName: "Community Events",
@@ -395,7 +395,7 @@ export const events = [
     id: 11,
     image:
       "https://images.uk.findarace.com/production/organisers/301260/gallery/332065832_3532986743605093_8900732268305912271_n.jpg?w=600&auto=compress%2Cformat&fit=crop&dm=1696323255&s=2a8f2e2efff393c4005ff169e10a3196",
-    date: 1703318400000,
+    date: 1736323200000,
     startTime: "10:00 AM",
     title: "Annual Charity Fun Run",
     groupName: "Community Events",
@@ -424,7 +424,7 @@ export const events = [
     id: 12,
     image:
       "https://www.foodsorcery.co.uk/wp-content/uploads/2018/10/Fit-Food-Class-at-Food-Sorcery-chef-talking.jpg",
-    date: 1703404800000,
+    date: 1736409600000,
     startTime: "3:00 PM",
     title: "Cooking with Local Ingredients",
     groupName: "Weymouth Foodies",
@@ -469,7 +469,7 @@ export const events = [
     id: 13,
     image:
       "https://www.love-weymouth.co.uk/wp-content/uploads/2022/07/the-leggomen.jpeg",
-    date: 1703983200000,
+    date: 1735982400000,
     startTime: "10:00 PM",
     title: "The Leggomen @ The Nook",
     groupName: "The Nook",
@@ -509,7 +509,7 @@ export const events = [
     id: 14,
     image:
       "https://eventespresso.com/wp-content/uploads/2016/01/painting-wine-classes-1024x676.jpg",
-    date: 1704316800000,
+    date: 1735852800000,
     startTime: "6:00 PM",
     title: "Art & Wine Night",
     groupName: "Weymouth Art Group",
@@ -550,7 +550,7 @@ export const events = [
     id: 15,
     image:
       "https://e1.pxfuel.com/desktop-wallpaper/759/998/desktop-wallpaper-night-club-dance-club-thumbnail.jpg",
-    date: 1704585600000,
+    date: 1736121600000,
     startTime: "9:00 PM",
     title: "The Ultimate Dance Party",
     groupName: "Night Crawlers",
@@ -590,7 +590,7 @@ export const events = [
   {
     id: 16,
     image: "https://mantracare.org/wp-content/uploads/2021/10/Running.png.webp",
-    date: 1704628800000,
+    date: 1737667200000,
     startTime: "11:00 AM",
     title: "Fitness Challenge",
     groupName: "Fitness Fanatics",
@@ -627,7 +627,7 @@ export const events = [
     id: 17,
     image:
       "https://www.dorsets.co.uk/sites/default/files/beaches/durdle-door.jpg",
-    date: 1705132800000,
+    date: 1737664800000,
     startTime: "8:00 AM",
     title: "Purbeck Hiking Challenge",
     groupName: "Weymouth Adventure Group",
@@ -666,7 +666,7 @@ export const events = [
     id: 18,
     image:
       "https://media.licdn.com/dms/image/D5612AQE-MyT6EjJ3VA/article-cover_image-shrink_720_1280/0/1707483130571?e=2147483647&v=beta&t=tN4SnB97m0kb5cSpj2n9QDIMqJqYroKVfl21iNSFucQ",
-    date: 1705334400000,
+    date: 1737796800000,
     startTime: "6:00 PM",
     title: "Web Development Hackathon",
     groupName: "Tech Enthusiasts",
@@ -705,7 +705,7 @@ export const events = [
     id: 19,
     image:
       "https://images.squarespace-cdn.com/content/v1/593456b837c581fea8474fd6/a29510cc-d2ff-4a25-af63-8dc7d36fca01/james-aitken-james-a-photography-in-studio.jpg",
-    date: 1705598400000,
+    date: 1737134400000,
     startTime: "1:00 PM",
     title: "Photography Skills Workshop",
     groupName: "Framed Perspectives",
@@ -741,7 +741,7 @@ export const events = [
     id: 20,
     image:
       "https://chapelhillpl.librarycalendar.com/sites/default/files/2023-09/Board%20Game%20Night%20Event%20Social%20media%20%28no%20date%29_1.png",
-    date: 1705742400000,
+    date: 1737278400000,
     startTime: "7:00 PM",
     title: "Board Game Night",
     groupName: "Dorset Gamers",
@@ -783,7 +783,7 @@ export const events = [
     id: 21,
     image:
       "https://www.amexessentials.com/wp-content/uploads/2017/04/Opener-2-Outdoor-Cinema.jpg",
-    date: 1706318400000,
+    date: 1737854400000,
     startTime: "8:00 PM",
     title: "Outdoor Cinema Night",
     groupName: "Community Events",
@@ -824,7 +824,7 @@ export const events = [
     id: 22,
     image:
       "https://www.love-weymouth.co.uk/wp-content/uploads/2024/07/dusk-to-dark-topaz-scaled.jpeg",
-    date: 1706985600000,
+    date: 1738521600000,
     startTime: "6:00 PM",
     title: "Dusk Til Dark 2025",
     groupName: "Community Events",
@@ -859,7 +859,7 @@ export const events = [
     id: 23,
     image:
       "https://www.barrelandhorn.com/-/media/sites/pubs-and-hotels/b/the-barrel-and-horn-_-p106/images/events-and-offers/quiz-007.ashx?h=400&w=600&la=en&hash=F92C80787F61B39D1A4A545FB506944C",
-    date: 1707334800000,
+    date: 1738876800000,
     startTime: "7:00 PM",
     title: "Pub Quiz Night",
     groupName: "The Nook",
@@ -891,7 +891,7 @@ export const events = [
     id: 24,
     image:
       "https://www.thefa.com/-/media/cfa/hertfordshirefa/images/players/players---small-sided1.ashx?mw=1440",
-    date: 1707547200000,
+    date: 1739083200000,
     startTime: "2:00 PM",
     title: "5-a-side Football Tournament",
     groupName: "Weymouth Sports Club",

@@ -1,4 +1,4 @@
-export const groups = [
+export const groupsData = [
   {
     id: 1,
     name: "Tech Enthusiasts",
