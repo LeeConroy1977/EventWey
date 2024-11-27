@@ -102,15 +102,37 @@ interface UserProviderProps {
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(defaultUser);
   const [userEvents, setUserEvents] = useState<Event[]>([]);
+  const [userTotalEvents, setUserTotalEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const getUserEvents = async () => {
+  const getUserEvents = async (params: { [key: string]: string }) => {
     setLoading(true);
     setError(null);
     try {
-      const events = await fetchUserEvents(user!.id);
+      const { category, date, sortBy = "date" } = params;
+      const events = await fetchUserEvents(user.id, {
+        category,
+        date,
+        sortBy,
+      });
       setUserEvents(events);
+      // const totalEvents = await fetchUserEvents(user.id, {});
+      // setUserTotalEvents(totalEvents);
+    } catch (err) {
+      console.error("Error fetching events:", err);
+      setError("Failed to fetch events.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getUserTotalEvents = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const totalEvents = await fetchUserEvents(user.id, {});
+      setUserTotalEvents(totalEvents);
     } catch (err) {
       console.error("Error fetching events:", err);
       setError("Failed to fetch events.");
@@ -127,6 +149,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         loading,
         error,
         getUserEvents,
+        userTotalEvents,
+        getUserTotalEvents,
       }}
     >
       {children}
@@ -134,7 +158,6 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   );
 };
 
-// Custom hook for consuming the UserContext
 export const useUser = (): UserContextType => {
   const context = useContext(UserContext);
   if (!context) {

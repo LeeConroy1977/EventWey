@@ -6,7 +6,7 @@ export const eventsData = [
     date: 1733356800000,
     startTime: "10:00 AM",
     title: "Tech Talk: Future of AI",
-    groupname: "Tech Enthusiasts",
+    groupName: "Tech Enthusiasts",
     groupId: 1,
     duration: "3 hrs",
     attendees: [1, 6, 9, 12, 14, 15, 18, 20],
@@ -795,8 +795,8 @@ export const eventsData = [
     availability: 8,
     free: false,
     priceBands: [
-      { type: "Early Bird", price: "7" },
-      { type: "Standard", price: "10" },
+      { type: "Early Bird", price: "£7" },
+      { type: "Standard", price: "£10" },
       { type: "VIP", price: "£20" },
     ],
     tags: [

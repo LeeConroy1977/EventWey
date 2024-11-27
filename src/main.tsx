@@ -5,13 +5,16 @@ import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./contexts/UserContext.tsx";
 import { EventsProvider } from "./contexts/EventsContext.tsx";
+import { ConnectionsProvider } from "./contexts/ConnectionsContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <UserProvider>
         <EventsProvider>
-          <App />
+          <ConnectionsProvider>
+            <App />
+          </ConnectionsProvider>
         </EventsProvider>
       </UserProvider>
     </BrowserRouter>

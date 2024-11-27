@@ -6,10 +6,16 @@ import {
   dateArr,
   sortByArr,
 } from "../../data/options";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
+import ConnectionsOptions from "./ConnectionsOptions";
 
 const OptionsContainer: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
+  const isConnectionsPage =
+    location.pathname === "/user/my-connections" ||
+    location.pathname === "/user/my-connections/requests";
+  // const isRequestPage = location.pathname === "/user/my-connections/requests";
 
   const [type, setType] = useState<string>(searchParams.get("type") || "");
   const [category, setCategory] = useState<string>(
@@ -76,43 +82,51 @@ const OptionsContainer: React.FC = () => {
 
   return (
     <div className="w-[100%] h-[65px] flex items-center justify-center bg-white border-t-2 border-b-2 border-gray-100 font-semibold">
-      <div className="w-[80%]">
-        <div className="w-[67%] h-[100%] flex items mr-auto">
-          <SelectComponent
-            optionArray={eventGroupArr}
-            defaultOption="Events"
-            handleChange={handleTypeOption}
-            selectedOption={type}
-          />
-          <SelectComponent
-            optionArray={categoriesArr}
-            defaultOption="Categories"
-            handleChange={handleCategoryOption}
-            selectedOption={category}
-          />
-          {type !== "Groups" && (
-            <SelectComponent
-              optionArray={dateArr}
-              defaultOption="Date"
-              handleChange={handleDateOption}
-              selectedOption={date}
-            />
-          )}
+      <div className="w-[80%] h-[100%] ">
+        <div className="w-[67%] h-[100%] flex items mr-auto ">
+          {isConnectionsPage ? (
+            <ConnectionsOptions />
+          ) : (
+            <>
+              <div className="flex  items-center">
+                <SelectComponent
+                  optionArray={eventGroupArr}
+                  defaultOption="Events"
+                  handleChange={handleTypeOption}
+                  selectedOption={type}
+                />
+                <SelectComponent
+                  optionArray={categoriesArr}
+                  defaultOption="Categories"
+                  handleChange={handleCategoryOption}
+                  selectedOption={category}
+                />
+                {type !== "Groups" && (
+                  <SelectComponent
+                    optionArray={dateArr}
+                    defaultOption="Date"
+                    handleChange={handleDateOption}
+                    selectedOption={date}
+                  />
+                )}
+              </div>
 
-          <div className=" flex  items-center ml-auto">
-            <button
-              className="mr-8  text-[14px] text-[#5D9B9B]"
-              onClick={handleResetParams}
-            >
-              Reset
-            </button>
-            <SelectComponent
-              optionArray={sortByArr}
-              defaultOption="Sort By"
-              handleChange={handleSortByOption}
-              selectedOption={sortBy}
-            />
-          </div>
+              <div className=" flex  items-center ml-auto">
+                <button
+                  className="mr-8  text-[14px] text-[#5D9B9B]"
+                  onClick={handleResetParams}
+                >
+                  Reset
+                </button>
+                <SelectComponent
+                  optionArray={sortByArr}
+                  defaultOption="Sort By"
+                  handleChange={handleSortByOption}
+                  selectedOption={sortBy}
+                />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

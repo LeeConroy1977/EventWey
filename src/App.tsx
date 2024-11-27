@@ -9,6 +9,7 @@ import Notifications from "./pages/Notifications";
 import Events from "./pages/Events";
 import UserEvents from "./pages/UserEvents";
 import UserConnection from "./pages/UserConnection";
+import ConnectionRequests from "./pages/ConnectionRequests";
 
 function App() {
   return (
@@ -23,7 +24,11 @@ function App() {
             <Route path="messages" element={<Messages />} />
             <Route path="notifications" element={<Notifications />} />
             <Route path="my-events" element={<UserEvents />} />
-            <Route path="my-connections" element={<UserConnection />} />
+            <Route path="my-connections" element={<UserConnection />}></Route>
+            <Route
+              path="my-connections/requests"
+              element={<ConnectionRequests />}
+            />
           </Route>
         </Route>
       </Routes>

@@ -1,8 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import HomeEventsCard from "../components/HomeEventsCard";
-import { useUser } from "../contexts/UserContext";
 import { useEvents } from "../contexts/EventsContext";
-import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 
 const Home = () => {
@@ -14,12 +12,6 @@ const Home = () => {
   const sortBy = searchParams.get("sortBy");
 
   console.log("Search Params:", category, date, sortBy);
-
-  // const { category, date, sortBy } = useParams<{
-  //   category: string | undefined;
-  //   date: string | undefined;
-  //   sortBy: string | undefined;
-  // }>();
 
   useEffect(() => {
     const params = {

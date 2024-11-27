@@ -52,9 +52,9 @@ const HomeEventsCard: React.FC<HomeEventsCardProps> = ({ event }) => {
     if (!priceArr || priceArr.length === 0) return "No price available";
 
     const sortedPrice = priceArr.sort((a, b) => a.price - b.price);
-    if (priceArr.length === 1) return `$${sortedPrice[0].price}`;
+    if (priceArr.length === 1) return `${sortedPrice[0].price}`;
 
-    return `$${sortedPrice[0].price} - $${
+    return `${sortedPrice[0].price} - ${
       sortedPrice[sortedPrice.length - 1].price
     }`;
   }
@@ -73,7 +73,9 @@ const HomeEventsCard: React.FC<HomeEventsCardProps> = ({ event }) => {
           {formattedDate}
         </p>
         <h2 className="text-[21px] font-bold text-[#2C3E50] mt-1">{title}</h2>
-        <p className="text-[12px] font-semibold text-[#5D9B9B] mt-2">{`Hosted by: ${groupName}`}</p>
+        <p className="text-[12px] font-semibold text-textPrimary mt-2">
+          Hosted by: <span className="text-[#5D9B9B] ml-2">{groupName}</span>
+        </p>
         <p className="text-[11px] font-semibold text-gray-500 mt-3">{`Duration: ${duration}`}</p>
         <div className="flex w-[100%] h-[25%] mt-2">
           <div className="flex items-center">
@@ -90,7 +92,7 @@ const HomeEventsCard: React.FC<HomeEventsCardProps> = ({ event }) => {
               </p>
             </div>
             {!isAttending && (
-              <p className="ml-6 text-[12px] text-[#D66E6E] font-semibold">
+              <p className="ml-4 text-[12px] text-[#D66E6E] font-semibold">
                 {availability} places left
               </p>
             )}

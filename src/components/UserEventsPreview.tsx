@@ -4,13 +4,22 @@ import EventsPreviewCard from "./EventsPreviewCard";
 import { useEffect } from "react";
 
 const UserEventsPreview = () => {
-  const { user, userEvents, loading, error, getUserEvents } = useUser();
+  const {
+    userTotalEvents,
+    loading,
+    error,
+    getUserEvents,
+    userEvents,
+    getUserTotalEvents,
+  } = useUser();
   const navigate = useNavigate();
 
-  const eventsLength = Array.isArray(userEvents) ? userEvents.length : 0;
+  const eventsLength = Array.isArray(userTotalEvents)
+    ? userTotalEvents.length
+    : 0;
 
-  const slicedEvents = Array.isArray(userEvents)
-    ? userEvents
+  const slicedEvents = Array.isArray(userTotalEvents)
+    ? userTotalEvents
         .sort((a, b) => {
           const dateA = new Date(a.date).getTime();
           const dateB = new Date(b.date).getTime();
@@ -20,19 +29,11 @@ const UserEventsPreview = () => {
     : [];
 
   useEffect(() => {
-    getUserEvents();
+    getUserTotalEvents();
   }, []);
 
   function handleNavigation() {
     navigate("/user/my-events");
-  }
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
   }
 
   return (
