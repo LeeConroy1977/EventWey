@@ -1,46 +1,46 @@
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
-import EventsPreviewCard from "./EventsPreviewCard";
 import { useEffect } from "react";
+import GroupsPreviewCard from "./GroupsPreviewCard";
 
-const UserEventsPreview = () => {
+const UserGroupsPreview = () => {
   const {
-    userTotalEvents,
+    userTotalGroups,
     loading,
     error,
-    getUserEvents,
-    userEvents,
-    getUserTotalEvents,
+    getUserGroups,
+    userGroups,
+    getUserTotalGroups,
   } = useUser();
+
   const navigate = useNavigate();
 
-  const eventsLength = Array.isArray(userTotalEvents)
-    ? userTotalEvents.length
+  const groupsLength = Array.isArray(userTotalGroups)
+    ? userTotalGroups.length
     : 0;
 
-  const slicedEvents = Array.isArray(userTotalEvents)
-    ? userTotalEvents
+  const slicedGroups = Array.isArray(userTotalGroups)
+    ? userTotalGroups
         .sort((a, b) => {
           const dateA = new Date(a.date).getTime();
           const dateB = new Date(b.date).getTime();
           return dateA - dateB;
         })
-        .slice(0, 3)
+        .slice(0, 4)
     : [];
 
   useEffect(() => {
-    getUserTotalEvents();
+    getUserTotalGroups();
   }, []);
 
   function handleNavigation() {
-    navigate("/user/my-events");
+    navigate("/user/my-groups");
   }
-
   return (
-    <div className="w-[100%] h-[380px] flex flex-col rounded-lg bg-white p-4">
+    <div className="w-[100%] h-[380px] flex flex-col rounded-lg bg-white p-4 mt-4">
       <div className="flex justify-between items-center">
         <h3 className="font-bold text-textPrimary">
-          Your Events (<span className="text-primary">{eventsLength}</span>)
+          Your groups (<span className="text-primary">{groupsLength}</span>)
         </h3>
         <p
           className="text-[12px] font-semibold text-primary cursor-pointer"
@@ -50,9 +50,9 @@ const UserEventsPreview = () => {
         </p>
       </div>
       <div className="mt-4 space-y-2">
-        {slicedEvents.length > 0 ? (
-          slicedEvents.map((event) => (
-            <EventsPreviewCard event={event} key={event.id} />
+        {slicedGroups.length > 0 ? (
+          slicedGroups.map((group) => (
+            <GroupsPreviewCard group={group} key={group.id} />
           ))
         ) : (
           <p>No upcoming events</p>
@@ -62,4 +62,4 @@ const UserEventsPreview = () => {
   );
 };
 
-export default UserEventsPreview;
+export default UserGroupsPreview;

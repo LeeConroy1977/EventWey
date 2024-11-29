@@ -1,34 +1,31 @@
 import { useSearchParams } from "react-router-dom";
-import { useUser } from "../contexts/UserContext";
 import { useEffect } from "react";
+import { useGroups } from "../contexts/GroupsContext";
 import HomeGroupsCard from "../components/HomeGroupsCard";
 
-const UserGroups = () => {
-  const { user, userGroups, loading, error, getUserGroups } = useUser();
+const Home = () => {
+  const { groups, setGroups, fetchGroups } = useGroups();
   const [searchParams] = useSearchParams();
   const category = searchParams.get("category");
-
   const sortBy = searchParams.get("sortBy");
-
-  console.log("Search Params:", category, sortBy);
 
   useEffect(() => {
     const params = {
       category,
       sortBy,
     };
-    getUserGroups(params);
+    fetchGroups(params);
   }, [category, sortBy]);
 
   return (
     <div className="w-full min-h-screen bg-bgSecondary">
-      {userGroups &&
-        userGroups.length > 0 &&
-        userGroups.map((group) => {
+      {groups &&
+        groups.length > 0 &&
+        groups.map((group) => {
           return <HomeGroupsCard group={group} key={group.id} />;
         })}
     </div>
   );
 };
 
-export default UserGroups;
+export default Home;

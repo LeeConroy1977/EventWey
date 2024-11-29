@@ -12,7 +12,7 @@ const ConnectionPreviewCard = ({ connection }) => {
           alt=""
         />
         <img
-          className="absolute top-2 w-[70px] h-[70px] rounded-full border-2 border-textPrimary"
+          className="absolute top-4 w-[60px] h-[60px] rounded-full border-2 border-textPrimary"
           src={profileImage}
           alt=""
         />

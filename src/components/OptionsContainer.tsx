@@ -6,7 +6,7 @@ import {
   dateArr,
   sortByArr,
 } from "../../data/options";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { NavLink, useLocation, useSearchParams } from "react-router-dom";
 import ConnectionsOptions from "./ConnectionsOptions";
 
 const OptionsContainer: React.FC = () => {
@@ -15,9 +15,9 @@ const OptionsContainer: React.FC = () => {
   const isConnectionsPage =
     location.pathname === "/user/my-connections" ||
     location.pathname === "/user/my-connections/requests";
-  // const isRequestPage = location.pathname === "/user/my-connections/requests";
 
-  const [type, setType] = useState<string>(searchParams.get("type") || "");
+  const isGroupPage = location.pathname === "/user/groups";
+
   const [category, setCategory] = useState<string>(
     searchParams.get("category") || ""
   );
@@ -34,12 +34,6 @@ const OptionsContainer: React.FC = () => {
       newParams.delete(paramOption);
     }
     setSearchParams(newParams);
-  };
-
-  const handleTypeOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const typeValue = e.target.value;
-    setType(typeValue);
-    handleParams("type", typeValue);
   };
 
   const handleCategoryOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -75,33 +69,71 @@ const OptionsContainer: React.FC = () => {
     const newParams = new URLSearchParams();
     setSearchParams(newParams);
     setDate("");
-    setType("");
+
     setCategory("");
     setSortBy("");
   };
 
   return (
     <div className="w-[100%] h-[65px] flex items-center justify-center bg-white border-t-2 border-b-2 border-gray-100 font-semibold">
-      <div className="w-[80%] h-[100%] ">
-        <div className="w-[67%] h-[100%] flex items mr-auto ">
+      <div className="w-[76%] h-[100%] ">
+        <div className="w-[100%] h-[100%] flex justify-between mr-auto ">
+          <nav className="w-[50%] h-[100%] flex items-center ml-4 ">
+            <ul className="w-[100%] flex items-center justify-start gap-10 text-[15px]">
+              <NavLink
+                to="/user/events"
+                className={({ isActive }) =>
+                  isActive
+                    ? "font-semibold text-primary"
+                    : "font-semibold text-textPrimary"
+                }
+              >
+                <li className="cursor-pointer">Events</li>
+              </NavLink>
+              <NavLink
+                to="/user/groups"
+                className={({ isActive }) =>
+                  isActive
+                    ? "font-semibold text-primary"
+                    : "font-semibold text-textPrimary"
+                }
+              >
+                <li className="cursor-pointer">Groups</li>
+              </NavLink>
+              <NavLink
+                to="/user/messages"
+                className={({ isActive }) =>
+                  isActive
+                    ? "font-semibold text-primary"
+                    : "font-semibold text-textPrimary"
+                }
+              >
+                <li className="cursor-pointer">Messages</li>
+              </NavLink>
+              <NavLink
+                to="/user/notifications"
+                className={({ isActive }) =>
+                  isActive
+                    ? "font-semibold text-primary"
+                    : "font-semibold text-textPrimary"
+                }
+              >
+                <li className="cursor-pointer">Notifications</li>
+              </NavLink>
+            </ul>
+          </nav>
           {isConnectionsPage ? (
             <ConnectionsOptions />
           ) : (
             <>
               <div className="flex  items-center">
                 <SelectComponent
-                  optionArray={eventGroupArr}
-                  defaultOption="Events"
-                  handleChange={handleTypeOption}
-                  selectedOption={type}
-                />
-                <SelectComponent
                   optionArray={categoriesArr}
                   defaultOption="Categories"
                   handleChange={handleCategoryOption}
                   selectedOption={category}
                 />
-                {type !== "Groups" && (
+                {!isGroupPage && (
                   <SelectComponent
                     optionArray={dateArr}
                     defaultOption="Date"
@@ -109,21 +141,18 @@ const OptionsContainer: React.FC = () => {
                     selectedOption={date}
                   />
                 )}
-              </div>
-
-              <div className=" flex  items-center ml-auto">
-                <button
-                  className="mr-8  text-[14px] text-[#5D9B9B]"
-                  onClick={handleResetParams}
-                >
-                  Reset
-                </button>
                 <SelectComponent
                   optionArray={sortByArr}
                   defaultOption="Sort By"
                   handleChange={handleSortByOption}
                   selectedOption={sortBy}
                 />
+                <button
+                  className="mr-8  text-[14px] text-[#5D9B9B] font-semibold"
+                  onClick={handleResetParams}
+                >
+                  Reset filters
+                </button>
               </div>
             </>
           )}

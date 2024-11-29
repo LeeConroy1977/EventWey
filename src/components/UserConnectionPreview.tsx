@@ -24,7 +24,7 @@ const UserConnectionPreview = () => {
     <div className="w-[100%] h-[450px] flex flex-col rounded-lg bg-white mt-4 p-4">
       <div className="flex justify-between items-center">
         <h3 className="font-bold text-textPrimary">
-          Your Connections(
+          Your Connections (
           <span className="text-primary">{connectionsLength}</span>)
         </h3>
         <p

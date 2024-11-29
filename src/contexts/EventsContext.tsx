@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
-import { fetchEventData } from "../../utils/api";
+import { fetchAllEvents } from "../../utils/api";
 
 interface PriceBand {
   type: "Early bird" | "Standard" | "Standing" | "Seated" | "VIP";
@@ -18,7 +18,7 @@ interface Event {
   image: string;
   title: string;
   date: string;
-  groupname: string;
+  groupName: string;
   groupId: number;
   duration: string;
   priceBands: PriceBand[];
@@ -63,7 +63,7 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({ children }) => {
     setError(null);
     try {
       const { category, date, sortBy = "date" } = params;
-      const eventsData = await fetchEventData({ category, date, sortBy });
+      const eventsData = await fetchAllEvents({ category, date, sortBy });
       setEvents(eventsData);
     } catch (err) {
       console.error("Error fetching events:", err);

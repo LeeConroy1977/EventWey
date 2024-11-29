@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { fetchUserEvents } from "../../utils/api";
+import { fetchUserEvents, fetchUserGroups } from "../../utils/api";
 
 interface User {
   id: number;
@@ -53,21 +53,23 @@ interface Event {
 interface Group {
   id: number;
   name: string;
-  membersId: number[];
   image: string;
   groupAdmin: number;
   description: string[];
   openAccess: boolean;
   location: string;
-  creationDate: string;
+  creationDate: number;
   eventsCount: number;
-  eventsId: number[];
-  messagesId: number[];
+  members: number[];
+  events: number[];
+  messages: any[];
+  category: string;
 }
 
 interface UserContextType {
   user: User | null;
   userEvents: Event[];
+  userGroup: Group[];
   loading: boolean;
   error: string | null;
   getUserEvents: () => void;
@@ -103,6 +105,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(defaultUser);
   const [userEvents, setUserEvents] = useState<Event[]>([]);
   const [userTotalEvents, setUserTotalEvents] = useState<Event[]>([]);
+  const [userGroups, setUserGroups] = useState<Group[]>([]);
+  const [userTotalGroups, setUserTotalGroups] = useState<Group[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -117,8 +121,6 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         sortBy,
       });
       setUserEvents(events);
-      // const totalEvents = await fetchUserEvents(user.id, {});
-      // setUserTotalEvents(totalEvents);
     } catch (err) {
       console.error("Error fetching events:", err);
       setError("Failed to fetch events.");
@@ -140,17 +142,52 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       setLoading(false);
     }
   };
+  const getUserGroups = async (params: { [key: string]: string }) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const { category, sortBy = "popular" } = params;
+      const groups = await fetchUserGroups(user.id, {
+        category,
+        sortBy,
+      });
+      setUserGroups(groups);
+    } catch (err) {
+      console.error("Error fetching groups:", err);
+      setError("Failed to fetch groups.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getUserTotalGroups = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const totalGroups = await fetchUserGroups(user.id, {});
+      setUserTotalGroups(totalGroups);
+    } catch (err) {
+      console.error("Error fetching groups", err);
+      setError("Failed to fetch groups");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <UserContext.Provider
       value={{
         user,
         userEvents,
+        userGroups,
         loading,
         error,
         getUserEvents,
         userTotalEvents,
+        userTotalGroups,
         getUserTotalEvents,
+        getUserGroups,
+        getUserTotalGroups,
       }}
     >
       {children}

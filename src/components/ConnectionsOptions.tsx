@@ -24,7 +24,7 @@ const ConnectionsOptions = () => {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder="Search connections..."
-        className="w-[50%] h-[54%] p-2 pl-6 flex items-center justify-start bg-bgSecondary rounded-full  mr-auto border-[1px] border-gray-200 text-[11px] text-textPrimary placeholder:text-[10px] focus:outline-none focus:ring-0"
+        className="w-[50%] h-[54%] p-2 pl-6 ml-6 flex items-center justify-start bg-bgSecondary rounded-full  mr-auto border-[1px] border-gray-200 text-[11px] text-textPrimary placeholder:text-[10px] focus:outline-none focus:ring-0"
       />
       <nav>
         <ul className="flex items-center">

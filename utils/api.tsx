@@ -6,7 +6,12 @@ import { sortByDate, sortByPopularity } from "./fakeEventSorting";
 
 console.log(eventsData);
 
-export const fetchEventData = (params: {
+export const fetchAllUser = async (): Promise<any[]> => {
+  let users = [...usersData];
+  return Promise.resolve(users);
+};
+
+export const fetchAllEvents = (params: {
   category?: string;
   date?: string;
   sortBy?: string;
@@ -32,22 +37,45 @@ export const fetchEventData = (params: {
   return Promise.resolve(filteredData);
 };
 
+export const fetchAllGroups = (params: {
+  category?: string;
+  sortBy?: string;
+}) => {
+  let filteredData = [...groupsData];
+
+  if (params.category) {
+    filteredData = filteredData.filter(
+      (group) => group.category === params.category
+    );
+  }
+
+  if (params.sortBy === "popular") {
+    filteredData = sortByPopularity(filteredData);
+  } else if (params.sortBy === "date") {
+    filteredData = sortByDate(filteredData);
+  }
+
+  return Promise.resolve(filteredData);
+};
+
 export const fetchUserEvents = async (
   id: number,
   params: { category?: string; date?: string; sortBy?: string }
 ): Promise<any[]> => {
-  // Fetch all events based on provided parameters
-  const allEvents = await fetchEventData(params);
-
-  // Filter events where the user is an attendee
+  const allEvents = await fetchAllEvents(params);
   const userEvents = allEvents.filter((event) => event.attendees.includes(id));
 
   return Promise.resolve(userEvents);
 };
 
-export const fetchAllUser = async (): Promise<any[]> => {
-  let users = [...usersData];
-  return Promise.resolve(users);
+export const fetchUserGroups = async (
+  id: number,
+  params: { category?: string; sortBy?: string }
+): Promise<any[]> => {
+  const allGroups = await fetchAllGroups(params);
+  const userGroups = allGroups.filter((group) => group.members.includes(id));
+
+  return Promise.resolve(userGroups);
 };
 
 export const fetchUserConnection = async (id: number): Promise<any[]> => {

@@ -13,6 +13,7 @@ interface Event {
   image: string;
   date: number;
   title: string;
+  description: string;
   groupName: string;
   duration: string;
   going: number;
@@ -32,6 +33,7 @@ const HomeEventsCard: React.FC<HomeEventsCardProps> = ({ event }) => {
     image,
     date,
     title,
+    description,
     groupName,
     duration,
     going,
@@ -40,13 +42,13 @@ const HomeEventsCard: React.FC<HomeEventsCardProps> = ({ event }) => {
     priceBands,
   } = event;
 
-  // Formatting the event date
   const formattedDate = format(new Date(date), "EEE, MMM d, yyyy");
 
-  // Checking if the user is attending the event
   const isAttending = user?.userEvents?.includes(id);
 
-  // Function to get the price range from the priceBands
+  let filteredDescription = description[0];
+  filteredDescription = filteredDescription.replaceAll("**", "");
+
   function getPriceRange(priceArr: PriceBand[]): string {
     if (free) return "Free";
     if (!priceArr || priceArr.length === 0) return "No price available";
@@ -62,21 +64,24 @@ const HomeEventsCard: React.FC<HomeEventsCardProps> = ({ event }) => {
   const eventPrices = getPriceRange(priceBands);
 
   return (
-    <div className="relative flex items-center w-[100%] h-[220px] bg-white p-4 border-gray-300 rounded-lg mt-4">
+    <div className="relative flex items-center w-[100%] h-[220px] bg-white p-4 border-gray-200 rounded-lg mt-4 border-[1px]">
       <img
         src={image}
         alt={title}
         className="w-[40%] h-[90%] ml-2 rounded-lg"
       />
-      <div className="w-[60%] h-[100%] p-3 pl-8 pt-5">
+      <div className="w-[60%] h-[100%] p-3 pl-8 pt-3">
         <p className="text-[12px] text-[#2C3E50] font-medium">
           {formattedDate}
         </p>
-        <h2 className="text-[21px] font-bold text-[#2C3E50] mt-1">{title}</h2>
-        <p className="text-[12px] font-semibold text-textPrimary mt-2">
+        <h2 className="text-[18px] font-bold text-[#2C3E50] mt-1">{title}</h2>
+        <p className="text-[11px] font-semibold text-textPrimary mt-2 pr-4">
+          {filteredDescription}
+        </p>
+        <p className="text-[11px] font-semibold text-textPrimary mt-2">
           Hosted by: <span className="text-[#5D9B9B] ml-2">{groupName}</span>
         </p>
-        <p className="text-[11px] font-semibold text-gray-500 mt-3">{`Duration: ${duration}`}</p>
+        <p className="text-[11px] font-semibold text-gray-500 mt-2">{`Duration: ${duration}`}</p>
         <div className="flex w-[100%] h-[25%] mt-2">
           <div className="flex items-center">
             <div className="flex items-center">
