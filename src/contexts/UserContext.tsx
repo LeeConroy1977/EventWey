@@ -1,11 +1,5 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  ReactNode,
-} from "react";
-import axios from "axios";
+import React, { createContext, useContext, useState, ReactNode } from "react";
+import { fetchUserEvents, fetchUserGroups } from "../../utils/api";
 
 interface User {
   id: number;
@@ -15,12 +9,12 @@ interface User {
   profileImage: string;
   bio: string;
   tags: string[];
-  connectionsId: number[];
-  groupsId: number[];
-  userEventsId: number[];
-  messagesId: number[];
-  groupAdminId: number[];
-  notificationsId: number[];
+  connections: number[];
+  groups: number[];
+  userEvents: number[];
+  messages: number[];
+  groupAdmin: number[];
+  notifications: number[];
   showEvents: "public" | "private";
   showConnections: "public" | "private";
 }
@@ -41,7 +35,7 @@ interface Event {
   image: string;
   title: string;
   date: string;
-  groupname: string;
+  groupName: string;
   groupId: number;
   duration: string;
   priceBands: PriceBand[];
@@ -59,41 +53,44 @@ interface Event {
 interface Group {
   id: number;
   name: string;
-  membersId: number[];
   image: string;
   groupAdmin: number;
   description: string[];
   openAccess: boolean;
   location: string;
-  creationDate: string;
+  creationDate: number;
   eventsCount: number;
-  eventsId: number[];
-  messagesId: number[];
+  members: number[];
+  events: number[];
+  messages: any[];
+  category: string;
 }
 
 interface UserContextType {
-  user: User | null | undefined;
+  user: User | null;
   userEvents: Event[];
-  events: Event[];
-  setUser: React.Dispatch<React.SetStateAction<User | null | undefined>>;
-  userConnections: User[];
-  userGroups: Group[];
+  userGroup: Group[];
+  loading: boolean;
+  error: string | null;
+  getUserEvents: () => void;
 }
 
 const defaultUser: User = {
   id: 3,
   email: "emma3@gmail.com",
-  username: "Emma J",
+  username: "Freddie J",
   profileBackgroundImage: "https://picsum.photos/800/600?random=3",
   profileImage: "https://randomuser.me/api/portraits/men/3.jpg",
   bio: "Avid traveler, foodie and animal lover",
   tags: ["Gourmet Food Tours", "Animal Rescue", "Wanderlust Adventures"],
-  connectionsId: [2, 3, 6, 7, 8, 9, 10, 11],
-  groupsId: [2, 4, 5],
-  userEventsId: [8, 9, 10],
-  messagesId: [10, 12],
-  groupAdminId: [3],
-  notificationsId: [3, 6, 8],
+  connections: [
+    2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
+  ],
+  groups: [2, 4, 5, 8, 9, 10, 11],
+  userEvents: [8, 9, 10, 3, 4, 18, 19, 20, 21, 22],
+  messages: [10, 12],
+  groupAdmin: [3],
+  notifications: [3, 6, 8],
   showEvents: "public",
   showConnections: "private",
 };
@@ -106,91 +103,91 @@ interface UserProviderProps {
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(defaultUser);
-  const [users, setUsers] = useState<User[]>([]);
-  const [events, setEvents] = useState<Event[]>([]);
-  const [groups, setGroups] = useState<Group[]>([]);
   const [userEvents, setUserEvents] = useState<Event[]>([]);
-  const [userConnections, setUserConnections] = useState<User[]>([]);
+  const [userTotalEvents, setUserTotalEvents] = useState<Event[]>([]);
   const [userGroups, setUserGroups] = useState<Group[]>([]);
+  const [userTotalGroups, setUserTotalGroups] = useState<Group[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const apiClient = axios.create({
-    baseURL: "http://localhost:3000",
-  });
-
-  useEffect(() => {
-    apiClient
-      .get<Event[]>("/events")
-      .then((response) => setEvents(response.data))
-      .catch((error) => console.error("Error fetching events:", error));
-  }, []);
-
-  useEffect(() => {
-    apiClient
-      .get<User[]>("/users")
-      .then((response) => setUsers(response.data))
-      .catch((error) => console.error("Error fetching users:", error));
-  }, []);
-
-  useEffect(() => {
-    apiClient
-      .get<Group[]>("/groups")
-      .then((response) => setGroups(response.data))
-      .catch((error) => console.error("Error fetching groups:", error));
-  }, []);
-
-  const getUserEvents = () => {
-    if (user && events.length) {
-      const matchedEvents = user.userEventsId
-        .map((userEventId) => events.find((event) => event.id === userEventId))
-        .filter(Boolean) as Event[];
-      setUserEvents(matchedEvents);
+  const getUserEvents = async (params: { [key: string]: string }) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const { category, date, sortBy = "date" } = params;
+      const events = await fetchUserEvents(user.id, {
+        category,
+        date,
+        sortBy,
+      });
+      setUserEvents(events);
+    } catch (err) {
+      console.error("Error fetching events:", err);
+      setError("Failed to fetch events.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const getUserConnections = () => {
-    if (user && users.length) {
-      const matchedConnections = user.connectionsId
-        .map((connectionId) =>
-          users.find((connection) => connection.id === connectionId)
-        )
-        .filter(Boolean) as User[];
-      setUserConnections(matchedConnections);
+  const getUserTotalEvents = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const totalEvents = await fetchUserEvents(user.id, {});
+      setUserTotalEvents(totalEvents);
+    } catch (err) {
+      console.error("Error fetching events:", err);
+      setError("Failed to fetch events.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  const getUserGroups = async (params: { [key: string]: string }) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const { category, sortBy = "popular" } = params;
+      const groups = await fetchUserGroups(user.id, {
+        category,
+        sortBy,
+      });
+      setUserGroups(groups);
+    } catch (err) {
+      console.error("Error fetching groups:", err);
+      setError("Failed to fetch groups.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const getUserGroups = () => {
-    if (user && groups.length) {
-      const matchedGroups = user.groupsId
-        .map((groupId) =>
-          groups.find((group) => group.membersId.includes(groupId))
-        )
-
-        .filter(Boolean) as Group[];
-      setUserGroups(matchedGroups);
+  const getUserTotalGroups = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const totalGroups = await fetchUserGroups(user.id, {});
+      setUserTotalGroups(totalGroups);
+    } catch (err) {
+      console.error("Error fetching groups", err);
+      setError("Failed to fetch groups");
+    } finally {
+      setLoading(false);
     }
   };
-
-  useEffect(() => {
-    getUserEvents();
-  }, [events]);
-
-  useEffect(() => {
-    getUserConnections();
-  }, [users]);
-
-  useEffect(() => {
-    getUserGroups();
-  }, [groups]);
 
   return (
     <UserContext.Provider
       value={{
         user,
-        setUser,
         userEvents,
-        events,
-        userConnections,
         userGroups,
+        loading,
+        error,
+        getUserEvents,
+        userTotalEvents,
+        userTotalGroups,
+        getUserTotalEvents,
+        getUserGroups,
+        getUserTotalGroups,
       }}
     >
       {children}
@@ -198,7 +195,6 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   );
 };
 
-// Custom hook for consuming the UserContext
 export const useUser = (): UserContextType => {
   const context = useContext(UserContext);
   if (!context) {
