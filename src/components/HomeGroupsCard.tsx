@@ -23,7 +23,7 @@ const HomeGroupsCard = ({ group }) => {
       <img src={image} alt="" className="w-[40%] h-[90%] ml-2 rounded-lg" />
       <div className="w-[60%] h-[100%] p-3 pl-8 pt-5">
         <h2 className="text-[21px] font-bold text-[#2C3E50] ">{name}</h2>
-        <p className="text-[14px] mt-2 font-medium pr-6 text-primary">
+        <p className="text-[11px] font-semibold text-primary mt-2 pr-4">
           {filteredDesc}
         </p>
         <p className="text-[11px] font-semibold text-gray-500 mt-3">{`${

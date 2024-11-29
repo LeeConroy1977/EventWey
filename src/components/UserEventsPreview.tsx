@@ -49,7 +49,7 @@ const UserEventsPreview = () => {
           Show all
         </p>
       </div>
-      <div className="mt-4 space-y-2">
+      <div className="mt-4 space-y-4">
         {slicedEvents.length > 0 ? (
           slicedEvents.map((event) => (
             <EventsPreviewCard event={event} key={event.id} />

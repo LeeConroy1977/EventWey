@@ -125,36 +125,35 @@ const OptionsContainer: React.FC = () => {
           {isConnectionsPage ? (
             <ConnectionsOptions />
           ) : (
-            <>
-              <div className="flex  items-center">
+            <div className="flex  items-center">
+              {!isGroupPage && (
                 <SelectComponent
-                  optionArray={categoriesArr}
-                  defaultOption="Categories"
-                  handleChange={handleCategoryOption}
-                  selectedOption={category}
+                  optionArray={dateArr}
+                  defaultOption="Date"
+                  handleChange={handleDateOption}
+                  selectedOption={date}
                 />
-                {!isGroupPage && (
-                  <SelectComponent
-                    optionArray={dateArr}
-                    defaultOption="Date"
-                    handleChange={handleDateOption}
-                    selectedOption={date}
-                  />
-                )}
-                <SelectComponent
-                  optionArray={sortByArr}
-                  defaultOption="Sort By"
-                  handleChange={handleSortByOption}
-                  selectedOption={sortBy}
-                />
-                <button
-                  className="mr-8  text-[14px] text-[#5D9B9B] font-semibold"
-                  onClick={handleResetParams}
-                >
-                  Reset filters
-                </button>
-              </div>
-            </>
+              )}
+              <SelectComponent
+                optionArray={categoriesArr}
+                defaultOption="Categories"
+                handleChange={handleCategoryOption}
+                selectedOption={category}
+              />
+
+              <SelectComponent
+                optionArray={sortByArr}
+                defaultOption="Sort By"
+                handleChange={handleSortByOption}
+                selectedOption={sortBy}
+              />
+              <button
+                className="mr-8  text-[14px] text-[#5D9B9B] font-semibold"
+                onClick={handleResetParams}
+              >
+                Reset filters
+              </button>
+            </div>
           )}
         </div>
       </div>

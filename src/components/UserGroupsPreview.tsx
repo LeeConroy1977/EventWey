@@ -37,7 +37,7 @@ const UserGroupsPreview = () => {
     navigate("/user/my-groups");
   }
   return (
-    <div className="w-[100%] h-[380px] flex flex-col rounded-lg bg-white p-4 mt-4">
+    <div className="w-[100%] min-h-[380px] flex flex-col rounded-lg bg-white p-4 mt-4 ">
       <div className="flex justify-between items-center">
         <h3 className="font-bold text-textPrimary">
           Your groups (<span className="text-primary">{groupsLength}</span>)
@@ -49,7 +49,7 @@ const UserGroupsPreview = () => {
           Show all
         </p>
       </div>
-      <div className="mt-4 space-y-2">
+      <div className="mt-4 space-y-4">
         {slicedGroups.length > 0 ? (
           slicedGroups.map((group) => (
             <GroupsPreviewCard group={group} key={group.id} />
