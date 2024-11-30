@@ -18,7 +18,7 @@ export const eventsData = [
     category: "technology",
     tags: ["Technology", "AI", "Innovation", "Future", "Networking"],
     description: [
-      "**Join us for an in-depth exploration of Artificial Intelligence and its revolutionary impact on various industries!**",
+      "Join us for an in-depth exploration of Artificial Intelligence and its revolutionary impact on various industries!",
       "The event will feature expert speakers who will provide insights into the latest developments in AI technology and its potential to shape the future. From advancements in machine learning to AI-powered automation, we’ll cover how these innovations are transforming industries such as healthcare, finance, and transportation. Whether you're an AI enthusiast or new to the subject, you'll gain valuable knowledge and perspectives from professionals in the field.",
       "This is also a great opportunity for networking with like-minded individuals who are passionate about technology and its future. Engage in thought-provoking discussions, exchange ideas, and explore potential collaborations with fellow tech enthusiasts. We’ll be diving deep into the ethical implications of AI and how it will impact society, making this a must-attend for anyone interested in the future of technology.",
       "Don’t miss this chance to stay ahead of the curve, expand your understanding of AI, and connect with some of the brightest minds in the industry. Join us for a day filled with learning, discussion, and innovation that will leave you inspired and informed about the exciting possibilities of AI.",
@@ -44,7 +44,7 @@ export const eventsData = [
     category: "outdoors",
     tags: ["Outdoor", "Adventure", "Hiking", "Exploration", "Nature"],
     description: [
-      "**Join us for a thrilling and adventurous hiking trip through the stunning landscapes of Weymouth and the surrounding areas!**",
+      "Join us for a thrilling and adventurous hiking trip through the stunning landscapes of Weymouth and the surrounding areas!",
       "Adventure Seekers is a community of outdoor enthusiasts passionate about exploring Dorset's natural beauty. Whether you're an experienced hiker or a nature lover, this event is for you. We’ll embark on an unforgettable journey through rugged terrain, meeting like-minded adventurers along the way.",
       "The adventure begins at Weymouth Harbour, with breathtaking views of Chesil Beach. As we follow the coastal paths, enjoy views of the Jurassic Coastline, a UNESCO World Heritage site. Our knowledgeable guides will share insights into the area's geology, wildlife, and history.",
       "After our hike, we’ll take a break at a local pub in Portland Bill, reflecting on the adventure. Whether you’re looking to make new connections, appreciate nature, or simply enjoy an outdoor day, this hike offers a perfect opportunity for relaxation and new memories.",
@@ -84,7 +84,7 @@ export const eventsData = [
       "Culture",
     ],
     description: [
-      "**Join us for a deep dive into sustainable architectural practices and the future of design!**",
+      "Join us for a deep dive into sustainable architectural practices and the future of design!",
       "This conference brings together leading architects and industry experts who will share their latest sustainable design solutions. With climate change becoming an urgent global challenge, the field of architecture must evolve to create eco-friendly, energy-efficient buildings that minimize environmental impact. Attendees will learn about cutting-edge materials, green building certifications, and how technology is driving innovation in sustainable design.",
       "During the event, you’ll have the opportunity to explore real-world case studies of sustainable architecture projects, showcasing how eco-friendly designs are not only beneficial to the environment but also cost-effective in the long term. The discussions will include topics such as passive house standards, renewable energy integration, and the latest trends in circular architecture.",
       "The conference will also provide a platform for networking with professionals from various sectors within the construction industry, fostering collaborations that could lead to groundbreaking projects. Whether you’re a seasoned architect, a student, or someone passionate about sustainable living, this event will inspire and equip you with the knowledge to contribute to a greener future.",
@@ -127,7 +127,7 @@ export const eventsData = [
       "Business Strategy",
     ],
     description: [
-      "**Join us to master the latest digital marketing strategies and techniques!**",
+      "Join us to master the latest digital marketing strategies and techniques!",
       "In this session, you will explore the latest trends in digital marketing, including search engine optimization (SEO), content marketing, social media strategies, and data analytics. Industry experts will demonstrate how to leverage these tools to build effective campaigns that generate results. Attendees will gain insights into current best practices and learn how to create strategies that align with business goals and target audiences.",
       "The event will feature hands-on workshops where you can try out the tools and techniques discussed, giving you practical experience in using advanced marketing platforms. Whether you're a business owner looking to enhance your online presence or a marketing professional aiming to stay ahead of the curve, this is the perfect opportunity to level up your skills.",
       "Moreover, the event will provide ample networking opportunities with marketing experts, business leaders, and like-minded professionals. By the end of the session, you’ll walk away with actionable insights that can directly improve your digital marketing efforts and help you stand out in an increasingly competitive online landscape.",
@@ -168,7 +168,7 @@ export const eventsData = [
       "Vegetarian Cuisine",
     ],
     description: [
-      "**Join us for an exciting cooking workshop focused on healthy eating!**",
+      "Join us for an exciting cooking workshop focused on healthy eating!",
       "This hands-on workshop, led by an experienced professional chef, will teach you how to create delicious and nutritious meals from scratch. You'll learn how to make healthy choices in your cooking, including the use of fresh, local ingredients, and how to incorporate more vegetables and lean proteins into your meals.",
       "Whether you're looking to improve your eating habits or learn new cooking techniques, this workshop is perfect for anyone interested in healthy living. We’ll cover meal prep ideas, cooking methods that preserve nutrients, and how to make cooking a fun and rewarding experience.",
       "All ingredients will be provided for the session, and you’ll get to take home your creations to enjoy. The focus is on fun, learning, and making healthy eating accessible for everyone, no matter your skill level in the kitchen.",
@@ -217,7 +217,7 @@ export const eventsData = [
       "Self-Improvement",
     ],
     description: [
-      "**Escape to the peaceful countryside for a rejuvenating yoga retreat!**",
+      "Escape to the peaceful countryside for a rejuvenating yoga retreat!",
       "Join us for a weekend of mindfulness, relaxation, and wellness in a serene natural setting. This retreat is designed to help you refresh both your body and mind through yoga, meditation, and nature walks. The retreat is suitable for all levels, whether you're new to yoga or a seasoned practitioner.",
       "Over the weekend, you'll enjoy daily yoga classes, mindfulness practices, and plenty of free time to unwind and reconnect with yourself. Experience the tranquility of the countryside and enjoy healthy, nourishing meals prepared by expert chefs.",
       "The retreat is all about slowing down, tuning into your body, and finding inner peace. You’ll leave feeling refreshed, recharged, and with practical tools to bring mindfulness into your everyday life.",
@@ -255,7 +255,7 @@ export const eventsData = [
       "Learning",
     ],
     description: [
-      "**Capture the beauty of nature!**",
+      "Capture the beauty of nature!",
       "Join us for a scenic walk through nature's most picturesque landscapes and learn valuable photography tips from seasoned professionals. This walk is designed for photographers of all skill levels, and it’s an excellent opportunity to enhance your skills in capturing nature's stunning vistas.",
       "Bring your camera or smartphone and get ready to explore stunning natural views. Our expert guides will provide hands-on guidance, helping you frame the perfect shots while soaking in the beauty of the outdoors.",
       "Along the way, you’ll have the chance to experiment with various photography techniques such as framing, lighting, and composition, all tailored to the natural environment. Whether you’re shooting sweeping landscapes, close-up flora, or wildlife, you’ll be able to capture breathtaking images to showcase your skills.",
@@ -296,7 +296,7 @@ export const eventsData = [
       "Active Lifestyles",
     ],
     description: [
-      "**Get fit and have fun!**",
+      "Get fit and have fun!",
       "Join us for an action-packed bootcamp that will help you get in shape for the new year! This high-energy session is designed to challenge all fitness levels and build strength, endurance, and flexibility.",
       "Throughout the 3-hour session, you'll experience a variety of exercises, from bodyweight movements to cardio circuits, ensuring a full-body workout that targets every muscle group. Our expert trainers will guide you through each exercise, helping you improve form, build stamina, and increase overall fitness.",
       "Whether you're new to fitness or looking to push your limits, this bootcamp will provide you with the motivation and support needed to succeed. Plus, you’ll leave feeling energized and ready to take on the year ahead with a renewed sense of health and well-being!",
@@ -339,7 +339,7 @@ export const eventsData = [
       "Public Speaking",
     ],
     description: [
-      "**Join us for an exciting forum on startups and innovation!**",
+      "Join us for an exciting forum on startups and innovation!",
       "This event brings together aspiring entrepreneurs, innovators, and startup experts to share ideas and discuss the future of business. You’ll have the chance to network with like-minded individuals and industry leaders, while gaining insights into critical topics such as funding, scaling, and business growth strategies.",
       "Whether you're looking to launch your startup, refine your business model, or explore new opportunities, this forum will provide you with the tools and knowledge to succeed. With keynote speakers and panel discussions led by industry veterans, you’ll walk away with actionable advice and the connections needed to take your business to the next level.",
     ],
@@ -380,7 +380,7 @@ export const eventsData = [
       "Local Events",
     ],
     description: [
-      "**Join us for a full day of pirate-themed fun!**",
+      "Join us for a full day of pirate-themed fun!",
       "The Weymouth Pirate Festival brings the swashbuckling spirit to life with a full day of activities including a pirate parade, live music, food stalls, and pirate-themed games for the whole family.",
       "Come dressed as your favorite pirate and join the festivities, which will include performances, historical reenactments, and plenty of photo opportunities. It's the perfect event for all ages, so bring your crew and enjoy a day of adventure and entertainment!",
       "This event is free and open to all, so don't miss out on a fantastic day in Weymouth full of pirate action, music, and community spirit!",
@@ -413,7 +413,7 @@ export const eventsData = [
     category: "fitness",
     tags: ["Running", "Community", "Wellness", "Exercise", "Active Lifestyles"],
     description: [
-      "**Run for a cause!**",
+      "Run for a cause!",
       "The Annual Charity Fun Run is a wonderful opportunity to support local causes while getting active. Whether you're a seasoned runner or just looking for a fun way to get moving, this event is for everyone. The scenic route along Weymouth Seafront provides beautiful views as you jog, walk, or run to raise funds for important community projects.",
       "Participants will enjoy a relaxed, inclusive atmosphere, making it the perfect event for families, friends, and coworkers. There’s no pressure to complete the race quickly—just come out, get moving, and help contribute to a good cause. Every step you take is a step toward supporting those in need in the local area.",
       "After the race, enjoy some well-deserved refreshments and celebrate with fellow participants. Whether you're there for the fitness or the fun, the Annual Charity Fun Run is all about bringing the community together and supporting important causes while staying healthy. So lace up your running shoes, grab your friends and family, and join us for an event that makes a difference!",
@@ -454,7 +454,7 @@ export const eventsData = [
       "Seafood",
     ],
     description: [
-      "**Cook like a pro!**",
+      "Cook like a pro!",
       "Learn how to cook delicious meals using fresh local ingredients in this hands-on cooking class. We'll teach you everything from prepping to plating, ensuring you master essential cooking techniques and improve your skills in the kitchen.",
       "Whether you're a beginner or an experienced cook, this workshop will expand your culinary knowledge. The class will cover tips for selecting the best seasonal produce, as well as the health benefits of cooking with fresh, local ingredients.",
       "By the end of the workshop, you'll have the skills and confidence to create meals that are not only delicious but also packed with nutrients. Join us and learn how to incorporate local ingredients into your daily cooking routine.",
@@ -494,7 +494,7 @@ export const eventsData = [
       "Meet New Friends",
     ],
     description: [
-      "**Get ready for a night of electrifying music!**",
+      "Get ready for a night of electrifying music!",
       "Join us at The Nook nightclub for a high-energy performance by The Leggomen, bringing the best of live music, beats, and nightlife vibes to Weymouth. The party kicks off at 10:00 PM and lasts for 2 hours, so be ready to dance the night away.",
       "With an exciting mix of genres, from electronic to indie rock, The Leggomen’s performance promises to get everyone moving. Whether you're a long-time fan or new to their music, this is the ultimate event for music lovers looking to enjoy a memorable night out.",
       "Entry is completely free, so bring your friends, get your dancing shoes on, and head to The Nook for a night you won’t forget!",
@@ -535,7 +535,7 @@ export const eventsData = [
       "Culture",
     ],
     description: [
-      "**Unleash your creativity with a glass of wine!**",
+      "Unleash your creativity with a glass of wine!",
       "Join us for a fun and relaxing evening at Art & Wine Night, where art and wine come together to create the perfect social experience. Whether you're looking to improve your painting skills or just enjoy a casual night out, this event is open to all levels. You'll be guided by local artists through a step-by-step painting session, all while sipping on your favorite wine or choosing from our selection of beverages.",
       "Throughout the evening, our instructors will help you explore different techniques and create a masterpiece that you can take home. The atmosphere will be warm and friendly, making it the perfect setting for anyone to unwind and let their creative side flourish. No previous painting experience is necessary—just bring your enthusiasm and a willingness to have fun.",
       "This is also a great opportunity to socialize, meet new people, and bond over a shared love for art and wine. Whether you're coming with friends or flying solo, you’re sure to have a fantastic time surrounded by fellow art lovers. Seats are limited, so reserve your spot today and get ready for a memorable evening of creativity, conversation, and wine!",
@@ -576,7 +576,7 @@ export const eventsData = [
     ],
     category: "nightlife",
     description: [
-      "**Get ready to dance the night away in a celebration of music, lights, and pure energy!**",
+      "Get ready to dance the night away in a celebration of music, lights, and pure energy!",
       "The Ultimate Dance Party is the highlight of the season for anyone who loves music, dancing, and making memories with friends. Hosted at the best venue in town, this event brings together the hottest local DJs spinning non-stop beats all night. Whether you're an avid dancer or just love to hang out and groove to the rhythm, there’s something for everyone. The vibrant energy, stunning light shows, and great music will keep you dancing until the early hours of the morning. This is the place to be if you want to experience the best party of the year!",
       "Throughout the night, you’ll enjoy a wide variety of tunes—everything from the latest chart-topping hits to underground dance classics. The energy in the room is infectious, and you won’t be able to resist joining in. The party’s electric atmosphere is perfect for letting loose, meeting new people, and creating lasting memories. Plus, a well-stocked bar with signature cocktails will keep you refreshed while you dance the night away. The vibe is always positive, fun, and all about having a good time!",
       "At the Ultimate Dance Party, it’s not just about dancing—it's about the whole experience. The night is filled with opportunities to socialize, make new friends, and connect with people who share your love for music and dance. Whether you come for the beats, the drinks, or the good company, this event is designed to make your night one you won’t forget. Don't miss out on the ultimate celebration of music, movement, and memories—grab your tickets now and get ready for the time of your life!",
@@ -612,7 +612,7 @@ export const eventsData = [
     ],
     category: "fitness",
     description: [
-      "**Push your limits!**",
+      "Push your limits!",
       "Get ready to challenge yourself in a high-energy fitness event designed to test your strength, stamina, and overall fitness level. This fitness challenge is all about pushing past your limits and achieving personal goals. Whether you're a beginner or an experienced athlete, this event will give you the opportunity to push your boundaries in a fun and supportive environment.",
       "The event will feature a variety of exercises that will help you build strength and improve endurance, from intense circuit training to agility drills. Each participant will be encouraged to take on the challenges at their own pace, while receiving expert guidance from fitness trainers to ensure the best form and maximum benefit.",
       "At the end of the challenge, you'll have the chance to reflect on your progress, see how much you've improved, and take home tips on how to continue your fitness journey. The event aims to create a sense of camaraderie and achievement, as participants cheer each other on and celebrate their success together.",
@@ -651,7 +651,7 @@ export const eventsData = [
     ],
     category: "outdoors",
     description: [
-      "**Explore the great outdoors!**",
+      "Explore the great outdoors!",
       "Join us for a thrilling mountain hiking expedition where you'll be surrounded by breathtaking natural beauty and explore pristine landscapes. Our expert guides will lead you through the terrain, sharing insights about the flora, fauna, and history of the area. Whether you’re a seasoned hiker or a beginner, this adventure will offer you an opportunity to connect with nature and challenge yourself.",
       "The hike will take you through rugged mountain paths, offering some stunning panoramic views. Along the way, you’ll have the chance to take in the fresh mountain air and pause for some memorable photos. Our team will ensure your safety and provide tips on hiking techniques, so you can enjoy the journey to the fullest.",
       "Be sure to wear sturdy hiking shoes, pack plenty of water, and prepare for a physically demanding but rewarding day. At the end of the day, you’ll leave with a sense of accomplishment and memories of one of the most beautiful landscapes in the region.",
@@ -690,7 +690,7 @@ export const eventsData = [
     ],
     category: "technology",
     description: [
-      "**Start building websites today!**",
+      "Start building websites today!",
       "In this intensive web development bootcamp, you’ll get hands-on experience with the fundamentals of web development. Our expert instructors will walk you through essential coding techniques, industry best practices, and key development tools, giving you the foundation to start building your own websites from scratch.",
       "You’ll learn how to create responsive, interactive websites using HTML, CSS, and JavaScript. The bootcamp is designed to be fast-paced and engaging, ensuring you stay motivated while acquiring valuable skills that are in high demand in the tech industry.",
       "By the end of the day, you’ll have the confidence and knowledge to build functional websites, implement styling and layout techniques, and troubleshoot common issues. Whether you're a beginner or looking to level up your skills, this bootcamp is the perfect way to get started in web development.",
@@ -726,7 +726,7 @@ export const eventsData = [
     ],
     category: "arts",
     description: [
-      "**Capture stunning images!**",
+      "Capture stunning images!",
       "Join us for a hands-on photography workshop where you’ll learn techniques used by professional photographers. Whether you’re a beginner or experienced, you’ll discover essential skills like composition, lighting, and editing that will help you take your photography to the next level.",
       "During the workshop, you’ll have the opportunity to experiment with different camera settings and learn how to make the most out of your gear. Our expert instructors will guide you through practical exercises and give you tips on how to capture the best images in various environments.",
       "By the end of the session, you’ll be confident in your ability to compose beautiful photos and edit them to perfection. Bring your camera and get ready to take some stunning shots while enhancing your creative skills.",
@@ -768,7 +768,7 @@ export const eventsData = [
     ],
     category: "games",
     description: [
-      "**Get ready for some friendly competition!**",
+      "Get ready for some friendly competition!",
       "Join us for an exciting evening filled with classic and new board games. Whether you're a strategy mastermind or just looking for a fun, lighthearted challenge, there will be something for everyone. You can compete in teams or solo, making new friends along the way.",
       "Choose from a wide selection of games including strategy, party, and trivia games that will get everyone laughing and engaged. Our friendly atmosphere ensures that everyone, no matter their skill level, has a great time.",
       "Snacks and drinks will be provided to keep you energized as you enjoy hours of fun and friendly competition. This is the perfect opportunity to unwind, enjoy a casual night with friends, and make new connections.",
@@ -809,7 +809,7 @@ export const eventsData = [
     ],
     category: "social",
     description: [
-      "**Enjoy a movie under the stars!**",
+      "Enjoy a movie under the stars!",
       "Join us for a magical evening of outdoor cinema. Settle in with your blankets and cushions as we bring the big screen to the great outdoors, offering a comfortable and relaxed environment to enjoy a classic film.",
       "The event promises to be an unforgettable experience, featuring a carefully chosen movie perfect for an outdoor setting. This is the ideal way to enjoy a film in the fresh air, surrounded by fellow movie buffs.",
       "Popcorn, drinks, and other snacks will be provided, ensuring you’re fueled for the film. Whether you're a film aficionado or simply looking for a fun night out, this outdoor cinema night is a great way to kick back and enjoy the show!",
@@ -848,7 +848,7 @@ export const eventsData = [
     ],
     category: "social",
     description: [
-      "**Celebrate the night with music, lights, and community spirit!**",
+      "Celebrate the night with music, lights, and community spirit!",
       "Dusk til Dark 2024 is Weymouth’s premier nightlife festival, offering an unforgettable evening of live performances, DJ sets, and entertainment. As the sun sets, join locals and visitors for a celebration of music and dance under the stars. The festival features talented bands and artists from across the region, ensuring a night filled with energy and excitement.",
       "This free event is open to all ages, making it a great opportunity to bring friends and family together for a night of fun. With food stalls, vibrant light displays, and a lively atmosphere, Dusk til Dark is a perfect way to experience the dynamic cultural vibe of Weymouth. Whether you’re there to dance, socialize, or simply soak in the ambiance, there’s something for everyone to enjoy.",
       "Mark your calendars and prepare for an evening you won’t forget! Come as you are, grab a spot on the dance floor, and celebrate the spirit of Weymouth with fellow festival-goers. Don’t miss this chance to make memories that will last a lifetime.",
@@ -876,7 +876,7 @@ export const eventsData = [
     tags: ["Trivia", "Social", "Community", "Meet New Friends"],
     category: "games",
     description: [
-      "**Test your knowledge!**",
+      "Test your knowledge!",
       "Gather your friends and join us for an exciting pub quiz night where you'll have the chance to test your knowledge across various categories. From history to pop culture, this quiz will challenge you in the best way possible.",
       "Form your team and compete for the title of trivia champions. With diverse questions and plenty of room for fun, this night promises to be filled with laughter, friendly competition, and the thrill of victory. Everyone’s welcome!",
       "There will be prizes for the winning team, so get ready to show off your trivia skills. Snacks and drinks will be provided to keep you energized as you compete!",
@@ -906,7 +906,7 @@ export const eventsData = [
     tags: ["Soccer", "Team Sports", "Social", "Community", "Meet New Friends"],
     category: "sports",
     description: [
-      "**Show off your skills in our 5-a-side football tournament!**",
+      "Show off your skills in our 5-a-side football tournament!",
       "Join us for an action-packed afternoon of competitive football. Teams of five will compete in fast-paced matches, with plenty of opportunities to showcase teamwork, skill, and strategy. Whether you're an experienced player or just looking to have fun, this event welcomes all levels.",
       "The tournament promises an energetic atmosphere with friendly rivalry and the chance to connect with fellow football enthusiasts. Gather your team or join as an individual to be placed in a group. It’s a great way to stay active and enjoy the love of the game.",
       "Prizes will be awarded to the winning team, and refreshments will be available for participants and spectators. Don’t miss this opportunity to be part of Weymouth’s football scene!",

@@ -79,7 +79,7 @@ const OptionsContainer: React.FC = () => {
       <div className="w-[76%] h-[100%] ">
         <div className="w-[100%] h-[100%] flex justify-between mr-auto ">
           <nav className="w-[50%] h-[100%] flex items-center ml-4 ">
-            <ul className="w-[100%] flex items-center justify-start gap-10 text-[15px]">
+            <ul className="w-[100%] flex items-center justify-start gap-10 text-[15px] ml-6">
               <NavLink
                 to="/user/events"
                 className={({ isActive }) =>
@@ -99,26 +99,6 @@ const OptionsContainer: React.FC = () => {
                 }
               >
                 <li className="cursor-pointer">Groups</li>
-              </NavLink>
-              <NavLink
-                to="/user/messages"
-                className={({ isActive }) =>
-                  isActive
-                    ? "font-semibold text-primary"
-                    : "font-semibold text-textPrimary"
-                }
-              >
-                <li className="cursor-pointer">Messages</li>
-              </NavLink>
-              <NavLink
-                to="/user/notifications"
-                className={({ isActive }) =>
-                  isActive
-                    ? "font-semibold text-primary"
-                    : "font-semibold text-textPrimary"
-                }
-              >
-                <li className="cursor-pointer">Notifications</li>
               </NavLink>
             </ul>
           </nav>

@@ -40,7 +40,8 @@ const UserEventsPreview = () => {
     <div className="w-[100%] h-[380px] flex flex-col rounded-lg bg-white p-4">
       <div className="flex justify-between items-center">
         <h3 className="font-bold text-textPrimary">
-          Your Events (<span className="text-primary">{eventsLength}</span>)
+          Your Events (<span className="text-primary">{eventsLength || 0}</span>
+          )
         </h3>
         <p
           className="text-[12px] font-semibold text-primary cursor-pointer"

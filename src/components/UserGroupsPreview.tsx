@@ -40,7 +40,8 @@ const UserGroupsPreview = () => {
     <div className="w-[100%] min-h-[380px] flex flex-col rounded-lg bg-white p-4 mt-4 ">
       <div className="flex justify-between items-center">
         <h3 className="font-bold text-textPrimary">
-          Your groups (<span className="text-primary">{groupsLength}</span>)
+          Your groups (<span className="text-primary">{groupsLength || 0}</span>
+          )
         </h3>
         <p
           className="text-[12px] font-semibold text-primary cursor-pointer"
