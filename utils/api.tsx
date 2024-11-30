@@ -37,6 +37,37 @@ export const fetchAllEvents = (params: {
   return Promise.resolve(filteredData);
 };
 
+export const fetchEventById = (id) => {
+  const event = eventsData.find((event) => event.id === id);
+
+  return Promise.resolve(event);
+};
+
+export const fetchGroupById = (id) => {
+  const group = groupsData.find((group) => group.id === id);
+
+  return Promise.resolve(group);
+};
+
+export const fetchEventGroupById = async (id) => {
+  const event = await fetchEventById(id);
+  const group = await fetchGroupById(event?.groupId);
+  console.log(group);
+
+  return group;
+};
+
+export const fetchEventConnections = async (id) => {
+  const event = await fetchEventById(id);
+  const users = await fetchAllUser();
+
+  const eventConnections = users.filter((user) =>
+    event?.attendees.includes(user.id)
+  );
+
+  return eventConnections;
+};
+
 export const fetchAllGroups = (params: {
   category?: string;
   sortBy?: string;

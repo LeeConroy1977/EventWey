@@ -25,7 +25,7 @@ const UserConnectionPreview = () => {
       <div className="flex justify-between items-center">
         <h3 className="font-bold text-textPrimary">
           Your Connections (
-          <span className="text-primary">{connectionsLength}</span>)
+          <span className="text-primary">{connectionsLength || 0}</span>)
         </h3>
         <p
           className="text-[12px] font-semibold text-primary cursor-pointer"
@@ -34,7 +34,7 @@ const UserConnectionPreview = () => {
           Show all
         </p>
       </div>
-      <div className="flex items-start justify-center flex-wrap mt-6 gap-3">
+      <div className="flex items-start justify-start flex-wrap mt-6 gap-3">
         {connectionPreview.length > 0 &&
           connectionPreview.map((connection, i) => {
             return <ConnectionPreviewCard connection={connection} key={i} />;
