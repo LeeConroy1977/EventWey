@@ -2,7 +2,7 @@ import { eventsData } from "../data/events";
 import { groupsData } from "../data/groups";
 import { usersData } from "../data/users";
 import { eventsDateFilter } from "./eventDateFilter";
-import { sortByDate, sortByPopularity } from "./fakeEventSorting";
+import { sortByDate, sortByPopularity, sortByFree } from "./fakeEventSorting";
 
 console.log(eventsData);
 
@@ -32,6 +32,8 @@ export const fetchAllEvents = (params: {
     filteredData = sortByPopularity(filteredData);
   } else if (params.sortBy === "date") {
     filteredData = sortByDate(filteredData);
+  } else if (params.sortBy === "free") {
+    filteredData = sortByFree(filteredData);
   }
 
   return Promise.resolve(filteredData);
@@ -132,4 +134,9 @@ export const fetchUserConnection = async (id: number): Promise<any[]> => {
   const userconnections = users.filter((user) => user.connections.includes(id));
 
   return Promise.resolve(userconnections);
+};
+
+export const fetchSortedEvents = async (sortBy: string): Promise<any[]> => {
+  const events = await fetchAllEvents({ sortBy });
+  return events;
 };

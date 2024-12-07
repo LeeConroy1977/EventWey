@@ -38,7 +38,7 @@ const EventWrapper = ({ event }) => {
   const eventPrices = getPriceRange(priceBands);
 
   return (
-    <div className="w-[100%] h-[21rem] flex items-center justify-center  bg-bgPrimary border-b-2 border-gray-200 p-8  ">
+    <div className="w-[100%] h-[21rem] flex items-center justify-center  bg-bgPrimary border-b-2 border-gray-200 p-8">
       <div className=" w-[76%] h-[100%] flex items-center justify-center  mt-6 ">
         <div className="h-[100%] w-[50%] flex items-center justify-center ">
           <img src={image} alt="" className="w-[90%] h-[92%] rounded-lg " />
