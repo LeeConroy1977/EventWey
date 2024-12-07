@@ -2,17 +2,13 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
 import EventsPreviewCard from "./EventsPreviewCard";
 import { useEffect } from "react";
+import useHandleEventClick from "../hooks/useHandleEventClick";
+import { Event } from "../contexts/EventsContext";
 
 const UserEventsPreview = () => {
-  const {
-    userTotalEvents,
-    loading,
-    error,
-    getUserEvents,
-    userEvents,
-    getUserTotalEvents,
-  } = useUser();
+  const { userTotalEvents, getUserTotalEvents } = useUser();
   const navigate = useNavigate();
+  const handleEventClick = useHandleEventClick();
 
   const eventsLength = Array.isArray(userTotalEvents)
     ? userTotalEvents.length
@@ -52,8 +48,12 @@ const UserEventsPreview = () => {
       </div>
       <div className="mt-4 space-y-4">
         {slicedEvents.length > 0 ? (
-          slicedEvents.map((event) => (
-            <EventsPreviewCard event={event} key={event.id} />
+          slicedEvents.map((event: Event) => (
+            <EventsPreviewCard
+              event={event}
+              key={event.id}
+              handleClick={handleEventClick}
+            />
           ))
         ) : (
           <p>No upcoming events</p>

@@ -52,9 +52,18 @@ export const fetchGroupById = (id) => {
 export const fetchEventGroupById = async (id) => {
   const event = await fetchEventById(id);
   const group = await fetchGroupById(event?.groupId);
-  console.log(group);
 
   return group;
+};
+
+export const fetchGroupEventsById = async (id) => {
+  const group = await fetchGroupById(id);
+  const events = await fetchAllEvents({});
+  const groupEvents = events.filter((event) =>
+    group?.events.includes(event.id)
+  );
+
+  return groupEvents;
 };
 
 export const fetchEventConnections = async (id) => {
@@ -66,6 +75,15 @@ export const fetchEventConnections = async (id) => {
   );
 
   return eventConnections;
+};
+
+export const fetchGroupMembers = async (id) => {
+  const group = await fetchGroupById(id);
+  const users = await fetchAllUser();
+
+  const groupMembers = users.filter((user) => group?.members.includes(user.id));
+
+  return groupMembers;
 };
 
 export const fetchAllGroups = (params: {

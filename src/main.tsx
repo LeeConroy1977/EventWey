@@ -8,6 +8,7 @@ import { EventProvider } from "./contexts/EventContext"; // Same for EventContex
 import { EventsProvider } from "./contexts/EventsContext"; // Same for EventsContext.tsx
 import { UserProvider } from "./contexts/UserContext"; // Same for UserContext.tsx
 import { BrowserRouter } from "react-router-dom";
+import { GroupProvider } from "./contexts/GroupContext";
 
 // Create a root element to render the app
 const root = ReactDOM.createRoot(document.getElementById("root")!); // Ensure that 'root' element exists in your index.html
@@ -20,9 +21,11 @@ root.render(
         <EventsProvider>
           <EventProvider>
             <GroupsProvider>
-              <ConnectionsProvider>
-                <App />
-              </ConnectionsProvider>
+              <GroupProvider>
+                <ConnectionsProvider>
+                  <App />
+                </ConnectionsProvider>
+              </GroupProvider>
             </GroupsProvider>
           </EventProvider>
         </EventsProvider>

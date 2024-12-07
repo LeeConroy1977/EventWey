@@ -7,6 +7,8 @@ import {
 import HomeEventsCard from "../components/HomeEventsCard";
 import { useEvents } from "../contexts/EventsContext";
 import { useEffect } from "react";
+import useHandleEventClick from "../hooks/useHandleEventClick";
+import { Event } from "../contexts/EventsContext";
 
 const Home = () => {
   const { events, setEvents, fetchEvents, loading, error } = useEvents();
@@ -15,10 +17,10 @@ const Home = () => {
   const date = searchParams.get("date");
   const sortBy = searchParams.get("sortBy");
 
-  const navigate = useNavigate();
+  const handleEventClick = useHandleEventClick();
 
   useEffect(() => {
-    const params = {
+    const params: Record<string, string | null> = {
       category,
       date,
       sortBy,
@@ -26,15 +28,11 @@ const Home = () => {
     fetchEvents(params);
   }, [category, date, sortBy]);
 
-  function handleEventClick(id) {
-    navigate(`/user/events/${id}`);
-  }
-
   return (
     <div className="w-full min-h-screen bg-bgSecondary">
       {events &&
         events.length > 0 &&
-        events.map((event) => {
+        events.map((event: Event) => {
           return (
             <HomeEventsCard
               event={event}

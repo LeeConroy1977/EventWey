@@ -3,6 +3,8 @@ import { useEvents } from "../contexts/EventsContext";
 import { useUser } from "../contexts/UserContext";
 import { useEffect } from "react";
 import HomeEventsCard from "../components/HomeEventsCard";
+import useHandleGroupClick from "../hooks/useHandleGroupClick";
+import useHandleEventClick from "../hooks/useHandleEventClick";
 
 const UserEvents = () => {
   const { user, userEvents, loading, error, getUserEvents } = useUser();
@@ -10,6 +12,8 @@ const UserEvents = () => {
   const category = searchParams.get("category");
   const date = searchParams.get("date");
   const sortBy = searchParams.get("sortBy");
+
+  const handleEventClick = useHandleEventClick();
 
   console.log("Search Params:", category, date, sortBy);
 
@@ -27,7 +31,13 @@ const UserEvents = () => {
       {userEvents &&
         userEvents.length > 0 &&
         userEvents.map((event) => {
-          return <HomeEventsCard event={event} key={event.id} />;
+          return (
+            <HomeEventsCard
+              event={event}
+              key={event.id}
+              handleClick={handleEventClick}
+            />
+          );
         })}
     </div>
   );

@@ -38,7 +38,7 @@ const NavBar: React.FC = () => {
                 <li className="cursor-pointer">Home</li>
               </NavLink>
               <NavLink
-                to="/profile"
+                to="/user/profile"
                 className={({ isActive }) =>
                   isActive
                     ? "font-semibold text-primary"
@@ -65,7 +65,7 @@ const NavBar: React.FC = () => {
                     : "font-semibold text-textPrimary"
                 }
               >
-                <li className="cursor-pointer">Notification</li>
+                <li className="cursor-pointer">Notifications</li>
               </NavLink>
             </>
           ) : (

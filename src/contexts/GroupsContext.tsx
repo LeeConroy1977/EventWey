@@ -1,6 +1,12 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import { fetchAllGroups } from "../../utils/api";
 
+interface Location {
+  placename: string;
+  lng: number;
+  lat: number;
+}
+
 interface Group {
   id: number;
   name: string;
@@ -8,7 +14,7 @@ interface Group {
   groupAdmin: number;
   description: string[];
   openAccess: boolean;
-  location: string;
+  location: Location;
   creationDate: number;
   eventsCount: number;
   members: number[];
