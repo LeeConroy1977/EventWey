@@ -21,7 +21,7 @@ export interface Event {
   groupName: string;
   groupId: number;
   duration: string;
-  priceBands: PriceBand[];
+  priceBands: PriceBand;
   going: number;
   capacity: number;
   availability: number;
@@ -30,7 +30,7 @@ export interface Event {
   tags: string[];
   description: string[];
   attendeesId: number[];
-  location: Location[];
+  location: Location;
 }
 
 interface EventsContextType {
@@ -72,7 +72,6 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({ children }) => {
       setLoading(false);
     }
   };
-  console.log(events);
 
   return (
     <EventsContext.Provider

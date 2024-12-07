@@ -3,21 +3,9 @@ import { FaUserFriends } from "react-icons/fa";
 import { useUser } from "../contexts/UserContext";
 import Button from "../reuseable-components/Button";
 
-const EventGroupDetail = ({ eventGroup }) => {
+const EventGroupDetail = ({ eventGroup, handleClick }) => {
   const { user } = useUser();
-  const {
-    id,
-    name,
-    image,
-    description,
-    location,
-    eventsCount,
-    members,
-    events,
-    messages,
-    category,
-    openAccess,
-  } = eventGroup;
+  const { id, name, image, description, members, openAccess } = eventGroup;
 
   const isMember = user?.groups?.includes(id);
   const buttonText = isMember
@@ -27,7 +15,10 @@ const EventGroupDetail = ({ eventGroup }) => {
     : "Request Access";
 
   return (
-    <div className="w-[100%] h-[11rem] flex bg-bgPrimary  rounded-lg px-8 py-5">
+    <div
+      className="w-[100%] h-[11rem] flex bg-bgPrimary  rounded-lg px-8 py-5"
+      onClick={() => handleClick(id)}
+    >
       <img src={image} alt={name} className="w-[31%] h-[100%] rounded-lg" />
       <div className="w-[69%] h-[100%] flex flex-col pl-8 py-1">
         <div>

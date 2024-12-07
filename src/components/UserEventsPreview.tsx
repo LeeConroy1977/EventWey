@@ -6,14 +6,7 @@ import useHandleEventClick from "../hooks/useHandleEventClick";
 import { Event } from "../contexts/EventsContext";
 
 const UserEventsPreview = () => {
-  const {
-    userTotalEvents,
-    loading,
-    error,
-    getUserEvents,
-    userEvents,
-    getUserTotalEvents,
-  } = useUser();
+  const { userTotalEvents, getUserTotalEvents } = useUser();
   const navigate = useNavigate();
   const handleEventClick = useHandleEventClick();
 

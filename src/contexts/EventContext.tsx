@@ -26,7 +26,7 @@ interface Event {
   groupName: string;
   groupId: number;
   duration: string;
-  priceBands: PriceBand[];
+  priceBands: PriceBand;
   going: number;
   capacity: number;
   availability: number;
@@ -35,7 +35,7 @@ interface Event {
   tags: string[];
   description: string[];
   attendeesId: number[];
-  location: Location[];
+  location: Location;
 }
 
 interface Group {
@@ -45,7 +45,7 @@ interface Group {
   groupAdmin: number;
   description: string[];
   openAccess: boolean;
-  location: string;
+  location: Location;
   creationDate: number;
   eventsCount: number;
   members: number[];

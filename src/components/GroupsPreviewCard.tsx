@@ -1,24 +1,18 @@
 import { IoPerson } from "react-icons/io5";
+import useHandleGroupClick from "../hooks/useHandleGroupClick";
 
 const GroupsPreviewCard = ({ group }) => {
-  const {
-    id,
-    name,
-    image,
-    description,
-    location,
-    eventsCount,
-    members,
-    events,
-    messages,
-    category,
-    openAccess,
-  } = group;
+  const { id, name, image, description, members } = group;
+
+  const handleGroupClick = useHandleGroupClick();
 
   let filteredDesc = description[0];
   filteredDesc = filteredDesc.replaceAll("**", "");
   return (
-    <div className="w-[100%] h-[5.4rem] flex items-center rounded-lg cursor-pointer ">
+    <div
+      className="w-[100%] h-[5.4rem] flex items-center rounded-lg cursor-pointer"
+      onClick={() => handleGroupClick(id)}
+    >
       <img src={image} alt="" className="w-[34%] h-[84%] ml-2 rounded-lg" />
       <div className="w-[66%] h-[100%] p-2 pl-4 flex flex-col">
         <h3 className="text-[11px] text-textPrimary font-bold">{name}</h3>

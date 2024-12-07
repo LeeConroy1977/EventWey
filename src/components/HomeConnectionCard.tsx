@@ -22,7 +22,7 @@ const HomeConnectionCard = ({ connection }) => {
       <p className="mt-11 text-[14px] font-semibold text-textPrimary">
         {username}
       </p>
-      <p className="text-[10px] text-textTertiary p-4">{bio}</p>
+      <p className="text-[9px] text-textTertiary p-4">{bio}</p>
       <button className="w-[80%] py-1 flex justify-center items-center mt-auto mb-3 text-primary text-[10px] font-semibold border-2 border-primary rounded-lg bg-bgPrimary">
         Message
       </button>

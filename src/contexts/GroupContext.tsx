@@ -5,6 +5,7 @@ import {
   fetchGroupById,
   fetchGroupMembers,
   fetchGroupEventsById,
+  fetchAllUser,
 } from "../../utils/api";
 
 interface PriceBand {
@@ -26,7 +27,7 @@ interface Event {
   groupName: string;
   groupId: number;
   duration: string;
-  priceBands: PriceBand[];
+  priceBands: PriceBand;
   going: number;
   capacity: number;
   availability: number;
@@ -35,7 +36,7 @@ interface Event {
   tags: string[];
   description: string[];
   attendeesId: number[];
-  location: Location[];
+  location: Location;
 }
 
 interface Group {
@@ -45,7 +46,7 @@ interface Group {
   groupAdmin: number;
   description: string[];
   openAccess: boolean;
-  location: string;
+  location: Location;
   creationDate: number;
   eventsCount: number;
   members: number[];
@@ -79,6 +80,8 @@ interface GroupContextType {
   setGroupEvents: (events: Event[]) => void;
   groupMembers: User[];
   setGroupMembers: (users: User[]) => void;
+  groupOrganiser: User | null;
+  setGroupOrganiser: (user: User) => void;
   getGroupById: (id: number) => Promise<void>;
   getEventsById: (id: number) => Promise<void>;
   getGroupMembers: (id: number) => Promise<void>;
@@ -96,6 +99,8 @@ export const GroupProvider: React.FC<GroupProviderProps> = ({ children }) => {
   const [group, setGroup] = useState<Group | null>(null);
   const [groupEvents, setGroupEvents] = useState<Event[]>([]);
   const [groupMembers, setGroupMembers] = useState<User[]>([]);
+  const [groupOrganiser, setGroupOrganiser] = useState<User | null>(null);
+
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -104,7 +109,10 @@ export const GroupProvider: React.FC<GroupProviderProps> = ({ children }) => {
     setError(null);
     try {
       const data = await fetchGroupById(id);
+      const users = await fetchAllUser();
+      const organiser = users.find((user) => user.id === data?.groupAdmin);
       setGroup(data);
+      setGroupOrganiser(organiser);
     } catch (err: any) {
       setError(err.message || "Failed to fetch group");
     } finally {
@@ -149,6 +157,8 @@ export const GroupProvider: React.FC<GroupProviderProps> = ({ children }) => {
         getGroupById,
         getEventsById,
         getGroupMembers,
+        groupOrganiser,
+        setGroupOrganiser,
         error,
         loading,
       }}

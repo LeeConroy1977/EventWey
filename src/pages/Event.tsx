@@ -9,6 +9,7 @@ import EventConnectionsContainer from "../components/EventConnectionsContainer";
 import EventOptionsContainer from "../components/EventOptionsContainer";
 import EventLocation from "../components/EventMapContainer";
 import EventMapContainer from "../components/EventMapContainer";
+import useHandleGroupClick from "../hooks/useHandleGroupClick";
 
 const Event = () => {
   const { id } = useParams();
@@ -39,6 +40,8 @@ const Event = () => {
 
   const { lat, lng, placename } = location || {};
 
+  const handleGroupClick = useHandleGroupClick();
+
   useEffect(() => {
     if (id) {
       getEventById(Number(id));
@@ -55,7 +58,10 @@ const Event = () => {
           <main className="w-[76%] min-h-screen flex items-center justify-center bg-bgSecondary p-4 ">
             <section className="flex flex-col justify-start items-start w-[62%] h-[100%] p-4">
               {/* <img src={image} alt="" className="w-[100%] h-[24rem] rounded-lg" /> */}
-              <EventGroupDetail eventGroup={eventGroup} />
+              <EventGroupDetail
+                eventGroup={eventGroup}
+                handleClick={handleGroupClick}
+              />
               <EventDetail description={description} />
             </section>
             <section className="w-[38%] h-[100%] flex flex-col items-center justify-start p-4 pl-8">

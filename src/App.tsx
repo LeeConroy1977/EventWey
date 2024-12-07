@@ -13,6 +13,11 @@ import ConnectionRequests from "./pages/ConnectionRequests";
 import UserGroups from "./pages/UserGroups";
 import Event from "./pages/Event";
 import Group from "./pages/Group";
+import GroupLayout from "./layouts/GroupLayout";
+import GroupDetails from "./pages/GroupDetails";
+import GroupEvents from "./pages/GroupEvents";
+import GroupMembers from "./pages/GroupMembers";
+import GroupChat from "./pages/GroupChat";
 
 function App() {
   return (
@@ -23,9 +28,16 @@ function App() {
           <Route index element={<LandingPage />} />
           <Route path="user/profile" element={<Profile />} />
           <Route path="user/events/:id" element={<Event />} />
-          <Route path="user/groups/:id" element={<Group />} />
           <Route path="user/messages" element={<Messages />} />
           <Route path="user/notifications" element={<Notifications />} />
+
+          <Route path="/user/groups/:id" element={<GroupLayout />}>
+            <Route index element={<Navigate to="details" replace />} />
+            <Route path="details" element={<GroupDetails />} />
+            <Route path="events" element={<GroupEvents />} />
+            <Route path="members" element={<GroupMembers />} />
+            <Route path="chat" element={<GroupChat />} />
+          </Route>
 
           <Route path="user" element={<UserLayout />}>
             <Route index element={<Navigate to="events" replace />} />
