@@ -2,9 +2,9 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 
 import { useUser } from "./UserContext";
 import {
-  fetchEventById,
-  fetchEventConnections,
-  fetchEventGroupById,
+  fetchGroupById,
+  fetchGroupMembers,
+  fetchGroupEventsById,
 } from "../../utils/api";
 
 interface PriceBand {
@@ -72,93 +72,96 @@ interface User {
   showConnections: "public" | "private";
 }
 
-interface EventContextType {
-  event: Event | null;
-  setEvent: (event: Event) => void;
-  eventGroup: Group | null;
-  setEventGroup: (group: Group) => void;
-  eventConnections: User | null;
-  setEventConnections: (user: User) => void;
-  getEventById: (id: number) => Promise<void>;
+interface GroupContextType {
+  group: Group | null;
+  setGroup: (group: Group) => void;
+  groupEvents: Event[];
+  setGroupEvents: (events: Event[]) => void;
+  groupMembers: User[];
+  setGroupMembers: (users: User[]) => void;
   getGroupById: (id: number) => Promise<void>;
-  getEventConnections: (id: number) => Promise<void>;
+  getEventsById: (id: number) => Promise<void>;
+  getGroupMembers: (id: number) => Promise<void>;
   loading: boolean;
   error: string | null;
 }
 
-interface EventProviderProps {
+interface GroupProviderProps {
   children: ReactNode;
 }
 
-const EventContext = createContext<EventContextType | null>(null);
+const GroupContext = createContext<GroupContextType | null>(null);
 
-export const EventProvider: React.FC<EventProviderProps> = ({ children }) => {
-  const [event, setEvent] = useState<Event | null>(null);
-  const [eventGroup, setEventGroup] = useState<Group | null>(null);
-  const [eventConnections, setEventConnections] = useState<User[]>([]);
+export const GroupProvider: React.FC<GroupProviderProps> = ({ children }) => {
+  const [group, setGroup] = useState<Group | null>(null);
+  const [groupEvents, setGroupEvents] = useState<Event[]>([]);
+  const [groupMembers, setGroupMembers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-
-  const getEventById = async (id: number) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await fetchEventById(id);
-      setEvent(data);
-    } catch (err: any) {
-      setError(err.message || "Failed to fetch event");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const getGroupById = async (id: number) => {
     setLoading(true);
     setError(null);
     try {
-      const data = await fetchEventGroupById(id);
-      setEventGroup(data);
+      const data = await fetchGroupById(id);
+      setGroup(data);
     } catch (err: any) {
       setError(err.message || "Failed to fetch group");
     } finally {
       setLoading(false);
     }
   };
-  const getEventConnections = async (id: number) => {
+
+  const getEventsById = async (id: number) => {
     setLoading(true);
     setError(null);
     try {
-      const data = await fetchEventConnections(id);
-      setEventConnections(data);
+      const data = await fetchGroupEventsById(id);
+      setGroupEvents(data);
     } catch (err: any) {
-      setError(err.message || "Failed to fetch connections");
+      setError(err.message || "Failed to fetch group events");
+    } finally {
+      setLoading(false);
+    }
+  };
+  const getGroupMembers = async (id: number) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await fetchGroupMembers(id);
+      setGroupMembers(data);
+    } catch (err: any) {
+      setError(err.message || "Failed to fetch group members");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <EventContext.Provider
+    <GroupContext.Provider
       value={{
-        event,
-        eventGroup,
-        eventConnections,
-        getEventById,
+        group,
+        setGroup,
+        groupEvents,
+        setGroupEvents,
+        groupMembers,
+        setGroupMembers,
         getGroupById,
-        getEventConnections,
+        getEventsById,
+        getGroupMembers,
         error,
         loading,
       }}
     >
       {children}
-    </EventContext.Provider>
+    </GroupContext.Provider>
   );
 };
 
-export const useEvent = (): EventContextType => {
-  const context = useContext(EventContext);
+export const useGroup = (): GroupContextType => {
+  const context = useContext(GroupContext);
   if (!context) {
-    throw new Error("useEvent must be used within a EventProvider");
+    throw new Error("useGroup must be used within a GroupProvider");
   }
   return context;
 };
