@@ -20,7 +20,7 @@ function App() {
         <Route path="/" element={<AppLayout />}>
           {/* <Route path="events" element={<Events />} /> */}
           <Route index element={<LandingPage />} />
-          <Route path="profile" element={<Profile />} />
+          <Route path="user/profile" element={<Profile />} />
           <Route path="user/events/:id" element={<Event />} />
           <Route path="user/messages" element={<Messages />} />
           <Route path="user/notifications" element={<Notifications />} />

@@ -4,11 +4,12 @@ import UserConnectionsPreview from "../components/UserConnectionPreview";
 import UserEventsPreview from "../components/UserEventsPreview";
 import UserGroupsPreview from "../components/UserGroupsPreview";
 import UserWrapper from "../components/UserWrapper";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 const UserLayout: React.FC = () => {
   // const location = useLocation();
   // const isHomePage = location.pathname === "/user/home";
+
   return (
     <div className="w-full min-h-screen flex flex-col items-center bg-bgSecondary">
       <UserWrapper />

@@ -1,21 +1,19 @@
 import { format } from "date-fns";
 
-interface Event {
-  date: string;
-  title: string;
-  groupName: string;
-}
-
 interface EventsPreviewCardProps {
   event: Event;
+  handleClick: () => void;
 }
 
-const EventsPreviewCard: React.FC<EventsPreviewCardProps> = ({ event }) => {
-  const { date, title, groupName } = event;
+const EventsPreviewCard: React.FC<EventsPreviewCardProps> = ({
+  event,
+  handleClick,
+}) => {
+  const { id, date, title, groupName } = event;
 
   const formattedDate = format(new Date(date), "EEE, MMM d, yyyy");
   return (
-    <div>
+    <div onClick={() => handleClick(id)}>
       <p className="text-[12px] text-textPrimary font-medium ml-3 mb-1">
         {formattedDate}
       </p>
