@@ -21,6 +21,7 @@ interface Event {
   availability: number;
   free: boolean;
   priceBands: PriceBand;
+  startTime: string;
 }
 
 interface HomeEventsCardProps {
@@ -45,6 +46,7 @@ const HomeEventsCard: React.FC<HomeEventsCardProps> = ({
     availability,
     free,
     priceBands,
+    startTime,
   } = event;
 
   const formattedDate = format(new Date(date), "EEE, MMM d, yyyy");
@@ -52,7 +54,6 @@ const HomeEventsCard: React.FC<HomeEventsCardProps> = ({
   const isAttending = user?.userEvents?.includes(id);
 
   let filteredDescription = description[0];
-  filteredDescription = filteredDescription.replaceAll("**", "");
 
   function getPriceRange(priceArr: PriceBand[]): string {
     if (free) return "Free";

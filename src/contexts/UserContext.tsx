@@ -102,7 +102,7 @@ interface UserProviderProps {
 }
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(defaultUser);
+  const [user, setUser] = useState<User | null>(null);
   const [userEvents, setUserEvents] = useState<Event[]>([]);
   const [userTotalEvents, setUserTotalEvents] = useState<Event[]>([]);
   const [userGroups, setUserGroups] = useState<Group[]>([]);
