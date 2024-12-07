@@ -35,32 +35,38 @@ const Event = () => {
     priceBands,
     tags,
     location,
-  } = event;
+  } = event || {};
 
   const { lat, lng, placename } = location || {};
 
   useEffect(() => {
-    getEventById(Number(id));
-    getGroupById(Number(id));
-    getEventConnections(Number(id));
-  }, [id]);
+    if (id) {
+      getEventById(Number(id));
+      getGroupById(Number(id));
+      getEventConnections(Number(id));
+    }
+  }, [id, getEventById, getGroupById, getEventConnections]);
 
   return (
     <div className="w-[100%] h-[100%] flex flex-col items-center justify-start bg-bgSecondary ">
-      <EventWrapper event={event} />
-      <main className="w-[76%] min-h-screen flex items-center justify-center bg-bgSecondary p-4 ">
-        <section className="flex flex-col justify-start items-start w-[62%] h-[100%] p-4">
-          {/* <img src={image} alt="" className="w-[100%] h-[24rem] rounded-lg" /> */}
-          <EventGroupDetail eventGroup={eventGroup} />
-          <EventDetail description={description} />
-        </section>
-        <section className="w-[38%] h-[100%] flex flex-col items-center justify-start p-4 pl-8">
-          <EventOptionsContainer />
-          <EventMapContainer lat={lat} lng={lng} placename={placename} />
-          {/* <EventTags tags={tags} /> */}
-          <EventConnectionsContainer eventConnections={eventConnections} />
-        </section>
-      </main>
+      {event && (
+        <>
+          <EventWrapper event={event} />
+          <main className="w-[76%] min-h-screen flex items-center justify-center bg-bgSecondary p-4 ">
+            <section className="flex flex-col justify-start items-start w-[62%] h-[100%] p-4">
+              {/* <img src={image} alt="" className="w-[100%] h-[24rem] rounded-lg" /> */}
+              <EventGroupDetail eventGroup={eventGroup} />
+              <EventDetail description={description} />
+            </section>
+            <section className="w-[38%] h-[100%] flex flex-col items-center justify-start p-4 pl-8">
+              <EventOptionsContainer />
+              <EventMapContainer lat={lat} lng={lng} placename={placename} />
+              {/* <EventTags tags={tags} /> */}
+              <EventConnectionsContainer eventConnections={eventConnections} />
+            </section>
+          </main>
+        </>
+      )}
     </div>
   );
 };

@@ -12,6 +12,7 @@ import UserConnection from "./pages/UserConnection";
 import ConnectionRequests from "./pages/ConnectionRequests";
 import UserGroups from "./pages/UserGroups";
 import Event from "./pages/Event";
+import Group from "./pages/Group";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route index element={<LandingPage />} />
           <Route path="user/profile" element={<Profile />} />
           <Route path="user/events/:id" element={<Event />} />
+          <Route path="user/groups/:id" element={<Group />} />
           <Route path="user/messages" element={<Messages />} />
           <Route path="user/notifications" element={<Notifications />} />
 
