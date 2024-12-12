@@ -13,7 +13,7 @@ const NavBar: React.FC = () => {
     location.pathname.startsWith("/user/notifications");
 
   return (
-    <nav className="fixed top-0 left-0 w-[100%] h-[4rem] flex items-center justify-between bg-bgPrimary border-b-2 border-gray-100 z-20">
+    <nav className="fixed top-0 left-0 w-[100%] h-[4.6rem] flex items-center justify-between bg-bgPrimary border-b-2 border-gray-100 z-20">
       <NavLink to="/">
         <div className="text-[22px] font-bold ml-12 text-secondary">
           EventWey

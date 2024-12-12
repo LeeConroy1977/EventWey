@@ -22,7 +22,7 @@ const GroupDetails = () => {
       {group && (
         <>
           <h3 className="text-[1rem] font-bold text-textPrimary">
-            Event Details
+            Group Details
           </h3>
           {description &&
             description.map((paragraph, i) => {

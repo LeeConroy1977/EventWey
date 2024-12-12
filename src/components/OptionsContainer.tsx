@@ -8,9 +8,11 @@ import {
 } from "../../data/options";
 import { NavLink, useLocation, useSearchParams } from "react-router-dom";
 import ConnectionsOptions from "./ConnectionsOptions";
+import { useUser } from "../contexts/UserContext";
 
 const OptionsContainer: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { user } = useUser();
   const location = useLocation();
   const isConnectionsPage =
     location.pathname === "/user/my-connections" ||
@@ -76,12 +78,12 @@ const OptionsContainer: React.FC = () => {
 
   return (
     <div className="w-[100%] h-[65px] flex items-center justify-center bg-white border-t-2 border-b-2 border-gray-100 font-semibold">
-      <div className="w-[76%] h-[100%] ">
+      <div className="w-[66%] h-[100%] ">
         <div className="w-[100%] h-[100%] flex justify-between mr-auto ">
           <nav className="w-[50%] h-[100%] flex items-center ml-4 ">
             <ul className="w-[100%] flex items-center justify-start gap-10 text-[15px] ml-6">
               <NavLink
-                to="/user/events"
+                to={user ? "/user/events" : "/events"}
                 className={({ isActive }) =>
                   isActive
                     ? "font-semibold text-primary"
@@ -91,7 +93,7 @@ const OptionsContainer: React.FC = () => {
                 <li className="cursor-pointer">Events</li>
               </NavLink>
               <NavLink
-                to="/user/groups"
+                to={user ? "/user/groups" : "/groups"}
                 className={({ isActive }) =>
                   isActive
                     ? "font-semibold text-primary"
