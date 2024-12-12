@@ -34,13 +34,17 @@ export const eventsData = [
     title: "Outdoor Adventure Meetup",
     groupName: "Weymouth Adventure Group",
     groupId: 3,
-    duration: "6 hrs",
+    duration: { value: 180, unit: "minutes" },
+    displayDuration: "6 hrs",
     attendees: [1, 2, 4, 6, 8, 10, 12, 14, 16],
-    going: 9,
     capacity: 40,
     availability: 31,
+    eventType: "In-person",
     free: true,
-    priceBands: [],
+    priceBands: [
+      { type: "Standard", price: "£50", quantity: 71 },
+      { type: "VIP", price: "£80", quantity: 20 },
+    ],
     category: "outdoors",
     tags: ["Outdoor", "Adventure", "Hiking", "Exploration", "Nature"],
     description: [
@@ -50,9 +54,11 @@ export const eventsData = [
       "After our hike, we’ll take a break at a local pub in Portland Bill, reflecting on the adventure. Whether you’re looking to make new connections, appreciate nature, or simply enjoy an outdoor day, this hike offers a perfect opportunity for relaxation and new memories.",
     ],
     location: {
-      placename: "Weymouth Pavilion",
-      lng: -2.4516,
-      lat: 50.6135,
+      placename: "Weymouth Library",
+      address: "123 Library St, Weymouth",
+      city: "Weymouth",
+      lng: -2.4512,
+      lat: 50.6105,
     },
   },
   {
@@ -71,8 +77,8 @@ export const eventsData = [
     availability: 91,
     free: false,
     priceBands: [
-      { type: "Standard", price: "£50" },
-      { type: "VIP", price: "£80" },
+      { type: "Standard", price: "£50", quantity: 71 },
+      { type: "VIP", price: "£80", quantity: 20 },
     ],
     category: "arts",
     tags: [
@@ -90,9 +96,11 @@ export const eventsData = [
       "The conference will also provide a platform for networking with professionals from various sectors within the construction industry, fostering collaborations that could lead to groundbreaking projects. Whether you’re a seasoned architect, a student, or someone passionate about sustainable living, this event will inspire and equip you with the knowledge to contribute to a greener future.",
     ],
     location: {
-      placename: "Weymouth Pavilion",
-      lng: -2.4519,
-      lat: 50.6111,
+      placename: "Weymouth Library",
+      address: "123 Library St, Weymouth",
+      city: "Weymouth",
+      lng: -2.4512,
+      lat: 50.6105,
     },
   },
   {

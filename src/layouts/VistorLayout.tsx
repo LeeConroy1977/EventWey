@@ -1,24 +1,18 @@
 import EventsOptions from "../components/OptionsContainer";
-import UserConnectionPreview from "../components/UserConnectionPreview";
-import UserConnectionsPreview from "../components/UserConnectionPreview";
-import UserEventsPreview from "../components/UserEventsPreview";
-import UserGroupsPreview from "../components/UserGroupsPreview";
-import UserWrapper from "../components/UserWrapper";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import VistorWrapper from "../components/VistorWrapper";
+import VistorSignUpAdvert from "../components/VistorSignUpAdvert";
+import VistorCreateEventAdvert from "../components/VistorCreateEventAdvert";
 
-const UserLayout: React.FC = () => {
-  // const location = useLocation();
-  // const isHomePage = location.pathname === "/user/home";
-
+const VistorLayout: React.FC = () => {
   return (
     <div className="w-full min-h-screen flex flex-col items-center bg-bgSecondary mt-6">
-      <UserWrapper />
+      <VistorWrapper />
       <EventsOptions />
       <main className="w-[66%] min-h-screen flex items-center justify-center bg-bgSecondary">
         <section className="w-[34%] h-[100%] flex flex-col items-center justify-start p-4">
-          <UserEventsPreview />
-          <UserConnectionPreview />
-          <UserGroupsPreview />
+          <VistorSignUpAdvert />
+          <VistorCreateEventAdvert />
         </section>
         <section className="flex flex-col justify-start items-start w-[66%] h-[100%]">
           <Outlet />
@@ -28,4 +22,4 @@ const UserLayout: React.FC = () => {
   );
 };
 
-export default UserLayout;
+export default VistorLayout;

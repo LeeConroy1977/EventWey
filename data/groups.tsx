@@ -19,6 +19,7 @@ export const groupsData = [
     events: [1, 18],
     messages: [1, 2, 5],
     category: "technology",
+    tags: ["coding", "hardware", "AI"],
   },
   {
     id: 2,

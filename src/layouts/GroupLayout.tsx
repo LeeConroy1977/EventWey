@@ -35,7 +35,7 @@ const GroupLayout = () => {
       {group && (
         <>
           <GroupWrapper group={group} />
-          <main className="w-[76%] min-h-screen flex items-center justify-center bg-bgSecondary ">
+          <main className="w-[66%] min-h-screen flex items-center justify-center bg-bgSecondary ">
             <section className="flex flex-col justify-start items-start w-[66%] h-[100%] p-8 ">
               <GroupNav id={id} />
               <Outlet />

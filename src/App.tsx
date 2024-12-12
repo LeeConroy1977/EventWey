@@ -12,20 +12,23 @@ import UserConnection from "./pages/UserConnection";
 import ConnectionRequests from "./pages/ConnectionRequests";
 import UserGroups from "./pages/UserGroups";
 import Event from "./pages/Event";
-import Group from "./pages/Group";
 import GroupLayout from "./layouts/GroupLayout";
 import GroupDetails from "./pages/GroupDetails";
 import GroupEvents from "./pages/GroupEvents";
 import GroupMembers from "./pages/GroupMembers";
 import GroupChat from "./pages/GroupChat";
+import VistorLayout from "./layouts/VistorLayout";
 
 function App() {
   return (
     <div className="w-[100%] min-h-screen font-poppins">
       <Routes>
         <Route path="/" element={<AppLayout />}>
-          {/* <Route path="events" element={<Events />} /> */}
           <Route index element={<LandingPage />} />
+          <Route path="/" element={<VistorLayout />}>
+            <Route path="events" element={<Events />} />
+            <Route path="groups" element={<Groups />} />
+          </Route>
           <Route path="user/profile" element={<Profile />} />
           <Route path="user/events/:id" element={<Event />} />
           <Route path="user/messages" element={<Messages />} />

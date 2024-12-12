@@ -12,17 +12,27 @@ interface Event {
 interface EventDisplayContainerProps {
   title: string;
   sortBy: string;
+  listName: string;
+  handleClick: () => void;
 }
 
 const EventDisplayContainer: React.FC<EventDisplayContainerProps> = ({
   title,
   sortBy,
+  listName,
+  handleClick,
 }) => {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   const handleEventClick = useHandleEventClick();
+
+  const handleSelect = (sortBy: string) => {
+    handleClick({
+      target: { value: sortBy },
+    } as React.ChangeEvent<HTMLSelectElement>);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -48,8 +58,11 @@ const EventDisplayContainer: React.FC<EventDisplayContainerProps> = ({
         <>
           <div className="flex flex-row justify-between items-center">
             <h3 className="text-[20px] text-textPrimary font-bold">{title}</h3>
-            <p className="text-[14px] text-primary font-semibold cursor-pointer">
-              See all events
+            <p
+              className="text-[14px] text-primary font-semibold cursor-pointer"
+              onClick={() => handleSelect(sortBy)}
+            >
+              {`See all ${listName} events`}
             </p>
           </div>
           <div className="w-[100%] flex justify-between mt-4">
