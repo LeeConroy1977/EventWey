@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import AppLayout from "./layouts/AppLayout";
 import LandingPage from "./pages/LandingPage";
 import UserLayout from "./layouts/UserLayout";
-import Profile from "./pages/Profile";
+import Profile from "./routes/profile/Profile";
 import Messages from "./pages/Messages";
 import Notifications from "./pages/Notifications";
 import Events from "./pages/Events";
@@ -22,6 +22,11 @@ import ConnectionLayout from "./layouts/connection-layout/ConnectionLayout";
 import ConnectionEvents from "./routes/connection-events/ConnectionEvents";
 import ConnectionGroups from "./routes/connection-groups/ConnectionGroups";
 import ConnectionConnections from "./routes/connection-connections/ConnectionConnections";
+import ProfileLayout from "./layouts/profile-layout/ProfileLayout";
+import ProfileEvents from "./routes/user-profile-events/ProfileEvents";
+import ProfileGroups from "./routes/user-profile-groups/ProfileGroups";
+import ProfileConnections from "./routes/user-profile-connections/ProfileConnections";
+import ProfileSettings from "./routes/user-profile-settings/ProfileSettings";
 
 function App() {
   return (
@@ -48,7 +53,13 @@ function App() {
             />
           </Route>
 
-          <Route path="user/profile" element={<Profile />} />
+          <Route path="user/profile" element={<ProfileLayout />}>
+            <Route index element={<Navigate to="events" replace />} />
+            <Route path="events" element={<ProfileEvents />} />
+            <Route path="groups" element={<ProfileGroups />} />
+            <Route path="connections" element={<ProfileConnections />} />
+            <Route path="settings" element={<ProfileSettings />} />
+          </Route>
           <Route path="user/events/:id" element={<Event />} />
           <Route path="user/messages" element={<Messages />} />
           <Route path="user/notifications" element={<Notifications />} />

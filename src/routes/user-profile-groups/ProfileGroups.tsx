@@ -1,25 +1,25 @@
 import HomeGroupsCard from "../../components/HomeGroupsCard";
-import { useConnection } from "../../contexts/ConnectionContext";
+import { useConnections } from "../../contexts/ConnectionsContext";
+import { useUser } from "../../contexts/UserContext";
 import useHandleGroupClick from "../../hooks/useHandleGroupClick";
 
-const ConnectionGroups = () => {
-  const { connection, connectionGroups } = useConnection();
+const ProfileGroups = () => {
+  const { userGroups } = useUser();
   const handleGroupClick = useHandleGroupClick();
 
-  const groupsLength = connectionGroups?.length;
+  const groupsLength = userGroups?.length;
 
-  const firstName = connection?.username.split(" ")[0];
   return (
     <div className="w-[100%] min-h-[8rem] bg-bgPrimary mt-8 rounded-lg p-10 pb-10">
-      {connectionGroups && (
+      {userGroups && (
         <>
           <h3 className="font-bold text-textPrimary text-[1rem] mb-8">
-            {`${firstName}'s Groups`} (
+            {`Your Groups`} (
             <span className="text-primary">{groupsLength || 0}</span>)
           </h3>
           <div className="flex flex-row items-start justify-start gap-3 flex-wrap ">
-            {connectionGroups?.length > 0 ? (
-              connectionGroups?.map((group, i) => {
+            {userGroups?.length > 0 ? (
+              userGroups?.map((group, i) => {
                 return (
                   <HomeGroupsCard
                     group={group}
@@ -38,4 +38,4 @@ const ConnectionGroups = () => {
   );
 };
 
-export default ConnectionGroups;
+export default ProfileGroups;
