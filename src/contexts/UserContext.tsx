@@ -8,6 +8,7 @@ interface User {
   profileBackgroundImage: string;
   profileImage: string;
   bio: string;
+  aboutMe: string;
   tags: string[];
   connections: number[];
   groups: number[];
@@ -73,6 +74,7 @@ interface UserContextType {
   loading: boolean;
   error: string | null;
   getUserEvents: () => void;
+  getUserGroups: () => void;
 }
 
 const defaultUser: User = {
@@ -82,6 +84,8 @@ const defaultUser: User = {
   profileBackgroundImage: "https://picsum.photos/800/600?random=3",
   profileImage: "https://randomuser.me/api/portraits/men/3.jpg",
   bio: "Avid traveler, foodie and animal lover",
+  aboutMe:
+    "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
   tags: ["Gourmet Food Tours", "Animal Rescue", "Wanderlust Adventures"],
   connections: [
     2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,

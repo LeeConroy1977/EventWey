@@ -13,7 +13,7 @@ const HomeGroupsCard = ({ group, handleClick }) => {
 
   return (
     <div
-      className="relative flex items-center w-[100%] h-[220px] bg-white p-4 border-gray-300 rounded-lg mt-4 cursor-pointer"
+      className="relative flex items-center w-[100%] h-[220px] bg-white p-4 border-[1px] border-gray-200 rounded-lg mt-4 cursor-pointer"
       onClick={() => handleClick(id)}
     >
       <img src={image} alt="" className="w-[40%] h-[90%] ml-2 rounded-lg" />
