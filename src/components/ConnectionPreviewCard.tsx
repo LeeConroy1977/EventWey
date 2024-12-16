@@ -1,7 +1,10 @@
-const ConnectionPreviewCard = ({ connection }) => {
-  const { profileBackgroundImage, profileImage, username } = connection;
+const ConnectionPreviewCard = ({ connection, handleClick }) => {
+  const { id, profileBackgroundImage, profileImage, username } = connection;
   return (
-    <div className="w-[30%] h-[170px] bg-bgSecondary rounded-lg flex flex-col items-center justify-start cursor-pointer mt-1 border-[1px] border-gray-200 ">
+    <div
+      className="w-[30%] h-[170px] bg-bgSecondary rounded-lg flex flex-col items-center justify-start cursor-pointer mt-1 border-[1px] border-gray-200 "
+      onClick={() => handleClick(id)}
+    >
       <div
         className="relative w-[100%] h-[30%]  flex items-center justify-center
       "

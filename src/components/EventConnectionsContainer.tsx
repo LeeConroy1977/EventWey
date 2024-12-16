@@ -1,7 +1,10 @@
+import useHandleConnectionClick from "../hooks/useHandleConnectionClick";
 import ConnectionPreviewCard from "./ConnectionPreviewCard";
 import HomeConnectionCard from "./HomeConnectionCard";
 
 const EventConnectionsContainer = ({ eventConnections }) => {
+  const handleConnectionClick = useHandleConnectionClick();
+
   const connectionPreview = [...eventConnections].slice(0, 9);
 
   const connectionsLength = eventConnections.length;
@@ -22,7 +25,13 @@ const EventConnectionsContainer = ({ eventConnections }) => {
       <div className="flex items-start justify-start flex-wrap mt-6 gap-3">
         {connectionPreview.length > 0 &&
           connectionPreview.map((connection, i) => {
-            return <ConnectionPreviewCard connection={connection} key={i} />;
+            return (
+              <ConnectionPreviewCard
+                connection={connection}
+                key={i}
+                handleClick={handleConnectionClick}
+              />
+            );
           })}
       </div>
     </div>

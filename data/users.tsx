@@ -6,6 +6,8 @@ export const usersData = [
     profileBackgroundImage: "https://picsum.photos/800/600?random=1",
     profileImage: "https://randomuser.me/api/portraits/men/1.jpg",
     bio: "Enjoy watching bands, hiking and real ale",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     tags: ["Live Music", "Hiking Trails", "Craft Beer"],
     connections: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 25],
     groups: [1, 3, 4],
@@ -22,6 +24,8 @@ export const usersData = [
     username: "John D",
     profileBackgroundImage: "https://picsum.photos/800/600?random=2",
     profileImage: "https://randomuser.me/api/portraits/women/2.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Love movies, music festivals and exploring new cultures",
     tags: ["Cultural Travel", "Film Screenings", "Outdoor Festivals"],
     connections: [1, 3, 4, 5, 6, 7, 9, 10],
@@ -39,6 +43,8 @@ export const usersData = [
     username: "Freddie J",
     profileBackgroundImage: "https://picsum.photos/800/600?random=3",
     profileImage: "https://randomuser.me/api/portraits/men/3.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Avid traveler, foodie and animal lover",
     tags: ["Gourmet Food Tours", "Animal Rescue", "Wanderlust Adventures"],
     connections: [
@@ -58,6 +64,8 @@ export const usersData = [
     username: "Michael T",
     profileBackgroundImage: "https://picsum.photos/800/600?random=4",
     profileImage: "https://randomuser.me/api/portraits/women/4.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Tech enthusiast and nature lover",
     tags: ["Nature Photography", "Mindfulness Retreats", "Yoga Workshops"],
     connections: [1, 2, 5, 7, 8, 9],
@@ -75,6 +83,8 @@ export const usersData = [
     username: "Lucas R",
     profileBackgroundImage: "https://picsum.photos/800/600?random=5",
     profileImage: "https://randomuser.me/api/portraits/men/5.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Outdoor adventure seeker, photography enthusiast",
     tags: ["Board Game Nights", "Historical Reenactments", "Trivia Quizzes"],
     connections: [1, 2, 3, 5, 7, 9, 10, 13],
@@ -92,6 +102,8 @@ export const usersData = [
     username: "Mia F",
     profileBackgroundImage: "https://picsum.photos/800/600?random=6",
     profileImage: "https://randomuser.me/api/portraits/women/6.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Lover of all things creative and tech. Exploring the future of digital art.",
     tags: ["Outdoor Concerts", "Mountain Biking", "Songwriting Circles"],
     connections: [2, 4, 5, 7, 10, 11, 13, 15, 16, 17, 18],
@@ -109,6 +121,8 @@ export const usersData = [
     username: "Lucy H",
     profileBackgroundImage: "https://picsum.photos/800/600?random=7",
     profileImage: "https://randomuser.me/api/portraits/men/7.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Passionate about fitness, yoga, and mental health. Dedicated to self-care.",
     tags: ["Esports Competitions", "Personal Training", "VR Gaming"],
     connections: [1, 2, 3, 4, 6, 9, 10, 13, 14],
@@ -126,6 +140,8 @@ export const usersData = [
     username: "Harry K",
     profileBackgroundImage: "https://picsum.photos/800/600?random=8",
     profileImage: "https://randomuser.me/api/portraits/women/8.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Traveler, foodie, and part-time photographer. Always looking for the next adventure.",
     tags: ["Baking Classes", "DIY Workshops", "Creative Arts"],
     connections: [1, 5, 7, 8, 10, 11, 12, 14, 16],
@@ -143,6 +159,8 @@ export const usersData = [
     username: "Olivia J",
     profileBackgroundImage: "https://picsum.photos/800/600?random=9",
     profileImage: "https://randomuser.me/api/portraits/men/9.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Passionate about writing and community building. Lover of books and animals.",
     tags: ["Tech Meetups", "Creative Writing", "Sci-Fi Screenings"],
     connections: [2, 4, 6, 8, 9, 10, 12, 13, 15],
@@ -160,6 +178,8 @@ export const usersData = [
     username: "Sophie L",
     profileBackgroundImage: "https://picsum.photos/800/600?random=10",
     profileImage: "https://randomuser.me/api/portraits/women/10.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "A true foodie and wine lover. Passionate about exploring local restaurants and culinary experiences.",
     tags: ["Book Clubs", "Community Projects", "Public Speaking"],
     connections: [1, 5, 7, 9, 10, 11, 12, 15, 17],
@@ -177,6 +197,8 @@ export const usersData = [
     username: "Jack M",
     profileBackgroundImage: "https://picsum.photos/800/600?random=11",
     profileImage: "https://randomuser.me/api/portraits/men/11.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Lover of all things tech, startup enthusiast, and innovator at heart.",
     tags: ["Food Tastings", "Travel Journals", "Photography"],
     connections: [2, 4, 5, 7, 8, 9, 11, 13, 14],
@@ -194,6 +216,8 @@ export const usersData = [
     username: "Dan W",
     profileBackgroundImage: "https://picsum.photos/800/600?random=12",
     profileImage: "https://randomuser.me/api/portraits/women/12.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Music producer and live performer. Passionate about creating new sounds.",
     tags: [
       "Gardening",
@@ -217,6 +241,8 @@ export const usersData = [
     username: "Lily T",
     profileBackgroundImage: "https://picsum.photos/800/600?random=13",
     profileImage: "https://randomuser.me/api/portraits/men/13.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Digital strategist, coffee enthusiast, and champion of positive change in the workplace.",
     tags: [
       "Painting Workshops",
@@ -240,6 +266,8 @@ export const usersData = [
     username: "Tom D",
     profileBackgroundImage: "https://picsum.photos/800/600?random=14",
     profileImage: "https://randomuser.me/api/portraits/women/14.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Passionate about fashion, sustainability, and ethical production practices.",
     tags: [
       "Astronomy Clubs",
@@ -263,6 +291,8 @@ export const usersData = [
     username: "Mia R",
     profileBackgroundImage: "https://picsum.photos/800/600?random=15",
     profileImage: "https://randomuser.me/api/portraits/men/15.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Adventurer at heart. Hiking the world, one mountain at a time.",
     tags: [
       "Coding Bootcamps",
@@ -286,6 +316,8 @@ export const usersData = [
     username: "Oliver S",
     profileBackgroundImage: "https://picsum.photos/800/600?random=16",
     profileImage: "https://randomuser.me/api/portraits/women/16.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Web developer with a love for all things digital. Creating innovative online experiences.",
     tags: [
       "Salsa Dancing",
@@ -309,6 +341,8 @@ export const usersData = [
     username: "Eva C",
     profileBackgroundImage: "https://picsum.photos/800/600?random=17",
     profileImage: "https://randomuser.me/api/portraits/men/17.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Graphic designer who loves crafting visual stories and exploring new design trends.",
     tags: [
       "Animal Rescue",
@@ -332,6 +366,8 @@ export const usersData = [
     username: "Jake P",
     profileBackgroundImage: "https://picsum.photos/800/600?random=18",
     profileImage: "https://randomuser.me/api/portraits/women/18.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Engineer by profession, artist by passion. Exploring the intersection of technology and creativity.",
     tags: [
       "Movie Nights",
@@ -355,6 +391,8 @@ export const usersData = [
     username: "Lucas E",
     profileBackgroundImage: "https://picsum.photos/800/600?random=19",
     profileImage: "https://randomuser.me/api/portraits/men/19.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Photographer and videographer. Capturing the world one frame at a time.",
     tags: [
       "DIY Woodworking",
@@ -378,6 +416,8 @@ export const usersData = [
     username: "Harry W",
     profileBackgroundImage: "https://picsum.photos/800/600?random=20",
     profileImage: "https://randomuser.me/api/portraits/women/20.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Passionate about tech, AI, and innovation. Always looking to learn and grow.",
     tags: [
       "Virtual Reality",
@@ -401,6 +441,8 @@ export const usersData = [
     username: "Sophia L",
     profileBackgroundImage: "https://picsum.photos/800/600?random=21",
     profileImage: "https://randomuser.me/api/portraits/men/21.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Fitness fanatic and health advocate. Always pushing my limits.",
     tags: [
       "Chess Tournaments",
@@ -424,6 +466,8 @@ export const usersData = [
     username: "James K",
     profileBackgroundImage: "https://picsum.photos/800/600?random=22",
     profileImage: "https://randomuser.me/api/portraits/women/22.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Architect, innovator, and lover of modern design.",
     tags: [
       "Fitness Retreats",
@@ -447,6 +491,8 @@ export const usersData = [
     username: "Chloe B",
     profileBackgroundImage: "https://picsum.photos/800/600?random=23",
     profileImage: "https://randomuser.me/api/portraits/men/23.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Blogger, digital content creator, and social media enthusiast.",
     tags: [
       "Language Exchanges",
@@ -470,6 +516,8 @@ export const usersData = [
     username: "Ryan M",
     profileBackgroundImage: "https://picsum.photos/800/600?random=24",
     profileImage: "https://randomuser.me/api/portraits/women/24.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Love tech startups and innovation. Trying to make a difference in the world.",
     tags: [
       "Photography",
@@ -493,6 +541,8 @@ export const usersData = [
     username: "Mia P",
     profileBackgroundImage: "https://picsum.photos/800/600?random=25",
     profileImage: "https://randomuser.me/api/portraits/men/25.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Travel junkie and foodie. Always looking for new experiences.",
     tags: [
       "Hiking Trails",
@@ -516,6 +566,8 @@ export const usersData = [
     username: "Olivia F",
     profileBackgroundImage: "https://picsum.photos/800/600?random=26",
     profileImage: "https://randomuser.me/api/portraits/women/26.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Yoga instructor, mindfulness enthusiast, and wellness advocate.",
     tags: [
       "Gaming Meetups",
@@ -539,6 +591,8 @@ export const usersData = [
     username: "Daniel T",
     profileBackgroundImage: "https://picsum.photos/800/600?random=27",
     profileImage: "https://randomuser.me/api/portraits/men/27.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Chef, lover of fine food, and passionate about new recipes.",
     tags: [
       "Cooking Classes",
@@ -562,6 +616,8 @@ export const usersData = [
     username: "Jack G",
     profileBackgroundImage: "https://picsum.photos/800/600?random=28",
     profileImage: "https://randomuser.me/api/portraits/women/28.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Outdoor enthusiast, hiker, and camper. Enjoys exploring nature.",
     tags: [
       "Entrepreneurship",
@@ -585,6 +641,8 @@ export const usersData = [
     username: "Lucas S",
     profileBackgroundImage: "https://picsum.photos/800/600?random=29",
     profileImage: "https://randomuser.me/api/portraits/men/29.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Sports enthusiast and aspiring fitness coach. Always looking to challenge myself.",
     tags: [
       "Music Festivals",
@@ -608,6 +666,8 @@ export const usersData = [
     username: "Zoe W",
     profileBackgroundImage: "https://picsum.photos/800/600?random=30",
     profileImage: "https://randomuser.me/api/portraits/women/30.jpg",
+    aboutMe:
+      "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
     bio: "Traveler, writer, and photographer. Passionate about capturing the world around me.",
     tags: [
       "Mindfulness Retreats",

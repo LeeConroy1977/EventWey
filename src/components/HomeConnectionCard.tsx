@@ -1,9 +1,13 @@
 import React from "react";
 
-const HomeConnectionCard = ({ connection }) => {
-  const { profileBackgroundImage, profileImage, username, bio } = connection;
+const HomeConnectionCard = ({ connection, handleClick }) => {
+  const { id, profileBackgroundImage, profileImage, username, bio } =
+    connection;
   return (
-    <div className="w-[22%] h-[260px] bg-bgPrimary rounded-lg flex flex-col items-center justify-start cursor-pointer mt-1 border-[1px] border-gray-200 ">
+    <div
+      className="w-[22%] h-[260px] bg-bgPrimary rounded-lg flex flex-col items-center justify-start cursor-pointer mt-1 border-[1px] border-gray-200 "
+      onClick={() => handleClick(id)}
+    >
       <div
         className="relative w-[100%] h-[28%]  flex items-center justify-center
       "
