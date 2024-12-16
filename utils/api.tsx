@@ -51,6 +51,12 @@ export const fetchGroupById = (id) => {
   return Promise.resolve(group);
 };
 
+export const fetchConnectionById = (id) => {
+  const connection = usersData.find((user) => user.id === id);
+
+  return Promise.resolve(connection);
+};
+
 export const fetchEventGroupById = async (id) => {
   const event = await fetchEventById(id);
   const group = await fetchGroupById(event?.groupId);
@@ -139,4 +145,37 @@ export const fetchUserConnection = async (id: number): Promise<any[]> => {
 export const fetchSortedEvents = async (sortBy: string): Promise<any[]> => {
   const events = await fetchAllEvents({ sortBy });
   return events;
+};
+
+export const fetchConnectionEvents = async (id) => {
+  const connection = await fetchConnectionById(id);
+  const events = await fetchAllEvents({});
+
+  const connectionEvents = events.filter((event) =>
+    connection?.connections.includes(event.id)
+  );
+
+  return connectionEvents;
+};
+
+export const fetchConnectionGroups = async (id) => {
+  const connection = await fetchConnectionById(id);
+  const groups = await fetchAllGroups({});
+
+  const connectionGroups = groups.filter((group) =>
+    connection?.groups.includes(group.id)
+  );
+
+  return connectionGroups;
+};
+
+export const fetchConnectionConnections = async (id) => {
+  const connection = await fetchConnectionById(id);
+  const users = await fetchAllUser();
+
+  const connectionConnections = users.filter((user) =>
+    connection?.connections.includes(user.id)
+  );
+
+  return connectionConnections;
 };

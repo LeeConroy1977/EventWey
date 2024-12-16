@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useConnections } from "../contexts/ConnectionsContext";
 import HomeConnectionCard from "../components/HomeConnectionCard";
+import useHandleConnectionClick from "../hooks/useHandleConnectionClick";
 
 const UserConnection = () => {
   const {
@@ -12,6 +13,8 @@ const UserConnection = () => {
     filteredConnections,
   } = useConnections();
 
+  const handleConnectionClick = useHandleConnectionClick();
+
   useEffect(() => {
     getAllConnections();
   }, []);
@@ -22,7 +25,11 @@ const UserConnection = () => {
         filteredConnections.length > 0 &&
         filteredConnections.map((connection) => {
           return (
-            <HomeConnectionCard connection={connection} key={connection.id} />
+            <HomeConnectionCard
+              connection={connection}
+              key={connection.id}
+              handleClick={handleConnectionClick}
+            />
           );
         })}
     </div>

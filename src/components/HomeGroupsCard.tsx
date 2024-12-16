@@ -2,11 +2,9 @@ import { IoPerson } from "react-icons/io5";
 import { useUser } from "../contexts/UserContext";
 import useHandleGroupClick from "../hooks/useHandleGroupClick";
 
-const HomeGroupsCard = ({ group }) => {
+const HomeGroupsCard = ({ group, handleClick }) => {
   const { user } = useUser();
   const { id, name, image, description, members, openAccess } = group;
-
-  const handleGroupClick = useHandleGroupClick();
 
   let filteredDesc = description[0];
   filteredDesc = filteredDesc.replaceAll("**", "");
@@ -15,8 +13,8 @@ const HomeGroupsCard = ({ group }) => {
 
   return (
     <div
-      className="relative flex items-center w-[100%] h-[220px] bg-white p-4 border-gray-300 rounded-lg mt-4"
-      onClick={() => handleGroupClick(id)}
+      className="relative flex items-center w-[100%] h-[220px] bg-white p-4 border-gray-300 rounded-lg mt-4 cursor-pointer"
+      onClick={() => handleClick(id)}
     >
       <img src={image} alt="" className="w-[40%] h-[90%] ml-2 rounded-lg" />
       <div className="w-[60%] h-[100%] flex flex-col justify-between p-3 pl-8 pt-5">

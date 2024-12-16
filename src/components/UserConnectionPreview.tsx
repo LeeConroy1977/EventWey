@@ -3,10 +3,12 @@ import { useUser } from "../contexts/UserContext";
 import ConnectionPreviewCard from "./ConnectionPreviewCard";
 import { useConnections } from "../contexts/ConnectionsContext";
 import { useEffect } from "react";
+import useHandleConnectionClick from "../hooks/useHandleConnectionClick";
 
 const UserConnectionPreview = () => {
   const navigate = useNavigate();
   const { connections, getAllConnections, loading, error } = useConnections();
+  const handleConnectionClick = useHandleConnectionClick();
 
   const connectionPreview = [...connections].slice(0, 6);
 
@@ -37,7 +39,13 @@ const UserConnectionPreview = () => {
       <div className="flex items-start justify-start flex-wrap mt-6 gap-3">
         {connectionPreview.length > 0 &&
           connectionPreview.map((connection, i) => {
-            return <ConnectionPreviewCard connection={connection} key={i} />;
+            return (
+              <ConnectionPreviewCard
+                connection={connection}
+                key={i}
+                handleClick={handleConnectionClick}
+              />
+            );
           })}
       </div>
     </div>
