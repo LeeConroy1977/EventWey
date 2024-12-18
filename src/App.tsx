@@ -2,7 +2,6 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import AppLayout from "./layouts/AppLayout";
 import LandingPage from "./pages/LandingPage";
 import UserLayout from "./layouts/UserLayout";
-import Profile from "./routes/profile/Profile";
 import Messages from "./pages/Messages";
 import Notifications from "./pages/Notifications";
 import Events from "./pages/Events";
@@ -27,6 +26,15 @@ import ProfileEvents from "./routes/user-profile-events/ProfileEvents";
 import ProfileGroups from "./routes/user-profile-groups/ProfileGroups";
 import ProfileConnections from "./routes/user-profile-connections/ProfileConnections";
 import ProfileSettings from "./routes/user-profile-settings/ProfileSettings";
+import CreateGroupLayout from "./layouts/create-group-layout/CreateGroupLayout";
+import CreateGroupIntro from "./routes/create-group/CreateGroupIntro";
+import CreateGroupName from "./routes/create-group/CreateGroupName";
+import CreateGroupDescription from "./routes/create-group/CreateGroupDescription";
+import CreateGroupImage from "./routes/create-group/CreateGroupImage";
+import CreateGroupCategory from "./routes/create-group/CreateGroupCategory";
+import CreateGroupAccess from "./routes/create-group/CreateGroupAccess";
+import CreateGroupLocation from "./routes/create-group/CreateGroupLocation";
+import CreateGroup from "./routes/create-group/CreateGroup";
 
 function App() {
   return (
@@ -78,6 +86,9 @@ function App() {
             <Route path="members" element={<GroupMembers />} />
             <Route path="chat" element={<GroupChat />} />
           </Route>
+          <Route path="create-group/intro" element={<CreateGroupIntro />} />
+
+          <Route path="create-group" element={<CreateGroup />} />
         </Route>
       </Routes>
     </div>

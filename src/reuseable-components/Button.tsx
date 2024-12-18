@@ -9,6 +9,7 @@ interface ButtonProps {
   fontWeight?: string;
   borderWidth?: string;
   borderColour?: string;
+  handleClick?: () => void;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -22,9 +23,11 @@ const Button: React.FC<ButtonProps> = ({
   fontWeight = "font-semibold",
   borderWidth,
   borderColour,
+  handleClick,
 }) => {
   return (
     <button
+      onClick={handleClick}
       className={`${px} ${py} ${ml} ${bgColour} ${textColour} ${fontSize} ${fontWeight} ${borderWidth} ${borderColour} flex justify-center items-center rounded-lg`}
     >
       {children}

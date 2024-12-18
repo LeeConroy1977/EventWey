@@ -1,20 +1,19 @@
 import React from "react";
-import ReactDOM from "react-dom/client"; // Use the new createRoot from react-dom/client
+import ReactDOM from "react-dom/client";
 import App from "./App";
-import "./index.css"; // Your styles, if any
-import { ConnectionsProvider } from "./contexts/ConnectionsContext"; // Assuming your context file is named ConnectionsContext.tsx
-import { GroupsProvider } from "./contexts/GroupsContext"; // Same for GroupsContext.tsx
-import { EventProvider } from "./contexts/EventContext"; // Same for EventContext.tsx
-import { EventsProvider } from "./contexts/EventsContext"; // Same for EventsContext.tsx
-import { UserProvider } from "./contexts/UserContext"; // Same for UserContext.tsx
+import "./index.css";
+import { ConnectionsProvider } from "./contexts/ConnectionsContext";
+import { GroupsProvider } from "./contexts/GroupsContext";
+import { EventProvider } from "./contexts/EventContext";
+import { EventsProvider } from "./contexts/EventsContext";
+import { UserProvider } from "./contexts/UserContext";
 import { BrowserRouter } from "react-router-dom";
 import { GroupProvider } from "./contexts/GroupContext";
 import { ConnectionProvider } from "./contexts/ConnectionContext";
+import { CreateGroupProvider } from "./contexts/CreateGroupContext";
 
-// Create a root element to render the app
-const root = ReactDOM.createRoot(document.getElementById("root")!); // Ensure that 'root' element exists in your index.html
+const root = ReactDOM.createRoot(document.getElementById("root")!);
 
-// Render the App inside the root element with all context providers
 root.render(
   <React.StrictMode>
     <BrowserRouter>
@@ -25,7 +24,9 @@ root.render(
               <GroupProvider>
                 <ConnectionsProvider>
                   <ConnectionProvider>
-                    <App />
+                    <CreateGroupProvider>
+                      <App />
+                    </CreateGroupProvider>
                   </ConnectionProvider>
                 </ConnectionsProvider>
               </GroupProvider>

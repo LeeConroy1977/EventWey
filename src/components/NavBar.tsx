@@ -1,10 +1,12 @@
 import { NavLink, useLocation, useMatch } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
 import Button from "../reuseable-components/Button";
+import useHandleCreateGroupClick from "../hooks/useHandleCreateGroupClick";
 
 const NavBar: React.FC = () => {
   const { user } = useUser();
   const location = useLocation();
+  const handleCreateGroupClick = useHandleCreateGroupClick();
 
   const isHomeActive =
     location.pathname.startsWith("/user/events") ||
@@ -21,7 +23,10 @@ const NavBar: React.FC = () => {
       </NavLink>
       <div className="flex items-center gap-10 mr-12">
         <ul className="flex items-center gap-10">
-          <li className="p-2 pl-4 pr-4 bg-bgPrimary border-2 border-[#2C3E50] text-textPrimary rounded-lg text-[14px] font-semibold cursor-pointer">
+          <li
+            className="p-2 pl-4 pr-4 bg-bgPrimary border-2 border-[#2C3E50] text-textPrimary rounded-lg text-[14px] font-semibold cursor-pointer"
+            onClick={handleCreateGroupClick}
+          >
             Create a group
           </li>
 
