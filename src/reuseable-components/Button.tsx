@@ -10,6 +10,7 @@ interface ButtonProps {
   borderWidth?: string;
   borderColour?: string;
   handleClick?: () => void;
+  isDisabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -24,9 +25,11 @@ const Button: React.FC<ButtonProps> = ({
   borderWidth,
   borderColour,
   handleClick,
+  isDisabled,
 }) => {
   return (
     <button
+      disabled={isDisabled}
       onClick={handleClick}
       className={`${px} ${py} ${ml} ${bgColour} ${textColour} ${fontSize} ${fontWeight} ${borderWidth} ${borderColour} flex justify-center items-center rounded-lg`}
     >

@@ -11,6 +11,7 @@ import { BrowserRouter } from "react-router-dom";
 import { GroupProvider } from "./contexts/GroupContext";
 import { ConnectionProvider } from "./contexts/ConnectionContext";
 import { CreateGroupProvider } from "./contexts/CreateGroupContext";
+import { CreateUserProvider } from "./contexts/CreateUserContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 
@@ -25,7 +26,9 @@ root.render(
                 <ConnectionsProvider>
                   <ConnectionProvider>
                     <CreateGroupProvider>
-                      <App />
+                      <CreateUserProvider>
+                        <App />
+                      </CreateUserProvider>
                     </CreateGroupProvider>
                   </ConnectionProvider>
                 </ConnectionsProvider>

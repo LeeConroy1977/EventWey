@@ -26,15 +26,8 @@ import ProfileEvents from "./routes/user-profile-events/ProfileEvents";
 import ProfileGroups from "./routes/user-profile-groups/ProfileGroups";
 import ProfileConnections from "./routes/user-profile-connections/ProfileConnections";
 import ProfileSettings from "./routes/user-profile-settings/ProfileSettings";
-import CreateGroupLayout from "./layouts/create-group-layout/CreateGroupLayout";
-import CreateGroupIntro from "./routes/create-group/CreateGroupIntro";
-import CreateGroupName from "./routes/create-group/CreateGroupName";
-import CreateGroupDescription from "./routes/create-group/CreateGroupDescription";
-import CreateGroupImage from "./routes/create-group/CreateGroupImage";
-import CreateGroupCategory from "./routes/create-group/CreateGroupCategory";
-import CreateGroupAccess from "./routes/create-group/CreateGroupAccess";
-import CreateGroupLocation from "./routes/create-group/CreateGroupLocation";
 import CreateGroup from "./routes/create-group/CreateGroup";
+import CreateUser from "./routes/sign-up/CreateUser";
 
 function App() {
   return (
@@ -86,9 +79,10 @@ function App() {
             <Route path="members" element={<GroupMembers />} />
             <Route path="chat" element={<GroupChat />} />
           </Route>
-          <Route path="create-group/intro" element={<CreateGroupIntro />} />
 
           <Route path="create-group" element={<CreateGroup />} />
+
+          <Route path="/auth/sign-up" element={<CreateUser />} />
         </Route>
       </Routes>
     </div>

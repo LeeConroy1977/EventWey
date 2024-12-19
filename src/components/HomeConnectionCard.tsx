@@ -2,7 +2,7 @@ import React from "react";
 
 const HomeConnectionCard = ({ connection, handleClick }) => {
   const { id, profileBackgroundImage, profileImage, username, bio } =
-    connection;
+    connection || {};
   return (
     <div
       className="w-[22%] h-[260px] bg-bgPrimary rounded-lg flex flex-col items-center justify-start cursor-pointer mt-1 border-[1px] border-gray-200 "

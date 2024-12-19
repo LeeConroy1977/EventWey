@@ -23,7 +23,12 @@ export const eventsData = [
       "This is also a great opportunity for networking with like-minded individuals who are passionate about technology and its future. Engage in thought-provoking discussions, exchange ideas, and explore potential collaborations with fellow tech enthusiasts. We’ll be diving deep into the ethical implications of AI and how it will impact society, making this a must-attend for anyone interested in the future of technology.",
       "Don’t miss this chance to stay ahead of the curve, expand your understanding of AI, and connect with some of the brightest minds in the industry. Join us for a day filled with learning, discussion, and innovation that will leave you inspired and informed about the exciting possibilities of AI.",
     ],
-    location: { placename: "Weymouth Library", lng: -2.4512, lat: 50.6105 },
+    location: {
+      placename: "Weymouth Library",
+      city: "Weymouth",
+      lng: -2.4512,
+      lat: 50.6105,
+    },
   },
   {
     id: 2,
@@ -55,7 +60,6 @@ export const eventsData = [
     ],
     location: {
       placename: "Weymouth Library",
-      address: "123 Library St, Weymouth",
       city: "Weymouth",
       lng: -2.4512,
       lat: 50.6105,
@@ -97,7 +101,6 @@ export const eventsData = [
     ],
     location: {
       placename: "Weymouth Library",
-      address: "123 Library St, Weymouth",
       city: "Weymouth",
       lng: -2.4512,
       lat: 50.6105,
@@ -142,6 +145,7 @@ export const eventsData = [
     ],
     location: {
       placename: "The Old Town Hall, Weymouth",
+      city: "Weymouth",
       lng: -2.453,
       lat: 50.6102,
     },
@@ -183,6 +187,7 @@ export const eventsData = [
     ],
     location: {
       placename: "Weymouth Community Centre",
+      city: "Weymouth",
       lng: -2.4535,
       lat: 50.6108,
     },
@@ -232,6 +237,7 @@ export const eventsData = [
     ],
     location: {
       placename: "Weymouth Countryside Retreat Centre",
+      city: "Weymouth",
       lng: -2.4623,
       lat: 50.61,
     },
@@ -270,6 +276,7 @@ export const eventsData = [
     ],
     location: {
       placename: "Weymouth Nature Reserve",
+      city: "Weymouth",
       lng: -2.451,
       lat: 50.61,
     },
@@ -311,6 +318,7 @@ export const eventsData = [
     ],
     location: {
       placename: "Weymouth Fitness Centre",
+      city: "Weymouth",
       lng: -2.4531,
       lat: 50.612,
     },
@@ -353,6 +361,7 @@ export const eventsData = [
     ],
     location: {
       placename: "Weymouth Conference Centre",
+      city: "Weymouth",
       lng: -2.4539,
       lat: 50.6115,
     },
@@ -395,6 +404,7 @@ export const eventsData = [
     ],
     location: {
       placename: "Weymouth Town Centre",
+      city: "Weymouth",
       lng: -2.4535,
       lat: 50.6108,
     },
@@ -427,6 +437,7 @@ export const eventsData = [
       "After the race, enjoy some well-deserved refreshments and celebrate with fellow participants. Whether you're there for the fitness or the fun, the Annual Charity Fun Run is all about bringing the community together and supporting important causes while staying healthy. So lace up your running shoes, grab your friends and family, and join us for an event that makes a difference!",
     ],
     location: { placename: "Weymouth Seafront", lng: -2.4542, lat: 50.612 },
+    city: "Weymouth",
   },
   {
     id: 12,
@@ -469,6 +480,7 @@ export const eventsData = [
     ],
     location: {
       placename: "Weymouth Cooking Studio",
+      city: "Weymouth",
       lng: -2.4545,
       lat: 50.6098,
     },
@@ -509,6 +521,7 @@ export const eventsData = [
     ],
     location: {
       placename: "The Nook Nightclub",
+      city: "Weymouth",
       lng: -2.4517,
       lat: 50.6179,
     },
@@ -550,6 +563,7 @@ export const eventsData = [
     ],
     location: {
       placename: "Weymouth Community Centre",
+      city: "Weymouth",
       lng: -2.4535,
       lat: 50.6108,
     },
@@ -591,6 +605,7 @@ export const eventsData = [
     ],
     location: {
       placename: "Weymouth Dance Hall",
+      city: "Weymouth",
       lng: -2.4535,
       lat: 50.6108,
     },
@@ -627,6 +642,7 @@ export const eventsData = [
     ],
     location: {
       placename: "Weymouth Fitness Centre",
+      city: "Weymouth",
       lng: -2.4535,
       lat: 50.6108,
     },
@@ -666,6 +682,7 @@ export const eventsData = [
     ],
     location: {
       placename: "Weymouth Mountain Trails",
+      city: "Weymouth",
       lng: -2.4535,
       lat: 50.6108,
     },
@@ -705,6 +722,7 @@ export const eventsData = [
     ],
     location: {
       placename: "Weymouth Tech Hub",
+      city: "Weymouth",
       lng: -2.4535,
       lat: 50.6108,
     },
@@ -741,6 +759,7 @@ export const eventsData = [
     ],
     location: {
       placename: "Weymouth Creative Studio",
+      city: "Weymouth",
       lng: -2.4535,
       lat: 50.6108,
     },
@@ -783,6 +802,7 @@ export const eventsData = [
     ],
     location: {
       placename: "Weymouth Game Lounge",
+      city: "Weymouth",
       lng: -2.4535,
       lat: 50.6108,
     },
@@ -824,6 +844,7 @@ export const eventsData = [
     ],
     location: {
       placename: "Weymouth Outdoor Cinema Park",
+      city: "Weymouth",
       lng: -2.4535,
       lat: 50.6108,
     },
@@ -862,6 +883,7 @@ export const eventsData = [
       "Mark your calendars and prepare for an evening you won’t forget! Come as you are, grab a spot on the dance floor, and celebrate the spirit of Weymouth with fellow festival-goers. Don’t miss this chance to make memories that will last a lifetime.",
     ],
     location: { placename: "Weymouth Seafront", lng: -2.4542, lat: 50.612 },
+    city: "Weymouth",
   },
   {
     id: 23,
@@ -891,6 +913,7 @@ export const eventsData = [
     ],
     location: {
       placename: "The Nook Nightclub",
+      city: "Weymouth",
       lng: -2.4517,
       lat: 50.6179,
     },
@@ -921,6 +944,7 @@ export const eventsData = [
     ],
     location: {
       placename: "Weymouth Sports Ground",
+      city: "Weymouth",
       lng: -2.451,
       lat: 50.613,
     },

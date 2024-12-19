@@ -5,7 +5,6 @@ import {
   CreateGroupState,
   CreateGroupAction,
 } from "../reducers/CreateGroupReducer";
-import { useNavigate } from "react-router-dom";
 
 const CreateGroupContext = createContext<{
   state: CreateGroupState;

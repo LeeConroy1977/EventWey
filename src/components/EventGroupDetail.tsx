@@ -5,7 +5,8 @@ import Button from "../reuseable-components/Button";
 
 const EventGroupDetail = ({ eventGroup, handleClick }) => {
   const { user } = useUser();
-  const { id, name, image, description, members, openAccess } = eventGroup;
+  const { id, name, image, description, members, openAccess } =
+    eventGroup || {};
 
   const isMember = user?.groups?.includes(id);
   const buttonText = isMember

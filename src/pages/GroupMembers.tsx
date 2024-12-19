@@ -7,6 +7,8 @@ const GroupMembers = () => {
   const handleConnectionClick = useHandleConnectionClick();
 
   const groupMembersLength = groupMembers.length;
+
+  console.log(groupMembers);
   return (
     <div className="w-[100%] min-[8rem] bg-bgPrimary mt-8 rounded-lg p-10 pb-10 ">
       {group && (
@@ -17,7 +19,7 @@ const GroupMembers = () => {
           </h3>
           <div className="flex flex-row items-start justify-start gap-3 flex-wrap ">
             {groupMembers.length > 0 ? (
-              groupMembers.map((member, i) => {
+              groupMembers?.map((member, i) => {
                 return (
                   <HomeConnectionCard
                     connection={member}

@@ -1,12 +1,12 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { fetchUserEvents, fetchUserGroups } from "../../utils/api";
+import { createUser, fetchUserEvents, fetchUserGroups } from "../../utils/api";
 
 interface User {
   id: number;
   email: string;
   username: string;
-  profileBackgroundImage: string;
   profileImage: string;
+  profileBackgroundImage: string;
   bio: string;
   aboutMe: string;
   tags: string[];
@@ -75,6 +75,8 @@ interface UserContextType {
   error: string | null;
   getUserEvents: () => void;
   getUserGroups: () => void;
+  createNewUser: () => void;
+  handleSignOut: () => void;
 }
 
 const defaultUser: User = {
@@ -113,6 +115,28 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [userTotalGroups, setUserTotalGroups] = useState<Group[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
+  
+
+  const handleSignOut = () => {
+    setUser(null);
+  };
+
+  const createNewUser = async (newUser) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const createdUser = await createUser(newUser);
+      setUser(createdUser);
+      console.log("User created successfully:", createdUser);
+    } catch (err) {
+      console.error("Error creating user:", err);
+      setError("Failed to create user.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const getUserEvents = async (params: { [key: string]: string }) => {
     setLoading(true);
@@ -178,6 +202,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
   };
 
+  console.log(user);
+
   return (
     <UserContext.Provider
       value={{
@@ -191,7 +217,9 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         userTotalGroups,
         getUserTotalEvents,
         getUserGroups,
+        createNewUser,
         getUserTotalGroups,
+        handleSignOut,
       }}
     >
       {children}
