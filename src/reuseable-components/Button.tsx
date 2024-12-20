@@ -9,6 +9,8 @@ interface ButtonProps {
   fontWeight?: string;
   borderWidth?: string;
   borderColour?: string;
+  handleClick?: () => void;
+  isDisabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -22,9 +24,13 @@ const Button: React.FC<ButtonProps> = ({
   fontWeight = "font-semibold",
   borderWidth,
   borderColour,
+  handleClick,
+  isDisabled,
 }) => {
   return (
     <button
+      disabled={isDisabled}
+      onClick={handleClick}
       className={`${px} ${py} ${ml} ${bgColour} ${textColour} ${fontSize} ${fontWeight} ${borderWidth} ${borderColour} flex justify-center items-center rounded-lg`}
     >
       {children}

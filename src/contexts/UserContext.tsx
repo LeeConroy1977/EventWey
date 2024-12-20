@@ -1,12 +1,17 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { fetchUserEvents, fetchUserGroups } from "../../utils/api";
+import {
+  createUser,
+  fetchUserEvents,
+  fetchUserGroups,
+  updateUser,
+} from "../../utils/api";
 
 interface User {
   id: number;
   email: string;
   username: string;
-  profileBackgroundImage: string;
   profileImage: string;
+  profileBackgroundImage: string;
   bio: string;
   aboutMe: string;
   tags: string[];
@@ -75,6 +80,7 @@ interface UserContextType {
   error: string | null;
   getUserEvents: () => void;
   getUserGroups: () => void;
+  handleSignOut: () => void;
 }
 
 const defaultUser: User = {
@@ -106,13 +112,34 @@ interface UserProviderProps {
 }
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(defaultUser);
+  const [user, setUser] = useState<User | null>();
   const [userEvents, setUserEvents] = useState<Event[]>([]);
   const [userTotalEvents, setUserTotalEvents] = useState<Event[]>([]);
   const [userGroups, setUserGroups] = useState<Group[]>([]);
   const [userTotalGroups, setUserTotalGroups] = useState<Group[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
+  const handleSignOut = () => {
+    setUser(null);
+  };
+
+  const patchUser = async (field: keyof User, value: any) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Assuming you have an API endpoint for patching user details
+      const updatedUser = await updateUser(user.id, { [field]: value });
+      setUser(updatedUser);
+      // Update context state
+    } catch (err) {
+      console.error(`Error updating user field ${field}:`, err);
+      setError(`Failed to update ${field}.`);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const getUserEvents = async (params: { [key: string]: string }) => {
     setLoading(true);
@@ -178,10 +205,13 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
   };
 
+  console.log(user);
+
   return (
     <UserContext.Provider
       value={{
         user,
+        setUser,
         userEvents,
         userGroups,
         loading,
@@ -192,6 +222,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         getUserTotalEvents,
         getUserGroups,
         getUserTotalGroups,
+        handleSignOut,
+        patchUser,
       }}
     >
       {children}

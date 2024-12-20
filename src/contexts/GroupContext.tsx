@@ -110,7 +110,9 @@ export const GroupProvider: React.FC<GroupProviderProps> = ({ children }) => {
     try {
       const data = await fetchGroupById(id);
       const users = await fetchAllUser();
-      const organiser = users.find((user) => user.id === data?.groupAdmin);
+      const organiser = users?.find(
+        (user) => Number(user?.id) === Number(data?.groupAdmin)
+      );
       setGroup(data);
       setGroupOrganiser(organiser);
     } catch (err: any) {
@@ -137,6 +139,7 @@ export const GroupProvider: React.FC<GroupProviderProps> = ({ children }) => {
     setError(null);
     try {
       const data = await fetchGroupMembers(id);
+      console.log(data, "group members");
       setGroupMembers(data);
     } catch (err: any) {
       setError(err.message || "Failed to fetch group members");

@@ -26,9 +26,11 @@ const GroupLayout = () => {
   const { lat, lng, placename } = group?.location || {};
 
   useEffect(() => {
-    getEventsById(Number(id));
-    getGroupById(Number(id));
-    getGroupMembers(Number(id));
+    if (id) {
+      getGroupById(Number(id));
+      getEventsById(Number(id));
+      getGroupMembers(Number(id));
+    }
   }, [id]);
   return (
     <div className="w-full min-h-screen flex flex-col items-center bg-bgSecondary">

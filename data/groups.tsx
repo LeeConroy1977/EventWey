@@ -4,7 +4,7 @@ export const groupsData = [
     name: "Tech Enthusiasts",
     image:
       "https://promptzone-community.s3.amazonaws.com/uploads/articles/05jtetckc5asjbeto03g.jpeg",
-    groupAdmin: 1,
+    groupAdmin: [1],
     description: [
       "A group for tech enthusiasts, from coders to hardware lovers.",
       "Join a vibrant community where we explore the latest tech trends, share coding tips, and build innovative projects. Whether you're a seasoned developer or just starting out, you'll find like-minded individuals here.",
@@ -12,12 +12,16 @@ export const groupsData = [
       "We also organize events like hackathons and coding challenges to help members improve their skills and learn new technologies in a fun, competitive environment.",
     ],
     openAccess: true,
-    location: { placename: "Weymouth Library", lng: -2.4512, lat: 50.6105 },
+    location: {
+      placename: "Weymouth Library",
+      city: "Weymouth",
+      lng: -2.4512,
+      lat: 50.6105,
+    },
     creationDate: "2024-01-01",
-    eventsCount: 2,
     members: [1, 3, 5, 7, 8, 12],
     events: [1, 18],
-    messages: [1, 2, 5],
+    groupComments: [1, 2, 5],
     category: "technology",
     tags: ["coding", "hardware", "AI"],
   },
@@ -26,7 +30,7 @@ export const groupsData = [
     name: "Weymouth Foodies",
     image:
       "https://media.licdn.com/dms/image/v2/D4D1BAQFIoyCGzrvycQ/company-background_10000/company-background_10000/0/1656924614519/foodies_media_cover?e=2147483647&v=beta&t=c-o9v8vkj92jYW7-KI7os-xU7vvZKrDL1jIBcewxQTk",
-    groupAdmin: 2,
+    groupAdmin: [2],
     description: [
       "A group for food lovers and amateur chefs.",
       "If you have a passion for cooking or just love trying new recipes, this is the place for you. Our members share their culinary experiments, kitchen tips, and favorite recipes.",
@@ -36,10 +40,9 @@ export const groupsData = [
     openAccess: false,
     location: { placename: "Weymouth Library", lng: -2.4512, lat: 50.6105 },
     creationDate: "2024-02-01",
-    eventsCount: 2,
     members: [2, 9, 11, 14, 15],
     events: [5, 12],
-    messages: [3, 4, 7],
+    groupComments: [3, 4, 7],
     category: "food & drink",
   },
   {
@@ -47,7 +50,7 @@ export const groupsData = [
     name: "Weymouth Adventure Group",
     image:
       "https://premiumteamnames.com/wp-content/uploads/2024/11/Adventure-Group-Names.webp",
-    groupAdmin: 5,
+    groupAdmin: [5],
     description: [
       "Discover the thrill of outdoor adventures around Weymouth!",
       "Weymouth Adventure Group is for individuals passionate about exploring nature, embracing physical challenges, and connecting with fellow adventurers. Whether you’re into hiking, kayaking, climbing, or just trying new outdoor activities, this group has something for everyone.",
@@ -57,10 +60,9 @@ export const groupsData = [
     openAccess: false,
     location: { placename: "Weymouth Library", lng: -2.4512, lat: 50.6105 },
     creationDate: "2024-11-24",
-    eventsCount: 2,
     members: [3, 5, 8, 10, 12, 13, 17],
     events: [2, 17],
-    messages: [41, 42, 43],
+    groupComments: [41, 42, 43],
     category: "outdoors",
   },
   {
@@ -68,7 +70,7 @@ export const groupsData = [
     name: "Architectural Innovators",
     image:
       "https://www.pmr-architecture.co.uk/wp-content/uploads/2024/04/PMR-Team-Wall-e1714144571920.jpg",
-    groupAdmin: 7,
+    groupAdmin: [7],
     description: [
       "Pioneering the future of design and architecture in Weymouth and beyond.",
       "Architectural Innovators is a group for individuals passionate about cutting-edge design, sustainable construction, and innovative urban planning. Whether you’re an architect, engineer, student, or enthusiast, this group is a space to share ideas, learn, and network.",
@@ -78,10 +80,9 @@ export const groupsData = [
     openAccess: true,
     location: { placename: "Weymouth Library", lng: -2.4512, lat: 50.6105 },
     creationDate: "2024-11-24",
-    eventsCount: 1,
     members: [3, 7, 11, 12, 15, 18],
     events: [3],
-    messages: [44, 45, 46],
+    groupComments: [44, 45, 46],
     category: "arts",
   },
   {
@@ -89,7 +90,7 @@ export const groupsData = [
     name: "Weymouth Business Network",
     image:
       "https://static.wixstatic.com/media/fd21a1_25c3c1f0c1ab4b9aa1087225c43a9e3a~mv2.jpeg/v1/fill/w_640,h_414,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/fd21a1_25c3c1f0c1ab4b9aa1087225c43a9e3a~mv2.jpeg",
-    groupAdmin: 4,
+    groupAdmin: [4],
     description: [
       "Connecting local entrepreneurs and professionals to grow and succeed together.",
       "Weymouth Business Network is a community of business owners, entrepreneurs, and professionals dedicated to supporting the growth of local businesses. Whether you're starting a new venture or looking to scale an established company, this group offers valuable resources, advice, and networking opportunities.",
@@ -99,10 +100,9 @@ export const groupsData = [
     openAccess: true,
     location: { placename: "Weymouth Library", lng: -2.4512, lat: 50.6105 },
     creationDate: "2024-11-24",
-    eventsCount: 2,
     members: [2, 4, 6, 8, 9, 12, 16],
     events: [4, 9],
-    messages: [47, 48, 49],
+    groupComments: [47, 48, 49],
     category: "business",
   },
   {
@@ -110,7 +110,7 @@ export const groupsData = [
     name: "Weymouth Wellness",
     image:
       "https://images.squarespace-cdn.com/content/v1/5c5c9c7a90f904cc5547f3e9/1679331503774-M07R4ZCG30XF4LGZLMNA/AdobeStock_313431040.jpg",
-    groupAdmin: 21,
+    groupAdmin: [21],
     description: [
       "A group dedicated to health, fitness, and overall well-being.",
       "Weymouth Wellness is a supportive community focused on promoting physical and mental health. Whether you're interested in fitness, nutrition, mental well-being, or holistic practices, this group provides a space for people to share advice, tips, and inspiration.",
@@ -120,10 +120,9 @@ export const groupsData = [
     openAccess: true,
     location: { placename: "Weymouth Library", lng: -2.4512, lat: 50.6105 },
     creationDate: "2024-11-24",
-    eventsCount: 1,
     members: [3, 7, 10, 14, 18, 20, 21, 22],
     events: [6],
-    messages: [50, 51, 52],
+    groupComments: [50, 51, 52],
     category: "health",
   },
   {
@@ -131,7 +130,7 @@ export const groupsData = [
     name: "Framed Perspectives",
     image:
       "https://media.greatbigphotographyworld.com/wp-content/uploads/2022/04/Photographer-Friends-Group.jpg",
-    groupAdmin: 14,
+    groupAdmin: [14],
     description: [
       "A creative collective for photography enthusiasts.",
       "Framed Perspectives is a community for photographers of all levels who want to share their passion for capturing unique moments, stories, and visual experiences. Whether you're an amateur or a professional, this group celebrates the art of photography through collaboration and creative expression.",
@@ -141,10 +140,9 @@ export const groupsData = [
     openAccess: true,
     location: { placename: "Weymouth Library", lng: -2.4512, lat: 50.6105 },
     creationDate: "2024-12-01",
-    eventsCount: 2,
     members: [3, 5, 7, 10, 12, 14, 16],
     events: [7, 19],
-    messages: [1, 3, 5, 7],
+    groupComments: [1, 3, 5, 7],
     category: "arts",
   },
   {
@@ -152,7 +150,7 @@ export const groupsData = [
     name: "Fitness Fanatics",
     image:
       "https://xplorgym.co.uk/wp-content/uploads/2024/07/The-Group-Fitness-Fanatics-1024x667.jpg",
-    groupAdmin: 16,
+    groupAdmin: [16],
     description: [
       "A group dedicated to fitness and health enthusiasts.",
       "Fitness Fanatics is the perfect community for individuals passionate about physical wellness, strength, and endurance. Whether you’re into weightlifting, cardio, yoga, or outdoor activities, this group is all about supporting each other to stay active and live healthy lives.",
@@ -162,17 +160,16 @@ export const groupsData = [
     openAccess: true,
     location: { placename: "Weymouth Library", lng: -2.4512, lat: 50.6105 },
     creationDate: "2024-12-10",
-    eventsCount: 2,
     members: [3, 4, 5, 6, 8, 11, 12, 14, 16, 17],
     events: [8, 16],
-    messages: [1, 2, 4, 5],
+    groupComments: [1, 2, 4, 5],
     category: "fitness",
   },
   {
     id: 9,
     name: "Community Events",
     image: "https://pbs.twimg.com/media/D7MKLZUXoAA8cTT.jpg:large",
-    groupAdmin: 11,
+    groupAdmin: [11],
     description: [
       "Bringing the community together through local events!",
       "The Community Events group is all about connecting people in our local area through a variety of events, from social gatherings to volunteer opportunities. Whether you're interested in festivals, charity events, or just meeting new people, this group is the perfect place to start.",
@@ -182,10 +179,9 @@ export const groupsData = [
     openAccess: true,
     location: { placename: "Weymouth Library", lng: -2.4512, lat: 50.6105 },
     creationDate: "2024-11-24",
-    eventsCount: 4,
     members: [1, 3, 4, 6, 7, 8, 9, 11, 12],
     events: [10, 11, 21, 22],
-    messages: [8, 9, 10],
+    groupComments: [8, 9, 10],
     category: "social",
   },
   {
@@ -193,7 +189,7 @@ export const groupsData = [
     name: "The Nook",
     image:
       "https://roomsthenookcocktailbar.hotels-dorset.com/data/Imgs/OriginalPhoto/1397/139713/139713591/rooms-the-nook-cocktail-bar-weymouth-img-1.JPEG",
-    groupAdmin: 10,
+    groupAdmin: [10],
     description: [
       "The place for music, quizzes, and unforgettable nights out!",
       "The Nook is Weymouth's lively nightclub that brings people together with live music, weekly quiz nights, and epic party events. Whether you're a fan of local bands or love showing off your trivia knowledge, there's always something exciting happening here.",
@@ -203,10 +199,9 @@ export const groupsData = [
     openAccess: true,
     location: { placename: "Weymouth Library", lng: -2.4512, lat: 50.6105 },
     creationDate: "2024-11-24",
-    eventsCount: 2,
     members: [2, 3, 4, 5, 6, 7, 8, 9, 10],
     events: [13, 23],
-    messages: [5, 6, 7],
+    groupComments: [5, 6, 7],
     category: "nightlife",
   },
   {
@@ -214,7 +209,7 @@ export const groupsData = [
     name: "Weymouth Art Group",
     image:
       "https://weymouthportland.u3asite.uk/wp-content/uploads/2023/03/img4r.jpg",
-    groupAdmin: 3,
+    groupAdmin: [3],
     description: [
       "A creative community for artists of all types!",
       "The Weymouth Art Group is a gathering place for local artists and creatives to share their passion for art. Whether you're into painting, sculpture, photography, or digital art, this group welcomes all levels and disciplines.",
@@ -224,10 +219,9 @@ export const groupsData = [
     openAccess: false,
     location: { placename: "Weymouth Library", lng: -2.4512, lat: 50.6105 },
     creationDate: "2024-11-24",
-    eventsCount: 1,
     members: [1, 2, 3, 5, 7, 9, 11],
     events: [14],
-    messages: [3, 6, 8],
+    groupComments: [3, 6, 8],
     category: "arts",
   },
   {
@@ -235,7 +229,7 @@ export const groupsData = [
     name: "Night Crawlers",
     image:
       "https://www.thefunkyturtle.com/wp-content/uploads/2020/01/thefunkyturtle.com-koh-tao-pub-crawl-best-in-asia.jpg",
-    groupAdmin: 4,
+    groupAdmin: [4],
     description: [
       "The ultimate pub and disco experience!",
       "Night Crawlers is the place to be for anyone who loves a fun night out! Whether it's enjoying a chilled pint at the pub, dancing to the latest tracks on the disco floor, or joining in on our themed party nights, there's always something happening here.",
@@ -245,10 +239,9 @@ export const groupsData = [
     openAccess: true,
     location: { placename: "Weymouth Library", lng: -2.4512, lat: 50.6105 },
     creationDate: "2024-11-24",
-    eventsCount: 1,
     members: [2, 3, 6, 8, 10, 12, 14, 27],
     events: [15],
-    messages: [4, 9, 11],
+    groupComments: [4, 9, 11],
     category: "nightlife",
   },
   {
@@ -256,7 +249,7 @@ export const groupsData = [
     name: "Dorset Gamers",
     image:
       "https://images.stockcake.com/public/2/5/3/2532c4be-a85e-465c-955d-d513eeb7ec48_large/friends-playing-game-stockcake.jpg",
-    groupAdmin: 29,
+    groupAdmin: [29],
     description: [
       "For the love of gaming!",
       "Dorset Gamers is a community of game lovers who meet regularly to play and enjoy all kinds of games. Whether you're into tabletop games, board games, or video games, this group is for anyone looking to connect with fellow gamers and have fun.",
@@ -266,10 +259,9 @@ export const groupsData = [
     openAccess: false,
     location: { placename: "Weymouth Library", lng: -2.4512, lat: 50.6105 },
     creationDate: "2024-11-24",
-    eventsCount: 1,
     members: [1, 3, 5, 7, 9, 11, 12],
     events: [20],
-    messages: [6, 8, 10],
+    groupComments: [6, 8, 10],
     category: "games",
   },
   {
@@ -277,7 +269,7 @@ export const groupsData = [
     name: "Weymouth Sports Club",
     image:
       "https://mongooseagency.com/files/3415/9620/1413/Return_of_Sports.jpg",
-    groupAdmin: 8,
+    groupAdmin: [8],
     description: [
       "For sports enthusiasts of all kinds!",
       "Weymouth Sports Club is the place to be for anyone passionate about sports. Whether you're into football, tennis, rugby, or other activities, this group brings together individuals looking to stay active and enjoy sports in a social environment.",
@@ -287,10 +279,9 @@ export const groupsData = [
     openAccess: false,
     location: { placename: "Weymouth Library", lng: -2.4512, lat: 50.6105 },
     creationDate: "2024-11-24",
-    eventsCount: 1,
     members: [2, 4, 6, 7, 9, 10, 11],
     events: [24],
-    messages: [12, 13, 14],
+    groupComments: [12, 13, 14],
     category: "sports",
   },
 ];

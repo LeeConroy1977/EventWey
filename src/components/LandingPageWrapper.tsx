@@ -11,9 +11,7 @@ const LandingPageWrapper = () => {
           <br />
           Make Memories in <span className="text-secondary">Weymouth</span>{" "}
         </h1>
-        {/* <h2 className="text-secondary font-bold text-[16px] mt-2">
-          Find the Events That Bring You Together
-        </h2> */}
+
         <p className="text-[14px] text-textPrimary font-medium mt-4 w-[80%]">
           Whether you're seeking new experiences or looking to meet others who
           share your passions, we’ve got you covered. Explore local events

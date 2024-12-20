@@ -5,7 +5,7 @@ const GroupOrganiserContainer = () => {
   const { groupOrganiser } = useGroup();
   const handleConnectionClick = useHandleConnectionClick();
 
-  const { id, profileImage, username, bio } = groupOrganiser;
+  const { id, profileImage, username, bio } = groupOrganiser || {};
   return (
     <div className="w-[100%] min-h-[160px] flex flex-col rounded-lg bg-bgPrimary p-4">
       <h3 className="text-[1rem] font-bold text-textPrimary">

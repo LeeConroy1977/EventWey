@@ -2,7 +2,6 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import AppLayout from "./layouts/AppLayout";
 import LandingPage from "./pages/LandingPage";
 import UserLayout from "./layouts/UserLayout";
-import Profile from "./routes/profile/Profile";
 import Messages from "./pages/Messages";
 import Notifications from "./pages/Notifications";
 import Events from "./pages/Events";
@@ -27,6 +26,9 @@ import ProfileEvents from "./routes/user-profile-events/ProfileEvents";
 import ProfileGroups from "./routes/user-profile-groups/ProfileGroups";
 import ProfileConnections from "./routes/user-profile-connections/ProfileConnections";
 import ProfileSettings from "./routes/user-profile-settings/ProfileSettings";
+import CreateGroup from "./routes/create-group/CreateGroup";
+import CreateUser from "./routes/sign-up/CreateUser";
+import SignIn from "./routes/sign-in/SignIn";
 
 function App() {
   return (
@@ -78,6 +80,11 @@ function App() {
             <Route path="members" element={<GroupMembers />} />
             <Route path="chat" element={<GroupChat />} />
           </Route>
+
+          <Route path="create-group" element={<CreateGroup />} />
+
+          <Route path="/auth/sign-up" element={<CreateUser />} />
+          <Route path="/auth/sign-in" element={<SignIn />} />
         </Route>
       </Routes>
     </div>

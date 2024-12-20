@@ -48,7 +48,7 @@ const Event = () => {
       getGroupById(Number(id));
       getEventConnections(Number(id));
     }
-  }, [id, getEventById, getGroupById, getEventConnections]);
+  }, [id]);
 
   return (
     <div className="w-[100%] h-[100%] flex flex-col items-center justify-start bg-bgSecondary ">
