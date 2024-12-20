@@ -1,5 +1,10 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { createUser, fetchUserEvents, fetchUserGroups } from "../../utils/api";
+import {
+  createUser,
+  fetchUserEvents,
+  fetchUserGroups,
+  updateUser,
+} from "../../utils/api";
 
 interface User {
   id: number;
@@ -75,7 +80,6 @@ interface UserContextType {
   error: string | null;
   getUserEvents: () => void;
   getUserGroups: () => void;
-  createNewUser: () => void;
   handleSignOut: () => void;
 }
 
@@ -116,23 +120,22 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  
-
   const handleSignOut = () => {
     setUser(null);
   };
 
-  const createNewUser = async (newUser) => {
-    setLoading(true);
-    setError(null);
-
+  const patchUser = async (field: keyof User, value: any) => {
     try {
-      const createdUser = await createUser(newUser);
-      setUser(createdUser);
-      console.log("User created successfully:", createdUser);
+      setLoading(true);
+      setError(null);
+
+      // Assuming you have an API endpoint for patching user details
+      const updatedUser = await updateUser(user.id, { [field]: value });
+      setUser(updatedUser);
+      // Update context state
     } catch (err) {
-      console.error("Error creating user:", err);
-      setError("Failed to create user.");
+      console.error(`Error updating user field ${field}:`, err);
+      setError(`Failed to update ${field}.`);
     } finally {
       setLoading(false);
     }
@@ -208,6 +211,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     <UserContext.Provider
       value={{
         user,
+        setUser,
         userEvents,
         userGroups,
         loading,
@@ -217,9 +221,9 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         userTotalGroups,
         getUserTotalEvents,
         getUserGroups,
-        createNewUser,
         getUserTotalGroups,
         handleSignOut,
+        patchUser,
       }}
     >
       {children}

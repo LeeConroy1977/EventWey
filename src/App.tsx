@@ -28,6 +28,7 @@ import ProfileConnections from "./routes/user-profile-connections/ProfileConnect
 import ProfileSettings from "./routes/user-profile-settings/ProfileSettings";
 import CreateGroup from "./routes/create-group/CreateGroup";
 import CreateUser from "./routes/sign-up/CreateUser";
+import SignIn from "./routes/sign-in/SignIn";
 
 function App() {
   return (
@@ -83,6 +84,7 @@ function App() {
           <Route path="create-group" element={<CreateGroup />} />
 
           <Route path="/auth/sign-up" element={<CreateUser />} />
+          <Route path="/auth/sign-in" element={<SignIn />} />
         </Route>
       </Routes>
     </div>

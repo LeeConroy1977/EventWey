@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useCreateUserContext } from "../../contexts/CreateUserContext";
 import AddAboutMe from "./AddAboutMe";
 import AddBackgroundImage from "./AddBackgroundImage";
@@ -32,11 +33,7 @@ const CreateUser = () => {
   };
   return (
     <div className="flex flex-col items-center w-[66%] h-[80%] bg-bgPrimary  mt-[6rem] rounded-lg">
-      <main className="w-[100%] h-[100%]">{renderStep()}</main>
-      <div className="w-[80%] flex justify-between mt-auto mb-6">
-        <button onClick={prevStep}>Prev</button>
-        <button onClick={nextStep}>Next</button>
-      </div>
+      <main className="w-full h-full">{renderStep()}</main>
     </div>
   );
 };

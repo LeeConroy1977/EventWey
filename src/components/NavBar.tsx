@@ -102,10 +102,18 @@ const NavBar: React.FC = () => {
               >
                 <li className="cursor-pointer">Groups</li>
               </NavLink>
-
-              <li className="font-semibold text-textPrimary cursor-pointer">
-                Log in
-              </li>
+              <NavLink
+                to="/auth/sign-in"
+                className={({ isActive }) =>
+                  isActive
+                    ? "font-semibold text-primary"
+                    : "font-semibold text-textPrimary"
+                }
+              >
+                <li className="font-semibold text-textPrimary cursor-pointer">
+                  Log in
+                </li>
+              </NavLink>
             </>
           )}
         </ul>

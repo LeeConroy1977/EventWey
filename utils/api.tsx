@@ -23,6 +23,24 @@ export const createUser = async (newUser: any): Promise<any> => {
   }
 };
 
+export const updateUser = async (id: number, patchObj: any): Promise<any> => {
+  try {
+    const { data: user } = await axios.get(`http://localhost:3000/users/${id}`);
+
+    const patchedUser = { ...user, ...patchObj };
+
+    const { data: updatedUser } = await axios.patch(
+      `http://localhost:3000/users/${id}`,
+      patchedUser
+    );
+
+    return updatedUser;
+  } catch (error) {
+    console.error("Error updating user:", error);
+    throw error;
+  }
+};
+
 export const fetchAllUser = async (): Promise<any[]> => {
   try {
     const response = await axios.get("http://localhost:3000/users");
@@ -187,14 +205,10 @@ export const fetchGroupMembers = async (id: number): Promise<any[]> => {
     const usersResponse = await axios.get("http://localhost:3000/users");
     const users = usersResponse.data;
 
-    console.log("Users Data:", users);
-
     // Filter users who are members of the group
     const groupMembers = users.filter((user: any) =>
       group.members.includes(Number(user.id))
     );
-
-    console.log("Group Members:", groupMembers);
 
     return groupMembers;
   } catch (error) {
@@ -423,6 +437,22 @@ export const fetchConnectionConnections = async (
     return connectionConnections;
   } catch (error) {
     console.error("Error fetching connection connections:", error);
+    throw error;
+  }
+};
+
+export const fetchAllTags = async (): Promise<any[]> => {
+  try {
+    const categoriesResponse = await axios.get(
+      `http://localhost:3000/categories`
+    );
+    const categories = categoriesResponse.data;
+
+    const tags = categories.map((category) => category.tags).flat();
+    const uniqueTags = [...new Set(tags)];
+    return uniqueTags;
+  } catch (error) {
+    console.error("Error fetching tags:", error);
     throw error;
   }
 };

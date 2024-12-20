@@ -12,6 +12,7 @@ import { GroupProvider } from "./contexts/GroupContext";
 import { ConnectionProvider } from "./contexts/ConnectionContext";
 import { CreateGroupProvider } from "./contexts/CreateGroupContext";
 import { CreateUserProvider } from "./contexts/CreateUserContext";
+import { SignInProvider } from "./contexts/SignInContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 
@@ -27,7 +28,9 @@ root.render(
                   <ConnectionProvider>
                     <CreateGroupProvider>
                       <CreateUserProvider>
-                        <App />
+                        <SignInProvider>
+                          <App />
+                        </SignInProvider>
                       </CreateUserProvider>
                     </CreateGroupProvider>
                   </ConnectionProvider>
