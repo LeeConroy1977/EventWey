@@ -4,6 +4,7 @@ import Button from "../reuseable-components/Button";
 import useHandleCreateGroupClick from "../hooks/useHandleCreateGroupClick";
 import useHandleCreateUserClick from "../hooks/useHandleCreateUserClick";
 import { CgProfile } from "react-icons/cg";
+import useHandleSignInClick from "../hooks/useHandleSignUpClick";
 
 const NavBar: React.FC = () => {
   const { user, handleSignOut } = useUser();
@@ -19,7 +20,7 @@ const NavBar: React.FC = () => {
 
   return (
     <nav className="fixed top-0 left-0 w-[100%] h-[4.6rem] flex items-center justify-between bg-bgPrimary border-b-2 border-gray-100 z-20">
-      <NavLink to="/">
+      <NavLink to={user ? "user/events" : "/"}>
         <div className="text-[22px] font-bold ml-12 text-secondary">
           EventWey
         </div>

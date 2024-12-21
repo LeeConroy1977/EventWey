@@ -8,10 +8,7 @@ import { sortByDate, sortByPopularity, sortByFree } from "./fakeEventSorting";
 
 console.log(eventsData);
 
-// export const fetchAllUser = async (): Promise<any[]> => {
-//   let users = [...usersData];
-//   return Promise.resolve(users);
-// };
+
 
 export const createUser = async (newUser: any): Promise<any> => {
   try {
@@ -44,7 +41,6 @@ export const updateUser = async (id: number, patchObj: any): Promise<any> => {
 export const fetchAllUser = async (): Promise<any[]> => {
   try {
     const response = await axios.get("http://localhost:3000/users");
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching users:", error);
@@ -52,6 +48,28 @@ export const fetchAllUser = async (): Promise<any[]> => {
   }
 };
 
+export const SignInUser = async (email: string, password: string): Promise<any | undefined> => {
+  try {
+    const response = await fetchAllUser();
+    const users = Array.isArray(response) ? response : [];
+
+    console.log("Fetched users:", users);
+    console.log("Input Email:", email);
+    console.log("Input Password:", password);
+
+    const user = users.find(user => user.email === email && user.password === password);
+
+    if (!user) {
+      console.warn("No user found with the provided credentials");
+      return undefined;
+    }
+
+    return user;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    throw new Error("Failed to fetch users");
+  }
+};
 export const fetchAllEvents = async (params: {
   category?: string;
   date?: string;
