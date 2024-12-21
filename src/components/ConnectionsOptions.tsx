@@ -53,12 +53,6 @@ const ConnectionsOptions = () => {
               View Requests
             </li>
           </NavLink>
-          {/* <li className="ml-auto mr-11  text-[14px] text-[#5D9B9B] ">
-          Connections
-        </li> */}
-          {/* <li className="ml-auto mr-11  text-[14px] text-[#5D9B9B] ">
-          View Requests
-        </li> */}
         </ul>
       </nav>
     </div>

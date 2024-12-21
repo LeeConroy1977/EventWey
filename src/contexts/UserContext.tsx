@@ -7,7 +7,7 @@ import {
 } from "../../utils/api";
 
 interface User {
-  id: number;
+  id: string;
   email: string;
   username: string;
   profileImage: string;
@@ -15,12 +15,12 @@ interface User {
   bio: string;
   aboutMe: string;
   tags: string[];
-  connections: number[];
-  groups: number[];
-  userEvents: number[];
-  messages: number[];
-  groupAdmin: number[];
-  notifications: number[];
+  connections: string[];
+  groups: string[];
+  userEvents: string[];
+  messages: string[];
+  groupAdmin: string[];
+  notifications: string[];
   showEvents: "public" | "private";
   showConnections: "public" | "private";
 }
@@ -37,7 +37,7 @@ interface Location {
 }
 
 interface Event {
-  id: number;
+  id: string;
   image: string;
   title: string;
   date: string;
@@ -52,12 +52,12 @@ interface Event {
   category: string;
   tags: string[];
   description: string[];
-  attendeesId: number[];
+  attendeesId: string[];
   location: Location;
 }
 
 interface Group {
-  id: number;
+  id: string;
   name: string;
   image: string;
   groupAdmin: number;
@@ -66,9 +66,9 @@ interface Group {
   location: Location;
   creationDate: number;
   eventsCount: number;
-  members: number[];
-  events: number[];
-  messages: any[];
+  members: string[];
+  events: string[];
+  messages: string[];
   category: string;
 }
 
@@ -82,28 +82,6 @@ interface UserContextType {
   getUserGroups: () => void;
   handleSignOut: () => void;
 }
-
-const defaultUser: User = {
-  id: 3,
-  email: "emma3@gmail.com",
-  username: "Freddie J",
-  profileBackgroundImage: "https://picsum.photos/800/600?random=3",
-  profileImage: "https://randomuser.me/api/portraits/men/3.jpg",
-  bio: "Avid traveler, foodie and animal lover",
-  aboutMe:
-    "Hi, I’m Lee! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
-  tags: ["Gourmet Food Tours", "Animal Rescue", "Wanderlust Adventures"],
-  connections: [
-    2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
-  ],
-  groups: [2, 4, 5, 8, 9, 10, 11],
-  userEvents: [8, 9, 10, 3, 4, 18, 19, 20, 21, 22],
-  messages: [10, 12],
-  groupAdmin: [3],
-  notifications: [3, 6, 8],
-  showEvents: "public",
-  showConnections: "private",
-};
 
 const UserContext = createContext<UserContextType | null>(null);
 
@@ -130,7 +108,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       setError(null);
 
       // Assuming you have an API endpoint for patching user details
-      const updatedUser = await updateUser(user.id, { [field]: value });
+      const updatedUser = await updateUser(user?.id, { [field]: value });
       setUser(updatedUser);
       // Update context state
     } catch (err) {
@@ -144,31 +122,36 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const getUserEvents = async (params: { [key: string]: string }) => {
     setLoading(true);
     setError(null);
+
     try {
-      const { category, date, sortBy = "date" } = params;
-      const events = await fetchUserEvents(user.id, {
-        category,
-        date,
-        sortBy,
-      });
+      if (!user?.id) {
+        throw new Error("User ID is not available.");
+      }
+      const { category = "", date = "", sortBy = "date" } = params;
+      const events = await fetchUserEvents(user.id, { category, date, sortBy });
       setUserEvents(events);
-    } catch (err) {
+    } catch (err: any) {
       console.error("Error fetching events:", err);
-      setError("Failed to fetch events.");
+      setError(err.message || "Failed to fetch events.");
     } finally {
       setLoading(false);
     }
   };
-
   const getUserTotalEvents = async () => {
     setLoading(true);
     setError(null);
+
     try {
-      const totalEvents = await fetchUserEvents(user.id.toString(), {});
+      if (!user?.id) {
+        throw new Error("User ID is not available.");
+      }
+
+      const totalEvents = await fetchUserEvents(user.id, {});
+      console.log("Total Events Fetched:", totalEvents);
       setUserTotalEvents(totalEvents);
-    } catch (err) {
-      console.error("Error fetching events:", err);
-      setError("Failed to fetch events.");
+    } catch (err: any) {
+      console.error("Error fetching events:", err.response || err);
+      setError(err.message || "Failed to fetch events.");
     } finally {
       setLoading(false);
     }
@@ -178,7 +161,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     setError(null);
     try {
       const { category, sortBy = "popular" } = params;
-      const groups = await fetchUserGroups(user.id.toString(), {
+      const groups = await fetchUserGroups(user.id, {
         category,
         sortBy,
       });

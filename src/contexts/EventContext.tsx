@@ -19,7 +19,7 @@ interface Location {
 }
 
 interface Event {
-  id: number;
+  id: string;
   image: string;
   title: string;
   date: string;
@@ -34,7 +34,7 @@ interface Event {
   category: string;
   tags: string[];
   description: string[];
-  attendeesId: number[];
+  attendeesId: string[];
   location: Location;
 }
 
@@ -48,9 +48,9 @@ interface Group {
   location: Location;
   creationDate: number;
   eventsCount: number;
-  members: number[];
-  events: number[];
-  messages: any[];
+  members: string[];
+  events: string[];
+  messages: string[];
   category: string;
 }
 
@@ -62,12 +62,12 @@ interface User {
   profileImage: string;
   bio: string;
   tags: string[];
-  connections: number[];
-  groups: number[];
-  userEvents: number[];
-  messages: number[];
-  groupAdmin: number[];
-  notifications: number[];
+  connections: string[];
+  groups: string[];
+  userEvents: string[];
+  messages: string[];
+  groupAdmin: string[];
+  notifications: string[];
   showEvents: "public" | "private";
   showConnections: "public" | "private";
 }
@@ -99,7 +99,7 @@ export const EventProvider: React.FC<EventProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const getEventById = async (id: number) => {
+  const getEventById = async (id: string) => {
     setLoading(true);
     setError(null);
     try {
@@ -112,7 +112,7 @@ export const EventProvider: React.FC<EventProviderProps> = ({ children }) => {
     }
   };
 
-  const getGroupById = async (id: number) => {
+  const getGroupById = async (id: string) => {
     setLoading(true);
     setError(null);
     try {

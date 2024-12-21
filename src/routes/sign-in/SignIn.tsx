@@ -154,8 +154,7 @@ const SignIn = ({}) => {
               })}
             </div>
             <h1 className="text-textPrimary text-[28px] font-bold mt-12">
-              Sign in as an admin{" "}
-              <span className="text-secondary">user...</span>
+              Sign in as an admin <span className="text-primary">user...</span>
             </h1>
             <div className="w-[80%] h-[30%] flex justify-around  mt-8">
               {signInAdminUsers?.map((user) => {

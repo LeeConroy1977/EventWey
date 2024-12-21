@@ -20,7 +20,7 @@ interface Location {
 }
 
 interface Event {
-  id: number;
+  id: string;
   image: string;
   title: string;
   date: string;
@@ -35,12 +35,12 @@ interface Event {
   category: string;
   tags: string[];
   description: string[];
-  attendeesId: number[];
+  attendeesId: string[];
   location: Location;
 }
 
 interface Group {
-  id: number;
+  id: string;
   name: string;
   image: string;
   groupAdmin: number;
@@ -49,26 +49,26 @@ interface Group {
   location: Location;
   creationDate: number;
   eventsCount: number;
-  members: number[];
-  events: number[];
+  members: string[];
+  events: string[];
   messages: any[];
   category: string;
 }
 
 interface User {
-  id: number;
+  id: string;
   email: string;
   username: string;
   profileBackgroundImage: string;
   profileImage: string;
   bio: string;
   tags: string[];
-  connections: number[];
-  groups: number[];
-  userEvents: number[];
-  messages: number[];
-  groupAdmin: number[];
-  notifications: number[];
+  connections: string[];
+  groups: string[];
+  userEvents: string[];
+  messages: string[];
+  groupAdmin: string[];
+  notifications: string[];
   showEvents: "public" | "private";
   showConnections: "public" | "private";
 }
@@ -104,15 +104,20 @@ export const GroupProvider: React.FC<GroupProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const getGroupById = async (id: number) => {
+  const getGroupById = async (id: string) => {
     setLoading(true);
     setError(null);
+
     try {
       const data = await fetchGroupById(id);
       const users = await fetchAllUser();
-      const organiser = users?.find(
-        (user) => Number(user?.id) === Number(data?.groupAdmin)
+
+      const organisers = users?.filter((user) =>
+        data?.groupAdmin.includes(user?.id)
       );
+
+      const organiser = organisers?.[0];
+
       setGroup(data);
       setGroupOrganiser(organiser);
     } catch (err: any) {
@@ -122,7 +127,7 @@ export const GroupProvider: React.FC<GroupProviderProps> = ({ children }) => {
     }
   };
 
-  const getEventsById = async (id: number) => {
+  const getEventsById = async (id: string) => {
     setLoading(true);
     setError(null);
     try {
@@ -134,12 +139,12 @@ export const GroupProvider: React.FC<GroupProviderProps> = ({ children }) => {
       setLoading(false);
     }
   };
-  const getGroupMembers = async (id: number) => {
+  const getGroupMembers = async (id: string) => {
     setLoading(true);
     setError(null);
     try {
       const data = await fetchGroupMembers(id);
-      console.log(data, "group members");
+      console.log("Fetched Group Members:", data);
       setGroupMembers(data);
     } catch (err: any) {
       setError(err.message || "Failed to fetch group members");

@@ -44,9 +44,9 @@ const Event = () => {
 
   useEffect(() => {
     if (id) {
-      getEventById(Number(id));
-      getGroupById(Number(id));
-      getEventConnections(Number(id));
+      getEventById(id);
+      getGroupById(id);
+      getEventConnections(id);
     }
   }, [id]);
 

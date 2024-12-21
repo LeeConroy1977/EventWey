@@ -122,7 +122,7 @@ const NavBar: React.FC = () => {
           <CgProfile className="w-[50px] h-[50px] rounded-full text-textPrimary" />
         ) : user && user.profileImage ? (
           <img
-            src={user.profileImage || "path/to/default-image.jpg"} // fallback image
+            src={user.profileImage || "path/to/default-image.jpg"}
             alt="User Profile"
             className="w-[48px] h-[48px] rounded-full border-[3px] border-textPrimary"
           />

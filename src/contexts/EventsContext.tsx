@@ -14,7 +14,7 @@ interface Location {
 }
 
 export interface Event {
-  id: number;
+  id: string;
   image: string;
   title: string;
   date: string;
@@ -29,7 +29,7 @@ export interface Event {
   category: string;
   tags: string[];
   description: string[];
-  attendeesId: number[];
+  attendeesId: string[];
   location: Location;
 }
 

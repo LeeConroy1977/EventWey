@@ -16,12 +16,12 @@ interface Connection {
   profileImage: string;
   bio: string;
   tags: string[];
-  connections: number[];
-  groups: number[];
-  userEvents: number[];
-  messages: number[];
-  groupAdmin: number[];
-  notifications: number[];
+  connections: string[];
+  groups: string[];
+  userEvents: string[];
+  messages: string[];
+  groupAdmin: string[];
+  notifications: string[];
   showEvents: string;
   showConnections: string;
 }

@@ -20,7 +20,7 @@ interface Location {
 }
 
 interface Event {
-  id: number;
+  id: string;
   image: string;
   title: string;
   date: string;
@@ -35,12 +35,12 @@ interface Event {
   category: string;
   tags: string[];
   description: string[];
-  attendeesId: number[];
+  attendeesId: string[];
   location: Location;
 }
 
 interface Group {
-  id: number;
+  id: string;
   name: string;
   image: string;
   groupAdmin: number;
@@ -49,26 +49,26 @@ interface Group {
   location: Location;
   creationDate: number;
   eventsCount: number;
-  members: number[];
-  events: number[];
+  members: string[];
+  events: string[];
   messages: any[];
   category: string;
 }
 
 interface User {
-  id: number;
+  id: string;
   email: string;
   username: string;
   profileBackgroundImage: string;
   profileImage: string;
   bio: string;
   tags: string[];
-  connections: number[];
-  groups: number[];
-  userEvents: number[];
-  messages: number[];
-  groupAdmin: number[];
-  notifications: number[];
+  connections: string[];
+  groups: string[];
+  userEvents: string[];
+  messages: string[];
+  groupAdmin: string[];
+  notifications: string[];
   showEvents: "public" | "private";
   showConnections: "public" | "private";
 }
@@ -113,7 +113,7 @@ export const ConnectionProvider: React.FC<ConnectionProviderProps> = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const getConnectionById = async (id: number) => {
+  const getConnectionById = async (id: string) => {
     setLoading(true);
     setError(null);
     try {
@@ -126,7 +126,7 @@ export const ConnectionProvider: React.FC<ConnectionProviderProps> = ({
     }
   };
 
-  const getConnectionConnections = async (id: number) => {
+  const getConnectionConnections = async (id: string) => {
     setLoading(true);
     setError(null);
     try {
@@ -139,7 +139,7 @@ export const ConnectionProvider: React.FC<ConnectionProviderProps> = ({
     }
   };
 
-  const getConnectionEvents = async (id: number) => {
+  const getConnectionEvents = async (id: string) => {
     setLoading(true);
     setError(null);
     try {
@@ -152,7 +152,7 @@ export const ConnectionProvider: React.FC<ConnectionProviderProps> = ({
     }
   };
 
-  const getConnectionGroups = async (id: number) => {
+  const getConnectionGroups = async (id: string) => {
     setLoading(true);
     setError(null);
     try {
