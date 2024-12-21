@@ -164,7 +164,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     setLoading(true);
     setError(null);
     try {
-      const totalEvents = await fetchUserEvents(user.id, {});
+      const totalEvents = await fetchUserEvents(user.id.toString(), {});
       setUserTotalEvents(totalEvents);
     } catch (err) {
       console.error("Error fetching events:", err);
@@ -178,7 +178,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     setError(null);
     try {
       const { category, sortBy = "popular" } = params;
-      const groups = await fetchUserGroups(user.id, {
+      const groups = await fetchUserGroups(user.id.toString(), {
         category,
         sortBy,
       });

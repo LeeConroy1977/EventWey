@@ -2,7 +2,7 @@ import { useUser } from "../contexts/UserContext";
 
 const UserWrapper = () => {
   const { user } = useUser();
-  const firstName = user?.username.split(" ")[0];
+  const firstName = user?.username ? user.username.split(" ")[0] : "";
   return (
     <div className="w-[100%] h-[7rem] flex items-center justify-center   bg-[#F6F7F8]">
       <div className=" w-[66%] h-[100%] flex items-center justify-center">

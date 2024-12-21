@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
 
-import { fetchAllUser } from "../../utils/api";
+import { fetchAllUser, SignInUser } from "../../utils/api";
 import { useUser } from "./UserContext";
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +9,7 @@ const SignInContext = createContext<{}>({});
 export const SignInProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isEmailValid, setIsEmailValid] = useState<boolean | null>(null);
@@ -19,7 +20,7 @@ export const SignInProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const navigate = useNavigate();
 
-  const checkIfUserExists = async (email) => {
+  const checkIfUserExists = async (email: string,) => {
     try {
       const users = await fetchAllUser();
       const existingUser = users.some((user) => user.email === email);
@@ -29,6 +30,18 @@ export const SignInProvider: React.FC<{ children: React.ReactNode }> = ({
       return null;
     }
   };
+
+  const handleFindUser = async (email: string, password: string) => {
+    try {
+      const user = await SignInUser(email, password);
+     
+      return user;
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      return null;
+    }
+  };
+
 
   function handleEmailValidation(email, regex) {
     if (email.length === 0) {
@@ -77,6 +90,7 @@ export const SignInProvider: React.FC<{ children: React.ReactNode }> = ({
         handlePasswordValidation,
         handleValidation,
         isFormValid,
+        handleFindUser
       }}
     >
       {children}

@@ -1,7 +1,9 @@
 import advertImage from "../assets/images/main.jpeg";
+import useHandleCreateUserClick from "../hooks/useHandleCreateUserClick";
 import Button from "../reuseable-components/Button";
 
 const LandingPageAdvert = () => {
+  const handleCreateUserClick = useHandleCreateUserClick();
   return (
     <div className="w-[100%] h-[16rem] flex items-center justify-center  bg-bgSecondary mt-16 px-8 py-4 rounded-lg">
       <div className="w-[50%] h-[100%] flex flex-col items-start justify-center">
@@ -15,7 +17,9 @@ const LandingPageAdvert = () => {
           involved.
         </p>
         <div className="mt-6">
-          <Button bgColour="bg-secondary">Sign up</Button>
+          <Button bgColour="bg-secondary" handleClick={handleCreateUserClick}>
+            Sign up
+          </Button>
         </div>
       </div>
       <div className="w-[44%] h-[100%]">

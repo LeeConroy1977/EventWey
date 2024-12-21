@@ -3,6 +3,7 @@ import Button from "../../reuseable-components/Button";
 import { useCreateUserContext } from "../../contexts/CreateUserContext";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import signupImage from "../../assets/images/signup.jpg";
+import useHandleSignInClick from "../../hooks/useHandleSignUpClick";
 
 const newUser = {
   email: "",
@@ -48,7 +49,7 @@ const SignUp = () => {
     loading,
   } = useCreateUserContext();
   const [googleSignIn, setGoogleSignIn] = useState(false);
-
+  const handleSignInClick = useHandleSignInClick();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -153,7 +154,7 @@ const SignUp = () => {
 
           <section className="w-[50%] h-[100%] flex flex-col items-center ">
             <h1 className="text-textPrimary text-[28px] font-bold mt-12">
-              Create a New Account...
+              Create a new <span className="text-secondary">account...</span>
             </h1>
             <form
               action="submit"
@@ -286,7 +287,7 @@ const SignUp = () => {
                 </Button>
               </div>
               <h3 className="text-textPrimary text-[20px] font-bold mt-12">
-                Or sign up with google
+                Or sign up with <span className="text-primary">Google...</span>
               </h3>
               <div className="mt-8">
                 <GoogleLogin onSuccess={handleGoogleLogin} onError={() => {}} />
@@ -297,7 +298,10 @@ const SignUp = () => {
             </h2>
             <h2 className="text-textPrimary text-[16px] font-semibold mt-2 ">
               sign in as an existing user?{" "}
-              <span className="text-secondary text-[16px] font-semibold cursor-pointer">
+              <span
+                onClick={handleSignInClick}
+                className="text-secondary text-[16px] font-semibold cursor-pointer"
+              >
                 Sign In
               </span>
             </h2>
