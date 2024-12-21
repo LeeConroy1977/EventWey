@@ -1,6 +1,5 @@
 import { IoPerson } from "react-icons/io5";
 import { IoMdPricetag } from "react-icons/io";
-import { FaRegCalendarAlt } from "react-icons/fa";
 import { format } from "date-fns";
 
 const LandingEventCard = ({ event, handleClick }) => {
@@ -58,9 +57,7 @@ const LandingEventCard = ({ event, handleClick }) => {
             <p className="text-[9px] font-semibold text-textPrimary mt-2">
               Hosted by: <span className="text-primary ml-1">{groupName}</span>
             </p>
-            <div className="flex items-center mt-auto">
-              {/* <FaRegCalendarAlt className="text-primary text-[14px]" /> */}
-            </div>
+
             <div className="flex items-center mt-auto mb-1">
               <div className="flex items-center">
                 <IoPerson className="text-[#D66E6E] text-[15px]" />

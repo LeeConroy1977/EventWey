@@ -1,33 +1,32 @@
 import { useCreateGroupContext } from "../../contexts/CreateGroupContext";
 import StepIndicator from "../../layouts/create-group-layout/StepIndicator";
 import CreateGroupAccess from "./CreateGroupAccess";
-import CreateGroupCategory from "./CreateGroupCategory";
+import CreateGroupCategory from "./CreateGroupType";
 import CreateGroupDescription from "./CreateGroupDescription";
 import CreateGroupImage from "./CreateGroupImage";
 import CreateGroupIntro from "./CreateGroupIntro";
 import CreateGroupLocation from "./CreateGroupLocation";
 import CreateGroupName from "./CreateGroupName";
+import CreateGroupType from "./CreateGroupType";
 
 const CreateGroup = () => {
-  const { state, nextStep, prevStep } = useCreateGroupContext();
+  const { state } = useCreateGroupContext();
 
-  if (state.isIntro) {
+  if (state.isCreateGroupIntro) {
     return <CreateGroupIntro />;
   }
 
   const renderStep = () => {
     switch (state.currentStep) {
-      case "name":
+      case 1:
         return <CreateGroupName />;
-      case "description":
+      case 2:
         return <CreateGroupDescription />;
-      case "image":
+      case 3:
         return <CreateGroupImage />;
-      case "category":
-        return <CreateGroupCategory />;
-      case "access":
-        return <CreateGroupAccess />;
-      case "location":
+      case 4:
+        return <CreateGroupType />;
+      case 5:
         return <CreateGroupLocation />;
 
       default:
@@ -37,12 +36,7 @@ const CreateGroup = () => {
 
   return (
     <div className="flex flex-col items-center w-[66%] h-[80%] bg-bgPrimary  mt-[6rem] rounded-lg">
-      <StepIndicator currentStepNum={state.currentStepNum} />
       <main className="w-[100%] h-[100%]">{renderStep()}</main>
-      <div className="w-[80%] flex justify-between mt-auto mb-6">
-        <button onClick={prevStep}>Prev</button>
-        <button onClick={nextStep}>Next</button>
-      </div>
     </div>
   );
 };

@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../contexts/UserContext";
 import ConnectionPreviewCard from "./ConnectionPreviewCard";
 import { useConnections } from "../contexts/ConnectionsContext";
 import { useEffect } from "react";

@@ -8,7 +8,7 @@ interface Location {
 }
 
 interface Group {
-  id: number;
+  id: string;
   name: string;
   image: string;
   groupAdmin: number;
@@ -17,9 +17,9 @@ interface Group {
   location: Location;
   creationDate: number;
   eventsCount: number;
-  members: number[];
-  events: number[];
-  messages: any[];
+  members: string[];
+  events: string[];
+  messages: string[];
   category: string;
 }
 

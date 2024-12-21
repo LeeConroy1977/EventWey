@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import mainImage from "../../assets/images/main_2.jpg";
 import Button from "../../reuseable-components/Button";
 import { useCreateGroupContext } from "../../contexts/CreateGroupContext";
@@ -6,8 +5,11 @@ import { useCreateGroupContext } from "../../contexts/CreateGroupContext";
 const CreateGroupIntro = () => {
   const { dispatch } = useCreateGroupContext();
 
-  function handleClick() {
-    dispatch({ type: "START_GROUP_CREATION" });
+  function handleNextClick() {
+    dispatch({
+      type: "START_GROUP_CREATION",
+    });
+    console.log("this ranssssssssssssssss");
   }
 
   return (
@@ -50,7 +52,7 @@ const CreateGroupIntro = () => {
           px="px-6"
           py="py-3"
           fontSize="text-[16px]"
-          handleClick={handleClick}
+          handleClick={handleNextClick}
         >
           Start a Group
         </Button>

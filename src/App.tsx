@@ -78,7 +78,6 @@ function App() {
             <Route path="details" element={<GroupDetails />} />
             <Route path="events" element={<GroupEvents />} />
             <Route path="members" element={<GroupMembers />} />
-            <Route path="chat" element={<GroupChat />} />
           </Route>
 
           <Route path="create-group" element={<CreateGroup />} />

@@ -1,6 +1,6 @@
 import { IoPerson } from "react-icons/io5";
 import { useUser } from "../contexts/UserContext";
-import useHandleGroupClick from "../hooks/useHandleGroupClick";
+
 
 const HomeGroupsCard = ({ group, handleClick }) => {
   const { user } = useUser();

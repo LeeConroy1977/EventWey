@@ -34,16 +34,6 @@ const GroupNav = ({ id }) => {
         >
           Members
         </NavLink>
-        <NavLink
-          to={`/user/groups/${id}/chat`}
-          className={({ isActive }) =>
-            isActive
-              ? "font-semibold text-primary"
-              : "font-semibold text-textPrimary"
-          }
-        >
-          Chat
-        </NavLink>
       </ul>
     </nav>
   );

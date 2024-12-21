@@ -15,10 +15,7 @@ const EventConnectionsContainer = ({ eventConnections }) => {
         <h3 className="font-bold text-textPrimary">
           Attendees (<span className="text-primary">{connectionsLength}</span>)
         </h3>
-        <p
-          className="text-[12px] font-semibold text-primary cursor-pointer"
-          // onClick={handleNavigation}
-        >
+        <p className="text-[12px] font-semibold text-primary cursor-pointer">
           Show all
         </p>
       </div>

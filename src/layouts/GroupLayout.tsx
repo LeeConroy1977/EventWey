@@ -27,9 +27,9 @@ const GroupLayout = () => {
 
   useEffect(() => {
     if (id) {
-      getGroupById(Number(id));
-      getEventsById(Number(id));
-      getGroupMembers(Number(id));
+      getGroupById(id);
+      getEventsById(id);
+      getGroupMembers(id);
     }
   }, [id]);
   return (

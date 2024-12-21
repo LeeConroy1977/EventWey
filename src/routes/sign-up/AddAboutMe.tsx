@@ -7,7 +7,6 @@ import signUpImage5 from "../../assets/images/signUp5.jpg";
 const AddAboutMe = () => {
   const { user } = useUser();
   const { patchUser, nextStep } = useCreateUserContext();
-  // const [showImage, setShowImage] = useState<boolean>(false);
   const [isValidAboutMe, setIsValidAboutMe] = useState<boolean | null>(null);
   const [aboutMe, setAboutMe] = useState<string>("");
 

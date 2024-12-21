@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+
 import { useCreateUserContext } from "../../contexts/CreateUserContext";
 import AddAboutMe from "./AddAboutMe";
 import AddBackgroundImage from "./AddBackgroundImage";

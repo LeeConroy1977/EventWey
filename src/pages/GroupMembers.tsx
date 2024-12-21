@@ -8,7 +8,7 @@ const GroupMembers = () => {
 
   const groupMembersLength = groupMembers.length;
 
-  console.log(groupMembers);
+  console.log("Group Members:", groupMembers);
   return (
     <div className="w-[100%] min-[8rem] bg-bgPrimary mt-8 rounded-lg p-10 pb-10 ">
       {group && (
