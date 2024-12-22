@@ -7,7 +7,6 @@ import signUpImage4 from "../../assets/images/signUp4.jpg";
 const AddBio = () => {
   const { user } = useUser();
   const { patchUser, nextStep } = useCreateUserContext();
-  // const [showImage, setShowImage] = useState<boolean>(false);
   const [isValidBio, setIsValidBio] = useState<boolean | null>(null);
   const [bio, setBio] = useState<string>("");
 

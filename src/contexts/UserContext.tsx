@@ -5,6 +5,8 @@ import {
   fetchUserGroups,
   updateUser,
 } from "../../utils/api";
+import { useModal } from "./ModalContext";
+import { useNavigate } from "react-router-dom";
 
 interface User {
   id: string;
@@ -89,8 +91,39 @@ interface UserProviderProps {
   children: ReactNode;
 }
 
+const defaultUser = {
+  id: "1",
+  email: "mia6@gmail.com",
+  username: "Mia F",
+  password: "Password#6",
+  googleId: null,
+  authMethod: "email",
+  profileBackgroundImage: "https://picsum.photos/800/600?random=6",
+  profileImage: "https://randomuser.me/api/portraits/women/6.jpg",
+  aboutMe:
+    "Hi, I’m Mia! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
+  bio: "Lover of all things creative and tech.",
+  tags: ["Outdoor Concerts", "Mountain Biking", "Songwriting Circles"],
+  connections: ["2", "4", "5", "7", "10", "11", "13", "15", "16", "17", "18"],
+  groups: ["1", "2"],
+  userEvents: ["6", "10", "14"],
+  messages: ["1", "8", "9"],
+  groupAdmin: ["1", "7", "8"],
+  notifications: ["4", "5"],
+  viewEventsStatus: "public",
+  viewConnectionsStatus: "public",
+  viewGroupsStatus: "public",
+  viewTagsStatus: "public",
+  viewProfileImage: "public",
+  viewBioStatus: "public",
+  aboutMeStatus: "public",
+  role: "user",
+};
+
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>();
+  const { hideModal } = useModal();
+  const [user, setUser] = useState<User | null>(defaultUser);
+  const navigate = useNavigate();
   const [userEvents, setUserEvents] = useState<Event[]>([]);
   const [userTotalEvents, setUserTotalEvents] = useState<Event[]>([]);
   const [userGroups, setUserGroups] = useState<Group[]>([]);
@@ -99,6 +132,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [error, setError] = useState<string | null>(null);
 
   const handleSignOut = () => {
+    hideModal();
+    navigate(`/connection/${id}`);
     setUser(null);
   };
 
@@ -106,11 +141,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     try {
       setLoading(true);
       setError(null);
-
-      // Assuming you have an API endpoint for patching user details
       const updatedUser = await updateUser(user?.id, { [field]: value });
       setUser(updatedUser);
-      // Update context state
     } catch (err) {
       console.error(`Error updating user field ${field}:`, err);
       setError(`Failed to update ${field}.`);

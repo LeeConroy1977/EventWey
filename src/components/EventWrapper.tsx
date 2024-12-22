@@ -2,6 +2,7 @@ import { IoPerson } from "react-icons/io5";
 import { IoMdPricetag } from "react-icons/io";
 import { useUser } from "../contexts/UserContext";
 import { useParams } from "react-router-dom";
+import useHandleCreateEventClick from "../hooks/useHandleCreateEventClick";
 
 const EventWrapper = ({ event }) => {
   const { user } = useUser();

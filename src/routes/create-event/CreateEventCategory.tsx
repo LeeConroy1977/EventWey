@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import createGroup3 from "../../assets/images/createGroup3.jpeg";
-import { useCreateGroupContext } from "../../contexts/CreateGroupContext";
 import Button from "../../reuseable-components/Button";
+import { useCreateEventContext } from "../../contexts/CreateEventContext";
 
-const CreateGroupType = () => {
-  const { nextStep, newGroup, setNewGroup, categories, getAllCatgories } =
-    useCreateGroupContext();
-  const [groupCategory, setGroupCategory] = useState<string>("");
-  const [groupAccess, setGroupAccess] = useState<string>("");
+const CreateGroupCategory = () => {
+  const { nextStep, newEvent, setNewEvent, categories, getAllCatgories } =
+    useCreateEventContext();
+  const [eventCategory, setEventCategory] = useState<string>("");
 
   useEffect(() => {
     (async () => {
@@ -16,20 +15,20 @@ const CreateGroupType = () => {
   }, []);
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setGroupCategory(e.target.value);
+    setEventCategory(e.target.value);
   };
 
   const handleSubmit = () => {
-    if (groupCategory && groupAccess) {
-      setNewGroup((prevGroup) => ({
-        ...prevGroup,
-        category: groupCategory.toLowerCase(),
-        access: groupAccess,
-        openAccess: groupAccess === "public" ? true : false,
+    if (eventCategory) {
+      setNewEvent((prevEvent) => ({
+        ...prevEvent,
+        category: eventCategory.toLowerCase(),
       }));
       nextStep();
     }
   };
+
+  console.log(eventCategory);
 
   return (
     <div className="flex flex-col items-center w-full h-full bg-bgPrimary rounded-lg">
@@ -57,7 +56,7 @@ const CreateGroupType = () => {
             </label>
             <select
               id="category"
-              value={groupCategory}
+              value={eventCategory}
               onChange={handleCategoryChange}
               className="w-full mt-2 p-2 border-2 border-gray-300 rounded-lg text-textPrimary focus:outline-none"
               aria-label="Select Group Category"
@@ -76,36 +75,17 @@ const CreateGroupType = () => {
               ))}
             </select>
           </div>
-          <div className="mt-8 w-[70%]">
-            <label htmlFor="access" className="text-textPrimary font-semibold ">
-              Group Access
-            </label>
-            <select
-              id="access"
-              value={groupAccess}
-              onChange={(e) => setGroupAccess(e.target.value)}
-              className="w-full mt-2 p-2 border-2 border-gray-300 rounded-lg text-textPrimary focus:outline-none"
-              aria-label="Select Group Access"
-            >
-              <option value="" disabled>
-                Select access type
-              </option>
-              <option value="public">Public</option>
-              <option value="private">Private</option>
-            </select>
-          </div>
+
           <div className="mt-auto mb-12">
             <Button
               handleClick={handleSubmit}
-              isDisabled={!groupCategory || !groupAccess}
-              bgColour={
-                groupCategory && groupAccess ? "bg-secondary" : "bg-gray-300"
-              }
+              isDisabled={!eventCategory}
+              bgColour={eventCategory ? "bg-secondary" : "bg-gray-300"}
               py="py-3"
               px="px-12"
               fontSize="text-14px"
             >
-              Add bio
+              Add category
             </Button>
           </div>
         </section>
@@ -114,4 +94,4 @@ const CreateGroupType = () => {
   );
 };
 
-export default CreateGroupType;
+export default CreateGroupCategory;

@@ -18,9 +18,7 @@ export const createUser = async (newUser: any): Promise<any> => {
 export const updateUser = async (id: string, patchObj: any): Promise<any> => {
   try {
     const { data: user } = await axios.get(`http://localhost:3000/users/${id}`);
-    console.log("Fetched User Data:", user);
     const patchedUser = { ...user, ...patchObj };
-    console.log("Patched User Data:", patchedUser);
 
     const { data: updatedUser } = await axios.patch(
       `http://localhost:3000/users/${id}`,
@@ -32,6 +30,25 @@ export const updateUser = async (id: string, patchObj: any): Promise<any> => {
     return updatedUser;
   } catch (error) {
     console.error("Error updating user:", error);
+    throw error;
+  }
+};
+
+export const patchGroup = async (id: string, patchObj: any): Promise<any> => {
+  try {
+    const { data: group } = await axios.get(
+      `http://localhost:3000/groups/${id}`
+    );
+    const patchedGroup = { ...group, ...patchObj };
+
+    const { data: updatedGroup } = await axios.patch(
+      `http://localhost:3000/groups/${id}`,
+      patchedGroup
+    );
+
+    return updatedGroup;
+  } catch (error) {
+    console.error("Error updating group:", error);
     throw error;
   }
 };
@@ -124,6 +141,25 @@ export const fetchEventById = async (id: string): Promise<any> => {
   }
 };
 
+export const fetchUserAdminGroupById = async (id: string): Promise<any> => {
+  try {
+    const userResponse = await axios.get(`http://localhost:3000/users/${id}`);
+    const user = userResponse.data;
+
+    const groupsResponse = await axios.get(`http://localhost:3000/groups`);
+    const groups = groupsResponse.data;
+
+    const adminGroups = groups.filter((group) =>
+      group.groupAdmin.includes(user.id)
+    );
+
+    return adminGroups;
+  } catch (error) {
+    console.error("Error fetching user by ID:", error);
+    throw error;
+  }
+};
+
 export const fetchGroupById = async (id: string): Promise<any> => {
   try {
     const response = await axios.get(`http://localhost:3000/groups/${id}`);
@@ -178,6 +214,20 @@ export const fetchEventGroupById = async (id: string): Promise<any> => {
     return groupResponse.data;
   } catch (error) {
     console.error("Error fetching event group by ID:", error);
+    throw error;
+  }
+};
+
+export const postEvent = async (eventData): Promise<any> => {
+  try {
+    const response = await axios.post(
+      "http://localhost:3000/events",
+      eventData
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error creating event:", error);
     throw error;
   }
 };

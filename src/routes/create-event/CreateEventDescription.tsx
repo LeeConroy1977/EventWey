@@ -4,9 +4,10 @@ import Button from "../../reuseable-components/Button";
 import { useUser } from "../../contexts/UserContext";
 import signUpImage5 from "../../assets/images/signUp5.jpg";
 import { useCreateGroupContext } from "../../contexts/CreateGroupContext";
+import { useCreateEventContext } from "../../contexts/CreateEventContext";
 
-const CreateGgroupDescription = () => {
-  const { nextStep, newGroup, setNewGroup } = useCreateGroupContext();
+const CreateGroupDescription = () => {
+  const { nextStep, setNewEvent } = useCreateEventContext();
   const [isValidIntro, setIsValidIntro] = useState<boolean | null>(null);
   const [isValidParagraphOne, setIsValidParagraphOne] = useState<
     boolean | null
@@ -95,10 +96,10 @@ const CreateGgroupDescription = () => {
       paragraphThree.length === 0 || isValidParagraphThree;
 
     if (isParagraphOneValid && isParagraphTwoValid && isParagraphThreeValid) {
-      setNewGroup(
-        (prevGroup) =>
-          (prevGroup = {
-            ...prevGroup,
+      setNewEvent(
+        (prevEvent) =>
+          (prevEvent = {
+            ...prevEvent,
             description: [intro, paragraphOne, paragraphTwo, paragraphThree],
           })
       );
@@ -129,7 +130,7 @@ const CreateGgroupDescription = () => {
         </section>
         <section className="w-[50%] h-[100%] flex flex-col items-center rounded-lg">
           <h1 className="text-textPrimary text-[32px] font-semibold mt-12">
-            Add a group description
+            Add an event description
           </h1>
           <h2 className="w-[70%] text-textPrimary text-[16px] font-medium mt-8">
             * Add an intro sentence and optional paragraphs.
@@ -243,4 +244,4 @@ const CreateGgroupDescription = () => {
   );
 };
 
-export default CreateGgroupDescription;
+export default CreateGroupDescription;
