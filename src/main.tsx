@@ -13,33 +13,39 @@ import { ConnectionProvider } from "./contexts/ConnectionContext";
 import { CreateGroupProvider } from "./contexts/CreateGroupContext";
 import { CreateUserProvider } from "./contexts/CreateUserContext";
 import { SignInProvider } from "./contexts/SignInContext";
+import { ModalProvider } from "./contexts/ModalContext";
+import { CreateEventProvider } from "./contexts/CreateEventContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <UserProvider>
-        <EventsProvider>
-          <EventProvider>
-            <GroupsProvider>
-              <GroupProvider>
-                <ConnectionsProvider>
-                  <ConnectionProvider>
-                    <CreateGroupProvider>
-                      <CreateUserProvider>
-                        <SignInProvider>
-                          <App />
-                        </SignInProvider>
-                      </CreateUserProvider>
-                    </CreateGroupProvider>
-                  </ConnectionProvider>
-                </ConnectionsProvider>
-              </GroupProvider>
-            </GroupsProvider>
-          </EventProvider>
-        </EventsProvider>
-      </UserProvider>
+      <ModalProvider>
+        <UserProvider>
+          <EventsProvider>
+            <EventProvider>
+              <GroupsProvider>
+                <GroupProvider>
+                  <ConnectionsProvider>
+                    <ConnectionProvider>
+                      <CreateGroupProvider>
+                        <CreateEventProvider>
+                          <CreateUserProvider>
+                            <SignInProvider>
+                              <App />
+                            </SignInProvider>
+                          </CreateUserProvider>
+                        </CreateEventProvider>
+                      </CreateGroupProvider>
+                    </ConnectionProvider>
+                  </ConnectionsProvider>
+                </GroupProvider>
+              </GroupsProvider>
+            </EventProvider>
+          </EventsProvider>
+        </UserProvider>
+      </ModalProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

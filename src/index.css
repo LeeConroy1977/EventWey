@@ -7,6 +7,12 @@
 body {
   @apply overflow-x-hidden;
 }
+input:focus,
+textarea:focus,
+select:focus,
+button:focus {
+  outline: none;
+}
 
 :root {
   --primary-color: #5d9b9b;
