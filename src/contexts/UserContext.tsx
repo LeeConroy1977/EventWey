@@ -4,17 +4,25 @@ import {
   fetchUserEvents,
   fetchUserGroups,
   updateUser,
-} from "../../utils/api";
+} from "../../utils/api/user-api";
+import {
+  fetchAllEvents,
+  fetchEventById,
+  patchEvent,
+} from "../../utils/api/events-api";
 import { useModal } from "./ModalContext";
 import { useNavigate } from "react-router-dom";
+import { useEvents } from "./EventsContext";
 
 interface User {
   id: string;
   email: string;
   username: string;
-  profileImage: string;
+  password: string;
+  googleId: string;
+  authMethod: string;
   profileBackgroundImage: string;
-  bio: string;
+  profileImage: string;
   aboutMe: string;
   tags: string[];
   connections: string[];
@@ -23,12 +31,18 @@ interface User {
   messages: string[];
   groupAdmin: string[];
   notifications: string[];
-  showEvents: "public" | "private";
-  showConnections: "public" | "private";
+  viewEventsStatus: string;
+  viewConnectionsStatus: string;
+  viewGroupsStatus: string;
+  viewTagsStatus: string;
+  viewProfileImage: string;
+  viewBioStatus: string;
+  aboutMeStatus: string;
+  role: string;
 }
 
 interface PriceBand {
-  type: "Early bird" | "Standard" | "Standing" | "Seated" | "VIP";
+  type: "Early bird" | "Standard" | "Standing" | "Vip";
   price: string;
 }
 
@@ -46,7 +60,7 @@ interface Event {
   groupName: string;
   groupId: number;
   duration: string;
-  priceBands: PriceBand;
+  priceBands: PriceBand[];
   going: number;
   capacity: number;
   availability: number;
@@ -62,7 +76,7 @@ interface Group {
   id: string;
   name: string;
   image: string;
-  groupAdmin: number;
+  groupAdmin: string[];
   description: string[];
   openAccess: boolean;
   location: Location;
@@ -80,8 +94,8 @@ interface UserContextType {
   userGroup: Group[];
   loading: boolean;
   error: string | null;
-  getUserEvents: () => void;
-  getUserGroups: () => void;
+  getUserEvents: (params: { [key: string]: string }) => void;
+  getUserGroups: (params: { [key: string]: string }) => void;
   handleSignOut: () => void;
 }
 
@@ -104,12 +118,12 @@ const defaultUser = {
     "Hi, I’m Mia! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
   bio: "Lover of all things creative and tech.",
   tags: ["Outdoor Concerts", "Mountain Biking", "Songwriting Circles"],
-  connections: ["2", "4", "5", "7", "10", "11", "13", "15", "16", "17", "18"],
-  groups: ["1", "2"],
-  userEvents: ["6", "10", "14"],
-  messages: ["1", "8", "9"],
-  groupAdmin: ["1", "7", "8"],
-  notifications: ["4", "5"],
+  connections: ["2", "3", "4", "5", "6", "7", "8", "15", "30"],
+  groups: ["1", "9", "11", "13"],
+  userEvents: ["1", "2", "5", "10", "22", "23", "24"],
+  messages: [],
+  groupAdmin: ["1"],
+  notifications: [],
   viewEventsStatus: "public",
   viewConnectionsStatus: "public",
   viewGroupsStatus: "public",
@@ -121,19 +135,20 @@ const defaultUser = {
 };
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
+  const { events, setEvents } = useEvents();
   const { hideModal } = useModal();
   const [user, setUser] = useState<User | null>(defaultUser);
   const navigate = useNavigate();
   const [userEvents, setUserEvents] = useState<Event[]>([]);
-  const [userTotalEvents, setUserTotalEvents] = useState<Event[]>([]);
   const [userGroups, setUserGroups] = useState<Group[]>([]);
-  const [userTotalGroups, setUserTotalGroups] = useState<Group[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [userTotalEvents, setUserTotalEvents] = useState<Event[]>([]);
+  const [userTotalGroups, setUserTotalGroups] = useState<Event[]>([]);
 
   const handleSignOut = () => {
     hideModal();
-    navigate(`/connection/${id}`);
+    navigate(`/connection/${user?.id}`);
     setUser(null);
   };
 
@@ -151,6 +166,43 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
   };
 
+  const joinFreeEvent = async (eventId: string) => {
+    try {
+      setError(null);
+
+      const event = await fetchEventById(eventId);
+      if (event.availability <= 0) {
+        setError("Event is fully booked.");
+        return;
+      }
+      if (event.attendeesId.includes(user?.id || "")) {
+        setError("You have already joined this event.");
+        return;
+      }
+      const updatedUser = await updateUser(user?.id, {
+        userEvents: [...(user?.userEvents ?? []), eventId],
+      });
+      const updatedEvent = await patchEvent(eventId, {
+        attendeesId: [...event.attendeesId, user?.id || ""],
+        going: event.going + 1,
+        availability: event.availability - 1,
+      });
+      setUser(updatedUser);
+      setEvents((prevEvents) => {
+        const eventIndex = prevEvents.findIndex((e) => e.id === eventId);
+        if (eventIndex > -1) {
+          prevEvents[eventIndex] = updatedEvent;
+        } else {
+          prevEvents.push(updatedEvent);
+        }
+        return [...prevEvents];
+      });
+    } catch (err) {
+      console.error(`Error joining event ${eventId}:`, err);
+      setError("Failed to join the event.");
+    }
+  };
+
   const getUserEvents = async (params: { [key: string]: string }) => {
     setLoading(true);
     setError(null);
@@ -162,13 +214,14 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       const { category = "", date = "", sortBy = "date" } = params;
       const events = await fetchUserEvents(user.id, { category, date, sortBy });
       setUserEvents(events);
-    } catch (err: any) {
+    } catch (err) {
       console.error("Error fetching events:", err);
       setError(err.message || "Failed to fetch events.");
     } finally {
       setLoading(false);
     }
   };
+
   const getUserTotalEvents = async () => {
     setLoading(true);
     setError(null);
@@ -179,7 +232,6 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       }
 
       const totalEvents = await fetchUserEvents(user.id, {});
-      console.log("Total Events Fetched:", totalEvents);
       setUserTotalEvents(totalEvents);
     } catch (err: any) {
       console.error("Error fetching events:", err.response || err);
@@ -188,15 +240,13 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       setLoading(false);
     }
   };
+
   const getUserGroups = async (params: { [key: string]: string }) => {
     setLoading(true);
     setError(null);
     try {
       const { category, sortBy = "popular" } = params;
-      const groups = await fetchUserGroups(user.id, {
-        category,
-        sortBy,
-      });
+      const groups = await fetchUserGroups(user.id, { category, sortBy });
       setUserGroups(groups);
     } catch (err) {
       console.error("Error fetching groups:", err);
@@ -220,7 +270,10 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
   };
 
-  console.log(user);
+  function isUserAttendingEvent(id) {
+    const isAttending = user?.userEvents?.includes(String(id));
+    return isAttending || false;
+  }
 
   return (
     <UserContext.Provider
@@ -232,13 +285,15 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         loading,
         error,
         getUserEvents,
-        userTotalEvents,
-        userTotalGroups,
-        getUserTotalEvents,
         getUserGroups,
-        getUserTotalGroups,
         handleSignOut,
         patchUser,
+        joinFreeEvent,
+        getUserTotalEvents,
+        userTotalEvents,
+        userTotalGroups,
+        getUserTotalGroups,
+        isUserAttendingEvent,
       }}
     >
       {children}

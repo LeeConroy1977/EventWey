@@ -1,4 +1,4 @@
-import HomeGroupsCard from "../../components/HomeGroupsCard";
+import HomeGroupsCard from "../groups/HomeGroupsCard";
 import { useConnections } from "../../contexts/ConnectionsContext";
 import { useUser } from "../../contexts/UserContext";
 import useHandleGroupClick from "../../hooks/useHandleGroupClick";

@@ -26,7 +26,7 @@ const CreateEvent = () => {
     };
 
     fetchData();
-  }, [user]);
+  }, [user, getUserAdminGroups]);
 
   const userAdminCount = adminGroups?.length;
 

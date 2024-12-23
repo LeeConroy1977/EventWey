@@ -15,6 +15,7 @@ import { CreateUserProvider } from "./contexts/CreateUserContext";
 import { SignInProvider } from "./contexts/SignInContext";
 import { ModalProvider } from "./contexts/ModalContext";
 import { CreateEventProvider } from "./contexts/CreateEventContext";
+import { EventModalProvider } from "./contexts/EventModelContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 
@@ -23,27 +24,29 @@ root.render(
     <BrowserRouter>
       <ModalProvider>
         <UserProvider>
-          <EventsProvider>
-            <EventProvider>
-              <GroupsProvider>
-                <GroupProvider>
-                  <ConnectionsProvider>
-                    <ConnectionProvider>
-                      <CreateGroupProvider>
-                        <CreateEventProvider>
-                          <CreateUserProvider>
-                            <SignInProvider>
-                              <App />
-                            </SignInProvider>
-                          </CreateUserProvider>
-                        </CreateEventProvider>
-                      </CreateGroupProvider>
-                    </ConnectionProvider>
-                  </ConnectionsProvider>
-                </GroupProvider>
-              </GroupsProvider>
-            </EventProvider>
-          </EventsProvider>
+          <EventModalProvider>
+            <EventsProvider>
+              <EventProvider>
+                <GroupsProvider>
+                  <GroupProvider>
+                    <ConnectionsProvider>
+                      <ConnectionProvider>
+                        <CreateGroupProvider>
+                          <CreateEventProvider>
+                            <CreateUserProvider>
+                              <SignInProvider>
+                                <App />
+                              </SignInProvider>
+                            </CreateUserProvider>
+                          </CreateEventProvider>
+                        </CreateGroupProvider>
+                      </ConnectionProvider>
+                    </ConnectionsProvider>
+                  </GroupProvider>
+                </GroupsProvider>
+              </EventProvider>
+            </EventsProvider>
+          </EventModalProvider>
         </UserProvider>
       </ModalProvider>
     </BrowserRouter>

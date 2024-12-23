@@ -1,4 +1,4 @@
-import HomeConnectionCard from "../../components/HomeConnectionCard";
+import HomeConnectionCard from "../group-members/HomeConnectionCard";
 import { useConnection } from "../../contexts/ConnectionContext";
 import useHandleConnectionClick from "../../hooks/useHandleConnectionClick";
 

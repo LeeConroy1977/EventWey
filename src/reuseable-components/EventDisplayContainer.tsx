@@ -1,12 +1,32 @@
 import React, { useEffect, useState } from "react";
-import LandingEventCard from "../components/LandingEventCard";
-import { fetchSortedEvents } from "../../utils/api";
+import LandingEventCard from "../routes/landing-page/LandingEventCard";
+import { fetchSortedEvents } from "../../utils/api/events-api";
 import useHandleEventClick from "../hooks/useHandleEventClick";
 
-interface Event {
-  id: number;
-  title: string;
+interface PriceBand {
+  type: "Early bird" | "Standard" | "VIP";
+  price: string;
+  ticketCount: number;
+}
+
+export interface Event {
+  id: string;
   image: string;
+  title: string;
+  date: string;
+  groupName: string;
+  groupId: number;
+  duration: string;
+  priceBands: PriceBand[];
+  going: number;
+  capacity: number;
+  availability: number;
+  free: boolean;
+  category: string;
+  tags: string[];
+  description: string[];
+  attendeesId: string[];
+  location: Location;
 }
 
 interface EventDisplayContainerProps {

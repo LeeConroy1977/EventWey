@@ -7,5 +7,5 @@ export const sortByDate = (events: any[]) => {
 };
 
 export const sortByFree = (events: any[]) => {
-  return events.filter((event) => event.free);
+  return events.filter((event) => event.free === true);
 };

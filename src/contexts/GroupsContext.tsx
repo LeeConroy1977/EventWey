@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { fetchAllGroups } from "../../utils/api";
+import { fetchAllGroups } from "../../utils/api/groups-api";
 
 interface Location {
   placename: string;
@@ -11,7 +11,7 @@ interface Group {
   id: string;
   name: string;
   image: string;
-  groupAdmin: number;
+  groupAdmin: string[];
   description: string[];
   openAccess: boolean;
   location: Location;
@@ -33,8 +33,8 @@ interface GroupsContextType {
 
 const GroupsContext = createContext<GroupsContextType>({
   groups: [],
-  setGroups: () => {},
-  fetchGroups: async () => {},
+  setGroups: () => {}, // Default no-op function
+  fetchGroups: async () => {}, // Default empty async function
   loading: false,
   error: null,
 });
@@ -55,7 +55,8 @@ export const GroupsProvider: React.FC<GroupsProviderProps> = ({ children }) => {
       const { category, sortBy = "popular" } = params;
       const groupsData = await fetchAllGroups({ category, sortBy });
       setGroups(groupsData);
-    } catch (err) {
+    } catch (err: any) {
+      // Added `any` to catch unknown error types
       console.error("Error fetching groups:", err);
       setError("Failed to fetch groups.");
     } finally {
@@ -72,7 +73,8 @@ export const GroupsProvider: React.FC<GroupsProviderProps> = ({ children }) => {
   );
 };
 
-export const useGroups = () => {
+export const useGroups = (): GroupsContextType => {
+  // Explicit return type for better type inference
   const context = useContext(GroupsContext);
   if (!context) {
     throw new Error("useGroups must be used within a GroupsProvider");

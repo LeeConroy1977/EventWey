@@ -18,10 +18,10 @@ const ConnectionLayout = () => {
   } = useConnection();
 
   useEffect(() => {
-    getConnectionById(Number(id));
-    getConnectionConnections(Number(id));
-    getConnectionEvents(Number(id));
-    getConnectionGroups(Number(id));
+    getConnectionById(id);
+    getConnectionConnections(id);
+    getConnectionEvents(id);
+    getConnectionGroups(id);
   }, [id]);
 
   return (
@@ -44,7 +44,7 @@ const ConnectionLayout = () => {
             <h1 className=" font-semibold text-[26px]">
               {connection?.username}
             </h1>
-            <button className=" py-2 px-5 flex justify-center items-center mt-auto mb-3 text-primary text-[13px] font-semibold border-2 border-primary rounded-lg bg-bgPrimary">
+            <button className=" py-3 px-12 flex justify-center items-center mt-auto mb-3 text-primary text-[14px] font-semibold border-2 border-primary rounded-lg bg-bgPrimary">
               Connect
             </button>
           </div>

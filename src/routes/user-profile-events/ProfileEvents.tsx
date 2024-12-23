@@ -1,6 +1,6 @@
-import HomeEventsCard from "../../components/HomeEventsCard";
 import { useUser } from "../../contexts/UserContext";
 import useHandleEventClick from "../../hooks/useHandleEventClick";
+import HomeEventsCard from "../events/HomeEventsCard";
 
 const ProfileEvents = () => {
   const { userEvents } = useUser();

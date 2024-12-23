@@ -1,6 +1,6 @@
-import HomeEventsCard from "../../components/HomeEventsCard";
 import { useConnection } from "../../contexts/ConnectionContext";
 import useHandleEventClick from "../../hooks/useHandleEventClick";
+import HomeEventsCard from "../events/HomeEventsCard";
 
 const ConnectionEvents = () => {
   const { connection, connectionEvents } = useConnection();
