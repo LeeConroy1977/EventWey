@@ -5,7 +5,7 @@ import React, {
   ReactNode,
   useEffect,
 } from "react";
-import { fetchUserConnection } from "../../utils/api";
+import { fetchUserConnection } from "../../utils/api/user-api";
 import { useUser } from "./UserContext";
 
 interface Connection {
@@ -29,7 +29,8 @@ interface Connection {
 interface ConnectionContextType {
   connections: Connection[];
   setConnections: (connections: Connection[]) => void;
-  filteredConnections: (filteredConnections: Connection[]) => void;
+  filteredConnections: Connection[];
+  setFilteredConnections: (filteredConnections: Connection[]) => void;
   getAllConnections: () => Promise<void>;
   loading: boolean;
   error: string | null;
@@ -46,7 +47,7 @@ export const ConnectionsProvider: React.FC<ConnectionsProviderProps> = ({
   children,
 }) => {
   const [connections, setConnections] = useState<Connection[]>([]);
-  const [filteredConnections, setfilteredConnections] = useState<Connection[]>(
+  const [filteredConnections, setFilteredConnections] = useState<Connection[]>(
     []
   );
   const [loading, setLoading] = useState<boolean>(false);
@@ -73,14 +74,14 @@ export const ConnectionsProvider: React.FC<ConnectionsProviderProps> = ({
   };
 
   const handleConnectionQuery = (value: string) => {
-    const filteredArr = connections?.filter((connection) =>
+    const filteredArr = connections.filter((connection) =>
       connection.username.toLowerCase().includes(value.toLowerCase())
     );
-    setfilteredConnections(filteredArr);
+    setFilteredConnections(filteredArr);
   };
 
   useEffect(() => {
-    setfilteredConnections(connections);
+    setFilteredConnections(connections);
   }, [connections]);
 
   return (
@@ -88,10 +89,11 @@ export const ConnectionsProvider: React.FC<ConnectionsProviderProps> = ({
       value={{
         connections,
         setConnections,
+        filteredConnections,
+        setFilteredConnections,
         getAllConnections,
         loading,
         error,
-        filteredConnections,
         handleConnectionQuery,
       }}
     >

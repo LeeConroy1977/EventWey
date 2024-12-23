@@ -138,7 +138,7 @@ const SignIn = ({}) => {
       <div className="flex flex-col items-center w-[66%] h-[80%] bg-bgPrimary  mt-[6rem] rounded-lg">
         <main className="w-[100%] h-[100%] flex">
           <section className="w-[50%] h-[100%] flex flex-col items-center">
-            <h1 className="text-textPrimary text-[28px] font-bold mt-12">
+            <h1 className="text-textPrimary text-[26px] font-bold mt-12">
               Sign in as an existing{" "}
               <span className="text-primary">user...</span>
             </h1>
@@ -153,7 +153,7 @@ const SignIn = ({}) => {
                 );
               })}
             </div>
-            <h1 className="text-textPrimary text-[28px] font-bold mt-12">
+            <h1 className="text-textPrimary text-[26px] font-bold mt-12">
               Sign in as an admin <span className="text-primary">user...</span>
             </h1>
             <div className="w-[80%] h-[30%] flex justify-around  mt-8">

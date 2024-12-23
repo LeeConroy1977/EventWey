@@ -7,12 +7,39 @@ import {
 } from "../reducers/CreateUserReducer";
 import {
   createUser,
-  fetchAllTags,
-  fetchAllUser,
   updateUser,
-} from "../../utils/api";
+  fetchAllUsers,
+} from "../../utils/api/user-api";
+import { fetchAllTags } from "../../utils/api/categories-api";
 import { useUser } from "./UserContext";
 import { useNavigate } from "react-router-dom";
+
+interface User {
+  id: string;
+  email: string;
+  username: string;
+  password: string;
+  googleId: string;
+  authMethod: string;
+  profileBackgroundImage: string;
+  profileImage: string;
+  aboutMe: string;
+  tags: string[];
+  connections: string[];
+  groups: string[];
+  userEvents: string[];
+  messages: string[];
+  groupAdmin: string[];
+  notifications: string[];
+  viewEventsStatus: string;
+  viewConnectionsStatus: string;
+  viewGroupsStatus: string;
+  viewTagsStatus: string;
+  viewProfileImage: string;
+  viewBioStatus: string;
+  aboutMeStatus: string;
+  role: string;
+}
 
 const CreateUserContext = createContext<{
   state: CreateUserState;
@@ -99,7 +126,7 @@ export const CreateUserProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const checkIfUserExists = async (email) => {
     try {
-      const users = await fetchAllUser();
+      const users = await fetchAllUsers();
       const existingUser = users.some((user) => user.email === email);
       return existingUser;
     } catch (error) {

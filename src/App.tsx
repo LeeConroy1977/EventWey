@@ -1,21 +1,10 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import AppLayout from "./layouts/AppLayout";
-import LandingPage from "./pages/LandingPage";
-import UserLayout from "./layouts/UserLayout";
-import Messages from "./pages/Messages";
-import Notifications from "./pages/Notifications";
-import Events from "./pages/Events";
-import Groups from "./pages/Groups";
-import UserEvents from "./pages/UserEvents";
-import UserConnection from "./pages/UserConnection";
-import ConnectionRequests from "./pages/ConnectionRequests";
-import UserGroups from "./pages/UserGroups";
-import Event from "./pages/Event";
-import GroupLayout from "./layouts/GroupLayout";
-import GroupDetails from "./pages/GroupDetails";
-import GroupEvents from "./pages/GroupEvents";
-import GroupMembers from "./pages/GroupMembers";
-import VistorLayout from "./layouts/VistorLayout";
+import Messages from "./routes/messages/Messages";
+import Notifications from "./routes/notifications/Notifications";
+import UserEvents from "./routes/user-events/UserEvents";
+import ConnectionRequests from "./routes/connection-requests/ConnectionRequests";
+import Event from "./routes/event/Event";
+import GroupLayout from "./layouts/group-layout/GroupLayout";
 import ConnectionLayout from "./layouts/connection-layout/ConnectionLayout";
 import ConnectionEvents from "./routes/connection-events/ConnectionEvents";
 import ConnectionGroups from "./routes/connection-groups/ConnectionGroups";
@@ -29,12 +18,22 @@ import CreateGroup from "./routes/create-group/CreateGroup";
 import CreateUser from "./routes/sign-up/CreateUser";
 import SignIn from "./routes/sign-in/SignIn";
 import PrivateRoute from "./PrivateRoute";
-import { useUser } from "./contexts/UserContext";
 import CreateEvent from "./routes/create-event/CreateEvent";
+import AppLayout from "./layouts/app-layout/AppLayout";
+import LandingPage from "./routes/landing-page/LandingPage";
+import VistorLayout from "./layouts/vistor-layout/VistorLayout";
+import UserLayout from "./layouts/user-layout/UserLayout";
+import UserGroups from "./routes/user-groups/UserGroups";
+import UserConnection from "./routes/user-connections/UserConnection";
+import GroupDetails from "./routes/group-details/GroupDetails";
+import GroupEvents from "./routes/group-events/GroupEvents";
+import GroupMembers from "./routes/group-members/GroupMembers";
+import Events from "./routes/events/Events";
+import Groups from "./routes/groups/Groups";
+import { useUser } from "./contexts/UserContext";
 
 function App() {
   const { user } = useUser();
-
 
   return (
     <div className="w-[100%] min-h-screen font-poppins">

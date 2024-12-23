@@ -1,32 +1,67 @@
 import React, { createContext, useContext, useState } from "react";
 
-import { fetchAllUser, SignInUser } from "../../utils/api";
-import { useUser } from "./UserContext";
-import { useNavigate } from "react-router-dom";
+import { fetchAllUsers } from "../../utils/api/user-api";
+import { SignInUser } from "../../utils/api/auth-api";
 
-const SignInContext = createContext<{}>({});
+interface User {
+  id: string;
+  email: string;
+  username: string;
+  password: string;
+  googleId: string;
+  authMethod: string;
+  profileBackgroundImage: string;
+  profileImage: string;
+  aboutMe: string;
+  tags: string[];
+  connections: string[];
+  groups: string[];
+  userEvents: string[];
+  messages: string[];
+  groupAdmin: string[];
+  notifications: string[];
+  viewEventsStatus: string;
+  viewConnectionsStatus: string;
+  viewGroupsStatus: string;
+  viewTagsStatus: string;
+  viewProfileImage: string;
+  viewBioStatus: string;
+  aboutMeStatus: string;
+  role: string;
+}
+
+interface SignInContextType {
+  isEmailValid: boolean | null;
+  isPasswordValid: boolean | null;
+  loading: boolean;
+  error: string | null;
+  checkIfUserExists: (email: string) => Promise<boolean | null>;
+  handleEmailValidation: (email: string, regex: RegExp) => void;
+  handlePasswordValidation: (password: string, regex: RegExp) => void;
+  handleValidation: (email: boolean, password: boolean) => void;
+  isFormValid: boolean | null;
+  handleFindUser: (email: string, password: string) => Promise<User | null>;
+}
+
+const SignInContext = createContext<SignInContextType | undefined>(undefined);
 
 export const SignInProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isEmailValid, setIsEmailValid] = useState<boolean | null>(null);
   const [isPasswordValid, setIsPasswordValid] = useState<boolean | null>(null);
   const [isFormValid, setIsFormValid] = useState<boolean | null>(null);
 
-  const { user, setUser } = useUser();
-
-  const navigate = useNavigate();
-
-  const checkIfUserExists = async (email: string,) => {
+  const checkIfUserExists = async (email: string) => {
     try {
-      const users = await fetchAllUser();
-      const existingUser = users.some((user) => user.email === email);
+      const users = await fetchAllUsers();
+      const existingUser = users.some((user: User) => user.email === email);
       return existingUser;
     } catch (error) {
       console.error("Error fetching users:", error);
+      setError("Failed to check if user exists.");
       return null;
     }
   };
@@ -34,49 +69,43 @@ export const SignInProvider: React.FC<{ children: React.ReactNode }> = ({
   const handleFindUser = async (email: string, password: string) => {
     try {
       const user = await SignInUser(email, password);
-     
-      return user;
+      return user as User | null;
     } catch (error) {
       console.error("Error fetching user:", error);
+      setError("Failed to fetch user.");
       return null;
     }
   };
 
-
-  function handleEmailValidation(email, regex) {
+  const handleEmailValidation = (email: string, regex: RegExp) => {
     if (email.length === 0) {
       setIsEmailValid(null);
     }
     if (regex.test(email)) {
       setIsEmailValid(true);
-    }
-    if (!isEmailValid && email.length < 2) {
-      setIsEmailValid(null);
-    }
-    if (!regex.test(email)) {
+    } else if (email.length > 0 && !regex.test(email)) {
       setIsEmailValid(false);
     }
-  }
+  };
 
-  function handlePasswordValidation(password, regex) {
+  const handlePasswordValidation = (password: string, regex: RegExp) => {
     if (password.length < 8) {
       setIsPasswordValid(null);
     }
-
     if (regex.test(password)) {
       setIsPasswordValid(true);
-    } else if (!isPasswordValid && password.length < 40) {
-      setIsPasswordValid(null);
-    } else if (!regex.test(password)) {
+    } else if (password.length >= 8 && !regex.test(password)) {
       setIsPasswordValid(false);
     }
-  }
+  };
 
-  function handleValidation(email, password) {
-    if (email === true && password === true) {
+  const handleValidation = (emailValid: boolean, passwordValid: boolean) => {
+    if (emailValid && passwordValid) {
       setIsFormValid(true);
+    } else {
+      setIsFormValid(false);
     }
-  }
+  };
 
   return (
     <SignInContext.Provider
@@ -90,7 +119,7 @@ export const SignInProvider: React.FC<{ children: React.ReactNode }> = ({
         handlePasswordValidation,
         handleValidation,
         isFormValid,
-        handleFindUser
+        handleFindUser,
       }}
     >
       {children}
@@ -98,4 +127,10 @@ export const SignInProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
-export const useSignInContext = () => useContext(SignInContext);
+export const useSignInContext = (): SignInContextType => {
+  const context = useContext(SignInContext);
+  if (!context) {
+    throw new Error("useSignInContext must be used within a SignInProvider");
+  }
+  return context;
+};

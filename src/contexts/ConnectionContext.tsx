@@ -1,16 +1,15 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-
-import { useUser } from "./UserContext";
 import {
   fetchConnectionById,
   fetchConnectionConnections,
   fetchConnectionEvents,
   fetchConnectionGroups,
-} from "../../utils/api";
+} from "../../utils/api/connection-api";
 
 interface PriceBand {
-  type: "Early bird" | "Standard" | "Standing" | "Seated" | "VIP";
+  type: "Early bird" | "Standard" | "VIP";
   price: string;
+  ticketCount: number;
 }
 
 interface Location {
@@ -27,7 +26,7 @@ interface Event {
   groupName: string;
   groupId: number;
   duration: string;
-  priceBands: PriceBand;
+  priceBands: PriceBand[];
   going: number;
   capacity: number;
   availability: number;
@@ -43,7 +42,7 @@ interface Group {
   id: string;
   name: string;
   image: string;
-  groupAdmin: number;
+  groupAdmin: string[];
   description: string[];
   openAccess: boolean;
   location: Location;
@@ -51,7 +50,7 @@ interface Group {
   eventsCount: number;
   members: string[];
   events: string[];
-  messages: any[];
+  messages: string[];
   category: string;
 }
 
@@ -59,9 +58,12 @@ interface User {
   id: string;
   email: string;
   username: string;
+  password: string;
+  googleId: string;
+  authMethod: string;
   profileBackgroundImage: string;
   profileImage: string;
-  bio: string;
+  aboutMe: string;
   tags: string[];
   connections: string[];
   groups: string[];
@@ -69,24 +71,29 @@ interface User {
   messages: string[];
   groupAdmin: string[];
   notifications: string[];
-  showEvents: "public" | "private";
-  showConnections: "public" | "private";
+  viewEventsStatus: string;
+  viewConnectionsStatus: string;
+  viewGroupsStatus: string;
+  viewTagsStatus: string;
+  viewProfileImage: string;
+  viewBioStatus: string;
+  aboutMeStatus: string;
+  role: string;
 }
 
 interface ConnectionContextType {
   connection: User | null;
   setConnection: (user: User) => void;
-  connectionGroups: Group | null;
-  setConnectionGroups: (group: Group) => void;
-  connectionEvents: Event | null;
-  setConnectionEvent: (Event: Group) => void;
-  connectionConnections: User | null;
-  setConnectionConnections: (user: User) => void;
-  getConnectionById: (id: number) => Promise<void>;
-  // getGroupById: (id: number) => Promise<void>;
-  getConnectionConnections: (id: number) => Promise<void>;
-  getConnectionEvents: (id: number) => Promise<void>;
-  getConnectionGroups: (id: number) => Promise<void>;
+  connectionGroups: Group[] | null;
+  setConnectionGroups: (groups: Group[]) => void;
+  connectionEvents: Event[] | null;
+  setConnectionEvents: (events: Event[]) => void;
+  connectionConnections: User[] | null;
+  setConnectionConnections: (users: User[]) => void;
+  getConnectionById: (id: string) => Promise<void>;
+  getConnectionConnections: (id: string) => Promise<void>;
+  getConnectionEvents: (id: string) => Promise<void>;
+  getConnectionGroups: (id: string) => Promise<void>;
   loading: boolean;
   error: string | null;
 }
@@ -107,9 +114,9 @@ export const ConnectionProvider: React.FC<ConnectionProviderProps> = ({
   const [connectionGroups, setConnectionGroups] = useState<Group[] | null>(
     null
   );
-  const [connectionConnections, setConnectionConnections] = useState<User[]>(
-    []
-  );
+  const [connectionConnections, setConnectionConnections] = useState<
+    User[] | null
+  >(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -188,7 +195,7 @@ export const ConnectionProvider: React.FC<ConnectionProviderProps> = ({
 export const useConnection = (): ConnectionContextType => {
   const context = useContext(ConnectionContext);
   if (!context) {
-    throw new Error("useEvent must be used within a ConnectionProvider");
+    throw new Error("useConnection must be used within a ConnectionProvider");
   }
   return context;
 };

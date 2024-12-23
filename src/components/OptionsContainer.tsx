@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
 import SelectComponent from "../reuseable-components/SelectComponent";
-import {
-  eventGroupArr,
-  categoriesArr,
-  dateArr,
-  sortByArr,
-} from "../../data/options";
+import { categoriesArr, dateArr, sortByArr } from "../../data/options";
 import { NavLink, useLocation, useSearchParams } from "react-router-dom";
-import ConnectionsOptions from "./ConnectionsOptions";
+import ConnectionsOptions from "../layouts/connection-layout/ConnectionsOptions";
 import { useUser } from "../contexts/UserContext";
 
 const OptionsContainer: React.FC = () => {

@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-
-import { fetchAllEvents } from "../../utils/api";
+import { fetchAllEvents } from "../../utils/api/events-api";
 
 interface PriceBand {
-  type: "Early bird" | "Standard" | "Standing" | "Seated" | "VIP";
+  type: "Early bird" | "Standard" | "VIP";
   price: string;
+  ticketCount: number;
 }
 
 interface Location {
@@ -21,7 +21,7 @@ export interface Event {
   groupName: string;
   groupId: number;
   duration: string;
-  priceBands: PriceBand;
+  priceBands: PriceBand[];
   going: number;
   capacity: number;
   availability: number;

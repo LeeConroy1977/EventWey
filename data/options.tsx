@@ -96,8 +96,7 @@ export const dateArr = [
 ];
 
 export const sortByArr = [
-  // { id: 1, name: "sort by", title: "Sort By" },
   { id: 2, name: "latest", title: "Latest" },
   { id: 3, name: "popular", title: "Popular" },
-  { id: 4, name: "connections", title: "Connections" },
+  { id: 3, name: "free", title: "Free" },
 ];
