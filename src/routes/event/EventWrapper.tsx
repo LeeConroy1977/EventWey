@@ -2,9 +2,14 @@ import { format } from "date-fns";
 import { useUser } from "../../contexts/UserContext";
 import { useParams } from "react-router-dom";
 import { useEventModal } from "../../contexts/EventModelContext";
+import { useScreenWidth } from "../../contexts/ScreenWidthContext";
+import EventOptionsContainer from "../../layouts/user-layout/EventOptionsContainer";
+import useHandleGroupClick from "../../hooks/useHandleGroupClick";
 
 const EventWrapper = ({ event }) => {
   const { user, isUserAttendingEvent } = useUser();
+  const { isMobile } = useScreenWidth();
+  const handleGroupClick = useHandleGroupClick();
   const { id } = useParams();
   const {
     image,
@@ -20,6 +25,7 @@ const EventWrapper = ({ event }) => {
     tags,
     location,
     startTime,
+    groupId,
   } = event;
   const { openEventModal } = useEventModal();
 
@@ -46,49 +52,67 @@ const EventWrapper = ({ event }) => {
   const eventPrices = getPriceRange(priceBands);
 
   return (
-    <div className="w-[100%] h-[21rem] flex items-center justify-center  bg-bgPrimary border-b-2 border-gray-200 p-8">
-      <div className=" w-[66%] h-[100%] flex items-center justify-center  mt-6 ">
-        <div className="h-[100%] w-[50%] flex items-center justify-center ">
-          <img src={image} alt="" className="w-[90%] h-[92%] rounded-lg " />
+    <div className="w-[100%] h-auto tablet:h-[18rem] desktop:h-[21rem] xl-screen:h-[25rem] flex flex-col tablet:flex-row items-center justify-center  bg-bgPrimary border-b-2 border-gray-200 p-6 desktop:p-8">
+      <div className=" w-full tablet:w-[94%] desktop:w-[66%] h-[100%] flex flex-col tablet:flex-row items-center justify-center mt-0  tablet:mt-6 ">
+        <div className="h-[100%] w-full tablet:w-[50%] flex items-center justify-center ">
+          <img
+            src={image}
+            alt=""
+            className="w-full h-[100%] tablet:w-[90%] tablet:h-[92%] rounded-lg "
+          />
         </div>
-        <div className="w-[50%] h-[100%] flex flex-col items-center justify-start pl-16 p-4">
-          <p className="text-[14px] font-meduim mt-1 mr-auto">
+        <div className="w-full tablet:w-[50%] h-[100%] flex flex-col items-center justify-start pl-0 p-0 tablet:pl-12 desktop:pl-16 tablet:p-2">
+          <p className="text-[12px] desktop:text-[14px] xl-screen:text-[18px] font-semibold text-secondary mt-4 tablet:mt-3 mr-auto">
             {formattedDate} @ {startTime}
           </p>
-          <h1 className="text-[26px] font-bold  text-[#2C3E50] mt-2 mr-auto">
+
+          <h1 className="text-[20px] desktop:text-[26px] xl-screen:text-[30px] font-bold  text-[#2C3E50] mt-2 mr-auto">
             {title}
           </h1>
-          <p className="text-[14px] font-semibold mt-1 mr-auto">
-            Hosted by:{" "}
-            <span className="font-semibold text-primary ml-2">
+          {isMobile && (
+            <p className="text-[12px] desktop:text-[14px]  font-semibold mt-2 mr-auto">
+              Hosted by:
+              <span
+                onClick={() => handleGroupClick(groupId)}
+                className="font-semibold text-primary ml-2"
+              >
+                {" "}
+                {groupName}
+              </span>
+            </p>
+          )}
+
+          <p className="text-[12px] desktop:text-[14px] xl-screen:text-[18px] font-semibold mt-2 mr-auto">
+            Location:
+            <span className="font-semibold text-textPrimary desktop:text-primary ml-2">
               {" "}
-              {groupName}
+              {location.placename}
             </span>
           </p>
-          <p
-            className="mt-4 text-[1
-          14px] font-semibold mr-auto"
-          >
+          <p className="mt-3 desktop:mt-3 text-[12px] desktop:text-[14px] xl-screen:text-[16px] font-semibold mr-auto">
             {description[0]}
           </p>
-          <button
-            onClick={
-              isAttending
-                ? () => handleCancelAttendance()
-                : free
-                ? () => handleJoinEvent()
-                : () => handleGetTickets()
-            }
-            className={`w-[120px] h-[40px] mt-auto mb-2 mr-auto  flex items-center justify-center text-[11px] font-semibold rounded-lg ${
-              isAttending
-                ? "bg-bgPrimary border-2 border-primary text-primary"
-                : free
-                ? "bg-secondary text-white"
-                : "bg-secondary text-white"
-            }`}
-          >
-            {isAttending ? "Going" : free ? "Join Event" : "Get Tickets"}
-          </button>
+          {isMobile && <EventOptionsContainer />}
+          {!isMobile && (
+            <button
+              onClick={
+                isAttending
+                  ? () => handleCancelAttendance()
+                  : free
+                  ? () => handleJoinEvent()
+                  : () => handleGetTickets()
+              }
+              className={`w-[110px]  desktop:w-[120px] tablet:h-[34px] desktop:h-[40px] xl-screen:w-[140px] xl-screen:h-[44px] mt-auto mb-1 mr-auto  flex items-center justify-center tablet:text-[10px] desktop:text-[11px] xl-screen:text-[12px] font-semibold rounded-lg tablet:mb-3 desktop:mb-1 ${
+                isAttending
+                  ? "bg-bgPrimary border-2 border-primary text-primary"
+                  : free
+                  ? "bg-secondary text-white"
+                  : "bg-secondary text-white"
+              }`}
+            >
+              {isAttending ? "Going" : free ? "Join Event" : "Get Tickets"}
+            </button>
+          )}
         </div>
       </div>
     </div>

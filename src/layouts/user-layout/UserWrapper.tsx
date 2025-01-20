@@ -12,8 +12,8 @@ const UserWrapper = () => {
     return handleCreateEventClick();
   }
   return (
-    <div className="w-[100%] h-[9rem] flex items-center justify-center   bg-[#F6F7F8]">
-      <div className=" w-[66%] h-[100%] flex items-center justify-center">
+    <div className="w-[100%] tablet:h-[10rem] desktop:h-[10rem] xl-screen:h-[13rem] flex items-center justify-center   bg-[#F6F7F8]">
+      <div className=" tablet:w-[90%] desktop:w-[66%] h-[100%] flex items-center justify-center">
         <h1 className="text-[26px] font-bold ml-6 text-[#2C3E50]">
           Welcome, <span className="text-[#5D9B9B]">{firstName}</span>
         </h1>

@@ -16,6 +16,7 @@ import { SignInProvider } from "./contexts/SignInContext";
 import { ModalProvider } from "./contexts/ModalContext";
 import { CreateEventProvider } from "./contexts/CreateEventContext";
 import { EventModalProvider } from "./contexts/EventModelContext";
+import { ScreenWidthProvider } from "./contexts/ScreenWidthContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 
@@ -35,7 +36,9 @@ root.render(
                           <CreateEventProvider>
                             <CreateUserProvider>
                               <SignInProvider>
-                                <App />
+                                <ScreenWidthProvider>
+                                  <App />
+                                </ScreenWidthProvider>
                               </SignInProvider>
                             </CreateUserProvider>
                           </CreateEventProvider>

@@ -4,9 +4,24 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Base Styles */
 body {
   @apply overflow-x-hidden;
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
 }
+
+html,
+body,
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 input:focus,
 textarea:focus,
 select:focus,
@@ -14,6 +29,7 @@ button:focus {
   outline: none;
 }
 
+/* Root CSS Variables */
 :root {
   --primary-color: #5d9b9b;
   --secondary-color: #d66e6e;
@@ -22,4 +38,46 @@ button:focus {
   --text-primary: #2c3e50;
   --text-secondary: #fff;
   --text-tertiary: #7f8c8d;
+}
+
+@layer utilities {
+  .scrollbar-primary::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  .scrollbar-primary::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 6px;
+  }
+
+  .scrollbar-primary::-webkit-scrollbar-thumb:hover {
+    background-color: darken(var(--primary-color), 10%);
+  }
+
+  .scrollbar-primary::-webkit-scrollbar-track {
+    background-color: var(--bg-secondary);
+    border-radius: 6px;
+  }
+
+  .scrollbar-primary {
+    scrollbar-color: var(--primary-color) var(--bg-secondary);
+    scrollbar-width: thin;
+  }
+}
+
+/* Utility Classes */
+.fixed-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 5rem;
+  background-color: var(--primary-color);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }

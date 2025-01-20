@@ -1,5 +1,9 @@
+import { useScreenWidth } from "../../contexts/ScreenWidthContext";
+
 const SignInUserCard = ({ user, handleClick }) => {
   const { id, profileBackgroundImage, profileImage, username, bio } = user;
+  const { isMobile, isTablet, isDesktop, isLargeDesktop, isExtraLargeDesktop } =
+    useScreenWidth();
   return (
     <div className="w-[30%] h-full bg-bgPrimary rounded-lg flex flex-col items-center justify-start  mt-1 border-[1px] border-gray-200 ">
       <div
@@ -12,20 +16,24 @@ const SignInUserCard = ({ user, handleClick }) => {
           alt=""
         />
         <img
-          className="absolute top-7 w-[64px] h-[64px] rounded-full border-2 border-textPrimary"
+          className="absolute mobile:top-6  desktop:top-7 mobile:w-[64px] mobile:h-[64px] tablet:w-[60px] tablet:h-[60px] rounded-full border-2 border-textPrimary"
           src={profileImage}
           alt=""
         />
       </div>
-      <p className="mt-9 text-[12px] font-semibold text-textPrimary">
+      <p className="mobile:mt-11 tablet:mt-10 mobile:text-[10px] tablet:text-[10px] desktop:text-[12px] font-semibold text-textPrimary">
         {username}
       </p>
-      <p className="mt-2 px-4 text-[9px] font-semibold text-textPrimary">
-        {bio}
-      </p>
+      {!isMobile && (
+        <p className="tablet:mt-1 desktop:mt-2 px-4 tablet:text-[5px] desktop:text-[9px] font-semibold text-textPrimary text-center">
+          {bio}
+        </p>
+      )}
+
       <button
         onClick={() => handleClick(id)}
-        className="w-[80%] py-1 flex justify-center items-center mt-auto mb-3 text-primary text-[10px] font-semibold border-2 border-primary rounded-lg bg-bgPrimary"
+        className="w-[80%] py-1 flex justify-center items-center mt-auto mb-3 text-primary mobile:text-[9px] 
+         desktop:text-[10px] font-semibold mobile:border-2 tablet:border-[1px] desktop:border-2 border-primary rounded-lg bg-bgPrimary"
       >
         Sign In
       </button>

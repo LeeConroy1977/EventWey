@@ -3,15 +3,17 @@ import { sortByPopularity, sortByDate, sortByFree } from "../fakeEventSorting";
 
 import { eventsDateFilter } from "../eventDateFilter";
 
+const API = "https://eventwey.glitch.me";
+
 export const fetchAllEvents = async (params: {
   category?: string;
   date?: string;
   sortBy?: string;
 }): Promise<any[]> => {
   try {
-    const response = await axios.get("http://localhost:3000/events");
+    const response = await axios.get(`${API}/events`);
     let filteredData = response.data;
-
+    console.log(filteredData, "events data glitch");
     if (params.category) {
       filteredData = filteredData.filter(
         (event: any) => event.category === params.category
@@ -39,7 +41,7 @@ export const fetchAllEvents = async (params: {
 
 export const fetchEventById = async (id: string): Promise<any> => {
   try {
-    const response = await axios.get(`http://localhost:3000/events/${id}`);
+    const response = await axios.get(`${API}/events/${id}`);
     const event = response.data;
 
     console.log("Event Data:", event);
@@ -56,9 +58,7 @@ export const fetchEventById = async (id: string): Promise<any> => {
 
 export const patchEvent = async (id: string, patchObj: any): Promise<any> => {
   try {
-    const { data: event } = await axios.get(
-      `http://localhost:3000/events/${id}`
-    );
+    const { data: event } = await axios.get(`${API}/events/${id}`);
 
     const patchedEvent = {
       ...event,
@@ -70,7 +70,7 @@ export const patchEvent = async (id: string, patchObj: any): Promise<any> => {
           : event.availability,
     };
     const { data: updatedEvent } = await axios.patch(
-      `http://localhost:3000/events/${id}`,
+      `${API}/events/${id}`,
       patchedEvent
     );
 
@@ -83,10 +83,7 @@ export const patchEvent = async (id: string, patchObj: any): Promise<any> => {
 
 export const postEvent = async (eventData): Promise<any> => {
   try {
-    const response = await axios.post(
-      "http://localhost:3000/events",
-      eventData
-    );
+    const response = await axios.post(`${API}/events`, eventData);
 
     return response.data;
   } catch (error) {
@@ -97,9 +94,7 @@ export const postEvent = async (eventData): Promise<any> => {
 
 export const fetchEventConnections = async (id: string): Promise<User[]> => {
   try {
-    const eventResponse = await axios.get<Event>(
-      `http://localhost:3000/events/${id}`
-    );
+    const eventResponse = await axios.get<Event>(`${API}/events/${id}`);
     const event = eventResponse?.data;
 
     if (!event || !Array.isArray(event.attendees)) {
@@ -108,9 +103,7 @@ export const fetchEventConnections = async (id: string): Promise<User[]> => {
       );
     }
 
-    const usersResponse = await axios.get<User[]>(
-      "http://localhost:3000/users"
-    );
+    const usersResponse = await axios.get<User[]>(`${API}/users`);
     const users = usersResponse.data;
 
     if (!Array.isArray(users)) {
@@ -130,7 +123,7 @@ export const fetchEventConnections = async (id: string): Promise<User[]> => {
 
 export const fetchEventGroupById = async (id: string): Promise<any> => {
   try {
-    const eventResponse = await axios.get(`http://localhost:3000/events/${id}`);
+    const eventResponse = await axios.get(`${API}/events/${id}`);
     const event = eventResponse.data;
 
     console.log("Event Data:", event);
@@ -140,9 +133,7 @@ export const fetchEventGroupById = async (id: string): Promise<any> => {
 
     const groupId = String(event.groupId);
 
-    const groupResponse = await axios.get(
-      `http://localhost:3000/groups/${groupId}`
-    );
+    const groupResponse = await axios.get(`${API}/groups/${groupId}`);
 
     return groupResponse.data;
   } catch (error) {
@@ -153,7 +144,7 @@ export const fetchEventGroupById = async (id: string): Promise<any> => {
 
 export const fetchSortedEvents = async (sortBy: string): Promise<any[]> => {
   try {
-    const eventsResponse = await axios.get("http://localhost:3000/events");
+    const eventsResponse = await axios.get(`${API}/events`);
     const events = eventsResponse.data;
 
     const randomArray = (array: any[]) => {

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useConnections } from "../../contexts/ConnectionsContext";
 import { NavLink } from "react-router-dom";
+import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 
 const ConnectionsOptions = () => {
   const [input, setInput] = useState("");
+  const { isMobile } = useScreenWidth();
   const {
     connections,
     getAllConnections,
@@ -18,16 +20,19 @@ const ConnectionsOptions = () => {
   }, [input]);
 
   return (
-    <div className="w-[100%] h-[100%] flex items-center justify-between ml-6">
-      <input
-        type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="Search connections..."
-        className="w-[50%] h-[54%] p-2 pl-6 ml-6 flex items-center justify-start bg-bgSecondary rounded-full  mr-auto border-[1px] border-gray-200 text-[11px] text-textPrimary placeholder:text-[10px] focus:outline-none focus:ring-0"
-      />
+    <div className="w-[100%] h-[100%] flex items-center justify-between   desktop:ml-6">
+      {!isMobile && (
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Search connections..."
+          className="w-[50%] h-[54%] p-2 pl-6 ml-6 flex items-center justify-start bg-bgSecondary rounded-full  mr-auto border-[1px] border-gray-200 text-[11px] text-textPrimary placeholder:text-[10px] focus:outline-none focus:ring-0"
+        />
+      )}
+
       <nav>
-        <ul className="flex items-center">
+        <ul className="flex items-center mr-auto desktop:mr-0 text-[13px] desktop:text-[14px]">
           <NavLink
             end
             to={"/user/my-connections"}
@@ -37,7 +42,7 @@ const ConnectionsOptions = () => {
                 : "font-semibold text-textPrimary"
             }
           >
-            <li className="ml-auto mr-11  text-[14px] cursor-pointer ">
+            <li className=" mr-6 desktop:ml-auto desktop:mr-11   cursor-pointer ">
               Connections
             </li>
           </NavLink>
@@ -49,7 +54,7 @@ const ConnectionsOptions = () => {
                 : "font-semibold text-textPrimary"
             }
           >
-            <li className="ml-auto mr-11  text-[14px]  cursor-pointer  ">
+            <li className="desktop:ml-auto desktop:mr-11   cursor-pointer  ">
               View Requests
             </li>
           </NavLink>

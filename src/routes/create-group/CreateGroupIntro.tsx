@@ -1,22 +1,23 @@
 import mainImage from "../../assets/images/main_2.jpg";
 import Button from "../../reuseable-components/Button";
 import { useCreateGroupContext } from "../../contexts/CreateGroupContext";
+import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 
 const CreateGroupIntro = () => {
   const { dispatch } = useCreateGroupContext();
+  const { isMobile } = useScreenWidth();
 
   function handleNextClick() {
     dispatch({
       type: "START_GROUP_CREATION",
     });
-    console.log("this ranssssssssssssssss");
   }
 
   return (
-    <div className="flex flex-col items-center w-[66%] h-[80%] bg-bgPrimary p-12 mt-[6rem] rounded-lg">
-      <main className="w-full h-[60%] flex  items-center">
-        <section className="w-[60%] h-[100%]">
-          <h1 className="text-textPrimary text-[32px] font-bold mt-9">
+    <div className="flex flex-col items-center mobile:w-[100%] tablet:w-[94%] desktop:w-[66%] mobile:h-screen tablet:h-[74%] desktop:h-[80%] bg-bgPrimary mobile:p-6 tablet:p-12 tablet:mt-[4rem] desktop:mt-[4.4rem] rounded-lg">
+      <main className="w-full  tablet:h-[60%] flex mobile:flex-col tablet:flex-row items-center">
+        <section className="mobile:w-[100%] tablet:w-[60%] tablet:h-[100%]">
+          <h1 className="text-textPrimary mobile:text-[26px] tablet:text-[24px]  desktop:text-[32px] font-bold mobile:mt-2 tablet:mt-4 desktop:mt-9">
             Start a <span className="text-primary">Group</span>. Build
             Community.
             <br />
@@ -25,7 +26,7 @@ const CreateGroupIntro = () => {
             </span>{" "}
           </h1>
 
-          <p className="text-[16px] text-textPrimary font-medium mt-8 w-[90%]">
+          <p className="mobile:text-[14px] tablet:text-[14px] desktop:text-[16px] text-textPrimary font-medium mobile:mt-6 tablet:mt-8 mobile:w-[100%]  tablet:w-[90%]">
             Whether you’re passionate about a cause, a hobby, or bringing people
             together, starting a group is the perfect way to create meaningful
             connections. Gather like-minded individuals, host engaging events,
@@ -33,29 +34,33 @@ const CreateGroupIntro = () => {
             great idea—let's make it happen!
           </p>
         </section>
-        <section className="w-[50%] h-[100%]">
-          <img
-            src={mainImage}
-            alt=""
-            className=" w-[100%] h-[80%] rounded-lg "
-          />
-        </section>
+        {!isMobile && (
+          <section className="w-[50%] h-[100%]">
+            <img
+              src={mainImage}
+              alt=""
+              className=" w-[100%] tablet:h-[100%] desktop:h-[80%] rounded-lg "
+            />
+          </section>
+        )}
       </main>
 
-      <div className="w-[80%] flex items-center justify-between mt-auto mb-12 ">
-        <h2 className="text-textPrimary text-[26px] font-bold ">
+      <div className="mobile:w-[100%] tablet:w-[88%] desktop:w-[80%] xl-screen:w-[70%] flex mobile:flex-col tablet:flex-row items-center justify-between mobile:mt-8 tablet:mt-auto tablet:mb-12 ">
+        <h2 className="text-textPrimary mobile:text-[18px] tablet:text-[20px]  desktop:text-[26px] font-bold ">
           Fill in the <span className="text-secondary">details</span>. Await
           <span className="text-primary"> approval</span>. You're good to go...
         </h2>
-        <Button
-          bgColour="bg-secondary"
-          px="px-6"
-          py="py-3"
-          fontSize="text-[16px]"
-          handleClick={handleNextClick}
-        >
-          Start a Group
-        </Button>
+        <div className="mobile:mt-10 tablet:mt-0 mobile:mb-4 tablet:mb-0  ">
+          <Button
+            bgColour="bg-secondary"
+            px="px-8"
+            py="py-4"
+            fontSize="text-[16px]"
+            handleClick={handleNextClick}
+          >
+            Start a Group
+          </Button>
+        </div>
       </div>
     </div>
   );

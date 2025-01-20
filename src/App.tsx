@@ -36,7 +36,7 @@ function App() {
   const { user } = useUser();
 
   return (
-    <div className="w-[100%] min-h-screen font-poppins">
+    <div className="w-screen min-h-screen font-poppins">
       =
       <Routes>
         <Route path="/" element={<AppLayout />}>

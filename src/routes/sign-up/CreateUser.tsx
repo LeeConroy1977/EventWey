@@ -1,4 +1,3 @@
-
 import { useCreateUserContext } from "../../contexts/CreateUserContext";
 import AddAboutMe from "./AddAboutMe";
 import AddBackgroundImage from "./AddBackgroundImage";
@@ -32,7 +31,7 @@ const CreateUser = () => {
     }
   };
   return (
-    <div className="flex flex-col items-center w-[66%] h-[80%] bg-bgPrimary  mt-[6rem] rounded-lg">
+    <div className="flex flex-col items-center mobile:w-screen mobile:h-screen tablet:w-[80%] desktop:w-[66%] tablet:h-[74%] desktop:h-[80%]  bg-bgPrimary  mobile:mt-0 tablet:mt-[4rem] desktop:mt-[4.4rem] rounded-lg">
       <main className="w-full h-full">{renderStep()}</main>
     </div>
   );

@@ -14,6 +14,16 @@ module.exports = {
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
       },
+      height: {
+        "screen-minus-4rem": "calc(100vh - 4rem)",
+      },
+    },
+    screens: {
+      mobile: "320px",
+      tablet: "640px",
+      laptop: "1020px",
+      desktop: "1600px",
+      "xl-screen": "2400px",
     },
   },
   plugins: [],

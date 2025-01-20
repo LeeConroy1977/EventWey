@@ -5,17 +5,17 @@ import { useEffect } from "react";
 import useHandleGroupClick from "../../hooks/useHandleGroupClick";
 import useHandleEventClick from "../../hooks/useHandleEventClick";
 import HomeEventsCard from "../events/HomeEventsCard";
+import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 
 const UserEvents = () => {
   const { user, userEvents, loading, error, getUserEvents } = useUser();
+  const { isMobile } = useScreenWidth();
   const [searchParams] = useSearchParams();
   const category = searchParams.get("category");
   const date = searchParams.get("date");
   const sortBy = searchParams.get("sortBy");
 
   const handleEventClick = useHandleEventClick();
-
-  console.log("Search Params:", category, date, sortBy);
 
   useEffect(() => {
     const params = {
@@ -27,7 +27,14 @@ const UserEvents = () => {
   }, [category, date, sortBy]);
 
   return (
-    <div className="w-full min-h-screen bg-bgSecondary">
+    <div className="w-full min-h-screen bg-bgSecondary px-6 desktop:px-0 pb-6 ">
+      {isMobile && (
+        <h2 className="text-[14px] font-bold text-textPrimary mb-4 mr-auto mt-4">
+          Your events (
+          <span className="text-primary">{userEvents?.length}</span>)
+        </h2>
+      )}
+
       {userEvents &&
         userEvents.length > 0 &&
         userEvents.map((event) => {

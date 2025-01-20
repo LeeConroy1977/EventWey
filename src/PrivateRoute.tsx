@@ -16,8 +16,6 @@ const PrivateRoute: React.FC<PrivateRouteProps> = () => {
   const handleCreateUserClick = useHandleCreateUserClick();
   const handleSignInClick = useHandleSignInClick();
 
-  console.log("User:", user);
-
   if (!user) {
     showModal(
       <div className="w-[100%] h-[100%] flex flex-col items-center  ">

@@ -23,20 +23,20 @@ const UserConnectionPreview = () => {
   }
 
   return (
-    <div className="w-[100%] h-[450px] flex flex-col rounded-lg bg-white mt-4 p-4">
+    <div className="w-[100%] h-[450px] desktop:h-auto flex flex-col rounded-lg bg-white mt-4 p-4 xl-screen:p-6 desktop:pb-6 xl-screen:pb-8">
       <div className="flex justify-between items-center">
-        <h3 className="font-bold text-textPrimary">
+        <h3 className="font-bold text-textPrimary tablet:text-[14px] desktop:text-[16px] xl-screen:text-[18px]">
           Your Connections (
           <span className="text-primary">{connectionsLength || 0}</span>)
         </h3>
         <p
-          className="text-[12px] font-semibold text-primary cursor-pointer"
+          className="text-[12px] xl-screen:text-[14px] font-semibold text-primary cursor-pointer"
           onClick={handleNavigation}
         >
           Show all
         </p>
       </div>
-      <div className="flex items-start justify-start flex-wrap mt-6 gap-3">
+      <div className="flex items-start justify-start flex-wrap mt-6 xl-screen:mt-8 gap-3 desktop:pl-2 xl-screen:pl-4">
         {connectionPreview.length > 0 &&
           connectionPreview.map((connection, i) => {
             return (

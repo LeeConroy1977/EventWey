@@ -4,9 +4,11 @@ import Button from "../../reuseable-components/Button";
 import { useUser } from "../../contexts/UserContext";
 import signUpImage5 from "../../assets/images/signUp5.jpg";
 import { useCreateGroupContext } from "../../contexts/CreateGroupContext";
+import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 
 const CreateGgroupDescription = () => {
   const { nextStep, newGroup, setNewGroup } = useCreateGroupContext();
+  const { isMobile } = useScreenWidth();
   const [isValidIntro, setIsValidIntro] = useState<boolean | null>(null);
   const [isValidParagraphOne, setIsValidParagraphOne] = useState<
     boolean | null
@@ -106,43 +108,68 @@ const CreateGgroupDescription = () => {
     }
   }
   return (
-    <div className="flex flex-col items-center w-full h-full bg-bgPrimary rounded-lg">
-      <main className="w-full h-full flex">
-        <section className="w-[50%] h-[100%] flex flex-col items-center overflow-hidden">
-          <h1 className="text-textPrimary text-[24px] font-semibold mt-12">
-            Description Preview
-          </h1>
-          <div className="w-[70%] h-[70%] rounded-lg border-[1px] border-primary mt-12 p-6">
-            <div className="text-[13px] font-semibold text-textPrimary mt-6">
-              {intro}
+    <div className="flex flex-col items-center mobile:w-screen mobile:h-screen tablet:w-[100%]  tablet:h-[100%] bg-bgPrimary mobile:mt-0 rounded-lg">
+      <main className="w-[100%] h-[100%] flex mobile:flex-col tablet:flex-row mobile:p-6 tablet:p-0">
+        {!isMobile && (
+          <section className="mobile:w-[100%] tablet:w-[50%] h-[100%] flex flex-col items-center ">
+            <h1 className="text-textPrimary mobile:text-[17px] tablet:text-[20px] desktop:text-[28px] xl-screen:text-[30px] font-bold mobile:mt-2 tablet:mt-6 desktop:mt-12 mobile:mr-auto tablet:mr-0">
+              Description Preview
+            </h1>
+            <div className="w-[70%] h-[70%] rounded-lg border-[1px] border-primary mt-12 p-6">
+              <div className="text-[13px] font-semibold text-textPrimary mt-6">
+                {intro}
+              </div>
+              <div className="text-[13px] font-normal text-textPrimary mt-6">
+                {paragraphOne}
+              </div>
+              <div className="text-[13px] font-normal text-textPrimary mt-6">
+                {paragraphTwo}
+              </div>
+              <div className="text-[13px] font-normal text-textPrimary mt-6">
+                {paragraphThree}
+              </div>
             </div>
-            <div className="text-[13px] font-normal text-textPrimary mt-6">
-              {paragraphOne}
-            </div>
-            <div className="text-[13px] font-normal text-textPrimary mt-6">
-              {paragraphTwo}
-            </div>
-            <div className="text-[13px] font-normal text-textPrimary mt-6">
-              {paragraphThree}
-            </div>
-          </div>
-        </section>
-        <section className="w-[50%] h-[100%] flex flex-col items-center rounded-lg">
-          <h1 className="text-textPrimary text-[32px] font-semibold mt-12">
+          </section>
+        )}
+
+        <section className="mobile:w-[100%] tablet:w-[50%] tablet:h-[100%] flex flex-col items-center ">
+          <h1 className="text-textPrimary mobile:text-[17px] tablet:text-[20px] desktop:text-[28px] xl-screen:text-[30px] font-bold mobile:mt-2 tablet:mt-6 desktop:mt-12 mobile:mr-auto tablet:mr-0">
             Add a group description
           </h1>
-          <h2 className="w-[70%] text-textPrimary text-[16px] font-medium mt-8">
+
+          {isMobile && (
+            <section className="mobile:w-[100%]  h-[400px] flex flex-col items-center ">
+              <h1 className=" mobile:w-[100%] tablet:w-[70%] text-textPrimary mobile:text-[13px] tablet:text-[13px] desktop:text-[16px]  font-medium mobile:mt-6 desktop:mt-8">
+                Description Preview
+              </h1>
+              <div className="w-[100%] h-[70%] rounded-lg border-[1px] border-primary mt-6 p-6">
+                <div className="text-[13px] font-semibold text-textPrimary mt-6">
+                  {intro}
+                </div>
+                <div className="text-[13px] font-normal text-textPrimary mt-6">
+                  {paragraphOne}
+                </div>
+                <div className="text-[13px] font-normal text-textPrimary mt-6">
+                  {paragraphTwo}
+                </div>
+                <div className="text-[13px] font-normal text-textPrimary mt-6">
+                  {paragraphThree}
+                </div>
+              </div>
+            </section>
+          )}
+          <h2 className=" mobile:w-[100%] tablet:w-[70%] text-textPrimary mobile:text-[13px] tablet:text-[13px] desktop:text-[16px]  font-medium mobile:mt-0 tablet:mt-8">
             * Add an intro sentence and optional paragraphs.
           </h2>
-          <div className="w-[70%] flex flex-row items-center justify-between mt-8">
+          <div className="mobile:w-[100%] tablet:w-[70%] flex flex-row items-center justify-between mobile:mt-8 tablet:mt-6">
             <label
               htmlFor="username"
-              className="text-[12px] text-primary font-semibold ml-2 mr-auto "
+              className="mobile:text-[12px] tablet:text-[11px] desktop:text-[12px] xl-screen:text-[14px]  text-primary font-semibold ml-2 mr-auto "
             >
               Intro
             </label>
 
-            <p className="text-[11px] text-secondary font-semibold mr-2 ml-auto">
+            <p className=" mobile:mr-auto tablet:mr-0 tablet:ml-auto mr-2 font-semibold mobile:text-[12px] tablet:text-[11px] desktop:text-[12px] text-secondary">
               {isValidIntro === false ||
               (intro.length < 8 && isIntroBlur) ||
               intro.length > 200 ? (
@@ -153,20 +180,20 @@ const CreateGgroupDescription = () => {
           <textarea
             value={intro}
             type="text"
-            className="w-[70%] h-[3.5rem] border-[2px] border-gray-200 rounded-lg p-6 mt-1 text-[13px]  placeholder:text-[12px] focus:outline-none"
+            className="mobile:w-[100%] tablet:w-[70%] h-[5rem] xl-screen:h-[5.4rem] border-[2px] border-gray-200 rounded-lg p-4 mobile:mt-[1rem] tablet:mt-2  mobile:placeholder:text-[12px] desktop:placeholder:text-[14px] focus:outline-none mobile:text-[14px] desktop:text-[16px]"
             placeholder="Tell us about yourself..."
             onChange={(e) => setIntro(e.target.value)}
             onBlur={() => handleIntroBlur()}
           />
-          <div className="w-[70%] flex flex-row items-center justify-between mt-5">
+          <div className="mobile:w-[100%] tablet:w-[70%] flex flex-row items-center justify-between mobile:mt-8 tablet:mt-4 ">
             <label
               htmlFor="username"
-              className="text-[12px] text-primary font-semibold ml-2 mr-auto "
+              className="mobile:text-[12px] tablet:text-[11px] desktop:text-[12px] xl-screen:text-[14px]  text-primary font-semibold ml-2 mr-auto "
             >
               Paragraph one
             </label>
 
-            <p className="text-[11px] text-secondary font-semibold mr-2 ml-auto">
+            <p className=" mobile:mr-auto tablet:mr-0 tablet:ml-auto mr-2 font-semibold mobile:text-[12px] tablet:text-[11px] desktop:text-[12px] text-secondary">
               {isValidParagraphOne === false ||
               (paragraphOne.length > 500 && paragraphOne !== "") ? (
                 <p>Must be between 8-200 characters</p>
@@ -176,20 +203,20 @@ const CreateGgroupDescription = () => {
           <textarea
             value={paragraphOne}
             type="text"
-            className="w-[70%] h-[5rem] border-[2px] border-gray-200 rounded-lg p-6 mt-1 text-[13px]  placeholder:text-[12px] focus:outline-none"
+            className="mobile:w-[100%] tablet:w-[70%] h-[5rem] xl-screen:h-[5.4rem]  border-[2px] border-gray-200 rounded-lg p-4 mobile:mt-[1rem] tablet:mt-2  mobile:placeholder:text-[12px] desktop:placeholder:text-[14px] focus:outline-none mobile:text-[14px] desktop:text-[16px]"
             placeholder="Add a paragraph..."
             onChange={(e) => setParagraphOne(e.target.value)}
           />
 
-          <div className="w-[70%] flex flex-row items-center justify-between mt-5">
+          <div className="mobile:w-[100%] tablet:w-[70%] flex flex-row items-center justify-between mobile:mt-8 tablet:mt-4">
             <label
               htmlFor="username"
-              className="text-[12px] text-primary font-semibold ml-2 mr-auto "
+              className="mobile:text-[12px] tablet:text-[11px] desktop:text-[12px] xl-screen:text-[14px]  text-primary font-semibold ml-2 mr-auto "
             >
-              Paragraph one
+              Paragraph two
             </label>
 
-            <p className="text-[11px] text-secondary font-semibold mr-2 ml-auto">
+            <p className=" mobile:mr-auto tablet:mr-0 tablet:ml-auto mr-2 font-semibold mobile:text-[12px] tablet:text-[11px] desktop:text-[12px] text-secondary">
               {isValidParagraphTwo === false ||
               (paragraphTwo.length > 500 && paragraphTwo !== "") ? (
                 <p>Must be between 8-200 characters</p>
@@ -199,19 +226,19 @@ const CreateGgroupDescription = () => {
           <textarea
             value={paragraphTwo}
             type="text"
-            className="w-[70%] h-[5rem] border-[2px] border-gray-200 rounded-lg p-6 mt-1 text-[13px] placeholder:text-[12px] focus:outline-none"
+            className="mobile:w-[100%] tablet:w-[70%] h-[5rem] xl-screen:h-[5.4rem]  border-[2px] border-gray-200 rounded-lg p-4 mobile:mt-[1rem] tablet:mt-2  mobile:placeholder:text-[12px] desktop:placeholder:text-[14px] focus:outline-none mobile:text-[14px] desktop:text-[16px]"
             placeholder="Add a paragraph..."
             onChange={(e) => setParagraphTwo(e.target.value)}
           />
-          <div className="w-[70%] flex flex-row items-center justify-between mt-5">
+          <div className="mobile:w-[100%] tablet:w-[70%] flex flex-row items-center justify-between mobile:mt-8 tablet:mt-4">
             <label
               htmlFor="username"
-              className="text-[12px] text-primary font-semibold ml-2 mr-auto "
+              className="mobile:text-[12px] tablet:text-[11px] desktop:text-[12px] xl-screen:text-[14px]  text-primary font-semibold ml-2 mr-auto "
             >
-              Paragraph one
+              Paragraph three
             </label>
 
-            <p className="text-[11px] text-secondary font-semibold mr-2 ml-auto">
+            <p className=" mobile:mr-auto tablet:mr-0 tablet:ml-auto mr-2 font-semibold mobile:text-[12px] tablet:text-[11px] desktop:text-[12px] text-secondary">
               {isValidParagraphThree === false ||
               (paragraphThree.length > 500 && intro !== "") ? (
                 <p>Must be between 8-200 characters</p>
@@ -221,11 +248,11 @@ const CreateGgroupDescription = () => {
           <textarea
             value={paragraphThree}
             type="text"
-            className="w-[70%] h-[5rem] border-[2px] border-gray-200 rounded-lg p-6 mt-1 text-[13px]  placeholder:text-[12px] focus:outline-none"
+            className="mobile:w-[100%] tablet:w-[70%] h-[5rem] xl-screen:h-[5.4rem]  border-[2px] border-gray-200 rounded-lg p-4 mobile:mt-[1rem] tablet:mt-2 mobile:placeholder:text-[12px] desktop:placeholder:text-[14px] focus:outline-none mobile:text-[14px] desktop:text-[16px]"
             placeholder="Add a paragraph..."
             onChange={(e) => setParagraphThree(e.target.value)}
           />
-          <div className="mt-auto mb-12">
+          <div className="mobile:mt-10 tablet:mt-6 desktop:mt-auto mb-12">
             <Button
               handleClick={handleSubmit}
               isDisabled={!isValidIntro}
