@@ -4,9 +4,11 @@ import { categoriesArr, dateArr, sortByArr } from "../../data/options";
 import { NavLink, useLocation, useSearchParams } from "react-router-dom";
 import ConnectionsOptions from "../layouts/connection-layout/ConnectionsOptions";
 import { useUser } from "../contexts/UserContext";
+import { useScreenWidth } from "../contexts/ScreenWidthContext";
 
 const OptionsContainer: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { isMobile } = useScreenWidth();
   const { user } = useUser();
   const location = useLocation();
   const isConnectionsPage =
@@ -14,6 +16,7 @@ const OptionsContainer: React.FC = () => {
     location.pathname === "/user/my-connections/requests";
 
   const isGroupPage = location.pathname === "/user/groups";
+  const isEventPage = location.pathname === "/user/events";
 
   const [category, setCategory] = useState<string>(
     searchParams.get("category") || ""
@@ -72,38 +75,55 @@ const OptionsContainer: React.FC = () => {
   };
 
   return (
-    <div className="w-[100%] h-[65px] flex items-center justify-center bg-white border-t-2 border-b-2 border-gray-100 font-semibold">
-      <div className="w-[66%] h-[100%] ">
-        <div className="w-[100%] h-[100%] flex justify-between mr-auto ">
-          <nav className="w-[50%] h-[100%] flex items-center ml-4 ">
-            <ul className="w-[100%] flex items-center justify-start gap-10 text-[15px] ml-6">
-              <NavLink
-                to={user ? "/user/events" : "/events"}
-                className={({ isActive }) =>
-                  isActive
-                    ? "font-semibold text-primary"
-                    : "font-semibold text-textPrimary"
-                }
-              >
-                <li className="cursor-pointer">Events</li>
-              </NavLink>
-              <NavLink
-                to={user ? "/user/groups" : "/groups"}
-                className={({ isActive }) =>
-                  isActive
-                    ? "font-semibold text-primary"
-                    : "font-semibold text-textPrimary"
-                }
-              >
-                <li className="cursor-pointer">Groups</li>
-              </NavLink>
-            </ul>
-          </nav>
-          {isConnectionsPage ? (
-            <ConnectionsOptions />
-          ) : (
-            <div className="flex  items-center">
-              {!isGroupPage && (
+    <div
+      className={`${
+        isConnectionsPage ? "h-[4rem]" : "h-[6rem]"
+      } w-screen  tablet:w-[100%] tablet:h-[62px] desktop:h-[65px] xl-screen:h-[70px] flex items-center justify-center bg-white border-t-2 border-b-2 border-gray-100 font-semibold  py-4 desktop:py-0`}
+    >
+      {isMobile && (
+        <div className="w-screen flex flex-col px-6 ">
+          {isConnectionsPage && <ConnectionsOptions />}
+          {(isGroupPage || isEventPage) && !isConnectionsPage && (
+            <nav className="w-[100%] h-[100%] flex items-center mt-6 ">
+              <ul className="w-[100%] flex items-center justify-start text-[13px] ">
+                <NavLink
+                  to={user ? "/user/events" : "/events"}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "font-semibold text-primary"
+                      : "font-semibold text-textPrimary"
+                  }
+                >
+                  <li className="cursor-pointer">Events</li>
+                </NavLink>
+                <NavLink
+                  to={user ? "/user/groups" : "/groups"}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "font-semibold text-primary"
+                      : "font-semibold text-textPrimary"
+                  }
+                >
+                  <li className="cursor-pointer ml-4">Groups</li>
+                </NavLink>{" "}
+                <button
+                  className="ml-auto  text-[11px] text-[#5D9B9B] font-semibold"
+                  onClick={handleResetParams}
+                >
+                  Reset filters
+                </button>
+              </ul>
+            </nav>
+          )}
+          {!isConnectionsPage && (
+            <div
+              className={`${
+                isGroupPage
+                  ? "justify-end gap-x-4 desktop:ml-0"
+                  : "justify-between gap-x-0 "
+              } flex w-[100%]  items-center  desktop:justify-start mb-4 mt-4`}
+            >
+              {!isGroupPage && !isConnectionsPage && (
                 <SelectComponent
                   optionArray={dateArr}
                   defaultOption="Date"
@@ -111,21 +131,30 @@ const OptionsContainer: React.FC = () => {
                   selectedOption={date}
                 />
               )}
-              <SelectComponent
-                optionArray={categoriesArr}
-                defaultOption="Categories"
-                handleChange={handleCategoryOption}
-                selectedOption={category}
-              />
+              {!isConnectionsPage && (
+                <>
+                  {" "}
+                  <SelectComponent
+                    optionArray={categoriesArr}
+                    defaultOption="Categories"
+                    handleChange={handleCategoryOption}
+                    selectedOption={category}
+                  />
+                  <SelectComponent
+                    optionArray={sortByArr}
+                    defaultOption="Sort By"
+                    handleChange={handleSortByOption}
+                    selectedOption={sortBy}
+                  />
+                </>
+              )}
+            </div>
+          )}
 
-              <SelectComponent
-                optionArray={sortByArr}
-                defaultOption="Sort By"
-                handleChange={handleSortByOption}
-                selectedOption={sortBy}
-              />
+          {!isEventPage && !isGroupPage && !isConnectionsPage && (
+            <div className="ml-auto mb-4 mt-0">
               <button
-                className="mr-8  text-[14px] text-[#5D9B9B] font-semibold"
+                className="ml-auto  text-[11px] text-[#5D9B9B] font-semibold"
                 onClick={handleResetParams}
               >
                 Reset filters
@@ -133,7 +162,70 @@ const OptionsContainer: React.FC = () => {
             </div>
           )}
         </div>
-      </div>
+      )}
+      {!isMobile && (
+        <div className="tablet:w-[90%] desktop:w-[66%] h-[100%] ">
+          <div className="w-[100%] h-[100%] flex justify-between mr-auto ">
+            <nav className="w-[50%] h-[100%] flex items-center desktop:ml-4 ">
+              <ul className="w-[100%] flex items-center justify-start gap-10 text-[15px] xl-screen:text-[17px] ml-6">
+                <NavLink
+                  to={user ? "/user/events" : "/events"}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "font-semibold text-primary"
+                      : "font-semibold text-textPrimary"
+                  }
+                >
+                  <li className="cursor-pointer">Events</li>
+                </NavLink>
+                <NavLink
+                  to={user ? "/user/groups" : "/groups"}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "font-semibold text-primary"
+                      : "font-semibold text-textPrimary"
+                  }
+                >
+                  <li className="cursor-pointer">Groups</li>
+                </NavLink>
+              </ul>
+            </nav>
+            {isConnectionsPage ? (
+              <ConnectionsOptions />
+            ) : (
+              <div className="w-full flex  items-center justify-end">
+                {!isGroupPage && (
+                  <SelectComponent
+                    optionArray={dateArr}
+                    defaultOption="Date"
+                    handleChange={handleDateOption}
+                    selectedOption={date}
+                  />
+                )}
+                <SelectComponent
+                  optionArray={categoriesArr}
+                  defaultOption="Categories"
+                  handleChange={handleCategoryOption}
+                  selectedOption={category}
+                />
+
+                <SelectComponent
+                  optionArray={sortByArr}
+                  defaultOption="Sort By"
+                  handleChange={handleSortByOption}
+                  selectedOption={sortBy}
+                />
+                <button
+                  className="mr-8  text-[14px] tablet:text-[12px] desktop:text-[14px] xl-screen:text-[15px] text-[#5D9B9B] font-semibold"
+                  onClick={handleResetParams}
+                >
+                  Reset filters
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

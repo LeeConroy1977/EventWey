@@ -12,7 +12,7 @@ const ProfileConnections = () => {
     <div className="w-[100%] min-[8rem] bg-bgPrimary mt-8 rounded-lg p-10 pb-10 ">
       {connections && (
         <>
-          <h3 className="font-bold text-textPrimary text-[1rem] mb-8">
+          <h3 className="font-bold text-textPrimary text-[1rem] xl-screen:text-[18px] mb-8">
             {`Your Connections`} (
             <span className="text-primary">{connectionsLength || 0}</span>)
           </h3>

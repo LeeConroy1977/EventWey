@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Button from "../../reuseable-components/Button";
 import { useCreateEventContext } from "../../contexts/CreateEventContext";
 import createGroup2 from "../../assets/images/createGroup2.jpeg";
+import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 
 const CreateEventTickets = () => {
   const { nextStep, setNewEvent } = useCreateEventContext();
@@ -12,6 +13,7 @@ const CreateEventTickets = () => {
     { type: "Standard", price: "", ticketCount: 0 },
     { type: "VIP", price: "", ticketCount: 0 },
   ]);
+  const { isMobile } = useScreenWidth();
 
   const [totalTickets, setTotalTickets] = useState<number>(0);
   const [selectedPlaces, setSelectedPlaces] = useState<number>(0);
@@ -76,17 +78,19 @@ const CreateEventTickets = () => {
   };
 
   return (
-    <div className="flex flex-col items-center w-full h-full bg-bgPrimary rounded-lg">
-      <main className="w-full h-full flex">
-        <section className="w-[50%] flex flex-col items-center">
-          <img
-            src={createGroup2}
-            alt="Sign Up"
-            className="w-[100%] h-[100%] rounded-tl-lg rounded-bl-lg"
-          />
-        </section>
-        <section className="w-[50%] flex flex-col items-center">
-          <h1 className="text-textPrimary text-[32px] font-semibold mt-12">
+    <div className="flex flex-col items-center mobile:w-screen mobile:h-screen tablet:w-[100%]  tablet:h-[100%] bg-bgPrimary mobile:mt-0 rounded-lg">
+      <main className="w-[100%] h-[100%] flex mobile:flex-col tablet:flex-row mobile:p-6 tablet:p-0">
+        {!isMobile && (
+          <section className="w-[50%] flex flex-col items-center">
+            <img
+              src={createGroup2}
+              alt="Sign Up"
+              className="w-[100%] h-[100%] rounded-tl-lg rounded-bl-lg"
+            />
+          </section>
+        )}
+        <section className="mobile:w-[100%] tablet:w-[50%] h-[100%] flex flex-col items-center ">
+          <h1 className="text-textPrimary mobile:text-[17px] tablet:text-[20px] desktop:text-[28px] xl-screen:text-[30px] font-bold mobile:mt-2 tablet:mt-6 desktop:mt-12 mobile:mr-auto tablet:mr-0">
             Set Pricing
           </h1>
           <div className="flex items-center gap-6 mt-16">

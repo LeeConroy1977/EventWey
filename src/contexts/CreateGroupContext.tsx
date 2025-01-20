@@ -98,6 +98,7 @@ export const CreateGroupProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       const fetchedCategories = await fetchAllCategories();
       setCategories(fetchedCategories);
+      console.log(categories);
     } catch (error) {
       console.error("Error fetching categories:", error);
     }

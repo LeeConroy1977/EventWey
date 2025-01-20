@@ -7,10 +7,10 @@ const ProfileEvents = () => {
   const handleEventClick = useHandleEventClick();
   const eventsLength = userEvents?.length;
   return (
-    <div className="w-[100%] min-h-[8rem] bg-bgPrimary mt-8 rounded-lg p-10 pb-10">
+    <div className="w-[100%] min-h-[8rem] bg-bgPrimary mt-8 rounded-lg p-6 desktop:p-10 pb-10">
       {userEvents && (
         <>
-          <h3 className="font-bold text-textPrimary text-[1rem] mb-8">
+          <h3 className="font-bold text-textPrimary mobile:text-[14px] tablet:text-[1rem] xl-screen:text-[18px] mb-8">
             {`Your Upcoming Events`} (
             <span className="text-primary">{eventsLength || 0}</span>)
           </h3>

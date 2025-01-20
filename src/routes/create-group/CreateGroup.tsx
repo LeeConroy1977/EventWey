@@ -35,7 +35,7 @@ const CreateGroup = () => {
   };
 
   return (
-    <div className="flex flex-col items-center w-[66%] h-[80%] bg-bgPrimary  mt-[6rem] rounded-lg">
+    <div className="flex flex-col items-center mobile:w-[100%] tablet:w-[94%] desktop:w-[66%] mobile:h-[100%] tablet:h-[74%] desktop:h-[80%] bg-bgPrimary tablet:mt-[4rem] desktop:mt-[4.4rem] rounded-lg">
       <main className="w-[100%] h-[100%]">{renderStep()}</main>
     </div>
   );

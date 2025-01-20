@@ -3,9 +3,12 @@ import { FaUserFriends } from "react-icons/fa";
 import { useUser } from "../../contexts/UserContext";
 import { useParams } from "react-router-dom";
 import Button from "../reuseable-components/Button";
+import useHandleGroupClick from "../../hooks/useHandleGroupClick";
+import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 
 const GroupWrapper = ({ group }) => {
   const { user } = useUser();
+  const { isMobile } = useScreenWidth();
   const { id } = useParams();
   const { name, image, description, members, openAccess } = group;
 
@@ -17,41 +20,57 @@ const GroupWrapper = ({ group }) => {
     : "Request Access";
 
   return (
-    <div className="w-[100%] h-[21rem] flex items-center justify-center  bg-bgPrimary border-b-2 border-gray-200 p-8  ">
-      <div className=" w-[66%] h-[100%] flex items-center justify-center  mt-6 ">
-        <div className="h-[100%] w-[50%] flex items-center justify-center ">
-          <img src={image} alt="" className="w-[90%] h-[92%] rounded-lg " />
+    <div className="w-[100%] h-auto tablet:h-[18rem] desktop:h-[21rem] xl-screen:h-[25rem] flex flex-col tablet:flex-row items-center justify-center  bg-bgPrimary border-b-2 border-gray-200 p-6 desktop:p-8">
+      <div className=" w-full tablet:w-[94%] desktop:w-[66%] h-[100%] flex flex-col tablet:flex-row items-center justify-center mt-0  tablet:mt-6 ">
+        <div className="h-[100%] w-full tablet:w-[50%] flex items-center justify-center ">
+          <img
+            src={image}
+            alt=""
+            className="w-full h-[100%] tablet:w-[90%] tablet:h-[92%] rounded-lg "
+          />
         </div>
-        <div className="w-[50%] h-[100%] flex flex-col items-center justify-start pl-16 p-4">
-          <h1 className="text-[26px] font-bold  text-[#2C3E50] mr-auto">
+        <div className="w-full tablet:w-[50%] h-[100%] flex flex-col items-center justify-start pl-0 p-0 tablet:pl-12 desktop:pl-16 tablet:p-2">
+          <h1 className="text-[20px] desktop:text-[26px] xl-screen:text-[30px] font-bold  text-[#2C3E50] mt-2 mr-auto">
             {name}
           </h1>
-          <p className="text-textPrimary text-[14px] font-semibold mt-2 mr-auto ">
+          <p className="text-textPrimary text-[12px] desktop:text-[14px] xl-screen:text-[16px] font-semibold mt-2 mr-auto ">
             {openAccess ? "Public" : "Private"} Group
           </p>
-          <p className="text-[15px] font-semibold mt-4 mr-auto text-primary">
+          <p className="mt-3 desktop:mt-3 text-[12px] desktop:text-[14px] xl-screen:text-[16px] font-semibold mr-auto">
             {description[0]}
           </p>
-          <div className="flex items-center mt-auto mr-auto ">
-            <IoPerson className="text-secondary text-[16px]" />
-            <p className="ml-2 text-[12px] font-semibold text-[#2C3E50]">
+          <div className="w-full flex items-center mt-6 desktop:mt-auto desktop:mr-auto  ">
+            <IoPerson className="text-secondary text-[16px] xl-screen:text-[18px]" />
+            <p className="ml-2 text-[12px] xl-screen:text-[16px] font-semibold text-[#2C3E50]">
               {members && members.length} Members
             </p>
-            <FaUserFriends className="text-primary text-[16px] ml-6" />
+            {/* <FaUserFriends className="text-primary text-[16px] ml-6" />
             <p className="ml-2 text-[12px] font-semibold text-[#2C3E50]">
               {members && members.length} Connections
-            </p>
+            </p> */}
+            {isMobile && (
+              <button
+                className={`w-[110px] h-[36px] ml-auto flex items-center justify-center text-[11px] font-semibold rounded-lg ${
+                  isMember
+                    ? "bg-bgPrimary border-2 border-primary text-primary"
+                    : "bg-secondary text-white"
+                }`}
+              >
+                {buttonText}
+              </button>
+            )}
           </div>
-
-          <button
-            className={`w-[120px] h-[40px] mt-auto mb-2 mr-auto  flex items-center justify-center text-[11px] font-semibold rounded-lg ${
-              isMember
-                ? "bg-bgPrimary border-2 border-primary text-primary"
-                : "bg-secondary text-white"
-            }`}
-          >
-            {buttonText}
-          </button>
+          {!isMobile && (
+            <button
+              className={`w-[110px]  desktop:w-[120px] tablet:h-[34px] desktop:h-[40px] xl-screen:w-[140px] xl-screen:h-[44px] mt-auto mb-1 mr-auto  flex items-center justify-center tablet:text-[10px] desktop:text-[11px] xl-screen:text-[12px] font-semibold rounded-lg tablet:mb-3 desktop:mb-1  ${
+                isMember
+                  ? "bg-bgPrimary border-2 border-primary text-primary"
+                  : "bg-secondary text-white"
+              }`}
+            >
+              {buttonText}
+            </button>
+          )}
         </div>
       </div>
     </div>

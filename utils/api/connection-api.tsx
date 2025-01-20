@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const API = "https://eventwey.glitch.me";
+
 export const fetchConnectionById = async (id: string): Promise<any> => {
   try {
     const response = await axios.get(`http://localhost:3000/users/${id}`);

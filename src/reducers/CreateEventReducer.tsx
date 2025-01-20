@@ -10,8 +10,8 @@ export type CreateEventAction =
   | { type: "PREVIOUS_STEP" };
 
 export const initialState: CreateEventState = {
-  isCreateEventIntro: true,
-  currentStep: 1,
+  isCreateEventIntro: false,
+  currentStep: 5,
 };
 
 export const CreateEventReducer = (

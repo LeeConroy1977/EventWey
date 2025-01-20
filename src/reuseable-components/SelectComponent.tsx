@@ -49,13 +49,11 @@ const SelectComponent: React.FC<SelectComponentProps> = ({
   const isSelected =
     currentSelectedOption && currentSelectedOption !== defaultOption;
 
-  console.log(currentSelectedOption, "zzzzzzzzzzzz");
-
   return (
-    <div className="relative flex" ref={dropdownRef}>
+    <div className="relative flex " ref={dropdownRef}>
       <button
         onClick={toggleDropdown}
-        className={`w-[110px] sm:w-[130px] p-2 pl-3 pr-3 mr-4 rounded-xl text-[12px] font-bold flex justify-between items-center ${
+        className={`tablet:w-[110px] w-[100px] xl-screen:w-[150px] p-2 pl-3 pr-3 mr-0 tablet:mr-5 xl-screen:mr-8  rounded-xl text-[8px] tablet:text-[10px] desktop:text-[12px] xl-screen:text-[14px] font-bold flex justify-between items-center ${
           isSelected
             ? "bg-bgSecondary text-textPrimary font-semibold border-2 border-primary "
             : "text-textPrimary bg-bgSecondary"
@@ -67,12 +65,12 @@ const SelectComponent: React.FC<SelectComponentProps> = ({
       </button>
 
       {isOpen && (
-        <ul className="absolute left-0 top-[31px] w-[110px] sm:w-[130px] mt-1 rounded-lg bg-bgPrimary shadow-lg z-10">
+        <ul className="absolute left-0 top-[31px] w-[110px] xl-screen:w-[150px] sm:w-[130px] mt-1 rounded-lg bg-bgPrimary shadow-lg z-10">
           {optionArray.map((option, index) => (
             <li
               key={index}
               onClick={() => handleSelect(option.name)}
-              className="p-2 text-[10px] font-bold text-primary hover:bg-primary hover:text-white dark:hover:text-white cursor-pointer"
+              className="p-2 text-[10px] xl-screen:text-[14px] font-bold text-primary hover:bg-primary hover:text-white dark:hover:text-white cursor-pointer"
             >
               {option.title}
             </li>

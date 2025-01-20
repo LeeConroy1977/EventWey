@@ -21,7 +21,7 @@ const Home = () => {
   }, [category, sortBy]);
 
   return (
-    <div className="w-full min-h-screen bg-bgSecondary">
+    <div className="w-full min-h-screen bg-bgSecondary mt-6 tablet:mt-0 px-6 tablet:px-0 tablet:mb-4">
       {groups &&
         groups.length > 0 &&
         groups.map((group) => {

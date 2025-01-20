@@ -4,6 +4,7 @@ import { useCreateUserContext } from "../../contexts/CreateUserContext";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import signupImage from "../../assets/images/signup.jpg";
 import useHandleSignInClick from "../../hooks/useHandleSignUpClick";
+import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 
 const newUser = {
   email: "",
@@ -57,6 +58,7 @@ const SignUp = () => {
   const [isUsernameBlur, setIsUsernameblur] = useState(false);
   const [isEmailBlur, setIsEmailblur] = useState(false);
   const [isPasswordBlur, setIsPasswordblur] = useState(false);
+  const { isMobile } = useScreenWidth();
 
   const usernameRegex = /^.{2,20}$/;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -142,23 +144,25 @@ const SignUp = () => {
 
   return (
     <GoogleOAuthProvider clientId="336072333198-60i3r0h35vhbnfatbbpej79389omj03p.apps.googleusercontent.com">
-      <div className="flex flex-col items-center w-[66%] h-[80%] bg-bgPrimary  mt-[6rem] rounded-lg">
-        <main className="w-[100%] h-[100%] flex">
-          <section className="w-[50%] h-[100%] flex flex-col items-center">
-            <img
-              src={signupImage}
-              alt=""
-              className="w-[100%] h-[100%] rounded-tl-lg rounded-bl-lg"
-            />
-          </section>
+      <div className="flex flex-col items-center mobile:w-screen mobile:h-screen tablet:w-[80%] desktop:w-[66%] tablet:h-[74%] desktop:h-[80%] bg-bgPrimary mobile:mt-0 tablet:mt-[4rem] desktop:mt-[4.4rem] xl-screen:mt-[4.8rem] rounded-lg">
+        <main className="w-[100%] h-[100%] flex mobile:flex-col tablet:flex-row mobile:p-6 tablet:p-0">
+          {!isMobile && (
+            <section className="w-[50%] h-[100%] flex flex-col items-center">
+              <img
+                src={signupImage}
+                alt=""
+                className="w-[100%] h-[100%] rounded-tl-lg rounded-bl-lg"
+              />
+            </section>
+          )}
 
-          <section className="w-[50%] h-[100%] flex flex-col items-center ">
-            <h1 className="text-textPrimary text-[28px] font-bold mt-12">
+          <section className="mobile:w-[100%] tablet:w-[50%] h-[100%] flex flex-col items-center ">
+            <h1 className="text-textPrimary mobile:text-[17px] tablet:text-[20px] desktop:text-[28px] xl-screen:text-[30px] font-bold mobile:mt-2 tablet:mt-6 desktop:mt-12 mobile:mr-auto tablet:mr-0">
               Create a new <span className="text-secondary">account...</span>
             </h1>
             <form
               action="submit"
-              className="w-[56%] h-[60%] flex flex-col items-center mt-16"
+              className="mobile:w-[100%] tablet:w-[66%] desktop:w-[56%] desktop:h-[60%] xl-screen:h-[64%] flex flex-col items-center mobile:mt-8 tablet:mt-6 desktop:mt-16"
               onSubmit={handleSubmit}
             >
               {error && (
@@ -167,12 +171,12 @@ const SignUp = () => {
               <div className="w-[100%] flex flex-row items-center justify-between">
                 <label
                   htmlFor="username"
-                  className="text-[12px] text-primary font-semibold ml-2 mr-auto "
+                  className="mobile:text-[12px] tablet:text-[11px] desktop:text-[12px] xl-screen:text-[14px] text-primary font-semibold ml-2 mr-auto "
                 >
                   Username
                 </label>
 
-                <p className="text-[11px] text-secondary font-semibold mr-2 ml-auto">
+                <p className="mobile:text-[11px] tablet:text-[9px]  desktop:text-[11px] text-secondary font-semibold mr-2 ml-auto">
                   {isUsernameValid === false ||
                   (isUsernameBlur && username.length < 2 && username !== "") ? (
                     <p>{validationErrorMsg.username}</p>
@@ -180,7 +184,7 @@ const SignUp = () => {
                 </p>
               </div>
               <input
-                className={`w-[100%] h-[2.4rem] border-[1px] border-gray-200 rounded-lg px-2 placeholder:text-[12px] text-textPrimary text-[14px] mt-1 focus:outline-none ${
+                className={`w-[100%] mobile:h-[40px] tablet:h-[2.1rem] desktop:h-[2.4rem] xl-screen:h-[2.7rem] border-[1px] border-gray-200 rounded-lg px-2 mobile:placeholder:text-[11px] tablet:placeholder:text-[10px] desktop:placeholder:text-[12px] text-textPrimary text-[14px] mt-1 focus:outline-none ${
                   isUsernameValid === true
                     ? "border-primary"
                     : isUsernameValid === false
@@ -204,12 +208,12 @@ const SignUp = () => {
               <div className="w-[100%] flex flex-row items-center justify-between mt-3">
                 <label
                   htmlFor="email"
-                  className="text-[12px] text-primary font-semibold ml-2 mr-auto "
+                  className="mobile:text-[12px] tablet:text-[11px] desktop:text-[12px] xl-screen:text-[14px]  text-primary font-semibold ml-2 mr-auto "
                 >
                   Email
                 </label>
 
-                <p className="text-[11px] text-secondary font-semibold mr-2 ml-auto">
+                <p className="mobile:text-[11px] tablet:text-[9px]  desktop:text-[11px] text-secondary font-semibold mr-2 ml-auto">
                   {isEmailValid === false && isEmailBlur ? (
                     <p>{validationErrorMsg.email}</p>
                   ) : isEmailValid === true ? null : null}
@@ -217,7 +221,7 @@ const SignUp = () => {
               </div>
 
               <input
-                className={`w-[100%] h-[2.4rem] border-[1px] rounded-lg px-2 placeholder:text-[12px] text-textPrimary text-[14px] mt-1 focus:outline-none  ${
+                className={`w-[100%] mobile:h-[40px] tablet:h-[2.1rem] border-[1px] rounded-lg px-2 mobile:placeholder:text-[11px] tablet:placeholder:text-[10px]  desktop:placeholder:text-[12px] xl-screen:h-[2.7rem] text-textPrimary text-[14px] mt-1 focus:outline-none  ${
                   isEmailValid === true
                     ? "border-primary"
                     : isEmailValid && isEmailBlur === false
@@ -241,11 +245,11 @@ const SignUp = () => {
               <div className="w-[100%] flex flex-row items-center justify-between mt-3">
                 <label
                   htmlFor="password"
-                  className="text-[12px] text-primary font-semibold ml-2 mr-auto "
+                  className="mobile:text-[12px] tablet:text-[11px] desktop:text-[12px] xl-screen:text-[14px]  text-primary font-semibold ml-2 mr-auto "
                 >
                   Password
                 </label>
-                <p className="text-[11px] text-secondary font-semibold mr-2 ml-auto">
+                <p className="mobile:text-[11px] tablet:text-[9px]  desktop:text-[11px] text-secondary font-semibold mr-2 ml-auto">
                   {isPasswordValid === false ||
                   (isPasswordValid === null &&
                     isPasswordBlur &&
@@ -256,7 +260,7 @@ const SignUp = () => {
               </div>
 
               <input
-                className={`w-[100%] h-[2.4rem] border-[1px] rounded-lg px-2 placeholder:text-[12px] text-textPrimary text-[14px] mt-1 focus:outline-none ${
+                className={`w-[100%] mobile:h-[40px] tablet:h-[2.1rem] border-[1px] rounded-lg px-2 mobile:placeholder:text-[11px] tablet:placeholder:text-[10px]  desktop:placeholder:text-[12px]  xl-screen:h-[2.7rem]  text-textPrimary text-[14px] mt-1 focus:outline-none ${
                   isPasswordValid === true
                     ? "border-primary"
                     : isPasswordValid === false
@@ -276,7 +280,7 @@ const SignUp = () => {
                 onBlur={() => handlePasswordBlur()}
                 required
               />
-              <div className="w-[100%] flex items-center justify-center mt-10">
+              <div className="w-[100%] flex items-center justify-center mobile:mt-8 desktop:mt-10 xl-screen:mt-12 ">
                 <Button
                   px="px-12"
                   py="py-3"
@@ -286,21 +290,21 @@ const SignUp = () => {
                   Create an account
                 </Button>
               </div>
-              <h3 className="text-textPrimary text-[20px] font-bold mt-12">
+              <h3 className="text-textPrimary mobile:text-[14px] desktop:text-[20px] font-bold mobile:mt-6 tablet:mt-6 desktop:mt-12">
                 Or sign up with <span className="text-primary">Google...</span>
               </h3>
-              <div className="mt-8">
+              <div className="mt-8 xl-screen:mt-12 ">
                 <GoogleLogin onSuccess={handleGoogleLogin} onError={() => {}} />
               </div>
             </form>
-            <h2 className="text-textPrimary text-[16px] font-semibold mt-6 ">
+            <h2 className="text-textPrimary mobile:text-[14px] desktop:text-[16px] xl-screen:text-[18px] font-semibold mobile:mt-6 tablet:mt-8 desktop:mt-6 ">
               Already have an account? Or want to
             </h2>
-            <h2 className="text-textPrimary text-[16px] font-semibold mt-2 ">
+            <h2 className="text-textPrimary mobile:text-[14px] desktop:text-[16px] xl-screen:text-[18px]  font-semibold mt-2 ">
               sign in as an existing user?{" "}
               <span
                 onClick={handleSignInClick}
-                className="text-secondary text-[16px] font-semibold cursor-pointer"
+                className="text-secondary mobile:text-[14px] desktop:text-[16px] xl-screen:text-[18px]  font-semibold cursor-pointer"
               >
                 Sign In
               </span>

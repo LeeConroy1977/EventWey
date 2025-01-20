@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 const ProfileNavBar = () => {
   return (
     <nav className="flex items-center t w-[100%] h-[4rem] bg-bgPrimary rounded-lg mt-8">
-      <ul className="w-[100%] flex items-center justify-start gap-10 text-[15px] ml-4 p-4 ">
+      <ul className="w-[100%] flex items-center justify-start gap-10 tablet:text-[14px] desktop:text-[15px] ml-4 p-4 ">
         <NavLink
           to={`/user/profile/events`}
           className={({ isActive }) =>

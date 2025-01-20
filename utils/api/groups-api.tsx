@@ -1,12 +1,14 @@
 import axios from "axios";
 import { sortByPopularity, sortByDate } from "../fakeEventSorting";
 
+const API = "https://eventwey.glitch.me";
+
 export const fetchAllGroups = async (params: {
   category?: string;
   sortBy?: string;
 }) => {
   try {
-    const groupsResponse = await axios.get("http://localhost:3000/groups");
+    const groupsResponse = await axios.get(`${API}/groups`);
     let filteredData = groupsResponse.data;
 
     if (params.category) {
@@ -29,7 +31,7 @@ export const fetchAllGroups = async (params: {
 
 export const fetchGroupById = async (id: string): Promise<any> => {
   try {
-    const response = await axios.get(`http://localhost:3000/groups/${id}`);
+    const response = await axios.get(`${API}/groups/${id}`);
     const group = response.data;
 
     console.log("Group Data:", group);
@@ -46,10 +48,7 @@ export const fetchGroupById = async (id: string): Promise<any> => {
 
 export const postGroup = async (groupData): Promise<any> => {
   try {
-    const response = await axios.post(
-      "http://localhost:3000/groups",
-      groupData
-    );
+    const response = await axios.post(`${API}/groups`, groupData);
 
     return response.data;
   } catch (error) {
@@ -60,13 +59,11 @@ export const postGroup = async (groupData): Promise<any> => {
 
 export const patchGroup = async (id: string, patchObj: any): Promise<any> => {
   try {
-    const { data: group } = await axios.get(
-      `http://localhost:3000/groups/${id}`
-    );
+    const { data: group } = await axios.get(`${API}/groups/${id}`);
     const patchedGroup = { ...group, ...patchObj };
 
     const { data: updatedGroup } = await axios.patch(
-      `http://localhost:3000/groups/${id}`,
+      `${API}/groups/${id}`,
       patchedGroup
     );
 
@@ -79,7 +76,7 @@ export const patchGroup = async (id: string, patchObj: any): Promise<any> => {
 
 export const fetchGroupEventsById = async (id: string): Promise<any[]> => {
   try {
-    const groupResponse = await axios.get(`http://localhost:3000/groups/${id}`);
+    const groupResponse = await axios.get(`${API}/groups/${id}`);
     const group = groupResponse.data;
 
     console.log("Group Data:", group);
@@ -88,7 +85,7 @@ export const fetchGroupEventsById = async (id: string): Promise<any[]> => {
       throw new Error(`Events not found or invalid for group with ID: ${id}`);
     }
 
-    const eventsResponse = await axios.get("http://localhost:3000/events");
+    const eventsResponse = await axios.get(`${API}/events`);
     const events = eventsResponse.data;
 
     const groupEvents = events.filter((event: any) =>
@@ -104,7 +101,7 @@ export const fetchGroupEventsById = async (id: string): Promise<any[]> => {
 
 export const fetchGroupMembers = async (id: string): Promise<any[]> => {
   try {
-    const groupResponse = await axios.get(`http://localhost:3000/groups/${id}`);
+    const groupResponse = await axios.get(`${API}/groups/${id}`);
     const group = groupResponse.data;
 
     console.log("Group Data:", group);
@@ -113,7 +110,7 @@ export const fetchGroupMembers = async (id: string): Promise<any[]> => {
       throw new Error(`Members not found or invalid for group with ID: ${id}`);
     }
 
-    const usersResponse = await axios.get("http://localhost:3000/users");
+    const usersResponse = await axios.get(`${API}/users`);
     const users = usersResponse.data;
 
     console.log("Fetched Users:", users);
