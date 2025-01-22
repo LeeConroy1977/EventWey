@@ -68,8 +68,9 @@ interface Event {
   category: string;
   tags: string[];
   description: string[];
-  attendeesId: string[];
+  attendees: string[];
   location: Location;
+  approved: boolean;
 }
 
 interface Group {
@@ -86,6 +87,7 @@ interface Group {
   events: string[];
   messages: string[];
   category: string;
+  approved: boolean;
 }
 
 interface UserContextType {
@@ -137,7 +139,7 @@ const defaultUser = {
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const { events, setEvents } = useEvents();
   const { hideModal } = useModal();
-  const [user, setUser] = useState<User | null>(defaultUser);
+  const [user, setUser] = useState<User | null>();
   const navigate = useNavigate();
   const [userEvents, setUserEvents] = useState<Event[]>([]);
   const [userGroups, setUserGroups] = useState<Group[]>([]);
@@ -156,7 +158,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     try {
       setLoading(true);
       setError(null);
-      const updatedUser = await updateUser(user?.id, { [field]: value });
+      const updatedUser = await updateUser(user?.id!, { [field]: value });
       setUser(updatedUser);
     } catch (err) {
       console.error(`Error updating user field ${field}:`, err);
@@ -166,39 +168,54 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
   };
 
-  const joinFreeEvent = async (eventId: string) => {
+  const joinFreeEvent = async (eventId: string | undefined) => {
     try {
       setError(null);
 
+      if (!eventId) {
+        setError("Invalid event ID.");
+        console.error("No event ID provided to joinFreeEvent.");
+        return;
+      }
+
+      console.log("Fetching event with ID:", eventId);
       const event = await fetchEventById(eventId);
+      if (!event || !Array.isArray(event.attendees)) {
+        setError("Event not found or has invalid data.");
+        console.error("Invalid event data:", event);
+        return;
+      }
+
       if (event.availability <= 0) {
         setError("Event is fully booked.");
         return;
       }
-      if (event.attendeesId.includes(user?.id || "")) {
+
+      if (event.attendees.includes(user?.id || "")) {
         setError("You have already joined this event.");
         return;
       }
-      const updatedUser = await updateUser(user?.id, {
+
+      const updatedUser = await updateUser(user?.id!, {
         userEvents: [...(user?.userEvents ?? []), eventId],
       });
       const updatedEvent = await patchEvent(eventId, {
-        attendeesId: [...event.attendeesId, user?.id || ""],
+        attendees: [...event.attendees, user?.id || ""],
         going: event.going + 1,
         availability: event.availability - 1,
       });
+
       setUser(updatedUser);
       setEvents((prevEvents) => {
-        const eventIndex = prevEvents.findIndex((e) => e.id === eventId);
-        if (eventIndex > -1) {
-          prevEvents[eventIndex] = updatedEvent;
+        const eventExists = prevEvents.some((e) => e.id === eventId);
+        if (eventExists) {
+          return prevEvents.map((e) => (e.id === eventId ? updatedEvent : e));
         } else {
-          prevEvents.push(updatedEvent);
+          return [...prevEvents, updatedEvent];
         }
-        return [...prevEvents];
       });
     } catch (err) {
-      console.error(`Error joining event ${eventId}:`, err);
+      console.error(`Error joining event ${eventId || "undefined"}:`, err);
       setError("Failed to join the event.");
     }
   };
@@ -212,7 +229,11 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         throw new Error("User ID is not available.");
       }
       const { category = "", date = "", sortBy = "date" } = params;
-      const events = await fetchUserEvents(user.id, { category, date, sortBy });
+      const events = await fetchUserEvents(user?.id!, {
+        category,
+        date,
+        sortBy,
+      });
       setUserEvents(events);
     } catch (err) {
       console.error("Error fetching events:", err);
@@ -231,7 +252,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         throw new Error("User ID is not available.");
       }
 
-      const totalEvents = await fetchUserEvents(user.id, {});
+      const totalEvents = await fetchUserEvents(user?.id, {});
       setUserTotalEvents(totalEvents);
     } catch (err: any) {
       console.error("Error fetching events:", err.response || err);
@@ -246,7 +267,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     setError(null);
     try {
       const { category, sortBy = "popular" } = params;
-      const groups = await fetchUserGroups(user.id, { category, sortBy });
+      const groups = await fetchUserGroups(user?.id, { category, sortBy });
       setUserGroups(groups);
     } catch (err) {
       console.error("Error fetching groups:", err);

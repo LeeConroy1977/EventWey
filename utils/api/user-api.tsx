@@ -15,16 +15,11 @@ export const createUser = async (newUser: any): Promise<any> => {
 
 export const updateUser = async (id: string, patchObj: any): Promise<any> => {
   try {
-    const { data: user } = await axios.get(`${API}/users/${id}`);
-    const patchedUser = { ...user, ...patchObj };
-
     const { data: updatedUser } = await axios.patch(
       `${API}/users/${id}`,
-      patchedUser
+      patchObj
     );
-
     console.log("Updated User Data:", updatedUser);
-
     return updatedUser;
   } catch (error) {
     console.error("Error updating user:", error);

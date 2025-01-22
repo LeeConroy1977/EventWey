@@ -1,8 +1,10 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import {
+  deleteEvent,
   fetchEventById,
   fetchEventConnections,
   fetchEventGroupById,
+  patchEvent,
 } from "../../utils/api/events-api";
 
 interface PriceBand {
@@ -35,6 +37,7 @@ interface Event {
   description: string[];
   attendeesId: string[];
   location: Location;
+  approved: boolean;
 }
 
 interface Group {
@@ -51,6 +54,7 @@ interface Group {
   events: string[];
   messages: string[];
   category: string;
+  approved: boolean;
 }
 
 interface User {
@@ -89,6 +93,8 @@ interface EventContextType {
   setEventConnections: (users: User[]) => void;
   getEventById: (id: string) => Promise<void>;
   getGroupById: (id: string) => Promise<void>;
+  updateEvent: (field: keyof Event, value: any) => Promise<void>;
+  removeEvent: (id: string) => Promise<void>;
   getEventConnections: (id: number) => Promise<void>;
   loading: boolean;
   error: string | null;
@@ -98,7 +104,7 @@ interface EventProviderProps {
   children: ReactNode;
 }
 
-const EventContext = createContext<EventContextType | null>(null);
+const EventContext = createContext<EventContextType | undefined>(undefined);
 
 export const EventProvider: React.FC<EventProviderProps> = ({ children }) => {
   const [event, setEvent] = useState<Event | null>(null);
@@ -146,20 +152,54 @@ export const EventProvider: React.FC<EventProviderProps> = ({ children }) => {
     }
   };
 
+  const updateEvent = async (field: keyof Event, value: any) => {
+    if (!event) {
+      setError("No event selected to update");
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    try {
+      const updatedEvent = await patchEvent(event.id, { [field]: value });
+      setEvent(updatedEvent);
+    } catch (err) {
+      console.error(`Error updating event field ${field}:`, err);
+      setError(`Failed to update ${field}.`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const removeEvent = async (id: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      await deleteEvent(id);
+      setEvent(null);
+    } catch (err) {
+      console.error("Error deleting event", err);
+      setError("Failed to delete the event.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <EventContext.Provider
       value={{
         event,
+        setEvent,
         eventGroup,
+        setEventGroup,
         eventConnections,
+        setEventConnections,
         getEventById,
         getGroupById,
+        updateEvent,
+        removeEvent,
         getEventConnections,
-        error,
         loading,
-        setEvent,
-        setEventGroup,
-        setEventConnections,
+        error,
       }}
     >
       {children}

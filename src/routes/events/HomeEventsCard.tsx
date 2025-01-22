@@ -48,6 +48,7 @@ const HomeEventsCard: React.FC<HomeEventsCardProps> = ({
     free,
     priceBands,
     startTime,
+    approved,
   } = event;
 
   const formattedDate = format(new Date(date), "EEE, MMM d, yyyy");
@@ -128,7 +129,13 @@ const HomeEventsCard: React.FC<HomeEventsCardProps> = ({
                   : "bg-[#5D9B9B] text-white"
               }`}
             >
-              {isAttending ? "Going" : free ? "Join Event" : "Get Tickets"}
+              {!approved
+                ? "Review Event"
+                : isAttending
+                ? "Going"
+                : free
+                ? "Join Event"
+                : "Get Tickets"}
             </button>
           )}
         </div>

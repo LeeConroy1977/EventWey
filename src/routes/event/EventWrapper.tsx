@@ -6,7 +6,7 @@ import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 import EventOptionsContainer from "../../layouts/user-layout/EventOptionsContainer";
 import useHandleGroupClick from "../../hooks/useHandleGroupClick";
 
-const EventWrapper = ({ event }) => {
+const EventWrapper = ({ event, handleApproveEvent, handleRemoveEvent }) => {
   const { user, isUserAttendingEvent } = useUser();
   const { isMobile } = useScreenWidth();
   const handleGroupClick = useHandleGroupClick();
@@ -26,6 +26,7 @@ const EventWrapper = ({ event }) => {
     location,
     startTime,
     groupId,
+    approved,
   } = event;
   const { openEventModal } = useEventModal();
 
@@ -93,7 +94,25 @@ const EventWrapper = ({ event }) => {
             {description[0]}
           </p>
           {isMobile && <EventOptionsContainer />}
-          {!isMobile && (
+          {!isMobile && !approved && (
+            <div className="flex mr-auto mt-auto mb-1 desktop:h-[66px]">
+              <button
+                onClick={handleApproveEvent}
+                className="w-[110px]  desktop:w-[120px] tablet:h-[34px] desktop:h-[40px] xl-screen:w-[140px] xl-screen:h-[44px] mt-auto mb-1 mr-auto  flex items-center justify-center tablet:text-[10px] desktop:text-[11px] xl-screen:text-[12px] font-semibold rounded-lg tablet:mb-3 desktop:mb-1 bg-primary text-white
+              "
+              >
+                Approve Group
+              </button>
+              <button
+                onClick={() => handleRemoveEvent(id)}
+                className="w-[110px]  desktop:w-[120px] tablet:h-[34px] desktop:h-[40px] xl-screen:w-[140px] xl-screen:h-[44px] mt-auto mb-1 mr-auto  flex items-center justify-center tablet:text-[10px] desktop:text-[11px] xl-screen:text-[12px] font-semibold rounded-lg tablet:mb-3 desktop:mb-1 bg-secondary text-white tablet:ml-8
+              "
+              >
+                Reject Group
+              </button>
+            </div>
+          )}
+          {!isMobile && approved && (
             <button
               onClick={
                 isAttending

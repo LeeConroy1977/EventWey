@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import ConnectionPreviewCard from "./ConnectionPreviewCard";
-
 import { useEffect } from "react";
 import useHandleConnectionClick from "../../hooks/useHandleConnectionClick";
 import { useConnections } from "../../contexts/ConnectionsContext";
+import { ClipLoader } from "react-spinners";
 
 const UserConnectionPreview = () => {
   const navigate = useNavigate();
@@ -37,7 +37,19 @@ const UserConnectionPreview = () => {
         </p>
       </div>
       <div className="flex items-start justify-start flex-wrap mt-6 xl-screen:mt-8 gap-3 desktop:pl-2 xl-screen:pl-4">
-        {connectionPreview.length > 0 &&
+        {loading && (
+          <div className="flex items-center justify-center h-[350px] mx-auto  my-auto">
+            <ClipLoader size={60} color={"#5d9b9b"} />
+          </div>
+        )}
+        {error && (
+          <p className="text-red-500 text-center w-full">
+            Something went wrong. Please try again later.
+          </p>
+        )}
+        {!loading &&
+          !error &&
+          connectionPreview.length > 0 &&
           connectionPreview.map((connection, i) => {
             return (
               <ConnectionPreviewCard
@@ -47,6 +59,11 @@ const UserConnectionPreview = () => {
               />
             );
           })}
+        {!loading && !error && connectionPreview.length === 0 && (
+          <p className="text-gray-500 text-center w-full">
+            You have no connections yet.
+          </p>
+        )}
       </div>
     </div>
   );

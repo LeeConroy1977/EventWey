@@ -23,35 +23,37 @@ const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ModalProvider>
-        <UserProvider>
-          <EventModalProvider>
-            <EventsProvider>
+      <ScreenWidthProvider>
+        <ModalProvider>
+          <EventsProvider>
+            <UserProvider>
               <EventProvider>
                 <GroupsProvider>
                   <GroupProvider>
                     <ConnectionsProvider>
                       <ConnectionProvider>
-                        <CreateGroupProvider>
-                          <CreateEventProvider>
-                            <CreateUserProvider>
-                              <SignInProvider>
-                                <ScreenWidthProvider>
-                                  <App />
-                                </ScreenWidthProvider>
-                              </SignInProvider>
-                            </CreateUserProvider>
-                          </CreateEventProvider>
-                        </CreateGroupProvider>
+                        <UserProvider>
+                          <CreateGroupProvider>
+                            <CreateEventProvider>
+                              <CreateUserProvider>
+                                <SignInProvider>
+                                  <EventModalProvider>
+                                    <App />
+                                  </EventModalProvider>
+                                </SignInProvider>
+                              </CreateUserProvider>
+                            </CreateEventProvider>
+                          </CreateGroupProvider>
+                        </UserProvider>
                       </ConnectionProvider>
                     </ConnectionsProvider>
                   </GroupProvider>
                 </GroupsProvider>
               </EventProvider>
-            </EventsProvider>
-          </EventModalProvider>
-        </UserProvider>
-      </ModalProvider>
+            </UserProvider>
+          </EventsProvider>
+        </ModalProvider>
+      </ScreenWidthProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

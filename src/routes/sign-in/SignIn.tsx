@@ -36,6 +36,8 @@ const SignIn = ({}) => {
   const handleCreateUserClick = useHandleCreateUserClick();
   const navigate = useNavigate();
 
+  const API = "https://eventwey.glitch.me";
+
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const passwordRegex = /^.{8,40}$/;
 
@@ -70,7 +72,7 @@ const SignIn = ({}) => {
     const user = parseJwt(token);
 
     try {
-      const response = await axios.get(`http://localhost:3000/users`, {
+      const response = await axios.get(``, {
         params: { email: user.email },
       });
 
@@ -100,7 +102,7 @@ const SignIn = ({}) => {
   };
 
   async function handleFetchAllUser() {
-    const response = await axios.get(`http://localhost:3000/users`, {
+    const response = await axios.get(`${API}/users`, {
       params: {},
     });
 

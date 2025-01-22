@@ -42,7 +42,7 @@ export const fetchAllEvents = async (params: {
 export const fetchEventById = async (id: string): Promise<any> => {
   try {
     const response = await axios.get(`${API}/events/${id}`);
-    const event = response.data;
+    const event = await response.data;
 
     console.log("Event Data:", event);
     if (!event) {
@@ -58,26 +58,26 @@ export const fetchEventById = async (id: string): Promise<any> => {
 
 export const patchEvent = async (id: string, patchObj: any): Promise<any> => {
   try {
-    const { data: event } = await axios.get(`${API}/events/${id}`);
-
-    const patchedEvent = {
-      ...event,
-
-      going: patchObj.going !== undefined ? patchObj.going : event.going,
-      availability:
-        patchObj.availability !== undefined
-          ? patchObj.availability
-          : event.availability,
-    };
     const { data: updatedEvent } = await axios.patch(
       `${API}/events/${id}`,
-      patchedEvent
+      patchObj
     );
 
     return updatedEvent;
-  } catch (err) {
-    console.error(`Error updating event ${id}:`, err);
-    throw err;
+  } catch (error) {
+    console.error("Error updating event:", error);
+    throw error;
+  }
+};
+
+export const deleteEvent = async (id: string): Promise<any> => {
+  try {
+    const { data: updatedEvent } = await axios.delete(`${API}/events/${id}`);
+
+    return updatedEvent;
+  } catch (error) {
+    console.error("Error updating group:", error);
+    throw error;
   }
 };
 

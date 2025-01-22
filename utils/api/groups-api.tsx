@@ -59,13 +59,21 @@ export const postGroup = async (groupData): Promise<any> => {
 
 export const patchGroup = async (id: string, patchObj: any): Promise<any> => {
   try {
-    const { data: group } = await axios.get(`${API}/groups/${id}`);
-    const patchedGroup = { ...group, ...patchObj };
-
     const { data: updatedGroup } = await axios.patch(
       `${API}/groups/${id}`,
-      patchedGroup
+      patchObj
     );
+
+    return updatedGroup;
+  } catch (error) {
+    console.error("Error updating group:", error);
+    throw error;
+  }
+};
+
+export const deleteGroup = async (id: string): Promise<any> => {
+  try {
+    const { data: updatedGroup } = await axios.delete(`${API}/groups/${id}`);
 
     return updatedGroup;
   } catch (error) {

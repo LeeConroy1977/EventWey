@@ -47,6 +47,15 @@ const MobileNavOptions = ({ setIsMobileNavOpen }) => {
         >
           <li className="cursor-pointer list-none">Your connections</li>
         </NavLink>
+        {user?.role === "admin" && (
+          <NavLink
+            to="/user/admin/groups"
+            className="font-semibold text-textPrimary"
+            onClick={handleClick}
+          >
+            <li className="cursor-pointer list-none">Admin</li>
+          </NavLink>
+        )}
       </div>
       <div className=" w-full h-[12%] flex flex-row items-center px-6 py-2 border-t-[1px] border-gray-200">
         <img

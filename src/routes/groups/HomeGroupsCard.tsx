@@ -5,7 +5,7 @@ import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 const HomeGroupsCard = ({ group, handleClick }) => {
   const { user } = useUser();
   const { isMobile } = useScreenWidth();
-  const { id, name, image, description, members, openAccess } = group;
+  const { id, name, image, description, members, openAccess, approved } = group;
 
   let filteredDesc = description[0];
   filteredDesc = filteredDesc.replaceAll("**", "");
@@ -43,13 +43,13 @@ const HomeGroupsCard = ({ group, handleClick }) => {
           </div>
           {!isMobile && (
             <button
-              className={`tablet:w-[84px] tablet:h-[33px] desktop:w-[100px] xl-screen:w-[120px]  desktop:h-[34px]  xl-screen:h-[40px]  ml-auto flex items-center justify-center tablet:text-[9px] desktop:text-[11px] xl-screen:text-[13px] xl-screen:mr-4  font-semibold rounded-lg ${
+              className={`tablet:w-[74px] tablet:h-[30px] desktop:w-[100px] xl-screen:w-[120px]  desktop:h-[34px]  xl-screen:h-[40px] ml-auto flex items-center justify-center tablet:text-[9px] desktop:text-[11px] xl-screen:text-[13px] desktop:mr-4  font-semibold rounded-lg ${
                 isMember
                   ? "bg-bgPrimary border-2 border-primary text-primary"
                   : "bg-[#5D9B9B] text-white"
               }`}
             >
-              {isMember ? "Member" : "Join group"}
+              {!approved ? "Review Group" : isMember ? "Member" : "Join group"}
             </button>
           )}
         </div>

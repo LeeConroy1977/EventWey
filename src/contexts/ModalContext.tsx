@@ -19,7 +19,7 @@ export const useModal = (): ModalContextProps => {
 export const ModalProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [modalContent, setModalContent] = useState<ReactNode>(null);
+  const [modalContent, setModalContent] = useState<ReactNode | null>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   const showModal = (content: ReactNode) => {
@@ -59,6 +59,7 @@ const overlayStyles: React.CSSProperties = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  zIndex: 1000,
 };
 
 const modalStyles: React.CSSProperties = {
@@ -68,7 +69,7 @@ const modalStyles: React.CSSProperties = {
   padding: "50px",
   borderRadius: "8px",
   position: "relative",
-  marginTop: "6rem",
+  overflowY: "auto",
 };
 
 const closeButtonStyles: React.CSSProperties = {
@@ -77,6 +78,5 @@ const closeButtonStyles: React.CSSProperties = {
   right: "10px",
   background: "transparent",
   border: "none",
-  fontSize: "16px",
   cursor: "pointer",
 };

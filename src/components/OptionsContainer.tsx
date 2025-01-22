@@ -5,6 +5,7 @@ import { NavLink, useLocation, useSearchParams } from "react-router-dom";
 import ConnectionsOptions from "../layouts/connection-layout/ConnectionsOptions";
 import { useUser } from "../contexts/UserContext";
 import { useScreenWidth } from "../contexts/ScreenWidthContext";
+import AdminNav from "../layouts/user-layout/AdminNav";
 
 const OptionsContainer: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -17,6 +18,9 @@ const OptionsContainer: React.FC = () => {
 
   const isGroupPage = location.pathname === "/user/groups";
   const isEventPage = location.pathname === "/user/events";
+  const isAdminPage =
+    location.pathname === "/user/admin/groups" ||
+    location.pathname === "/user/admin/events";
 
   const [category, setCategory] = useState<string>(
     searchParams.get("category") || ""
@@ -77,7 +81,7 @@ const OptionsContainer: React.FC = () => {
   return (
     <div
       className={`${
-        isConnectionsPage ? "h-[4rem]" : "h-[6rem]"
+        isConnectionsPage || isAdminPage ? "h-[4rem]" : "h-[6rem]"
       } w-screen  tablet:w-[100%] tablet:h-[62px] desktop:h-[65px] xl-screen:h-[70px] flex items-center justify-center bg-white border-t-2 border-b-2 border-gray-100 font-semibold  py-4 desktop:py-0`}
     >
       {isMobile && (
@@ -106,6 +110,18 @@ const OptionsContainer: React.FC = () => {
                 >
                   <li className="cursor-pointer ml-4">Groups</li>
                 </NavLink>{" "}
+                {user?.role === "admin" && (
+                  <NavLink
+                    to={"/user/admin"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? "font-semibold text-primary"
+                        : "font-semibold text-textPrimary"
+                    }
+                  >
+                    <li className="cursor-pointer ml-4">Admin</li>
+                  </NavLink>
+                )}
                 <button
                   className="ml-auto  text-[11px] text-[#5D9B9B] font-semibold"
                   onClick={handleResetParams}
@@ -115,7 +131,7 @@ const OptionsContainer: React.FC = () => {
               </ul>
             </nav>
           )}
-          {!isConnectionsPage && (
+          {!isConnectionsPage && !isAdminPage && (
             <div
               className={`${
                 isGroupPage
@@ -150,21 +166,24 @@ const OptionsContainer: React.FC = () => {
               )}
             </div>
           )}
-
-          {!isEventPage && !isGroupPage && !isConnectionsPage && (
-            <div className="ml-auto mb-4 mt-0">
-              <button
-                className="ml-auto  text-[11px] text-[#5D9B9B] font-semibold"
-                onClick={handleResetParams}
-              >
-                Reset filters
-              </button>
-            </div>
-          )}
+          {isAdminPage && <AdminNav />}
+          {!isEventPage &&
+            !isGroupPage &&
+            !isConnectionsPage &&
+            !isAdminPage && (
+              <div className="ml-auto mb-4 mt-0">
+                <button
+                  className="ml-auto  text-[11px] text-[#5D9B9B] font-semibold"
+                  onClick={handleResetParams}
+                >
+                  Reset filters
+                </button>
+              </div>
+            )}
         </div>
       )}
       {!isMobile && (
-        <div className="tablet:w-[90%] desktop:w-[66%] h-[100%] ">
+        <div className="tablet:w-[90%] desktop:w-[66%] h-[100%]">
           <div className="w-[100%] h-[100%] flex justify-between mr-auto ">
             <nav className="w-[50%] h-[100%] flex items-center desktop:ml-4 ">
               <ul className="w-[100%] flex items-center justify-start gap-10 text-[15px] xl-screen:text-[17px] ml-6">
@@ -188,10 +207,24 @@ const OptionsContainer: React.FC = () => {
                 >
                   <li className="cursor-pointer">Groups</li>
                 </NavLink>
+                {user?.role === "admin" && (
+                  <NavLink
+                    to={"/user/admin"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? "font-semibold text-primary"
+                        : "font-semibold text-textPrimary"
+                    }
+                  >
+                    <li className="cursor-pointer">Admin</li>
+                  </NavLink>
+                )}
               </ul>
             </nav>
             {isConnectionsPage ? (
               <ConnectionsOptions />
+            ) : isAdminPage ? (
+              <AdminNav />
             ) : (
               <div className="w-full flex  items-center justify-end">
                 {!isGroupPage && (

@@ -28,9 +28,9 @@ interface Connection {
 
 interface ConnectionContextType {
   connections: Connection[];
-  setConnections: (connections: Connection[]) => void;
+  setConnections: React.Dispatch<React.SetStateAction<Connection[]>>;
   filteredConnections: Connection[];
-  setFilteredConnections: (filteredConnections: Connection[]) => void;
+  setFilteredConnections: React.Dispatch<React.SetStateAction<Connection[]>>;
   getAllConnections: () => Promise<void>;
   loading: boolean;
   error: string | null;

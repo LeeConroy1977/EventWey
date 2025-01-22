@@ -1,4 +1,10 @@
-import React, { createContext, useState, useContext, ReactNode } from "react";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  FC,
+} from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 
 import JoinedEventConfimation from "../components/JoinedEventConfimation";
@@ -6,7 +12,10 @@ import GetTickets from "../components/GetTickets";
 import CancelAttendance from "../components/CancelAttendance";
 
 interface EventModalContextProps {
-  openEventModal: (event: any, action: "join" | "tickets" | "cancel") => void;
+  openEventModal: (
+    event: unknown,
+    action: "join" | "tickets" | "cancel"
+  ) => void;
   closeEventModal: () => void;
 }
 
@@ -22,17 +31,17 @@ export const useEventModal = (): EventModalContextProps => {
   return context;
 };
 
-export const EventModalProvider: React.FC<{ children: ReactNode }> = ({
+export const EventModalProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [modalContent, setModalContent] = useState<ReactNode>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
 
   const openEventModal = (
-    event: any,
+    event: unknown,
     action: "join" | "tickets" | "cancel"
   ) => {
-    let content;
+    let content: ReactNode;
     switch (action) {
       case "join":
         content = <JoinedEventConfimation event={event} />;
@@ -57,50 +66,23 @@ export const EventModalProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   return (
-    <EventModalContext.Provider value={{ openEventModal, closeEventModal }}>
+    <EventModalContext.Provider
+      value={{ openEventModal, closeEventModal, isVisible }}
+    >
       {children}
       {isVisible && (
-        <div style={overlayStyles}>
-          <div style={modalStyles}>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="relative w-4/5 lg:w-2/3 h-4/5 bg-white rounded-lg p-5 mobile:mt-16 tablet:mt-24">
             {modalContent}
-            <button style={closeButtonStyles} onClick={closeEventModal}>
-              <IoIosCloseCircle className="text-primary text-[36px] m-4" />
+            <button
+              className="absolute top-3 right-3 text-transparent bg-none text-2xl cursor-pointer"
+              onClick={closeEventModal}
+            >
+              <IoIosCloseCircle className="text-primary tablet:text-[36px] " />
             </button>
           </div>
         </div>
       )}
     </EventModalContext.Provider>
   );
-};
-
-const overlayStyles: React.CSSProperties = {
-  position: "fixed",
-  top: 0,
-  left: 0,
-  width: "100%",
-  height: "100%",
-  backgroundColor: "rgba(0, 0, 0, 0.5)",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-};
-
-const modalStyles: React.CSSProperties = {
-  width: "66%",
-  height: "80%",
-  background: "white",
-  padding: "20px",
-  borderRadius: "8px",
-  position: "relative",
-  marginTop: "6rem",
-};
-
-const closeButtonStyles: React.CSSProperties = {
-  position: "absolute",
-  top: "10px",
-  right: "10px",
-  background: "transparent",
-  border: "none",
-  fontSize: "16px",
-  cursor: "pointer",
 };
