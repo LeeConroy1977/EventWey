@@ -31,6 +31,8 @@ import GroupMembers from "./routes/group-members/GroupMembers";
 import Events from "./routes/events/Events";
 import Groups from "./routes/groups/Groups";
 import { useUser } from "./contexts/UserContext";
+import AdminGroups from "./routes/user-admin-groups/AdminGroups";
+import AdminEvents from "./routes/user-admin-events/AdminEvents";
 
 function App() {
   const { user } = useUser();
@@ -59,6 +61,11 @@ function App() {
                 path="my-connections/requests"
                 element={<ConnectionRequests />}
               />
+              <Route path="admin">
+                <Route index element={<Navigate to="groups" replace />} />{" "}
+                <Route path="groups" element={<AdminGroups />} />
+                <Route path="events" element={<AdminEvents />} />
+              </Route>
             </Route>
           </Route>
 

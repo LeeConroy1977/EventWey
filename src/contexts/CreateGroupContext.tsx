@@ -29,9 +29,10 @@ interface Group {
   events: string[];
   messages: string[];
   category: string;
+  approved: boolean;
 }
 
-const CreateGroupContext = createContext<{
+interface CreateGroupContextType {
   state: CreateGroupState;
   dispatch: React.Dispatch<CreateGroupAction>;
   nextStep: () => void;
@@ -43,33 +44,11 @@ const CreateGroupContext = createContext<{
   createGroup: (newGroup: Group) => Promise<Group | null>;
   finishCreateGroup: () => void;
   resetGroup: () => void;
-}>({
-  state: initialState,
-  dispatch: () => null,
-  nextStep: () => {},
-  prevStep: () => {},
-  newGroup: {
-    id: "",
-    name: "",
-    image: "",
-    groupAdmin: [],
-    description: [],
-    openAccess: true,
-    category: "",
-    location: { placename: "", lng: -2.4512, lat: 50.6105 },
-    creationDate: 0,
-    members: [],
-    events: [],
-    messages: [],
-    eventsCount: 0,
-  },
-  setNewGroup: () => {},
-  categories: [],
-  getAllCategories: async () => {},
-  createGroup: async () => null,
-  finishCreateGroup: () => {},
-  resetGroup: () => {},
-});
+}
+
+const CreateGroupContext = createContext<CreateGroupContextType | undefined>(
+  undefined
+);
 
 export const CreateGroupProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -89,6 +68,7 @@ export const CreateGroupProvider: React.FC<{ children: React.ReactNode }> = ({
     events: [],
     messages: [],
     eventsCount: 0,
+    approved: false,
   });
 
   const [categories, setCategories] = useState<string[]>([]);
@@ -98,13 +78,12 @@ export const CreateGroupProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       const fetchedCategories = await fetchAllCategories();
       setCategories(fetchedCategories);
-      console.log(categories);
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
   };
 
-  const createGroup = async (newGroup: Group) => {
+  const createGroup = async (newGroup: Group): Promise<Group | null> => {
     try {
       const group = await postGroup(newGroup);
       setNewGroup(group);
@@ -143,6 +122,7 @@ export const CreateGroupProvider: React.FC<{ children: React.ReactNode }> = ({
       events: [],
       messages: [],
       eventsCount: 0,
+      approved: false,
     });
   };
 
@@ -167,4 +147,12 @@ export const CreateGroupProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
-export const useCreateGroupContext = () => useContext(CreateGroupContext);
+export const useCreateGroupContext = (): CreateGroupContextType => {
+  const context = useContext(CreateGroupContext);
+  if (!context) {
+    throw new Error(
+      "useCreateGroupContext must be used within a CreateGroupProvider"
+    );
+  }
+  return context;
+};

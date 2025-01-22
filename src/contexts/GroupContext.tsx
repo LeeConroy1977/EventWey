@@ -1,9 +1,17 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  FC,
+} from "react";
 import { fetchAllUsers } from "../../utils/api/user-api";
 import {
   fetchGroupById,
   fetchGroupMembers,
   fetchGroupEventsById,
+  patchGroup,
+  deleteGroup,
 } from "../../utils/api/groups-api";
 
 interface PriceBand {
@@ -36,6 +44,7 @@ interface Event {
   description: string[];
   attendeesId: string[];
   location: Location;
+  approved: boolean;
 }
 
 interface Group {
@@ -52,6 +61,7 @@ interface Group {
   events: string[];
   messages: string[];
   category: string;
+  approved: boolean;
 }
 
 interface User {
@@ -92,6 +102,8 @@ interface GroupContextType {
   setGroupOrganiser: (user: User) => void;
   getGroupById: (id: string) => Promise<void>;
   getEventsById: (id: string) => Promise<void>;
+  updateGroup: (field: keyof Group, value: any) => Promise<void>;
+  removeGroup: (id: string) => Promise<void>;
   getGroupMembers: (id: string) => Promise<void>;
   loading: boolean;
   error: string | null;
@@ -103,7 +115,7 @@ interface GroupProviderProps {
 
 const GroupContext = createContext<GroupContextType | null>(null);
 
-export const GroupProvider: React.FC<GroupProviderProps> = ({ children }) => {
+export const GroupProvider: FC<GroupProviderProps> = ({ children }) => {
   const [group, setGroup] = useState<Group | null>(null);
   const [groupEvents, setGroupEvents] = useState<Event[]>([]);
   const [groupMembers, setGroupMembers] = useState<User[]>([]);
@@ -161,6 +173,33 @@ export const GroupProvider: React.FC<GroupProviderProps> = ({ children }) => {
     }
   };
 
+  const updateGroup = async (field: keyof Group, value: any) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const updatedGroup = await patchGroup(group?.id!, { [field]: value });
+      setGroup(updatedGroup);
+    } catch (err) {
+      console.error(`Error updating group field ${field}:`, err);
+      setError(`Failed to update ${field}.`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const removeGroup = async (id: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+      await deleteGroup(id);
+    } catch (err) {
+      console.error("Error deleting group", err);
+      setError("Failed to delete.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <GroupContext.Provider
       value={{
@@ -177,6 +216,8 @@ export const GroupProvider: React.FC<GroupProviderProps> = ({ children }) => {
         getGroupMembers,
         error,
         loading,
+        updateGroup,
+        removeGroup,
       }}
     >
       {children}

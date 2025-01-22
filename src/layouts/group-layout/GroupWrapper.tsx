@@ -6,11 +6,11 @@ import Button from "../reuseable-components/Button";
 import useHandleGroupClick from "../../hooks/useHandleGroupClick";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 
-const GroupWrapper = ({ group }) => {
+const GroupWrapper = ({ group, handleRemoveGroup, handleApproveGroup }) => {
   const { user } = useUser();
   const { isMobile } = useScreenWidth();
   const { id } = useParams();
-  const { name, image, description, members, openAccess } = group;
+  const { name, image, description, members, openAccess, approved } = group;
 
   const isMember = user?.groups?.includes(id);
   const buttonText = isMember
@@ -39,28 +39,34 @@ const GroupWrapper = ({ group }) => {
           <p className="mt-3 desktop:mt-3 text-[12px] desktop:text-[14px] xl-screen:text-[16px] font-semibold mr-auto">
             {description[0]}
           </p>
-          <div className="w-full flex items-center mt-6 desktop:mt-auto desktop:mr-auto  ">
-            <IoPerson className="text-secondary text-[16px] xl-screen:text-[18px]" />
-            <p className="ml-2 text-[12px] xl-screen:text-[16px] font-semibold text-[#2C3E50]">
-              {members && members.length} Members
-            </p>
-            {/* <FaUserFriends className="text-primary text-[16px] ml-6" />
-            <p className="ml-2 text-[12px] font-semibold text-[#2C3E50]">
-              {members && members.length} Connections
-            </p> */}
-            {isMobile && (
+          {approved && (
+            <div className="w-full flex items-center mt-6 desktop:mt-auto desktop:mr-auto  ">
+              <IoPerson className="text-secondary text-[16px] xl-screen:text-[18px]" />
+              <p className="ml-2 text-[12px] xl-screen:text-[16px] font-semibold text-[#2C3E50]">
+                {members && members.length} Members
+              </p>
+            </div>
+          )}
+
+          {!isMobile && !approved && (
+            <div className="flex mr-auto mt-auto mb-4 desktop:h-[66px]">
               <button
-                className={`w-[110px] h-[36px] ml-auto flex items-center justify-center text-[11px] font-semibold rounded-lg ${
-                  isMember
-                    ? "bg-bgPrimary border-2 border-primary text-primary"
-                    : "bg-secondary text-white"
-                }`}
+                onClick={handleApproveGroup}
+                className="w-[110px]  desktop:w-[120px] tablet:h-[34px] desktop:h-[40px] xl-screen:w-[140px] xl-screen:h-[44px] mt-auto mb-1 mr-auto  flex items-center justify-center tablet:text-[10px] desktop:text-[11px] xl-screen:text-[12px] font-semibold rounded-lg tablet:mb-3 desktop:mb-1 bg-primary text-white
+              "
               >
-                {buttonText}
+                Approve Group
               </button>
-            )}
-          </div>
-          {!isMobile && (
+              <button
+                onClick={() => handleRemoveGroup(id)}
+                className="w-[110px]  desktop:w-[120px] tablet:h-[34px] desktop:h-[40px] xl-screen:w-[140px] xl-screen:h-[44px] mt-auto mb-1 mr-auto  flex items-center justify-center tablet:text-[10px] desktop:text-[11px] xl-screen:text-[12px] font-semibold rounded-lg tablet:mb-3 desktop:mb-1 bg-secondary text-white tablet:ml-8
+              "
+              >
+                Reject Group
+              </button>
+            </div>
+          )}
+          {!isMobile && approved && (
             <button
               className={`w-[110px]  desktop:w-[120px] tablet:h-[34px] desktop:h-[40px] xl-screen:w-[140px] xl-screen:h-[44px] mt-auto mb-1 mr-auto  flex items-center justify-center tablet:text-[10px] desktop:text-[11px] xl-screen:text-[12px] font-semibold rounded-lg tablet:mb-3 desktop:mb-1  ${
                 isMember

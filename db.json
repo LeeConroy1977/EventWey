@@ -1348,6 +1348,30 @@
       "groupComments": ["12", "13", "14"],
       "category": "sports",
       "approved": true
+    },
+    {
+      "id": "15",
+      "name": "Weymouth Art Collective",
+      "image": "https://media.istockphoto.com/id/522461648/photo/students-in-workshop.jpg?s=612x612&w=0&k=20&c=bZA6zDx0_1EsKCa810aB8RVpI8jWgqLVtMsbkHK7c9Q=",
+      "groupAdmin": ["3"],
+      "description": [
+        "A group for artists, art enthusiasts, and creatives in Weymouth.",
+        "Join a thriving community where we celebrate all forms of art, from painting and sculpture to digital and performance art.",
+        "We host workshops, gallery visits, and collaborative art projects to inspire creativity and foster collaboration among members.",
+        "Whether you're an experienced artist or just starting your creative journey, you'll find support, inspiration, and opportunities to showcase your work."
+      ],
+      "openAccess": true,
+      "location": {
+        "placename": "Weymouth Art Studio",
+        "lng": -2.4521,
+        "lat": 50.6098
+      },
+      "creationDate": "2025-01-20",
+      "members": [],
+      "events": [],
+      "groupComments": [],
+      "category": "arts",
+      "approved": false
     }
   ],
   "events": [
@@ -2477,6 +2501,42 @@
         "lat": 50.613
       },
       "approved": true
+    },
+    {
+      "id": "25",
+      "image": "https://white-rhino.co.uk/wp-content/uploads/2019/03/School-Sports-Day-680x426.jpg",
+      "date": 1733443200000,
+      "startTime": "9:00 AM",
+      "title": "Weymouth Sports Festival",
+      "groupName": "Weymouth Sports Club",
+      "groupId": "17",
+      "duration": "6 hrs",
+      "attendees": [],
+      "going": 8,
+      "capacity": 100,
+      "availability": 92,
+      "free": true,
+      "priceBands": [],
+      "category": "sports",
+      "tags": [
+        "Soccer",
+        "Team Sports",
+        "Social",
+        "Community",
+        "Meet New Friends"
+      ],
+      "description": [
+        "Get ready for an action-packed day at the Weymouth Sports Festival, where sports enthusiasts come together to celebrate fitness and camaraderie!",
+        "The event will feature a variety of sports activities, including football, basketball, and tennis tournaments. Whether you’re a seasoned athlete or a beginner looking to try something new, there’s something for everyone to enjoy.",
+        "Aside from competitive games, the festival will also host fitness challenges, fun activities for kids, and live demonstrations from local sports professionals. It’s the perfect event to bring the community together and promote a healthy, active lifestyle.",
+        "Join us for an unforgettable day filled with excitement, sportsmanship, and community spirit. Don't miss the chance to showcase your skills, meet fellow sports enthusiasts, and cheer on the participants. Together, let’s make this festival a celebration of the vibrant sports culture in Weymouth!"
+      ],
+      "location": {
+        "placename": "Weymouth Community Grounds",
+        "lng": -2.4541,
+        "lat": 50.6087
+      },
+      "approved": false
     }
   ],
   "categories": [

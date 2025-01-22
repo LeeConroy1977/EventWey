@@ -24,7 +24,7 @@ interface Event {
   title: string;
   date: string;
   groupName: string;
-  groupId: number;
+  groupId: string;
   duration: string;
   priceBands: PriceBand[];
   going: number;
@@ -36,6 +36,7 @@ interface Event {
   description: string[];
   attendeesId: string[];
   location: Location;
+  approved: boolean;
 }
 
 interface Group {
@@ -46,12 +47,13 @@ interface Group {
   description: string[];
   openAccess: boolean;
   location: Location;
-  creationDate: number;
+  creationDate: string;
   eventsCount: number;
   members: string[];
   events: string[];
   messages: string[];
   category: string;
+  approved: boolean;
 }
 
 interface User {
@@ -126,8 +128,10 @@ export const ConnectionProvider: React.FC<ConnectionProviderProps> = ({
     try {
       const data = await fetchConnectionById(id);
       setConnection(data);
-    } catch (err: any) {
-      setError(err.message || "Failed to fetch connection");
+    } catch (err) {
+      const errorMessage =
+        (err as Error).message || "Failed to fetch connection";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -139,8 +143,10 @@ export const ConnectionProvider: React.FC<ConnectionProviderProps> = ({
     try {
       const data = await fetchConnectionConnections(id);
       setConnectionConnections(data);
-    } catch (err: any) {
-      setError(err.message || "Failed to fetch connections");
+    } catch (err) {
+      const errorMessage =
+        (err as Error).message || "Failed to fetch connections";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -152,8 +158,9 @@ export const ConnectionProvider: React.FC<ConnectionProviderProps> = ({
     try {
       const data = await fetchConnectionEvents(id);
       setConnectionEvents(data);
-    } catch (err: any) {
-      setError(err.message || "Failed to fetch events");
+    } catch (err) {
+      const errorMessage = (err as Error).message || "Failed to fetch events";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -165,8 +172,9 @@ export const ConnectionProvider: React.FC<ConnectionProviderProps> = ({
     try {
       const data = await fetchConnectionGroups(id);
       setConnectionGroups(data);
-    } catch (err: any) {
-      setError(err.message || "Failed to fetch groups");
+    } catch (err) {
+      const errorMessage = (err as Error).message || "Failed to fetch groups";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -185,6 +193,10 @@ export const ConnectionProvider: React.FC<ConnectionProviderProps> = ({
         getConnectionGroups,
         error,
         loading,
+        setConnection,
+        setConnectionGroups,
+        setConnectionEvents,
+        setConnectionConnections,
       }}
     >
       {children}

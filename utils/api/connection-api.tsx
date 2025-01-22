@@ -4,7 +4,7 @@ const API = "https://eventwey.glitch.me";
 
 export const fetchConnectionById = async (id: string): Promise<any> => {
   try {
-    const response = await axios.get(`http://localhost:3000/users/${id}`);
+    const response = await axios.get(`${API}/users/${id}`);
     const connection = response.data;
 
     console.log("Fetched Connection Data:", connection);
@@ -22,12 +22,10 @@ export const fetchConnectionById = async (id: string): Promise<any> => {
 
 export const fetchConnectionEvents = async (id: string): Promise<any[]> => {
   try {
-    const connectionResponse = await axios.get(
-      `http://localhost:3000/users/${id}`
-    );
+    const connectionResponse = await axios.get(`${API}/users/${id}`);
     const connection = connectionResponse.data;
 
-    const eventsResponse = await axios.get("http://localhost:3000/events");
+    const eventsResponse = await axios.get(`${API}/events`);
     const events = eventsResponse.data;
     const connectionEvents = events.filter((event) =>
       connection?.connections.includes(String(event.id))
@@ -42,12 +40,10 @@ export const fetchConnectionEvents = async (id: string): Promise<any[]> => {
 
 export const fetchConnectionGroups = async (id: string): Promise<any[]> => {
   try {
-    const connectionResponse = await axios.get(
-      `http://localhost:3000/users/${id}`
-    );
+    const connectionResponse = await axios.get(`${API}/users/${id}`);
     const connection = connectionResponse.data;
 
-    const groupsResponse = await axios.get("http://localhost:3000/groups");
+    const groupsResponse = await axios.get(`${API}/groups`);
     const groups = groupsResponse.data;
 
     const connectionGroups = groups.filter((group) =>
@@ -65,12 +61,10 @@ export const fetchConnectionConnections = async (
   id: number
 ): Promise<any[]> => {
   try {
-    const connectionResponse = await axios.get(
-      `http://localhost:3000/users/${id}`
-    );
+    const connectionResponse = await axios.get(`${API}/users/${id}`);
     const connection = connectionResponse.data;
 
-    const usersResponse = await axios.get("http://localhost:3000/users");
+    const usersResponse = await axios.get(`${API}/users/`);
     const users = usersResponse.data;
 
     const connectionConnections = users.filter((user) =>

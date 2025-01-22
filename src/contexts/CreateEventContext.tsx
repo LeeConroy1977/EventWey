@@ -48,7 +48,7 @@ interface Event {
   approved: boolean;
 }
 
-const CreateEventContext = createContext<{
+interface CreateEventContextType {
   state: CreateEventState;
   dispatch: React.Dispatch<CreateEventAction>;
   nextStep: () => void;
@@ -68,46 +68,11 @@ const CreateEventContext = createContext<{
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   error: string | null;
-}>({
-  state: initialState,
-  dispatch: () => null,
-  nextStep: () => {},
-  prevStep: () => {},
-  createEvent: async () => null,
-  categories: [],
-  getAllCategories: async () => {},
-  getTags: async () => {},
-  categoryTags: [],
-  newEvent: {
-    image: "",
-    date: 0,
-    startTime: "",
-    title: "",
-    groupName: "",
-    groupId: "",
-    duration: "",
-    going: 0,
-    attendees: [],
-    capacity: 0,
-    availability: 0,
-    free: true,
-    priceBands: [],
-    category: "",
-    tags: [],
-    description: [],
-    location: { placename: "", lng: 0, lat: 0 },
-    approved: false,
-  },
-  finishCreateEvent: () => {},
-  getUserAdminGroups: async () => {},
-  adminGroups: [],
-  setNewEvent: () => {},
-  startEventCreation: () => {},
-  resetEvent: () => {},
-  loading: false,
-  setLoading: () => {},
-  error: null,
-});
+}
+
+const CreateEventContext = createContext<CreateEventContextType | undefined>(
+  undefined
+);
 
 export const CreateEventProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -150,8 +115,8 @@ export const CreateEventProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       const categories = await fetchAllCategories();
       setCategories(categories);
-    } catch (error) {
-      console.error("Error fetching categories:", error);
+    } catch (err) {
+      console.error("Error fetching categories:", err);
       setError("Failed to fetch categories.");
     }
   };
@@ -163,7 +128,7 @@ export const CreateEventProvider: React.FC<{ children: React.ReactNode }> = ({
       const tags = await fetchAllTags();
       setCategoryTags(tags);
     } catch (err) {
-      console.error("Error fetching tags", err);
+      console.error("Error fetching tags:", err);
       setError("Failed to fetch tags.");
     } finally {
       setLoading(false);
@@ -186,8 +151,8 @@ export const CreateEventProvider: React.FC<{ children: React.ReactNode }> = ({
       }
 
       return event;
-    } catch (error) {
-      console.error("Error creating event:", error);
+    } catch (err) {
+      console.error("Error creating event:", err);
       setError("Failed to create event.");
       return null;
     }
@@ -195,10 +160,10 @@ export const CreateEventProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const getUserAdminGroups = async () => {
     try {
-      const groups = await fetchUserAdminGroupById(user.id);
+      const groups = await fetchUserAdminGroupById(user?.id);
       setAdminGroups(groups);
-    } catch (error) {
-      console.error("Error fetching admin groups:", error);
+    } catch (err) {
+      console.error("Error fetching admin groups:", err);
       setError("Failed to fetch admin groups.");
     }
   };
@@ -226,14 +191,14 @@ export const CreateEventProvider: React.FC<{ children: React.ReactNode }> = ({
   return (
     <CreateEventContext.Provider
       value={{
+        state,
+        dispatch,
         nextStep,
         prevStep,
         createEvent,
-        state,
         categories,
         getAllCategories,
         getTags,
-        dispatch,
         categoryTags,
         newEvent,
         finishCreateEvent,
@@ -252,4 +217,12 @@ export const CreateEventProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
-export const useCreateEventContext = () => useContext(CreateEventContext);
+export const useCreateEventContext = (): CreateEventContextType => {
+  const context = useContext(CreateEventContext);
+  if (!context) {
+    throw new Error(
+      "useCreateEventContext must be used within a CreateEventProvider"
+    );
+  }
+  return context;
+};

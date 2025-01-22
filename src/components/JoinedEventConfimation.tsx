@@ -5,10 +5,13 @@ import Button from "../reuseable-components/Button";
 import { useUser } from "../contexts/UserContext";
 import { useEffect, useState } from "react";
 import EventConfimation from "./EventConfimation";
+import { useParams } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
+import { useScreenWidth } from "../contexts/ScreenWidthContext";
 
 const JoinedEventConfimation = ({ event }) => {
+  const { id } = useParams();
   const {
-    id,
     image,
     title,
     groupName,
@@ -20,10 +23,11 @@ const JoinedEventConfimation = ({ event }) => {
     free,
   } = event;
 
-  const { joinFreeEvent, isUserAttendingEvent, setIsAttending, isAttending } =
-    useUser();
+  const { joinFreeEvent, isUserAttendingEvent } = useUser();
   const [isJoined, setIsJoined] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const [isAttending, setIsAttending] = useState(false);
+  const { isMobile } = useScreenWidth();
 
   useEffect(() => {
     const checkAttendanceStatus = async () => {
@@ -40,7 +44,7 @@ const JoinedEventConfimation = ({ event }) => {
     const availablePriceBands = priceBands.filter(
       (priceBand) => priceBand.price && priceBand.ticketCount > 0
     );
-
+    if (event?.free) return "Free";
     if (availablePriceBands.length === 0) return "No price available";
     const sortedPriceBands = availablePriceBands.sort(
       (a, b) => parseFloat(a.price) - parseFloat(b.price)
@@ -55,7 +59,7 @@ const JoinedEventConfimation = ({ event }) => {
 
   const handleJoinEvent = async () => {
     console.log("isLoading", isLoading); // Check loading state
-    await joinFreeEvent(id); // Simulate event join
+    await joinFreeEvent(event.id); // Simulate event join
     setIsJoined(true); // Update joined status
     setLoading(false); // Set loading to false after completion
   };
@@ -64,61 +68,67 @@ const JoinedEventConfimation = ({ event }) => {
   return (
     <div className="flex flex-col items-center w-full h-full bg-bgPrimary rounded-lg">
       <main className="w-full h-full flex">
-        <section className="w-[50%] h-[100%] flex flex-col items-center overflow-hidden ">
-          <div className="w-[80%] h-[100%] flex flex-col items-center justify-start ">
-            <img
-              className="w-[100%] h-[40%] rounded-lg mt-6"
-              src={image}
-              alt=""
-            />
-            <h1 className="text-textPrimary text-[26px] font-bold mt-4 mr-auto ml-2">
-              {title}
-            </h1>
-            <p className="text-textPrimary font-bold text-[18px] mr-auto ml-2 mt-4">
-              Hosted by: <span className="text-primary">{groupName}</span>
-            </p>
+        {!isMobile && (
+          <section className="w-[50%] h-[100%] flex flex-col items-center overflow-hidden ">
+            <div className="w-[80%] h-[100%] flex flex-col items-center justify-start ">
+              <img
+                className="w-[100%] tablet:h-[36%] desktop:h-[40%] rounded-lg mt-6"
+                src={image}
+                alt=""
+              />
+              <h1 className="text-textPrimary tablet:text-[20px] desktop:text-[26px] xl-screen:text-[30px] font-bold mt-4 mr-auto ml-2">
+                {title}
+              </h1>
+              <p className="text-textPrimary font-bold tablet:text-[14px] desktop:text-[18px] xl-screen:text-[22px] mr-auto ml-2 mt-4">
+                Hosted by: <span className="text-primary">{groupName}</span>
+              </p>
 
-            <p className="font-bold text-textPrimary mt-4 text-[15px] mr-auto ml-2 pr-3">
-              {description[0]}
-            </p>
-            <p className="font-medium text-textPrimary mt-4 text-[14px] mr-auto ml-2 pr-3">
-              {description[1]}
-            </p>
-            <div className="flex items-center mr-auto mt-auto mb-12 pl-4">
-              <div className="flex items-center">
-                <IoPerson className="text-[#D66E6E] text-[20px]" />
-                <p className="ml-2 text-[14px] font-semibold text-[#2C3E50]">
-                  {going} going
-                </p>
-              </div>
-              <div className="flex items-center ml-4">
-                <IoMdPricetag className="text-[#5D9B9B] text-[21px]" />
-                <p className="ml-2 text-[14px] font-semibold text-[#2C3E50]">
-                  {eventPrices}
-                </p>
+              <p className="font-bold text-textPrimary mt-4 tablet:text-[11px] desktop:text-[14px] xl-screen:text-[16px] mr-auto ml-2 pr-3">
+                {description[0]}
+              </p>
+              <p className="font-medium text-textPrimary mt-4 tablet:text-[11px] deskto:text-[13px] xl-screen:text-[15px] mr-auto ml-2 pr-3">
+                {description[1]}
+              </p>
+              <div className="flex items-center mr-auto mt-auto mb-12 pl-4">
+                <div className="flex items-center">
+                  <IoPerson className="text-[#D66E6E] tablet:text-[16px] desktop:text-[20px] xl-screen:text-[22px]" />
+                  <p className="ml-2 tablet:text-[11px] desktop:text-[14px] xl-screen:text-[16px] font-semibold text-[#2C3E50]">
+                    {going} going
+                  </p>
+                </div>
+                <div className="flex items-center ml-4">
+                  <IoMdPricetag className="text-[#5D9B9B] tablet:text-[17px] desktop:text-[21px] xl-screen:text-[23px]" />
+                  <p className="ml-2 tablet:text-[11px] desktop:text-[14px] xl-screen:text-[16px] font-semibold text-[#2C3E50]">
+                    {eventPrices}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
-        <section className="w-[50%] h-[100%] flex flex-col items-center rounded-lg mt-8">
-          <h1 className="text-[36px] font-bold text-secondary mt-4">
+        <section className="mobile:full mobile:w-full tablet:w-[50%] h-[100%] flex flex-col items-center rounded-lg mt-8">
+          <h1 className="mobile:text-[28px] tablet:text-[28px] desktop:text-[36px] xl-screen:text-[42px] font-bold text-secondary mt-4">
             EventWey
           </h1>
           {isLoading ? (
-            <div className="w-8 h-8 border-4 border-t-4 border-gray-200 rounded-full animate-spin"></div>
+            <div className="flex mobile:flex-col mobile:justify-start tablet:justify-center items-center mobile:mb-auto tablet:mb-0 mobile:h-screen tablet:h-[200px] mobile:mt-16 mt-8">
+              <ClipLoader size={80} color={"#5d9b9b"} />
+            </div>
           ) : (
             <>
               {!isLoading && isJoined ? (
                 <EventConfimation event={event} />
               ) : (
                 <>
-                  <h2 className="text-textPrimary text-[26px] font-bold mt-[7rem] mr-auto ml-2">
-                    Confirm your attendance to the event
-                  </h2>
-                  <h3 className="text-primary font-bold text-[28px] mt-6">
-                    {title}
-                  </h3>
+                  <div className="w-full flex flex-col tablet:justify-center items-center ">
+                    <h2 className="text-textPrimary mobile:text-[18px]  tablet:text-[20px] desktop:text-[24px] xl-screen:text-[28px] font-bold mobile:mt-12 tablet:mt-[7rem]  ml-2">
+                      Confirm your attendance
+                    </h2>
+                    <h3 className="text-primary font-bold mobile:text-[18px]  tablet:text-[22px] desktop:text-[26px] xl-screen:text-[30px] mt-10">
+                      {title}
+                    </h3>
+                  </div>
                   <div className="mt-auto mb-16">
                     <Button
                       handleClick={() => {
