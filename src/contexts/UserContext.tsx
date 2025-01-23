@@ -1,15 +1,10 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import {
-  createUser,
   fetchUserEvents,
   fetchUserGroups,
   updateUser,
 } from "../../utils/api/user-api";
-import {
-  fetchAllEvents,
-  fetchEventById,
-  patchEvent,
-} from "../../utils/api/events-api";
+import { fetchEventById, patchEvent } from "../../utils/api/events-api";
 import { useModal } from "./ModalContext";
 import { useNavigate } from "react-router-dom";
 import { useEvents } from "./EventsContext";
@@ -24,6 +19,7 @@ interface User {
   profileBackgroundImage: string;
   profileImage: string;
   aboutMe: string;
+  bio: string;
   tags: string[];
   connections: string[];
   groups: string[];
@@ -42,8 +38,9 @@ interface User {
 }
 
 interface PriceBand {
-  type: "Early bird" | "Standard" | "Standing" | "Vip";
+  type: "Early bird" | "Standard" | "VIP";
   price: string;
+  ticketCount: number;
 }
 
 interface Location {
@@ -64,6 +61,7 @@ interface Event {
   going: number;
   capacity: number;
   availability: number;
+  startTime: string;
   free: boolean;
   category: string;
   tags: string[];
@@ -91,14 +89,22 @@ interface Group {
 }
 
 interface UserContextType {
-  user: User | null;
+  user: User | null | undefined;
+  setUser: React.Dispatch<React.SetStateAction<User | null | undefined>>;
   userEvents: Event[];
-  userGroup: Group[];
+  userTotalEvents: Event[];
+  userGroups: Group[];
+  userTotalGroups: Group[];
   loading: boolean;
   error: string | null;
   getUserEvents: (params: { [key: string]: string }) => void;
   getUserGroups: (params: { [key: string]: string }) => void;
+  getUserTotalGroups: (params: { [key: string]: string }) => void;
+  isUserAttendingEvent: (id: string) => void;
   handleSignOut: () => void;
+  patchUser: (field: keyof User, value: any) => Promise<void>;
+  joinFreeEvent: (eventId: string) => Promise<void>;
+  getUserTotalEvents: () => Promise<void>;
 }
 
 const UserContext = createContext<UserContextType | null>(null);
@@ -107,37 +113,37 @@ interface UserProviderProps {
   children: ReactNode;
 }
 
-const defaultUser = {
-  id: "1",
-  email: "mia6@gmail.com",
-  username: "Mia F",
-  password: "Password#6",
-  googleId: null,
-  authMethod: "email",
-  profileBackgroundImage: "https://picsum.photos/800/600?random=6",
-  profileImage: "https://randomuser.me/api/portraits/women/6.jpg",
-  aboutMe:
-    "Hi, I’m Mia! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
-  bio: "Lover of all things creative and tech.",
-  tags: ["Outdoor Concerts", "Mountain Biking", "Songwriting Circles"],
-  connections: ["2", "3", "4", "5", "6", "7", "8", "15", "30"],
-  groups: ["1", "9", "11", "13"],
-  userEvents: ["1", "2", "5", "10", "22", "23", "24"],
-  messages: [],
-  groupAdmin: ["1"],
-  notifications: [],
-  viewEventsStatus: "public",
-  viewConnectionsStatus: "public",
-  viewGroupsStatus: "public",
-  viewTagsStatus: "public",
-  viewProfileImage: "public",
-  viewBioStatus: "public",
-  aboutMeStatus: "public",
-  role: "user",
-};
+// const defaultUser = {
+//   id: "1",
+//   email: "mia6@gmail.com",
+//   username: "Mia F",
+//   password: "Password#6",
+//   googleId: null,
+//   authMethod: "email",
+//   profileBackgroundImage: "https://picsum.photos/800/600?random=6",
+//   profileImage: "https://randomuser.me/api/portraits/women/6.jpg",
+//   aboutMe:
+//     "Hi, I’m Mia! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
+//   bio: "Lover of all things creative and tech.",
+//   tags: ["Outdoor Concerts", "Mountain Biking", "Songwriting Circles"],
+//   connections: ["2", "3", "4", "5", "6", "7", "8", "15", "30"],
+//   groups: ["1", "9", "11", "13"],
+//   userEvents: ["1", "2", "5", "10", "22", "23", "24"],
+//   messages: [],
+//   groupAdmin: ["1"],
+//   notifications: [],
+//   viewEventsStatus: "public",
+//   viewConnectionsStatus: "public",
+//   viewGroupsStatus: "public",
+//   viewTagsStatus: "public",
+//   viewProfileImage: "public",
+//   viewBioStatus: "public",
+//   aboutMeStatus: "public",
+//   role: "user",
+// };
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const { events, setEvents } = useEvents();
+  const { setEvents } = useEvents();
   const { hideModal } = useModal();
   const [user, setUser] = useState<User | null>();
   const navigate = useNavigate();
@@ -146,7 +152,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [userTotalEvents, setUserTotalEvents] = useState<Event[]>([]);
-  const [userTotalGroups, setUserTotalGroups] = useState<Event[]>([]);
+  const [userTotalGroups, setUserTotalGroups] = useState<Group[]>([]);
 
   const handleSignOut = () => {
     hideModal();
@@ -180,6 +186,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
       console.log("Fetching event with ID:", eventId);
       const event = await fetchEventById(eventId);
+
       if (!event || !Array.isArray(event.attendees)) {
         setError("Event not found or has invalid data.");
         console.error("Invalid event data:", event);
@@ -199,6 +206,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       const updatedUser = await updateUser(user?.id!, {
         userEvents: [...(user?.userEvents ?? []), eventId],
       });
+
       const updatedEvent = await patchEvent(eventId, {
         attendees: [...event.attendees, user?.id || ""],
         going: event.going + 1,
@@ -206,17 +214,28 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       });
 
       setUser(updatedUser);
-      setEvents((prevEvents) => {
-        const eventExists = prevEvents.some((e) => e.id === eventId);
+
+      (setEvents as any)((prevEvents: any) => {
+        const eventExists = prevEvents.some((e: any) => e.id === eventId);
+
         if (eventExists) {
-          return prevEvents.map((e) => (e.id === eventId ? updatedEvent : e));
+          return prevEvents.map((e: any) =>
+            e.id === eventId ? updatedEvent : e
+          );
         } else {
           return [...prevEvents, updatedEvent];
         }
       });
-    } catch (err) {
-      console.error(`Error joining event ${eventId || "undefined"}:`, err);
-      setError("Failed to join the event.");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error(`Error joining event ${eventId || "undefined"}:`, err);
+        setError(err.message || "Failed to join the event.");
+      } else {
+        console.error(
+          `Unknown error occurred while joining event ${eventId || "undefined"}`
+        );
+        setError("Failed to join the event.");
+      }
     }
   };
 
@@ -228,16 +247,23 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       if (!user?.id) {
         throw new Error("User ID is not available.");
       }
+
       const { category = "", date = "", sortBy = "date" } = params;
       const events = await fetchUserEvents(user?.id!, {
         category,
         date,
         sortBy,
       });
+
       setUserEvents(events);
-    } catch (err) {
-      console.error("Error fetching events:", err);
-      setError(err.message || "Failed to fetch events.");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error("Error fetching events:", err.message);
+        setError(err.message || "Failed to fetch events.");
+      } else {
+        console.error("Unknown error fetching events:", err);
+        setError("An unknown error occurred.");
+      }
     } finally {
       setLoading(false);
     }
@@ -265,9 +291,17 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const getUserGroups = async (params: { [key: string]: string }) => {
     setLoading(true);
     setError(null);
+
+    if (!user?.id) {
+      setError("User is not logged in or doesn't have a valid ID.");
+      setLoading(false);
+      return;
+    }
+
     try {
       const { category, sortBy = "popular" } = params;
-      const groups = await fetchUserGroups(user?.id, { category, sortBy });
+      const groups = await fetchUserGroups(user.id, { category, sortBy });
+
       setUserGroups(groups);
     } catch (err) {
       console.error("Error fetching groups:", err);
@@ -280,6 +314,13 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const getUserTotalGroups = async () => {
     setLoading(true);
     setError(null);
+
+    if (!user?.id) {
+      setError("User is not logged in or doesn't have a valid ID.");
+      setLoading(false);
+      return;
+    }
+
     try {
       const totalGroups = await fetchUserGroups(user.id, {});
       setUserTotalGroups(totalGroups);
@@ -291,7 +332,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
   };
 
-  function isUserAttendingEvent(id) {
+  function isUserAttendingEvent(id: string) {
     const isAttending = user?.userEvents?.includes(String(id));
     return isAttending || false;
   }

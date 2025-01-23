@@ -4,6 +4,7 @@ import Button from "../../reuseable-components/Button";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 
 const AddTags = () => {
+  // @ts-ignore
   const { patchUser, getTags, categoryTags, finishSignUp } =
     useCreateUserContext();
   const [isValidTags, setIsValidTags] = useState<boolean | null>(null);
@@ -53,8 +54,8 @@ const AddTags = () => {
           <section className="w-[50%] h-[90%] flex flex-col items-center justify-center my-auto">
             <div className="w-[84%] tablet:h-[600px] desktop:h-[680px] xl-screen:h-[680px] flex justify-start items-start flex-wrap gap-3 p-6 rounded-lg bg-bgPrimary border-2 border-gray-200  overflow-y-scroll">
               {categoryTags
-                .sort((a, b) => a.localeCompare(b))
-                .map((tag, i) => (
+                .sort((a: any, b: any) => a.localeCompare(b))
+                .map((tag: any, i: any) => (
                   <div
                     key={i}
                     className={`flex items-center justify-center text-textPrimary text-[10px] font-semibold px-4 py-2 rounded-full border-[1px] border-gray-200 cursor-pointer ${
@@ -81,8 +82,8 @@ const AddTags = () => {
           {isMobile ? (
             <div className="w-[100%] h-[340px] flex justify-start items-start flex-wrap gap-3 p-4 rounded-lg bg-bgPrimary border-2 border-gray-200 mt-8 overflow-y-scroll">
               {categoryTags
-                .sort((a, b) => a.localeCompare(b))
-                .map((tag, i) => (
+                .sort((a: any, b: any) => a.localeCompare(b))
+                .map((tag: any, i: any) => (
                   <div
                     key={i}
                     className={`flex items-center justify-center text-textPrimary text-[9px] font-semibold px-3 py-2 rounded-full border-[1px] border-gray-200 cursor-pointer ${

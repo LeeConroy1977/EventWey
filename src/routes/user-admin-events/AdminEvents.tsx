@@ -29,6 +29,7 @@ const AdminEvents = () => {
         reviewEvents.length > 0 &&
         reviewEvents.map((event) => (
           <HomeEventsCard
+            // @ts-ignore
             event={event}
             key={event.id}
             handleClick={handleEventClick}

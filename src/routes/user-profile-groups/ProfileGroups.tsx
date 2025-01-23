@@ -1,5 +1,4 @@
 import HomeGroupsCard from "../groups/HomeGroupsCard";
-import { useConnections } from "../../contexts/ConnectionsContext";
 import { useUser } from "../../contexts/UserContext";
 import useHandleGroupClick from "../../hooks/useHandleGroupClick";
 import { ClipLoader } from "react-spinners";
@@ -26,6 +25,7 @@ const ProfileGroups = () => {
         <div className="flex flex-row items-start justify-start gap-3 flex-wrap">
           {userGroups.map((group) => (
             <HomeGroupsCard
+              // @ts-ignore
               group={group}
               key={group.id}
               handleClick={handleGroupClick}

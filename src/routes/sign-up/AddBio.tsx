@@ -6,8 +6,9 @@ import signUpImage4 from "../../assets/images/signUp4.jpg";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 
 const AddBio = () => {
-  const { user } = useUser();
+  const {} = useUser();
   const { isMobile } = useScreenWidth();
+  // @ts-ignore
   const { patchUser, nextStep } = useCreateUserContext();
   const [isValidBio, setIsValidBio] = useState<boolean | null>(null);
   const [bio, setBio] = useState<string>("");

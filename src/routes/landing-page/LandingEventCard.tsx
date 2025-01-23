@@ -1,8 +1,51 @@
 import { IoPerson } from "react-icons/io5";
 import { IoMdPricetag } from "react-icons/io";
 import { format } from "date-fns";
+import React from "react";
 
-const LandingEventCard = ({ event, handleClick }) => {
+interface PriceBand {
+  type: "Early bird" | "Standard" | "VIP";
+  price: string;
+  ticketCount: number;
+}
+
+interface Location {
+  placename: string;
+  lng: number;
+  lat: number;
+}
+
+interface Event {
+  id: string;
+  image: string;
+  title: string;
+  date: string;
+  groupName: string;
+  groupId: number;
+  duration: string;
+  priceBands: PriceBand[];
+  startTime: string;
+  going: number;
+  capacity: number;
+  availability: number;
+  free: boolean;
+  category: string;
+  tags: string[];
+  description: string[];
+  attendeesId: string[];
+  location: Location;
+  approved: boolean;
+}
+
+interface LandingEventCardProps {
+  event: Event;
+  handleClick: (id: string) => void;
+}
+
+const LandingEventCard: React.FC<LandingEventCardProps> = ({
+  event,
+  handleClick,
+}) => {
   const {
     id,
     image,
@@ -10,9 +53,7 @@ const LandingEventCard = ({ event, handleClick }) => {
     title,
     description,
     groupName,
-    duration,
     going,
-    availability,
     free,
     priceBands,
     startTime,
@@ -22,7 +63,7 @@ const LandingEventCard = ({ event, handleClick }) => {
     if (free) return "Free";
     if (!priceArr || priceArr.length === 0) return "No price available";
 
-    const sortedPrice = priceArr.sort((a, b) => a.price - b.price);
+    const sortedPrice = priceArr.sort((a: any, b: any) => a.price - b.price);
     if (priceArr.length === 1) return `${sortedPrice[0].price}`;
 
     return `${sortedPrice[0].price} - ${

@@ -1,7 +1,11 @@
-import { BiParagraph } from "react-icons/bi";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
+import React from "react";
 
-const EventDetail = ({ description }) => {
+interface EventDetailProps {
+  description: string[];
+}
+
+const EventDetail: React.FC<EventDetailProps> = ({ description }) => {
   const { isMobile } = useScreenWidth();
   return (
     <div className="w-[100%] min-h-[8rem] flex flex-col items-center justify-start bg-bgPrimary mt-0 tablet:mt-8 rounded-lg tablet:p-6  desktop:p-10 desktop:pb-10">

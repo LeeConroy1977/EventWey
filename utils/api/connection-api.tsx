@@ -27,7 +27,7 @@ export const fetchConnectionEvents = async (id: string): Promise<any[]> => {
 
     const eventsResponse = await axios.get(`${API}/events`);
     const events = eventsResponse.data;
-    const connectionEvents = events.filter((event) =>
+    const connectionEvents = events.filter((event: any) =>
       connection?.connections.includes(String(event.id))
     );
 
@@ -46,7 +46,7 @@ export const fetchConnectionGroups = async (id: string): Promise<any[]> => {
     const groupsResponse = await axios.get(`${API}/groups`);
     const groups = groupsResponse.data;
 
-    const connectionGroups = groups.filter((group) =>
+    const connectionGroups = groups.filter((group: any) =>
       connection?.groups.includes(String(group.id))
     );
 
@@ -58,7 +58,7 @@ export const fetchConnectionGroups = async (id: string): Promise<any[]> => {
 };
 
 export const fetchConnectionConnections = async (
-  id: number
+  id: string
 ): Promise<any[]> => {
   try {
     const connectionResponse = await axios.get(`${API}/users/${id}`);
@@ -67,7 +67,7 @@ export const fetchConnectionConnections = async (
     const usersResponse = await axios.get(`${API}/users/`);
     const users = usersResponse.data;
 
-    const connectionConnections = users.filter((user) =>
+    const connectionConnections = users.filter((user: any) =>
       connection?.connections.includes(String(user.id))
     );
 

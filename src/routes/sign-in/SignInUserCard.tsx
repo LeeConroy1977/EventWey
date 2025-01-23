@@ -1,9 +1,44 @@
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 
-const SignInUserCard = ({ user, handleClick }) => {
+interface User {
+  id: string;
+  email: string;
+  username: string;
+  password: string;
+  googleId: string;
+  authMethod: string;
+  profileBackgroundImage: string;
+  profileImage: string;
+  aboutMe: string;
+  bio: string;
+  tags: string[];
+  connections: string[];
+  groups: string[];
+  userEvents: string[];
+  messages: string[];
+  groupAdmin: string[];
+  notifications: string[];
+  viewEventsStatus: string;
+  viewConnectionsStatus: string;
+  viewGroupsStatus: string;
+  viewTagsStatus: string;
+  viewProfileImage: string;
+  viewBioStatus: string;
+  aboutMeStatus: string;
+  role: string;
+}
+
+interface SignInUserCardProps {
+  user: User;
+  handleClick: (id: string) => void;
+}
+
+const SignInUserCard: React.FC<SignInUserCardProps> = ({
+  user,
+  handleClick,
+}) => {
   const { id, profileBackgroundImage, profileImage, username, bio } = user;
-  const { isMobile, isTablet, isDesktop, isLargeDesktop, isExtraLargeDesktop } =
-    useScreenWidth();
+  const { isMobile } = useScreenWidth();
   return (
     <div className="w-[30%] h-full bg-bgPrimary rounded-lg flex flex-col items-center justify-start  mt-1 border-[1px] border-gray-200 ">
       <div

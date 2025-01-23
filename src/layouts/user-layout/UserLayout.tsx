@@ -1,4 +1,4 @@
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import UserWrapper from "./UserWrapper";
 import UserEventsPreview from "./UserEventsPreview";
 import UserConnectionPreview from "./UserConnectionPreview";
@@ -7,8 +7,6 @@ import EventsOptions from "../../components/OptionsContainer";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 
 const UserLayout: React.FC = () => {
-  // const location = useLocation();
-  // const isHomePage = location.pathname === "/user/home";
   const { isMobile } = useScreenWidth();
 
   return (

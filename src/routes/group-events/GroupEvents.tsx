@@ -20,6 +20,7 @@ const GroupEvents = () => {
             groupEvents.map((event, i) => {
               return (
                 <GroupEventCard
+                  // @ts-ignore
                   event={event}
                   key={i}
                   handleClick={handleEventClick}

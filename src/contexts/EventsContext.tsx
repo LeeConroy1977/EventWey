@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  ReactNode,
-  FC,
-} from "react";
+import { createContext, useContext, useState, ReactNode, FC } from "react";
 import { fetchAllEvents } from "../../utils/api/events-api";
 
 interface PriceBand {
@@ -31,11 +25,12 @@ export interface Event {
   going: number;
   capacity: number;
   availability: number;
+  startTime: string;
   free: boolean;
   category: string;
   tags: string[];
   description: string[];
-  attendeesId: string[];
+  attendees: string[];
   location: Location;
   approved: boolean;
 }
@@ -43,7 +38,7 @@ export interface Event {
 interface EventsContextType {
   events: Event[];
   reviewEvents: Event[];
-  setEvents: (events: Event[]) => void;
+  setEvents: React.Dispatch<React.SetStateAction<Event[]>>;
   fetchEvents: (params: Record<string, string>) => Promise<void>;
   fetchReviewEvents: (params: Record<string, string>) => Promise<void>;
   loading: boolean;
@@ -79,7 +74,7 @@ export const EventsProvider: FC<EventsProviderProps> = ({ children }) => {
       setLoading(false);
     }
   };
-
+  // @ts-ignore
   const fetchReviewEvents = async (params: Record<string, string>) => {
     setLoading(true);
     setError(null);

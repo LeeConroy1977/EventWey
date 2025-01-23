@@ -1,0 +1,8 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { useScreenWidth } from "../../contexts/ScreenWidthContext";
+const SignInUserCard = ({ user, handleClick }) => {
+    const { id, profileBackgroundImage, profileImage, username, bio } = user;
+    const { isMobile, isTablet, isDesktop, isLargeDesktop, isExtraLargeDesktop } = useScreenWidth();
+    return (_jsxs("div", { className: "w-[30%] h-full bg-bgPrimary rounded-lg flex flex-col items-center justify-start  mt-1 border-[1px] border-gray-200 ", children: [_jsxs("div", { className: "relative w-[100%] h-[28%]  flex items-center justify-center\n  ", children: [_jsx("img", { className: "w-[100%] h-[100%] rounded-tl-lg rounded-tr-lg", src: profileBackgroundImage, alt: "" }), _jsx("img", { className: "absolute mobile:top-6  desktop:top-7 mobile:w-[64px] mobile:h-[64px] tablet:w-[60px] tablet:h-[60px] rounded-full border-2 border-textPrimary", src: profileImage, alt: "" })] }), _jsx("p", { className: "mobile:mt-11 tablet:mt-10 mobile:text-[10px] tablet:text-[10px] desktop:text-[12px] font-semibold text-textPrimary", children: username }), !isMobile && (_jsx("p", { className: "tablet:mt-1 desktop:mt-2 px-4 tablet:text-[5px] desktop:text-[9px] font-semibold text-textPrimary text-center", children: bio })), _jsx("button", { onClick: () => handleClick(id), className: "w-[80%] py-1 flex justify-center items-center mt-auto mb-3 text-primary mobile:text-[9px] \n         desktop:text-[10px] font-semibold mobile:border-2 tablet:border-[1px] desktop:border-2 border-primary rounded-lg bg-bgPrimary", children: "Sign In" })] }));
+};
+export default SignInUserCard;

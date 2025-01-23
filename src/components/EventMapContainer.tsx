@@ -4,7 +4,9 @@ interface EventMapContainerProps {
   lat: number | null | undefined;
   lng: number | null | undefined;
   placename?: string;
-  onLocationSelect: (lat: number, lng: number, placename: string) => void;
+  onLocationSelect?:
+    | ((lat: number, lng: number, placename: string) => void)
+    | undefined;
 }
 
 const EventMapContainer: React.FC<EventMapContainerProps> = ({
@@ -58,28 +60,40 @@ const EventMapContainer: React.FC<EventMapContainerProps> = ({
 
       const geocoder = new window.google.maps.Geocoder();
 
-      window.google.maps.event.addListener(newMap, "click", (event: any) => {
-        const clickedLat = event.latLng.lat();
-        const clickedLng = event.latLng.lng();
+      window.google.maps.event.addListener(
+        newMap,
+        "click",
+        (event: google.maps.MapMouseEvent) => {
+          // @ts-ignore
+          const clickedLat = event.latLng.lat();
+          // @ts-ignore
+          const clickedLng = event.latLng.lng();
 
-        geocoder.geocode(
-          { location: event.latLng },
-          (
-            results: google.maps.GeocoderResult[],
-            status: google.maps.GeocoderStatus
-          ) => {
-            if (status === "OK" && results[0]) {
-              const clickedPlaceName =
-                results[0].formatted_address || "Unknown Location";
-              onLocationSelect(clickedLat, clickedLng, clickedPlaceName);
-            } else {
-              console.error("Geocoder failed due to: " + status);
+          geocoder.geocode(
+            { location: event.latLng },
+            (
+              results: google.maps.GeocoderResult[] | null,
+              status: google.maps.GeocoderStatus
+            ) => {
+              if (
+                status === google.maps.GeocoderStatus.OK &&
+                results &&
+                results[0]
+              ) {
+                const clickedPlaceName =
+                  results[0].formatted_address || "Unknown Location";
+                // @ts-ignore
+                onLocationSelect(clickedLat, clickedLng, clickedPlaceName);
+              } else {
+                console.error("Geocoder failed due to: " + status);
+              }
             }
-          }
-        );
-      });
+          );
+        }
+      );
     } else {
       if (marker && lat !== null && lng !== null) {
+        // @ts-ignore
         const newLatLng = new window.google.maps.LatLng(lat, lng);
         marker.setPosition(newLatLng);
         map.setCenter(newLatLng);

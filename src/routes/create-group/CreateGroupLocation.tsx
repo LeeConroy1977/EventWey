@@ -12,14 +12,8 @@ const defaultLocation = {
 };
 
 const CreateGroupLocation = () => {
-  const {
-    nextStep,
-    setNewGroup,
-    newGroup,
-    createGroup,
-    finishCreateGroup,
-    resetGroup,
-  } = useCreateGroupContext();
+  const { setNewGroup, newGroup, createGroup, finishCreateGroup, resetGroup } =
+    useCreateGroupContext();
   const [groupLocation, setGroupLocation] = useState(defaultLocation);
   const { user } = useUser();
   const { isMobile } = useScreenWidth();
@@ -45,10 +39,11 @@ const CreateGroupLocation = () => {
       groupAdmin: [user.id],
       members: [user.id],
     };
-
+    // @ts-ignore
     setNewGroup(updatedGroup);
 
     try {
+      // @ts-ignore
       await createGroup(updatedGroup);
       resetGroup();
       finishCreateGroup();

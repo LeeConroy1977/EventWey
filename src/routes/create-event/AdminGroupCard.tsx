@@ -1,6 +1,31 @@
 import { IoPerson } from "react-icons/io5";
 
-const AdminGroupCard = ({ group, handleClick }) => {
+interface Group {
+  id: string;
+  name: string;
+  image: string;
+  groupAdmin: string[];
+  description: string[];
+  openAccess: boolean;
+  location: Location;
+  creationDate: number;
+  eventsCount: number;
+  members: string[];
+  events: string[];
+  messages: string[];
+  category: string;
+  approved: boolean;
+}
+
+interface AdminGroupCardProps {
+  group: Group;
+  handleClick: (id: string) => void;
+}
+
+const AdminGroupCard: React.FC<AdminGroupCardProps> = ({
+  group,
+  handleClick,
+}) => {
   const { id, image, description, members, name } = group;
   let filteredDesc = description[0];
   return (

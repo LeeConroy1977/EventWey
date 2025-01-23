@@ -74,7 +74,7 @@ export const fetchUserAdminGroupById = async (id: string): Promise<any> => {
     const groupsResponse = await axios.get(`${API}/groups`);
     const groups = groupsResponse.data;
 
-    const adminGroups = groups.filter((group) =>
+    const adminGroups = groups.filter((group: any) =>
       group.groupAdmin.includes(user.id)
     );
 
@@ -86,7 +86,7 @@ export const fetchUserAdminGroupById = async (id: string): Promise<any> => {
 };
 
 export const fetchUserEvents = async (
-  id: number,
+  id: string,
   params: { category?: string; date?: string; sortBy?: string }
 ): Promise<any[]> => {
   try {
@@ -121,7 +121,7 @@ export const fetchUserEvents = async (
 };
 
 export const fetchUserGroups = async (
-  id: number,
+  id: string,
   params: { category?: string; sortBy?: string }
 ): Promise<any[]> => {
   try {

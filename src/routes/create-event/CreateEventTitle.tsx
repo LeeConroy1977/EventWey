@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import Button from "../../reuseable-components/Button";
 import createGroup1 from "../../assets/images/createGroup1.jpeg";
-import { useCreateGroupContext } from "../../contexts/CreateGroupContext";
 import { useCreateEventContext } from "../../contexts/CreateEventContext";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 
 const CreateEventTitle = () => {
-  const { nextStep, newEvent, setNewEvent } = useCreateEventContext();
+  const { nextStep, setNewEvent } = useCreateEventContext();
   const [isValidTitle, setIsValidTitle] = useState<boolean | null>(null);
   const [title, setTitle] = useState<string>("");
   const { isMobile } = useScreenWidth();

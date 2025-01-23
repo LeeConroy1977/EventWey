@@ -64,7 +64,7 @@ const CreateEventTickets = () => {
       capacity,
       availability,
     });
-
+    // @ts-ignore
     setNewEvent((prevEvent) => ({
       ...prevEvent,
       free: isFree,

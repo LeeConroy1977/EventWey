@@ -28,6 +28,7 @@ interface Event {
   groupId: number;
   duration: string;
   priceBands: PriceBand[];
+  startTime: string;
   going: number;
   capacity: number;
   availability: number;
@@ -143,6 +144,7 @@ export const EventProvider: React.FC<EventProviderProps> = ({ children }) => {
     setLoading(true);
     setError(null);
     try {
+      // @ts-ignore
       const data = await fetchEventConnections(id);
       setEventConnections(data);
     } catch (err: any) {

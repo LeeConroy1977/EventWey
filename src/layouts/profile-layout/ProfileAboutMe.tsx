@@ -1,4 +1,36 @@
-const ProfileAboutMe = ({ user }) => {
+interface User {
+  id: string;
+  email: string;
+  username: string;
+  password: string;
+  googleId: string;
+  authMethod: string;
+  profileBackgroundImage: string;
+  profileImage: string;
+  aboutMe: string;
+  tags: string[];
+  connections: string[];
+  bio: string;
+  groups: string[];
+  userEvents: string[];
+  messages: string[];
+  groupAdmin: string[];
+  notifications: string[];
+  viewEventsStatus: string;
+  viewConnectionsStatus: string;
+  viewGroupsStatus: string;
+  viewTagsStatus: string;
+  viewProfileImage: string;
+  viewBioStatus: string;
+  aboutMeStatus: string;
+  role: string;
+}
+
+interface ProfileAboutMeProps {
+  user: User | null;
+}
+
+const ProfileAboutMe: React.FC<ProfileAboutMeProps> = ({ user }) => {
   return (
     <div className="w-[100%] tablet:min-h-[150px] flex flex-col rounded-lg bg-white mt-4 p-0 tablet:mt-8 tablet:p-6">
       <div className="flex justify-between items-center">

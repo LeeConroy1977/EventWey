@@ -30,16 +30,12 @@ import GroupEvents from "./routes/group-events/GroupEvents";
 import GroupMembers from "./routes/group-members/GroupMembers";
 import Events from "./routes/events/Events";
 import Groups from "./routes/groups/Groups";
-import { useUser } from "./contexts/UserContext";
 import AdminGroups from "./routes/user-admin-groups/AdminGroups";
 import AdminEvents from "./routes/user-admin-events/AdminEvents";
 
 function App() {
-  const { user } = useUser();
-
   return (
     <div className="w-screen min-h-screen font-poppins">
-      =
       <Routes>
         <Route path="/" element={<AppLayout />}>
           <Route index element={<LandingPage />} />

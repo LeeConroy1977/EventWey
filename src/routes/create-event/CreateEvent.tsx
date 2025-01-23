@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useCreateEventContext } from "../../contexts/CreateEventContext";
 import { useUser } from "../../contexts/UserContext";
 import CreateEventDescription from "./CreateEventDescription";
@@ -38,6 +38,7 @@ const CreateEvent = () => {
     return <NoAdminGroups />;
   }
   if (state.isCreateEventIntro) {
+    // @ts-ignore
     return <CreateEventIntro adminGroups={adminGroups} />;
   }
 

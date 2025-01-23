@@ -1,11 +1,7 @@
-import React from "react";
 import useHandleCreateEventClick from "../../hooks/useHandleCreateEventClick";
-import Button from "../../reuseable-components/Button";
-import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 
 const VistorWrapper = () => {
   const handleCreateEventClick = useHandleCreateEventClick();
-  const { isMobile, isTablet, isSmallLaptop } = useScreenWidth();
 
   function handleClick() {
     return handleCreateEventClick();

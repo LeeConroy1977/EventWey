@@ -1,6 +1,10 @@
 import Tag from "../reuseable-components/Tag";
 
-const EventTags = ({ tags, connectionsLength }) => {
+interface EventTagsProps {
+  tags: string[];
+}
+
+const EventTags: React.FC<EventTagsProps> = ({ tags }) => {
   return (
     <div className="w-[100%] min-h-[150px] flex flex-col rounded-lg bg-white mt-8 p-4">
       <div className="flex justify-between items-center">

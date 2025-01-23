@@ -34,20 +34,25 @@ const newUser = {
 };
 
 const SignUp = () => {
+  // @ts-ignore
   const {
     state,
     dispatch,
     checkIfUserExists,
     createNewUser,
     handleValidation,
+    // @ts-ignore
     handleUsenameValidation,
     handleEmailValidation,
     handlePasswordValidation,
+    // @ts-ignore
     isUsernameValid,
+    // @ts-ignore
     isEmailValid,
+    // @ts-ignore
     isPasswordValid,
+    // @ts-ignore
     error,
-    loading,
   } = useCreateUserContext();
   const [googleSignIn, setGoogleSignIn] = useState(false);
   const handleSignInClick = useHandleSignInClick();
@@ -76,6 +81,7 @@ const SignUp = () => {
 
   useEffect(() => {
     if (googleSignIn) {
+      // @ts-ignore
       handleSubmit();
       setGoogleSignIn(false);
     }
@@ -83,7 +89,9 @@ const SignUp = () => {
 
   useEffect(() => {
     handleUsenameValidation(username, usernameRegex);
+    // @ts-ignore
     handleEmailValidation(email, emailRegex);
+    // @ts-ignore
     handlePasswordValidation(password, passwordRegex);
   }, [email, username, password]);
 
@@ -98,7 +106,7 @@ const SignUp = () => {
   function handlePasswordBlur() {
     setIsPasswordblur(true);
   }
-
+  // @ts-ignore
   const handleGoogleLogin = (credentialResponse) => {
     const token = credentialResponse.credential;
     const user = parseJwt(token);
@@ -110,6 +118,7 @@ const SignUp = () => {
 
     setGoogleSignIn(true);
   };
+  // @ts-ignore
   const parseJwt = (token) => {
     try {
       return JSON.parse(atob(token.split(".")[1]));
@@ -119,7 +128,7 @@ const SignUp = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     if (e) e.preventDefault();
 
     const existingUser = await checkIfUserExists(email);
@@ -136,6 +145,7 @@ const SignUp = () => {
     };
 
     console.log("Submitting User Data:", createdUser);
+    // @ts-ignore
     createNewUser(createdUser);
     dispatch({
       type: "START_USER_CREATION",

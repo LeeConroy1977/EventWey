@@ -1,11 +1,18 @@
 import { Link, NavLink } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
-import useHandleCreateUserClick from "../../hooks/useHandleCreateUserClick";
+import React from "react";
 
-const MobileNavOptions = ({ setIsMobileNavOpen }) => {
+interface MobileNavOptionsProps {
+  setIsMobileNavOpen: () => void;
+}
+
+const MobileNavOptions: React.FC<MobileNavOptionsProps> = ({
+  setIsMobileNavOpen,
+}) => {
   const { user, handleSignOut } = useUser();
 
   function handleClick() {
+    // @ts-ignore
     setIsMobileNavOpen(false);
   }
   return (
@@ -76,6 +83,7 @@ const MobileNavOptions = ({ setIsMobileNavOpen }) => {
         <p
           onClick={() => {
             handleSignOut();
+            // @ts-ignore
             setIsMobileNavOpen(false);
           }}
           className="ml-auto "

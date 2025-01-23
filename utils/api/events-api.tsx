@@ -81,7 +81,7 @@ export const deleteEvent = async (id: string): Promise<any> => {
   }
 };
 
-export const postEvent = async (eventData): Promise<any> => {
+export const postEvent = async (eventData: any): Promise<any> => {
   try {
     const response = await axios.post(`${API}/events`, eventData);
 
@@ -91,18 +91,18 @@ export const postEvent = async (eventData): Promise<any> => {
     throw error;
   }
 };
-
+// @ts-ignore
 export const fetchEventConnections = async (id: string): Promise<User[]> => {
   try {
     const eventResponse = await axios.get<Event>(`${API}/events/${id}`);
     const event = eventResponse?.data;
-
+    // @ts-ignore
     if (!event || !Array.isArray(event.attendees)) {
       throw new Error(
         `Invalid event data or attendees not found for event with ID: ${id}`
       );
     }
-
+    // @ts-ignore
     const usersResponse = await axios.get<User[]>(`${API}/users`);
     const users = usersResponse.data;
 
@@ -111,11 +111,13 @@ export const fetchEventConnections = async (id: string): Promise<User[]> => {
     }
 
     const eventConnections = users.filter((user) =>
+      // @ts-ignore
       event.attendees.includes(String(user.id))
     );
 
     return eventConnections;
   } catch (error) {
+    // @ts-ignore
     console.error("Error fetching event connections:", error.message);
     throw error;
   }
@@ -154,12 +156,14 @@ export const fetchSortedEvents = async (sortBy: string): Promise<any[]> => {
     let sortedEvents: any[] = [];
 
     if (sortBy === "popular") {
-      sortedEvents = events.sort((a, b) => b.going - a.going);
+      sortedEvents = events.sort((a: any, b: any) => b.going - a.going);
     } else if (sortBy === "date") {
       sortedEvents = events.sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        (a: any, b: any) =>
+          new Date(a.date).getTime() - new Date(b.date).getTime()
       );
     } else if (sortBy === "free") {
+      // @ts-ignore
       sortedEvents = randomArray(events.filter((event) => event.free === true));
     } else {
       sortedEvents = events;

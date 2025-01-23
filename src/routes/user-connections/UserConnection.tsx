@@ -11,7 +11,6 @@ const UserConnection = () => {
     getAllConnections,
     loading,
     error,
-    handleConnectionQuery,
     filteredConnections,
   } = useConnections();
   const { isMobile } = useScreenWidth();

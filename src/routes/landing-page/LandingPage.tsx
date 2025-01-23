@@ -4,14 +4,11 @@ import LandingPageWrapper from "./LandingPageWrapper";
 import EventDisplayContainer from "../../reuseable-components/EventDisplayContainer";
 import LandingPageAdvert from "./LandingPageAdvert";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
-import { ClipLoader } from "react-spinners";
 
 const LandingPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { isMobile } = useScreenWidth();
-  const [sortBy, setSortBy] = useState<string>(
-    searchParams.get("sortBy") || ""
-  );
+  const [setSortBy] = useState<string>(searchParams.get("sortBy") || "");
 
   const navigate = useNavigate();
 
@@ -27,6 +24,7 @@ const LandingPage = () => {
 
   const handleSortByOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const sortByValue = e.target.value;
+    // @ts-ignore
     setSortBy(sortByValue);
     handleParams("sortBy", sortByValue);
     navigate(`/events?sortBy=${sortByValue}`);

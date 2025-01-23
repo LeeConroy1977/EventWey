@@ -6,9 +6,10 @@ import signUpImage3 from "../../assets/images/signUp3.jpg";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 
 const AddBackgroundImage = () => {
-  const { user } = useUser();
+  const {} = useUser();
   const { isMobile } = useScreenWidth();
-  const { state, patchUser, nextStep } = useCreateUserContext();
+  // @ts-ignore
+  const { patchUser, nextStep } = useCreateUserContext();
   const [showImage, setShowImage] = useState<boolean>(false);
   const [isValidImage, setIsValidImage] = useState<boolean | null>(null);
   const [profileBackgroundImage, setProfileBackgroundImage] =

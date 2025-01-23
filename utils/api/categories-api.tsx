@@ -6,7 +6,7 @@ export const fetchAllTags = async (): Promise<any[]> => {
     const categoriesResponse = await axios.get(`${API}/categories`);
     const categories = categoriesResponse.data;
 
-    const tags = categories.map((category) => category.tags).flat();
+    const tags = categories.map((category: any) => category.tags).flat();
     const uniqueTags = [...new Set(tags)];
     return uniqueTags;
   } catch (error) {
@@ -37,6 +37,7 @@ export const fetchAllCategories = async (): Promise<string[]> => {
     return categoryArray;
   } catch (error) {
     console.error("Error fetching categories:", error);
+    // @ts-ignore
     throw new Error(`Error fetching categories: ${error.message}`);
   }
 };

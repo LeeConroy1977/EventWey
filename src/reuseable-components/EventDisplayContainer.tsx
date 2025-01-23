@@ -10,7 +10,13 @@ interface PriceBand {
   ticketCount: number;
 }
 
-export interface Event {
+interface Location {
+  placename: string;
+  lng: number;
+  lat: number;
+}
+
+interface Event {
   id: string;
   image: string;
   title: string;
@@ -19,6 +25,7 @@ export interface Event {
   groupId: number;
   duration: string;
   priceBands: PriceBand[];
+  startTime: string;
   going: number;
   capacity: number;
   availability: number;
@@ -28,13 +35,14 @@ export interface Event {
   description: string[];
   attendeesId: string[];
   location: Location;
+  approved: boolean;
 }
 
 interface EventDisplayContainerProps {
   title: string;
   sortBy: string;
   listName: string;
-  handleClick: () => void;
+  handleClick: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const EventDisplayContainer: React.FC<EventDisplayContainerProps> = ({
@@ -49,7 +57,9 @@ const EventDisplayContainer: React.FC<EventDisplayContainerProps> = ({
 
   const handleEventClick = useHandleEventClick();
 
+  // @ts-ignore
   const handleSelect = (sortBy: string) => {
+    // @ts-ignore
     handleClick({
       target: { value: sortBy },
     } as React.ChangeEvent<HTMLSelectElement>);

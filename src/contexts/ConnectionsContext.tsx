@@ -9,11 +9,15 @@ import { fetchUserConnection } from "../../utils/api/user-api";
 import { useUser } from "./UserContext";
 
 interface Connection {
-  id: number;
+  id: string;
   email: string;
   username: string;
+  password: string;
+  googleId: string;
+  authMethod: string;
   profileBackgroundImage: string;
   profileImage: string;
+  aboutMe: string;
   bio: string;
   tags: string[];
   connections: string[];
@@ -22,8 +26,14 @@ interface Connection {
   messages: string[];
   groupAdmin: string[];
   notifications: string[];
-  showEvents: string;
-  showConnections: string;
+  viewEventsStatus: string;
+  viewConnectionsStatus: string;
+  viewGroupsStatus: string;
+  viewTagsStatus: string;
+  viewProfileImage: string;
+  viewBioStatus: string;
+  aboutMeStatus: string;
+  role: string;
 }
 
 interface ConnectionContextType {

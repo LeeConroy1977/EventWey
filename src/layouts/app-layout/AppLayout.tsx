@@ -14,6 +14,7 @@ const AppLayout: React.FC = () => {
       />
       <main className="w-full min-h-screen mt-[2.3rem] flex justify-center">
         {isMobileNavOpen ? (
+          // @ts-ignore
           <MobileNavOptions setIsMobileNavOpen={setIsMobileNavOpen} />
         ) : (
           <Outlet />

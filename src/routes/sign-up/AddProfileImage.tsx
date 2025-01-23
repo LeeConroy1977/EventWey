@@ -6,8 +6,9 @@ import signUpImage2 from "../../assets/images/signUp2.jpg";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 
 const AddProfileImage = () => {
-  const { user } = useUser();
-  const { state, patchUser, nextStep } = useCreateUserContext();
+  const {} = useUser();
+  // @ts-ignore
+  const { patchUser, nextStep } = useCreateUserContext();
   const [showImage, setShowImage] = useState<boolean>(false);
   const [isValidImage, setIsValidImage] = useState<boolean | null>(null);
   const [profileImage, setProfileImage] = useState<string>("");

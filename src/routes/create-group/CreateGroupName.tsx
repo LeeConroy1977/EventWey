@@ -5,7 +5,7 @@ import { useCreateGroupContext } from "../../contexts/CreateGroupContext";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 
 const CreateGroupName = () => {
-  const { nextStep, newGroup, setNewGroup } = useCreateGroupContext();
+  const { nextStep, setNewGroup } = useCreateGroupContext();
   const [isValidName, setIsValidName] = useState<boolean | null>(null);
   const [name, setName] = useState<string>("");
   const { isMobile } = useScreenWidth();

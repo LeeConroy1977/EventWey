@@ -1,7 +1,29 @@
 import { IoPerson } from "react-icons/io5";
 import useHandleGroupClick from "../../hooks/useHandleGroupClick";
+import React from "react";
 
-const GroupsPreviewCard = ({ group }) => {
+interface Group {
+  id: string;
+  name: string;
+  image: string;
+  groupAdmin: string[];
+  description: string[];
+  openAccess: boolean;
+  location: Location;
+  creationDate: number;
+  eventsCount: number;
+  members: string[];
+  events: string[];
+  messages: string[];
+  category: string;
+  approved: boolean;
+}
+
+interface GroupsPreviewCardProps {
+  group: Group;
+}
+
+const GroupsPreviewCard: React.FC<GroupsPreviewCardProps> = ({ group }) => {
   const { id, name, image, description, members } = group;
 
   const handleGroupClick = useHandleGroupClick();

@@ -55,7 +55,7 @@ interface CreateEventContextType {
   prevStep: () => void;
   createEvent: (newEvent: Event) => Promise<Event | null>;
   categories: string[];
-  getAllCategories: () => Promise<void>;
+  getAllCatgories: () => Promise<void>;
   getTags: () => Promise<void>;
   categoryTags: string[];
   newEvent: Event;
@@ -111,7 +111,7 @@ export const CreateEventProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const navigate = useNavigate();
 
-  const getAllCategories = async () => {
+  const getAllCatgories = async () => {
     try {
       const categories = await fetchAllCategories();
       setCategories(categories);
@@ -160,6 +160,7 @@ export const CreateEventProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const getUserAdminGroups = async () => {
     try {
+      // @ts-ignore
       const groups = await fetchUserAdminGroupById(user?.id);
       setAdminGroups(groups);
     } catch (err) {
@@ -197,7 +198,7 @@ export const CreateEventProvider: React.FC<{ children: React.ReactNode }> = ({
         prevStep,
         createEvent,
         categories,
-        getAllCategories,
+        getAllCatgories,
         getTags,
         categoryTags,
         newEvent,

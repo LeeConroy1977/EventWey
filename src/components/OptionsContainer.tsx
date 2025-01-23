@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import SelectComponent from "../reuseable-components/SelectComponent";
 import { categoriesArr, dateArr, sortByArr } from "../../data/options";
 import { NavLink, useLocation, useSearchParams } from "react-router-dom";

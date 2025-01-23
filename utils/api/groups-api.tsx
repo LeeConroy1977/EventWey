@@ -46,7 +46,7 @@ export const fetchGroupById = async (id: string): Promise<any> => {
   }
 };
 
-export const postGroup = async (groupData): Promise<any> => {
+export const postGroup = async (groupData: any): Promise<any> => {
   try {
     const response = await axios.post(`${API}/groups`, groupData);
 

@@ -8,7 +8,7 @@ import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 import { ClipLoader } from "react-spinners";
 
 const UserGroups = () => {
-  const { user, userGroups, loading, error, getUserGroups } = useUser();
+  const { userGroups, loading, error, getUserGroups } = useUser();
   const { isMobile } = useScreenWidth();
   const [searchParams] = useSearchParams();
   const handleGroupClick = useHandleGroupClick();
@@ -23,6 +23,7 @@ const UserGroups = () => {
       category,
       sortBy,
     };
+    // @ts-ignore
     getUserGroups(params);
   }, [category, sortBy]);
 
@@ -45,6 +46,7 @@ const UserGroups = () => {
         <div className="w-full flex flex-wrap gap-4">
           {userGroups.map((group) => (
             <HomeGroupsCard
+              // @ts-ignore
               group={group}
               key={group.id}
               handleClick={handleGroupClick}

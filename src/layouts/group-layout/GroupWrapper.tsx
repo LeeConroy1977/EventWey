@@ -1,18 +1,43 @@
 import { IoPerson } from "react-icons/io5";
-import { FaUserFriends } from "react-icons/fa";
 import { useUser } from "../../contexts/UserContext";
 import { useParams } from "react-router-dom";
-import Button from "../reuseable-components/Button";
-import useHandleGroupClick from "../../hooks/useHandleGroupClick";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
+import React from "react";
 
-const GroupWrapper = ({ group, handleRemoveGroup, handleApproveGroup }) => {
+interface Group {
+  id: string;
+  name: string;
+  image: string;
+  groupAdmin: string[];
+  description: string[];
+  openAccess: boolean;
+  location: Location;
+  creationDate: number;
+  eventsCount: number;
+  members: string[];
+  events: string[];
+  messages: string[];
+  category: string;
+  approved: boolean;
+}
+
+interface GroupWrapperProps {
+  group: Group;
+  handleRemoveGroup: (id: string) => void;
+  handleApproveGroup: (id: string) => void;
+}
+
+const GroupWrapper: React.FC<GroupWrapperProps> = ({
+  group,
+  handleRemoveGroup,
+  handleApproveGroup,
+}) => {
   const { user } = useUser();
   const { isMobile } = useScreenWidth();
   const { id } = useParams();
   const { name, image, description, members, openAccess, approved } = group;
-
-  const isMember = user?.groups?.includes(id);
+  // @ts-ignore
+  const isMember = user?.groups?.includes(id) || false;
   const buttonText = isMember
     ? "Member"
     : openAccess
@@ -51,6 +76,7 @@ const GroupWrapper = ({ group, handleRemoveGroup, handleApproveGroup }) => {
           {!isMobile && !approved && (
             <div className="flex mr-auto mt-auto mb-4 desktop:h-[66px]">
               <button
+                // @ts-ignore
                 onClick={handleApproveGroup}
                 className="w-[110px]  desktop:w-[120px] tablet:h-[34px] desktop:h-[40px] xl-screen:w-[140px] xl-screen:h-[44px] mt-auto mb-1 mr-auto  flex items-center justify-center tablet:text-[10px] desktop:text-[11px] xl-screen:text-[12px] font-semibold rounded-lg tablet:mb-3 desktop:mb-1 bg-primary text-white
               "
@@ -58,6 +84,7 @@ const GroupWrapper = ({ group, handleRemoveGroup, handleApproveGroup }) => {
                 Approve Group
               </button>
               <button
+                // @ts-ignore
                 onClick={() => handleRemoveGroup(id)}
                 className="w-[110px]  desktop:w-[120px] tablet:h-[34px] desktop:h-[40px] xl-screen:w-[140px] xl-screen:h-[44px] mt-auto mb-1 mr-auto  flex items-center justify-center tablet:text-[10px] desktop:text-[11px] xl-screen:text-[12px] font-semibold rounded-lg tablet:mb-3 desktop:mb-1 bg-secondary text-white tablet:ml-8
               "
