@@ -55,27 +55,19 @@ Once both commands are running, you can access the application via your browser.
 
 To use Eventwey, visitor to the app have 4 options.
 
-**Bold text**
-
-1. Sign up and create a new account.
+**1. Sign up and create a new account.**
 
 Users can create a new account with a username, email and password. New user will then add their profile image, background image, bio, about me and tags to populate their profile page.
 
-**Bold text**
-
-2. Sign in to your existing account.
+**2. Sign in to your existing account.**
 
 If a user has already created an account, they can sign in using their email and password.
 
-**Bold text**
-
-3. Sign in as an existing user.
+**3. Sign in as an existing user.**
 
 A user can also sign in as an existing user by clicking on the existing user profile. If that user is the owner of a group, they can create new events for that group.
 
-**Bold text**
-
-4. Sign in as an existing admin user.
+**4. Sign in as an existing admin user.**
 
 A user can also sign in as an admin user and can approve or reject newly created events and groups.
 
