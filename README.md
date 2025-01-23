@@ -37,41 +37,68 @@ EventWey is an innovative event and meetup application designed to help users di
 
 Once both commands are running, you can access the application via your browser.
 
+---
+
+## Main features
+
+- Create groups for users to join
+
+- Create group events that user can join
+
+- Add an event to google calendar
+
+- If an admin user, approve or reject new groups and events
+
+---
+
 ## Using the app
 
-Using EventWey
-Sign Up or Sign In
-New Users: Sign up to create a new account and start using the app.
-Existing Users: Log in with your credentials to access your profile and events.
-Admin Users: Admin users can sign in to manage and approve events and groups.
-Features
-Create and manage groups: Organize your community by creating groups with like-minded individuals.
-Organize and participate in events: Host your own events or join events created by others.
-Join groups and connect: Find and join groups that interest you to meet new people.
-RSVP to events: Confirm your attendance to events that match your interests.
-App Description
-EventWey bridges the gap between planning and participation, providing a platform to explore and build communities. From intimate meetups to large-scale events, EventWey makes it simple to create, discover, and engage with like-minded people in your community.
+To use Eventwey, visitor to the app have 4 options.
 
-Future Features
-We're excited about the following planned enhancements to EventWey:
+**Bold text**
 
-User Connections and Messaging:
-Connect with other users on the platform and send and receive direct messages to build meaningful relationships.
+1. Sign up and create a new account.
 
-Group and Event Comments:
-Comment on group pages and event details to foster discussion, share experiences, and engage with other members.
+Users can create a new account with a username, email and password. New user will then add their profile image, background image, bio, about me and tags to populate their profile page.
 
-Enhanced Notifications:
-Receive updates on:
+**Bold text**
 
-Connection requests.
-Group admittance.
-New events in groups you've joined.
-Invitations to events from your connections.
-Admin Capabilities:
-Admin users will have the ability to approve new groups and events to ensure platform quality and relevance.
+2. Sign in to your existing account.
 
-Editable User Profiles:
-Update your profile with new information, upload photos, and customize your privacy settings to control visibility and data sharing.
+If a user has already created an account, they can sign in using their email and password.
 
-Start building connections and experiencing events like never before with EventWey. 🚀
+**Bold text**
+
+3. Sign in as an existing user.
+
+A user can also sign in as an existing user by clicking on the existing user profile. If that user is the owner of a group, they can create new events for that group.
+
+**Bold text**
+
+4. Sign in as an existing admin user.
+
+A user can also sign in as an admin user and can approve or reject newly created events and groups.
+
+---
+
+## How to test the app features
+
+1. Sign up as a new user or sign in as an existing user.
+
+2. Click create a group in the nav bar and follow the instruction to add the group details.
+
+3. Sign out and sign back in as an admin user.
+
+4. In the admin user home page, Click admin in the navbar and click the newly created group and approve.
+
+5. Sign out and sign back in as the user who created the group.
+
+6. Click the create event button and follow the instruction to create an event.
+
+7. Sign out and sign back in as an admin user and approve the newly created event.
+
+8. Click join event and then click add to google calendar.
+
+9. Browse other groups and events and join any that you like!
+
+---
