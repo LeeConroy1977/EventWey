@@ -4,6 +4,12 @@ EventWey is an innovative event and meetup application designed to help users di
 
 ---
 
+## Website
+
+- https://eventwey77.netlify.app
+
+---
+
 ## Getting Started
 
 ### Prerequisites
@@ -16,17 +22,22 @@ EventWey is an innovative event and meetup application designed to help users di
 
 2. Open a terminal and navigate to the project directory.
 
-3. Run the following command to install the necessary dependencies and start the app:
+3. Run the following commands to install the necessary dependencies and start the app:
 
    ```bash
    npm install
-   npm run start
+   ```
+
+   ```bash
+   npm run dev
    ```
 
    Open a new terminal in the same directory and start the JSON server on port 3000 using:
    json-server --watch db.json --port 3000
 
 Once both commands are running, you can access the application via your browser.
+
+## Using the app
 
 Using EventWey
 Sign Up or Sign In
