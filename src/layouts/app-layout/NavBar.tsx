@@ -109,16 +109,7 @@ const NavBar: React.FC<{
                   >
                     <li className="cursor-pointer">Profile</li>
                   </NavLink>
-                  <NavLink
-                    to="/user/notifications"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "font-semibold text-primary"
-                        : "font-semibold text-textPrimary"
-                    }
-                  >
-                    <li className="cursor-pointer">Notifications</li>
-                  </NavLink>
+
                   <NavLink
                     onClick={handleSignOut}
                     to="/"
