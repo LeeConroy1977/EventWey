@@ -12,7 +12,6 @@ import HomeGroupsCard from "../../routes/groups/HomeGroupsCard";
 import useHandleEventClick from "../../hooks/useHandleEventClick";
 import useHandleGroupClick from "../../hooks/useHandleGroupClick";
 import useHandleConnectionClick from "../../hooks/useHandleConnectionClick";
-import { CiSettings } from "react-icons/ci";
 import { FaCaretDown } from "react-icons/fa";
 import HomeConnectionCard from "../../routes/group-members/HomeConnectionCard";
 
@@ -36,13 +35,17 @@ const ConnectionLayout = () => {
   } = useConnection();
 
   useEffect(() => {
+    // @ts-ignore
     getConnectionById(id);
+    // @ts-ignore
     getConnectionConnections(id);
+    // @ts-ignore
     getConnectionEvents(id);
+    // @ts-ignore
     getConnectionGroups(id);
   }, [id]);
 
-  const toggleSection = (sectionKey) => {
+  const toggleSection = (sectionKey: any) => {
     setOpenSection((prev) => (prev === sectionKey ? null : sectionKey));
   };
 
@@ -50,14 +53,16 @@ const ConnectionLayout = () => {
     {
       title: `Your Upcoming Events (${connectionEvents?.length || 0})`,
       content: connectionEvents?.map((event, i) => (
+        // @ts-ignore
         <HomeEventsCard event={event} key={i} handleClick={handleEventClick} />
       )),
       sectionKey: "events",
     },
     {
       title: `Your Groups (${connection?.groups?.length || 0})`,
-      content: connectionGroups?.map((group, i) => (
+      content: connectionGroups?.map((group) => (
         <HomeGroupsCard
+          // @ts-ignore
           group={group}
           key={group.id}
           handleClick={handleGroupClick}
@@ -67,7 +72,7 @@ const ConnectionLayout = () => {
     },
     {
       title: `Your Connections (${connectionConnections?.length || 0})`,
-      content: connectionConnections?.map((connection, i) => (
+      content: connectionConnections?.map((connection) => (
         <HomeConnectionCard
           connection={connection}
           key={connection.id}

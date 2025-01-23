@@ -8,35 +8,6 @@ import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdClose } from "react-icons/md";
 
-import logo from "../../assets/logo/EventWey-logo.svg";
-
-interface User {
-  id: string;
-  email: string;
-  username: string;
-  password: string;
-  googleId: string;
-  authMethod: string;
-  profileBackgroundImage: string;
-  profileImage: string;
-  aboutMe: string;
-  tags: string[];
-  connections: string[];
-  groups: string[];
-  userEvents: string[];
-  messages: string[];
-  groupAdmin: string[];
-  notifications: string[];
-  viewEventsStatus: string;
-  viewConnectionsStatus: string;
-  viewGroupsStatus: string;
-  viewTagsStatus: string;
-  viewProfileImage: string;
-  viewBioStatus: string;
-  aboutMeStatus: string;
-  role: string;
-}
-
 const NavBar: React.FC<{
   setIsMobileNavOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isMobileNavOpen: boolean;

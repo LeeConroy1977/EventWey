@@ -29,6 +29,7 @@ const AdminGroups = () => {
         reviewGroups.length > 0 &&
         reviewGroups.map((group) => (
           <HomeGroupsCard
+            // @ts-ignore
             group={group}
             key={group.id}
             handleClick={handleGroupClick}

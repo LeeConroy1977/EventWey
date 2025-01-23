@@ -6,8 +6,9 @@ import useHandleCreateUserClick from "./hooks/useHandleCreateUserClick";
 import { useUser } from "./contexts/UserContext";
 
 interface PrivateRouteProps {
-  allowedRoutes: string[];
-  user: any;
+  // allowedRoutes: string[];
+  // user: string[];
+  // children: React.ReactNode;
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = () => {

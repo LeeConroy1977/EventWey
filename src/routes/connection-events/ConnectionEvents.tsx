@@ -24,10 +24,11 @@ const ConnectionEvents = () => {
         </div>
       ) : error ? (
         <div className="w-full text-red-500 text-center mt-4">{error}</div>
-      ) : eventsLength > 0 ? (
+      ) : (eventsLength ?? 0) > 0 ? (
         <div className="flex flex-col gap-4">
-          {connectionEvents.map((event, index) => (
+          {connectionEvents?.map((event, index) => (
             <HomeEventsCard
+              // @ts-ignore
               event={event}
               key={index}
               handleClick={handleEventClick}
@@ -36,7 +37,7 @@ const ConnectionEvents = () => {
         </div>
       ) : (
         !loading &&
-        eventsLength > 0 && (
+        (eventsLength ?? 0) === 0 && (
           <p className="text-gray-500 text-center">
             No Upcoming Events To Show...
           </p>

@@ -1,7 +1,4 @@
 import { useCreateGroupContext } from "../../contexts/CreateGroupContext";
-import StepIndicator from "../../layouts/create-group-layout/StepIndicator";
-import CreateGroupAccess from "./CreateGroupAccess";
-import CreateGroupCategory from "./CreateGroupType";
 import CreateGroupDescription from "./CreateGroupDescription";
 import CreateGroupImage from "./CreateGroupImage";
 import CreateGroupIntro from "./CreateGroupIntro";

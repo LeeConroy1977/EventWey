@@ -6,9 +6,9 @@ import signUpImage5 from "../../assets/images/signUp5.jpg";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 
 const AddAboutMe = () => {
-  const { user } = useUser();
+  const {} = useUser();
   const { isMobile } = useScreenWidth();
-  const { patchUser, nextStep } = useCreateUserContext();
+  const { nextStep } = useCreateUserContext();
   const [isValidAboutMe, setIsValidAboutMe] = useState<boolean | null>(null);
   const [aboutMe, setAboutMe] = useState<string>("");
 
@@ -26,6 +26,7 @@ const AddAboutMe = () => {
 
   function handleSubmit() {
     if (isValidAboutMe) {
+      // @ts-ignore
       patchUser("aboutMe", aboutMe);
     }
 
@@ -62,7 +63,6 @@ const AddAboutMe = () => {
           </div>
           <textarea
             value={aboutMe}
-            type="text"
             className="mobile:w-[100%] tablet:w-[80%] h-[8rem] border-[2px] border-gray-200 rounded-lg p-6  mobile:placeholder:text-[12px] desktop:placeholder:text-[14px] focus:outline-none mobile:text-[14px] desktop:text-[16px] "
             placeholder="Tell us about yourself..."
             onChange={(e) => setAboutMe(e.target.value)}

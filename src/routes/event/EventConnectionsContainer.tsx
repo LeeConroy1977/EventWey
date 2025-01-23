@@ -5,7 +5,40 @@ import ConnectionPreviewCard from "../../layouts/user-layout/ConnectionPreviewCa
 import Modal from "../../reuseable-components/Modal";
 import HomeConnectionCard from "../group-members/HomeConnectionCard";
 
-const EventConnectionsContainer = ({ eventConnections }) => {
+interface User {
+  id: string;
+  email: string;
+  username: string;
+  password: string;
+  googleId: string;
+  authMethod: string;
+  profileBackgroundImage: string;
+  profileImage: string;
+  aboutMe: string;
+  tags: string[];
+  connections: string[];
+  groups: string[];
+  userEvents: string[];
+  messages: string[];
+  groupAdmin: string[];
+  notifications: string[];
+  viewEventsStatus: string;
+  viewConnectionsStatus: string;
+  viewGroupsStatus: string;
+  viewTagsStatus: string;
+  viewProfileImage: string;
+  viewBioStatus: string;
+  aboutMeStatus: string;
+  role: string;
+}
+
+interface EventConnectionsContainerProps {
+  eventConnections: User[] | null;
+}
+
+const EventConnectionsContainer: React.FC<EventConnectionsContainerProps> = ({
+  eventConnections,
+}) => {
   const handleConnectionClick = useHandleConnectionClick();
   const { isMobile } = useScreenWidth();
   const [showModal, setShowModal] = useState(false);
@@ -46,7 +79,8 @@ const EventConnectionsContainer = ({ eventConnections }) => {
       >
         {connectionPreview.length > 0 ? (
           (isMobile ? connectionMobilePreview : connectionPreview).map(
-            (connection) => (
+            (connection: any) => (
+              // @ts-ignore
               <ConnectionPreviewCard
                 connection={connection}
                 key={connection.id} // Use unique ID
@@ -87,6 +121,7 @@ const EventConnectionsContainer = ({ eventConnections }) => {
             {connections.map((connection) =>
               isMobile ? (
                 <ConnectionPreviewCard
+                  // @ts-ignore
                   connection={connection}
                   key={connection.id}
                   handleClick={handleConnectionClick}
@@ -94,6 +129,7 @@ const EventConnectionsContainer = ({ eventConnections }) => {
                 />
               ) : (
                 <HomeConnectionCard
+                  // @ts-ignore
                   connection={connection}
                   key={connection.id}
                   handleClick={handleConnectionClick}

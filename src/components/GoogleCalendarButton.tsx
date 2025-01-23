@@ -1,6 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { gapi } from "gapi-script";
-import Button from "../reuseable-components/Button";
+interface PriceBand {
+  type: "Early bird" | "Standard" | "VIP";
+  price: string;
+  ticketCount: number;
+}
+
+interface Location {
+  placename: string;
+  lng: number;
+  lat: number;
+}
 
 interface Event {
   id: string;
@@ -10,6 +18,8 @@ interface Event {
   groupName: string;
   groupId: number;
   duration: string;
+  priceBands: PriceBand[];
+  startTime?: string;
   going: number;
   capacity: number;
   availability: number;
@@ -23,15 +33,15 @@ interface Event {
 }
 
 const GoogleCalendarButton = ({ eventDetails }: { eventDetails: Event }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  function addToGoogleCalendar(event) {
+  function addToGoogleCalendar(event: Event) {
     const { title, date, startTime, duration, description, location } = event;
 
     const startDate = new Date(date);
+    // @ts-ignore
     const [startHours, startMinutes] = startTime
       .split(/:|\s/)
-      .map((val, i) => (i < 2 ? parseInt(val) : val));
+      .map((val: any, i: any) => (i < 2 ? parseInt(val) : val));
+    // @ts-ignore
     const isPM = startTime.includes("PM");
     startDate.setHours(
       isPM && startHours !== 12 ? startHours + 12 : startHours,
@@ -43,7 +53,7 @@ const GoogleCalendarButton = ({ eventDetails }: { eventDetails: Event }) => {
     const hoursDuration = parseInt(duration.split(" ")[0]);
     endDate.setHours(endDate.getHours() + hoursDuration);
 
-    const formatToGoogleDate = (dateObj) =>
+    const formatToGoogleDate = (dateObj: any) =>
       dateObj.toISOString().replace(/[-:.]/g, "").slice(0, 15) + "Z";
 
     const formattedStartDate = formatToGoogleDate(startDate);

@@ -30,6 +30,7 @@ interface Event {
   going: number;
   capacity: number;
   availability: number;
+  startTime: string;
   free: boolean;
   category: string;
   tags: string[];
@@ -67,6 +68,7 @@ interface User {
   profileImage: string;
   aboutMe: string;
   tags: string[];
+  bio: string;
   connections: string[];
   groups: string[];
   userEvents: string[];

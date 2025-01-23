@@ -4,7 +4,7 @@ import Button from "../../reuseable-components/Button";
 import { useCreateEventContext } from "../../contexts/CreateEventContext";
 
 const CreateGroupCategory = () => {
-  const { nextStep, newEvent, setNewEvent, categories, getAllCatgories } =
+  const { nextStep, setNewEvent, categories, getAllCatgories } =
     useCreateEventContext();
   const [eventCategory, setEventCategory] = useState<string>("");
 

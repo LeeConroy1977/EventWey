@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  ReactNode,
-  FC,
-} from "react";
+import { createContext, useContext, useState, ReactNode, FC } from "react";
 import { fetchAllUsers } from "../../utils/api/user-api";
 import {
   fetchGroupById,
@@ -76,6 +70,7 @@ interface User {
   aboutMe: string;
   tags: string[];
   connections: string[];
+  bio: string;
   groups: string[];
   userEvents: string[];
   messages: string[];

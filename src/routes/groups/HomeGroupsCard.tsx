@@ -1,8 +1,34 @@
 import { IoPerson } from "react-icons/io5";
 import { useUser } from "../../contexts/UserContext";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
+import React from "react";
 
-const HomeGroupsCard = ({ group, handleClick }) => {
+interface Group {
+  id: string;
+  name: string;
+  image: string;
+  groupAdmin: string[];
+  description: string[];
+  openAccess: boolean;
+  location: Location;
+  creationDate: number;
+  eventsCount: number;
+  members: string[];
+  events: string[];
+  messages: string[];
+  category: string;
+  approved: boolean;
+}
+
+interface HomeGroupsCardProps {
+  group: Group;
+  handleClick: (id: string) => void;
+}
+
+const HomeGroupsCard: React.FC<HomeGroupsCardProps> = ({
+  group,
+  handleClick,
+}) => {
   const { user } = useUser();
   const { isMobile } = useScreenWidth();
   const { id, name, image, description, members, openAccess, approved } = group;

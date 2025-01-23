@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import { IoPerson } from "react-icons/io5";
 import { IoMdPricetag } from "react-icons/io";
 import Button from "../reuseable-components/Button";
@@ -9,29 +8,60 @@ import { useParams } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { useScreenWidth } from "../contexts/ScreenWidthContext";
 
-const JoinedEventConfimation = ({ event }) => {
+interface PriceBand {
+  type: "Early bird" | "Standard" | "VIP";
+  price: string;
+  ticketCount: number;
+}
+
+interface Location {
+  placename: string;
+  lng: number;
+  lat: number;
+}
+
+interface Event {
+  id: string;
+  image: string;
+  title: string;
+  date: string;
+  groupName: string;
+  groupId: number;
+  duration: string;
+  priceBands: PriceBand[];
+  going: number;
+  capacity: number;
+  availability: number;
+  free: boolean;
+  category: string;
+  tags: string[];
+  description: string[];
+  attendeesId: string[];
+  location: Location;
+  approved: boolean;
+}
+
+interface JoinedEventConfimationProps {
+  event: Event;
+}
+
+const JoinedEventConfimation: React.FC<JoinedEventConfimationProps> = ({
+  event,
+}) => {
   const { id } = useParams();
-  const {
-    image,
-    title,
-    groupName,
-    description,
-    date,
-    going,
-    priceBands,
-    availability,
-    free,
-  } = event;
+  const { image, title, groupName, description, going, priceBands } = event;
 
   const { joinFreeEvent, isUserAttendingEvent } = useUser();
   const [isJoined, setIsJoined] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const [isAttending, setIsAttending] = useState(false);
+  const [setIsAttending] = useState(false);
   const { isMobile } = useScreenWidth();
 
   useEffect(() => {
     const checkAttendanceStatus = async () => {
+      // @ts-ignore
       const attendingStatus = await isUserAttendingEvent(id);
+      // @ts-ignore
       setIsAttending(attendingStatus);
     };
 

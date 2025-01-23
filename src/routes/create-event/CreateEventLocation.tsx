@@ -11,14 +11,8 @@ const defaultLocation = {
 };
 
 const CreateEventLocation = () => {
-  const {
-    nextStep,
-    setNewEvent,
-    newEvent,
-    createEvent,
-    finishCreateEvent,
-    resetEvent,
-  } = useCreateEventContext();
+  const { setNewEvent, newEvent, createEvent, finishCreateEvent, resetEvent } =
+    useCreateEventContext();
   const [eventLocation, setEventLocation] = useState(defaultLocation);
   const { user } = useUser();
 

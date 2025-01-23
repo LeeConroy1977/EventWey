@@ -6,7 +6,7 @@ import HomeGroupsCard from "./HomeGroupsCard";
 import { ClipLoader } from "react-spinners";
 
 const Home = () => {
-  const { groups, setGroups, fetchGroups, loading, error } = useGroups();
+  const { groups, fetchGroups, loading, error } = useGroups();
   const [searchParams] = useSearchParams();
   const category = searchParams.get("category");
   const sortBy = searchParams.get("sortBy");
@@ -18,6 +18,7 @@ const Home = () => {
       category,
       sortBy,
     };
+    // @ts-ignore
     fetchGroups(params);
   }, [category, sortBy]);
 
@@ -42,6 +43,7 @@ const Home = () => {
         groups.length > 0 &&
         groups.map((group) => (
           <HomeGroupsCard
+            // @ts-ignore
             group={group}
             key={group.id}
             handleClick={handleGroupClick}

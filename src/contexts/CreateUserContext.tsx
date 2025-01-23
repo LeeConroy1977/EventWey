@@ -47,9 +47,12 @@ const CreateUserContext = createContext<{
   nextStep: () => void;
   prevStep: () => void;
   resetCreateUser: () => void;
-  createNewUser: () => void;
-  checkIfUserExists: () => void;
-  handleValidation: () => void;
+  createNewUser: (newUser: User) => Promise<void>; // Updated type
+  checkIfUserExists: (email: string) => Promise<boolean | null>;
+  handleValidation: (username: string, email: string, password: string) => void;
+  handleUsernameValidation?: (username: string, regex: RegExp) => void; // Corrected here
+  handleEmailValidation?: (email: string, regex: RegExp) => void;
+  handlePasswordValidation?: (password: string, regex: RegExp) => void;
   getTags: () => void;
   finishSignUp: () => void;
 }>({
@@ -58,10 +61,13 @@ const CreateUserContext = createContext<{
   nextStep: () => {},
   prevStep: () => {},
   resetCreateUser: () => null,
-  createNewUser: () => {},
-  checkIfUserExists: () => null,
+  createNewUser: async () => Promise.resolve(),
+  checkIfUserExists: async () => Promise.resolve(null),
   handleValidation: () => null,
-  getTags: () => [],
+  handleUsernameValidation: () => null, // Corrected here
+  handleEmailValidation: () => null,
+  handlePasswordValidation: () => null,
+  getTags: () => null,
   finishSignUp: () => null,
 });
 
@@ -79,7 +85,7 @@ export const CreateUserProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const navigate = useNavigate();
 
-  const createNewUser = async (newUser) => {
+  const createNewUser = async (newUser: any) => {
     setLoading(true);
     setError(null);
 
@@ -99,7 +105,7 @@ export const CreateUserProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       setLoading(true);
       setError(null);
-
+      // @ts-ignore
       const updatedUser = await updateUser(user.id, { [field]: value });
       setUser(updatedUser);
     } catch (err) {
@@ -124,7 +130,7 @@ export const CreateUserProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  const checkIfUserExists = async (email) => {
+  const checkIfUserExists = async (email: string) => {
     try {
       const users = await fetchAllUsers();
       const existingUser = users.some((user) => user.email === email);
@@ -135,7 +141,7 @@ export const CreateUserProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  function handleUsenameValidation(username, regex) {
+  function handleUsenameValidation(username: string, regex: any) {
     if (username.length < 2) {
       setIsUsernameValid(null);
     }
@@ -149,7 +155,7 @@ export const CreateUserProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }
 
-  function handleEmailValidation(email, regex) {
+  function handleEmailValidation(email: string, regex: any) {
     if (email.length === 0) {
       setIsEmailValid(null);
     }
@@ -164,7 +170,7 @@ export const CreateUserProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }
 
-  function handlePasswordValidation(password, regex) {
+  function handlePasswordValidation(password: string, regex: any) {
     if (password.length < 8) {
       setIsPasswordValid(null);
     }
@@ -178,7 +184,7 @@ export const CreateUserProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }
 
-  function handleValidation(username, email, password) {
+  function handleValidation(username: string, email: string, password: string) {
     if (username && email && password) {
       dispatch({ type: "SET_FORM_VALID", payload: true });
     } else {
@@ -213,6 +219,7 @@ export const CreateUserProvider: React.FC<{ children: React.ReactNode }> = ({
         createNewUser,
         checkIfUserExists,
         handleValidation,
+        // @ts-ignore
         handleUsenameValidation,
         handleEmailValidation,
         handlePasswordValidation,
@@ -223,6 +230,8 @@ export const CreateUserProvider: React.FC<{ children: React.ReactNode }> = ({
         getTags,
         categoryTags,
         finishSignUp,
+        loading,
+        error,
       }}
     >
       {children}

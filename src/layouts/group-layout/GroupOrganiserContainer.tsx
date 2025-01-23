@@ -15,6 +15,7 @@ const GroupOrganiserContainer = () => {
       </h3>
       <div
         className="flex items-center w-full h-full mt-4 desktop:mt-4 xl-screen:mt-6 cursor-pointer "
+        // @ts-ignore
         onClick={() => handleConnectionClick(id)}
       >
         {groupOrganiser && (

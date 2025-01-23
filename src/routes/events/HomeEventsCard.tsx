@@ -9,31 +9,37 @@ interface PriceBand {
   type: string;
 }
 
-interface Event {
-  id: number;
+export interface Event {
+  id: string;
   image: string;
-  date: number;
   title: string;
-  description: string;
+  date: string;
   groupName: string;
+  groupId: number;
   duration: string;
+  priceBands: PriceBand[];
   going: number;
+  capacity: number;
   availability: number;
-  free: boolean;
-  priceBands: PriceBand;
   startTime: string;
+  free: boolean;
+  category: string;
+  tags: string[];
+  description: string[];
+  attendees: string[];
+  location: Location;
+  approved: boolean;
 }
-
 interface HomeEventsCardProps {
   event: Event;
-  handleClick: () => void;
+  handleClick: (id: string) => void;
 }
 
 const HomeEventsCard: React.FC<HomeEventsCardProps> = ({
   event,
   handleClick,
 }) => {
-  const { user, isUserAttendingEvent } = useUser();
+  const { isUserAttendingEvent } = useUser();
   const { isMobile } = useScreenWidth();
   const {
     id,
@@ -42,9 +48,7 @@ const HomeEventsCard: React.FC<HomeEventsCardProps> = ({
     title,
     description,
     groupName,
-    duration,
     going,
-    availability,
     free,
     priceBands,
     startTime,
@@ -52,8 +56,8 @@ const HomeEventsCard: React.FC<HomeEventsCardProps> = ({
   } = event;
 
   const formattedDate = format(new Date(date), "EEE, MMM d, yyyy");
-
-  const isAttending = isUserAttendingEvent(event?.id);
+  // @ts-ignore
+  const isAttending = isUserAttendingEvent(event?.id) || false;
 
   let filteredDescription = description[0];
 
@@ -113,11 +117,6 @@ const HomeEventsCard: React.FC<HomeEventsCardProps> = ({
                 {eventPrices}
               </p>
             </div>
-            {/* {!isAttending && (
-              <p className="ml-4 tablet:ml-2 desktop:ml-4 text-[10px] desktop:text-[12px] xl-screen:text-[14px]  text-[#D66E6E] font-semibold">
-                {availability} places
-              </p>
-            )} */}
           </div>
           {!isMobile && (
             <button

@@ -24,6 +24,7 @@ const ProfileEvents = () => {
         <div className="w-full flex flex-col gap-4">
           {userEvents.map((event, i) => (
             <HomeEventsCard
+              // @ts-ignore
               event={event}
               key={i}
               handleClick={handleEventClick}

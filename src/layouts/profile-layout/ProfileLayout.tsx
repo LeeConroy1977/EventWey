@@ -8,7 +8,6 @@ import { useConnections } from "../../contexts/ConnectionsContext";
 import { useEffect, useState } from "react";
 import ProfileTags from "./ProfileTags";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
-import ProfileEvents from "../../routes/user-profile-events/ProfileEvents";
 import { CiSettings } from "react-icons/ci";
 import { FaCaretDown } from "react-icons/fa";
 import HomeEventsCard from "../../routes/events/HomeEventsCard";
@@ -22,8 +21,7 @@ const ProfileLayout = () => {
   const { user, getUserEvents, getUserGroups, userEvents, userGroups } =
     useUser();
   const { isMobile } = useScreenWidth();
-  const { connections, getAllConnections, filteredConnections } =
-    useConnections();
+  const { getAllConnections, filteredConnections } = useConnections();
   const handleEventClick = useHandleEventClick();
   const handleGroupClick = useHandleGroupClick();
   const handleConnectionClick = useHandleConnectionClick();
@@ -37,7 +35,7 @@ const ProfileLayout = () => {
     getUserGroups({});
   }, []);
 
-  const toggleSection = (sectionKey) => {
+  const toggleSection = (sectionKey: any) => {
     setOpenSection((prev) => (prev === sectionKey ? null : sectionKey));
   };
 
@@ -45,14 +43,16 @@ const ProfileLayout = () => {
     {
       title: `Your Upcoming Events (${userEvents?.length || 0})`,
       content: userEvents?.map((event, i) => (
+        // @ts-ignore
         <HomeEventsCard event={event} key={i} handleClick={handleEventClick} />
       )),
       sectionKey: "events",
     },
     {
       title: `Your Groups (${user?.groups?.length || 0})`,
-      content: userGroups?.map((group, i) => (
+      content: userGroups?.map((group) => (
         <HomeGroupsCard
+          // @ts-ignore
           group={group}
           key={group.id}
           handleClick={handleGroupClick}
@@ -62,8 +62,9 @@ const ProfileLayout = () => {
     },
     {
       title: `Your Connections (${filteredConnections?.length || 0})`,
-      content: filteredConnections?.map((connection, i) => (
+      content: filteredConnections?.map((connection) => (
         <HomeConnectionCard
+          // @ts-ignore
           connection={connection}
           key={connection.id}
           handleClick={handleConnectionClick}
@@ -75,7 +76,8 @@ const ProfileLayout = () => {
 
   return (
     <div className="w-full flex flex-col items-center bg-bgSecondary">
-      <ProfileWrapper user={user} />
+      {user && <ProfileWrapper user={user} />}
+
       <main className="w-full tablet:w-[94%] desktop:w-[66%] min-h-screen flex items-start justify-center mobile:bg-bgPrimary tablet:bg-bgSecondary">
         {!isMobile && (
           <>
@@ -85,9 +87,9 @@ const ProfileLayout = () => {
                 alt="Profile"
                 className="absolute top-[-5.8rem] left-[7rem] rounded-full w-[200px] h-[200px] border-[10px] border-white"
               />
-              <ProfileBio user={user} />
-              <ProfileAboutMe user={user} />
-              <ProfileTags user={user} />
+              {user && <ProfileBio user={user} />}
+              {user && <ProfileAboutMe user={user} />}
+              {user && <ProfileTags user={user} />}
             </section>
             <section className="flex flex-col justify-start items-start tablet:w-[66%] desktop:w-[66%] pl-6 ">
               <div className="w-full h-[4rem] flex justify-between items-center px-4 mt-[2.5rem]">
@@ -112,8 +114,8 @@ const ProfileLayout = () => {
               </p>
               <CiSettings className="text-[21px] text-textPrimary ml-auto cursor-pointer" />
             </div>
-            <ProfileBio user={user} />
-            <ProfileAboutMe user={user} />
+            {user && <ProfileBio user={user} />}
+            {user && <ProfileAboutMe user={user} />}
 
             {accordionData.map(({ title, content, sectionKey }) => (
               <div key={sectionKey} className="mt-6 w-full flex flex-col">

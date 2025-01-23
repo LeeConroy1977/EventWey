@@ -1,6 +1,5 @@
 import HomeConnectionCard from "../group-members/HomeConnectionCard";
 import { useConnections } from "../../contexts/ConnectionsContext";
-import { useUser } from "../../contexts/UserContext";
 import useHandleConnectionClick from "../../hooks/useHandleConnectionClick";
 import { ClipLoader } from "react-spinners";
 

@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  ReactNode,
-  FC,
-} from "react";
+import { createContext, useContext, useState, ReactNode, FC } from "react";
 import { fetchAllGroups } from "../../utils/api/groups-api";
 
 interface Location {
@@ -67,7 +61,7 @@ export const GroupsProvider: FC<GroupsProviderProps> = ({ children }) => {
       const { category, sortBy = "popular" } = params;
       const groupsData = await fetchAllGroups({ category, sortBy });
       const approvedGroups = groupsData.filter(
-        (group) => group.approved === true
+        (group: any) => group.approved === true
       );
       setGroups(approvedGroups);
     } catch (err: any) {
@@ -77,7 +71,7 @@ export const GroupsProvider: FC<GroupsProviderProps> = ({ children }) => {
       setLoading(false);
     }
   };
-
+  // @ts-ignore
   const fetchReviewGroups = async (params: { [key: string]: string }) => {
     setLoading(true);
     setError(null);

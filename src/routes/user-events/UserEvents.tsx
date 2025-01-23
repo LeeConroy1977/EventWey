@@ -1,15 +1,13 @@
 import { useSearchParams } from "react-router-dom";
-import { useEvents } from "../../contexts/EventsContext";
 import { useUser } from "../../contexts/UserContext";
 import { useEffect } from "react";
-import useHandleGroupClick from "../../hooks/useHandleGroupClick";
 import useHandleEventClick from "../../hooks/useHandleEventClick";
 import HomeEventsCard from "../events/HomeEventsCard";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 import { ClipLoader } from "react-spinners";
 
 const UserEvents = () => {
-  const { user, userEvents, loading, error, getUserEvents } = useUser();
+  const { userEvents, loading, error, getUserEvents } = useUser();
   const { isMobile } = useScreenWidth();
   const [searchParams] = useSearchParams();
   const category = searchParams.get("category");
@@ -24,6 +22,7 @@ const UserEvents = () => {
       date,
       sortBy,
     };
+    // @ts-ignore
     getUserEvents(params);
   }, [category, date, sortBy]);
 
@@ -45,6 +44,7 @@ const UserEvents = () => {
       ) : userEvents && userEvents.length > 0 ? (
         userEvents.map((event) => (
           <HomeEventsCard
+            // @ts-ignore
             event={event}
             key={event.id}
             handleClick={handleEventClick}

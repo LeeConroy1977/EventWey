@@ -5,14 +5,7 @@ import GroupsPreviewCard from "./GroupsPreviewCard";
 import { ClipLoader } from "react-spinners";
 
 const UserGroupsPreview = () => {
-  const {
-    userTotalGroups,
-    loading,
-    error,
-    getUserGroups,
-    userGroups,
-    getUserTotalGroups,
-  } = useUser();
+  const { userTotalGroups, loading, error, getUserTotalGroups } = useUser();
 
   const navigate = useNavigate();
 
@@ -23,7 +16,9 @@ const UserGroupsPreview = () => {
   const slicedGroups = Array.isArray(userTotalGroups)
     ? userTotalGroups
         .sort((a, b) => {
+          // @ts-ignore
           const dateA = new Date(a.date).getTime();
+          // @ts-ignore
           const dateB = new Date(b.date).getTime();
           return dateA - dateB;
         })
@@ -31,6 +26,7 @@ const UserGroupsPreview = () => {
     : [];
 
   useEffect(() => {
+    // @ts-ignore
     getUserTotalGroups();
   }, []);
 
@@ -66,6 +62,7 @@ const UserGroupsPreview = () => {
           !error &&
           slicedGroups.length > 0 &&
           slicedGroups.map((group) => (
+            // @ts-ignore
             <GroupsPreviewCard group={group} key={group.id} />
           ))}
         {!loading && !error && slicedGroups.length === 0 && (

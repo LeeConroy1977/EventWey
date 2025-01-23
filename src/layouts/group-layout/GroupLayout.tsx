@@ -15,24 +15,17 @@ const GroupLayout = () => {
 
   const {
     group,
-    setGroup,
-    groupEvents,
-    setGroupEvents,
-    groupMembers,
-    setGroupMembers,
     getGroupById,
     getEventsById,
     getGroupMembers,
     updateGroup,
     removeGroup,
-    location,
-    error,
-    loading,
   } = useGroup();
 
   const navigate = useNavigate();
   const { lat, lng, placename } = group?.location || {};
-  const isMember = user?.groups?.includes(id);
+  // @ts-ignore
+  const isMember = user?.groups?.includes(id) || false;
 
   const buttonText = isMember
     ? "Member"
@@ -68,6 +61,7 @@ const GroupLayout = () => {
             Approve Group
           </button>
           <button
+            // @ts-ignore
             onClick={() => handleRemoveGroup(id)}
             className="w-[120px] h-[40px] text-[11px] flex items-center justify-center font-semibold rounded-lg  text-white bg-secondary "
           >
@@ -91,13 +85,15 @@ const GroupLayout = () => {
       {group && (
         <>
           <GroupWrapper
+            // @ts-ignore
             group={group}
             handleApproveGroup={handleApproveGroup}
             handleRemoveGroup={handleRemoveGroup}
           />
           <main className="w-full m-h-screen tablet:w-[94%]  desktop:w-[66%] desktop:h-auto flex flex-col tablet:flex-row items-start justify-center bg-bgPrimary tablet:bg-bgSecondary px-6 mt-0 tablet:mt-0 tablet:px-0 tablet:p-4 pb-[5rem] ">
             <section className="flex flex-col justify-start items-start w-full tablet:w-[62%] h-auto p-0 tablet:p-4">
-              <GroupNav id={id} />
+              {id && <GroupNav id={id} />}
+
               <Outlet />
             </section>
             {!isMobile && (

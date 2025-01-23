@@ -6,14 +6,7 @@ import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 const ConnectionsOptions = () => {
   const [input, setInput] = useState("");
   const { isMobile } = useScreenWidth();
-  const {
-    connections,
-    getAllConnections,
-    loading,
-    error,
-    handleConnectionQuery,
-    filteredConnections,
-  } = useConnections();
+  const { handleConnectionQuery } = useConnections();
 
   useEffect(() => {
     handleConnectionQuery(input);

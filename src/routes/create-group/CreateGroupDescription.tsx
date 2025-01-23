@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
-import { useCreateUserContext } from "../../contexts/CreateUserContext";
 import Button from "../../reuseable-components/Button";
-import { useUser } from "../../contexts/UserContext";
-import signUpImage5 from "../../assets/images/signUp5.jpg";
 import { useCreateGroupContext } from "../../contexts/CreateGroupContext";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 
 const CreateGgroupDescription = () => {
-  const { nextStep, newGroup, setNewGroup } = useCreateGroupContext();
+  const { nextStep, setNewGroup } = useCreateGroupContext();
   const { isMobile } = useScreenWidth();
   const [isValidIntro, setIsValidIntro] = useState<boolean | null>(null);
   const [isValidParagraphOne, setIsValidParagraphOne] = useState<
@@ -179,7 +176,6 @@ const CreateGgroupDescription = () => {
           </div>
           <textarea
             value={intro}
-            type="text"
             className="mobile:w-[100%] tablet:w-[70%] h-[5rem] xl-screen:h-[5.4rem] border-[2px] border-gray-200 rounded-lg p-4 mobile:mt-[1rem] tablet:mt-2  mobile:placeholder:text-[12px] desktop:placeholder:text-[14px] focus:outline-none mobile:text-[14px] desktop:text-[16px]"
             placeholder="Tell us about yourself..."
             onChange={(e) => setIntro(e.target.value)}
@@ -202,7 +198,6 @@ const CreateGgroupDescription = () => {
           </div>
           <textarea
             value={paragraphOne}
-            type="text"
             className="mobile:w-[100%] tablet:w-[70%] h-[5rem] xl-screen:h-[5.4rem]  border-[2px] border-gray-200 rounded-lg p-4 mobile:mt-[1rem] tablet:mt-2  mobile:placeholder:text-[12px] desktop:placeholder:text-[14px] focus:outline-none mobile:text-[14px] desktop:text-[16px]"
             placeholder="Add a paragraph..."
             onChange={(e) => setParagraphOne(e.target.value)}
@@ -225,7 +220,6 @@ const CreateGgroupDescription = () => {
           </div>
           <textarea
             value={paragraphTwo}
-            type="text"
             className="mobile:w-[100%] tablet:w-[70%] h-[5rem] xl-screen:h-[5.4rem]  border-[2px] border-gray-200 rounded-lg p-4 mobile:mt-[1rem] tablet:mt-2  mobile:placeholder:text-[12px] desktop:placeholder:text-[14px] focus:outline-none mobile:text-[14px] desktop:text-[16px]"
             placeholder="Add a paragraph..."
             onChange={(e) => setParagraphTwo(e.target.value)}
@@ -247,7 +241,6 @@ const CreateGgroupDescription = () => {
           </div>
           <textarea
             value={paragraphThree}
-            type="text"
             className="mobile:w-[100%] tablet:w-[70%] h-[5rem] xl-screen:h-[5.4rem]  border-[2px] border-gray-200 rounded-lg p-4 mobile:mt-[1rem] tablet:mt-2 mobile:placeholder:text-[12px] desktop:placeholder:text-[14px] focus:outline-none mobile:text-[14px] desktop:text-[16px]"
             placeholder="Add a paragraph..."
             onChange={(e) => setParagraphThree(e.target.value)}

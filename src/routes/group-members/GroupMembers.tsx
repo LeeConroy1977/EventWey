@@ -1,5 +1,4 @@
 import { useGroup } from "../../contexts/GroupContext";
-import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 import useHandleConnectionClick from "../../hooks/useHandleConnectionClick";
 import HomeConnectionCard from "./HomeConnectionCard";
 

@@ -7,26 +7,21 @@ import { useUser } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import SignInUserCard from "./SignInUserCard";
-import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 
-const SignIn = ({}) => {
-  const { user, setUser } = useUser();
-  const { isMobile } = useScreenWidth();
-  const [googleSignIn, setGoogleSignIn] = useState(false);
+const SignIn = () => {
+  const { setUser } = useUser();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [googleId, setGoogleId] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isEmailBlur, setIsEmailblur] = useState(false);
   const [isPasswordBlur, setIsPasswordblur] = useState(false);
+  // @ts-ignore
   const [signInUsers, setSignInUsers] = useState<User | null>();
+  // @ts-ignore
   const [signInAdminUsers, setSignInAdminUsers] = useState<User | null>();
   const {
     isEmailValid,
     isPasswordValid,
-    loading,
-    error,
-    checkIfUserExists,
     handleEmailValidation,
     handlePasswordValidation,
     handleValidation,
@@ -51,6 +46,7 @@ const SignIn = ({}) => {
   }, []);
 
   useEffect(() => {
+    // @ts-ignore
     handleValidation(isEmailValid, isPasswordValid);
   }, [isEmailValid, isPasswordValid]);
 
@@ -108,6 +104,7 @@ const SignIn = ({}) => {
 
     const users = response?.data;
     setSignInUsers(users?.slice(0, 3));
+    // @ts-ignore
     const adminUsers = users.filter((user) => user.role === "admin");
     setSignInAdminUsers(adminUsers);
   }
@@ -119,18 +116,21 @@ const SignIn = ({}) => {
       setErrorMessage("User cannot be found.");
       return;
     }
+    // @ts-ignore
     setUser(user);
     navigate("/user/events");
   };
-
+  // @ts-ignore
   async function handleSignInAsUser(id) {
+    // @ts-ignore
     const user = signInUsers.find((user) => user.id === id);
 
     setUser(user);
     navigate("/user/events");
   }
-
+  // @ts-ignore
   async function handleSignInAsAdmin(id) {
+    // @ts-ignore
     const user = signInAdminUsers.find((user) => user.id === id);
 
     setUser(user);
@@ -147,7 +147,7 @@ const SignIn = ({}) => {
               <span className="text-primary">user...</span>
             </h1>
             <div className="mobile:w-[100%] tablet:w-[80%] mobile:h-[200px] tablet:h-[32%] desktop:h-[30%] flex justify-around  mobile:mt-8 tablet:mt-6 desktop:mt-8">
-              {signInUsers?.map((user) => {
+              {signInUsers?.map((user: any) => {
                 return (
                   <SignInUserCard
                     user={user}
@@ -161,7 +161,7 @@ const SignIn = ({}) => {
               Sign in as an admin <span className="text-primary">user...</span>
             </h1>
             <div className="mobile:w-[100%] tablet:w-[80%] mobile:h-[200px] tablet:h-[30%] flex justify-around  mobile:mt-8 tablet:mt-6 desktop:mt-8">
-              {signInAdminUsers?.map((user) => {
+              {signInAdminUsers?.map((user: any) => {
                 return (
                   <SignInUserCard
                     user={user}
@@ -260,7 +260,8 @@ const SignIn = ({}) => {
                   py="py-3"
                   bgColour={isFormValid ? "bg-primary" : "bg-gray-300"}
                   isDisabled={!isFormValid}
-                  handleClick={(e) => handleSubmit(e)}
+                  // @ts-ignore
+                  handleClick={(e: any) => handleSubmit(e)}
                 >
                   Sign In
                 </Button>

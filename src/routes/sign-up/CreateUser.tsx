@@ -7,7 +7,7 @@ import AddTags from "./AddTags";
 import SignUp from "./SignUp";
 
 const CreateUser = () => {
-  const { state, nextStep, prevStep } = useCreateUserContext();
+  const { state } = useCreateUserContext();
 
   if (state.isSignUp) {
     return <SignUp />;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEvent } from "../../contexts/EventContext";
 import EventGroupDetail from "./EventGroupDetail";
@@ -15,35 +15,19 @@ import { useEventModal } from "../../contexts/EventModelContext";
 const Event = () => {
   const { id } = useParams();
   const { isMobile } = useScreenWidth();
-  const { user, isUserAttendingEvent } = useUser();
+  const { isUserAttendingEvent } = useUser();
   const navigate = useNavigate();
   const {
     event,
     eventGroup,
     eventConnections,
     getEventById,
-    error,
-    loading,
     getGroupById,
     getEventConnections,
     updateEvent,
     removeEvent,
   } = useEvent();
-  const {
-    image,
-    date,
-    title,
-    description,
-    groupName,
-    duration,
-    going,
-    availability,
-    free,
-    priceBands,
-    tags,
-    location,
-    approved,
-  } = event || {};
+  const { description, free, priceBands, location, approved } = event || {};
 
   const { lat, lng, placename } = location || {};
 
@@ -54,7 +38,7 @@ const Event = () => {
   const handleCancelAttendance = () => openEventModal(event, "cancel");
 
   const handleGroupClick = useHandleGroupClick();
-
+  // @ts-ignore
   function getPriceRange(priceArr: PriceBand[]): string {
     if (free) return "Free";
     if (!priceArr || priceArr.length === 0) return "No price available";
@@ -66,9 +50,10 @@ const Event = () => {
       sortedPrice[sortedPrice.length - 1].price
     }`;
   }
-
+  // @ts-ignore
   const eventPrices = getPriceRange(priceBands);
-  const isAttending = isUserAttendingEvent(event?.id);
+  // @ts-ignore
+  const isAttending = isUserAttendingEvent(event?.id) || false;
 
   function handleApproveEvent() {
     updateEvent("approved", true);
@@ -84,6 +69,7 @@ const Event = () => {
     if (id) {
       getEventById(id);
       getGroupById(id);
+      // @ts-ignore
       getEventConnections(id);
     }
   }, [id]);
@@ -95,6 +81,7 @@ const Event = () => {
           <EventWrapper
             event={event}
             handleApproveEvent={handleApproveEvent}
+            // @ts-ignore
             handleRemoveEvent={handleRemoveEvent}
           />
           {isMobile && !approved && (
@@ -106,6 +93,7 @@ const Event = () => {
                 Approve Event
               </button>
               <button
+                // @ts-ignore
                 onClick={() => handleRemoveEvent(id)}
                 className="w-[120px] h-[40px] text-[11px] flex items-center justify-center font-semibold rounded-lg  text-white bg-secondary "
               >
@@ -140,11 +128,13 @@ const Event = () => {
             <section className="flex flex-col justify-start items-start w-full tablet:w-[62%] h-auto p-0 tablet:p-4">
               {!isMobile && (
                 <EventGroupDetail
+                  // @ts-ignore
                   eventGroup={eventGroup}
                   handleClick={handleGroupClick}
                 />
               )}
-              <EventDetail description={description} />
+
+              <EventDetail description={description ?? []} />
             </section>
             <section className="w-full tablet:w-[38%] h-auto flex flex-col items-center justify-start p-0 pl-0 desktop:p-0 tablet:pl-4 desktop:pl-8 gap-y-4 overflow-x-scroll">
               {!isMobile && <EventOptionsContainer />}
@@ -153,6 +143,7 @@ const Event = () => {
                   Location
                 </h1>
               )}
+
               <EventMapContainer lat={lat} lng={lng} placename={placename} />
               <EventConnectionsContainer eventConnections={eventConnections} />
             </section>

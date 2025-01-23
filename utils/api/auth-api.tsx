@@ -1,5 +1,4 @@
 import { fetchAllUsers } from "./user-api";
-import axios from "axios";
 
 export const SignInUser = async (
   email: string,

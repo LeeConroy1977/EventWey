@@ -5,7 +5,7 @@ import Button from "../../reuseable-components/Button";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 
 const CreateGroupType = () => {
-  const { nextStep, newGroup, setNewGroup, categories, getAllCategories } =
+  const { nextStep, setNewGroup, categories, getAllCategories } =
     useCreateGroupContext();
   const [groupCategory, setGroupCategory] = useState<string>("");
   const [groupAccess, setGroupAccess] = useState<string>("");

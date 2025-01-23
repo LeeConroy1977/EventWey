@@ -2,18 +2,42 @@ import AdminGroupCard from "./AdminGroupCard";
 import createGroup2 from "../../assets/images/createGroup2.jpeg";
 import { useCreateEventContext } from "../../contexts/CreateEventContext";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
-const CreateEventIntro = ({ adminGroups }) => {
-  const { dispatch, setNewEvent, startEventCreation } = useCreateEventContext();
+import React from "react";
+
+interface Group {
+  id: string;
+  name: string;
+  image: string;
+  groupAdmin: string[];
+  description: string[];
+  openAccess: boolean;
+  location: Location;
+  creationDate: number;
+  eventsCount: number;
+  members: string[];
+  events: string[];
+  messages: string[];
+  category: string;
+  approved: boolean;
+}
+
+interface CreateEventIntroProps {
+  adminGroups: Group[] | undefined;
+  handleClick: (id: string) => void;
+}
+
+const CreateEventIntro: React.FC<CreateEventIntroProps> = ({ adminGroups }) => {
+  const { setNewEvent, startEventCreation } = useCreateEventContext();
   const { isMobile } = useScreenWidth();
 
-  function handleClick(id) {
-    const selectedGroup = adminGroups.find((group) => group.id === id);
+  function handleClick(id: string) {
+    const selectedGroup = adminGroups?.find((group: Group) => group.id === id);
     setNewEvent(
       (prevEvent) =>
         (prevEvent = {
           ...prevEvent,
-          groupId: selectedGroup.id,
-          groupName: selectedGroup.name,
+          groupId: selectedGroup!.id,
+          groupName: selectedGroup!.name,
         })
     );
     startEventCreation();
@@ -36,7 +60,7 @@ const CreateEventIntro = ({ adminGroups }) => {
             Select the group hosting the event.
           </h1>
           <div className="w-[100%] min-h-[90%] tablet:mt-4 desktop:mt-8 overflow-y-auto scrollbar-hide mobile:p-0 tablet:p-8">
-            {adminGroups.map((group) => {
+            {adminGroups?.map((group: Group) => {
               return (
                 <AdminGroupCard
                   group={group}

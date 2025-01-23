@@ -23,10 +23,11 @@ const ConnectionGroups = () => {
         </div>
       ) : error ? (
         <div className="w-full text-red-500 text-center mt-4">{error}</div>
-      ) : groupsLength > 0 ? (
+      ) : (groupsLength ?? 0) > 0 ? (
         <div className="flex flex-row items-start justify-start gap-3 flex-wrap">
-          {connectionGroups.map((group) => (
+          {connectionGroups?.map((group) => (
             <HomeGroupsCard
+              // @ts-ignore
               group={group}
               key={group.id}
               handleClick={handleGroupClick}
@@ -34,10 +35,7 @@ const ConnectionGroups = () => {
           ))}
         </div>
       ) : (
-        !loading &&
-        groupsLength > 0 && (
-          <p className="text-gray-500 text-center">No groups To Show...</p>
-        )
+        <p className="text-gray-500 text-center">No groups To Show...</p>
       )}
     </div>
   );

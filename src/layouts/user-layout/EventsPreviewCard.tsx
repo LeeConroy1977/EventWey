@@ -1,8 +1,42 @@
 import { format } from "date-fns";
 
+interface PriceBand {
+  type: "Early bird" | "Standard" | "VIP";
+  price: string;
+  ticketCount: number;
+}
+
+interface Location {
+  placename: string;
+  lng: number;
+  lat: number;
+}
+
+interface Event {
+  id: string;
+  image: string;
+  title: string;
+  date: string;
+  groupName: string;
+  groupId: number;
+  duration: string;
+  priceBands: PriceBand[];
+  going: number;
+  capacity: number;
+  availability: number;
+  startTime: string;
+  free: boolean;
+  category: string;
+  tags: string[];
+  description: string[];
+  attendees: string[];
+  location: Location;
+  approved: boolean;
+}
+
 interface EventsPreviewCardProps {
   event: Event;
-  handleClick: () => void;
+  handleClick: (is: string) => void;
 }
 
 const EventsPreviewCard: React.FC<EventsPreviewCardProps> = ({

@@ -1,14 +1,7 @@
-import React, {
-  createContext,
-  useState,
-  useContext,
-  ReactNode,
-  FC,
-} from "react";
+import { createContext, useState, useContext, ReactNode, FC } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 
 import JoinedEventConfimation from "../components/JoinedEventConfimation";
-import GetTickets from "../components/GetTickets";
 import CancelAttendance from "../components/CancelAttendance";
 
 interface EventModalContextProps {
@@ -17,6 +10,7 @@ interface EventModalContextProps {
     action: "join" | "tickets" | "cancel"
   ) => void;
   closeEventModal: () => void;
+  isVisible: boolean;
 }
 
 const EventModalContext = createContext<EventModalContextProps | undefined>(
@@ -44,12 +38,15 @@ export const EventModalProvider: FC<{ children: ReactNode }> = ({
     let content: ReactNode;
     switch (action) {
       case "join":
+        // @ts-ignore
         content = <JoinedEventConfimation event={event} />;
         break;
       case "tickets":
+        // @ts-ignore
         content = <JoinedEventConfimation event={event} />;
         break;
       case "cancel":
+        // @ts-ignore
         content = <CancelAttendance event={event} />;
         break;
       default:

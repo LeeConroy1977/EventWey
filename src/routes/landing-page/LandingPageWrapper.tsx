@@ -1,11 +1,10 @@
 import mainImage from "../../assets/images/main_2.jpg";
-import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 import useHandleCreateUserClick from "../../hooks/useHandleCreateUserClick";
 import Button from "../../reuseable-components/Button";
 
 const LandingPageWrapper = () => {
   const handleCreateUserClick = useHandleCreateUserClick();
-  const { isMobile, desktop } = useScreenWidth();
+
   return (
     <div className="w:full tablet:w-[86%]  desktop:w-[66%] tablet:h-[22rem] xl-screen:h-[25rem]  flex flex-col tablet:flex-row items-center justify-start tablet:justify-center  bg-bgPrimary px-6 tablet:px-0 tablet:mt-6 desktop:mt-14">
       <div className="w-full tablet:w-[60%] tablet:h-[100%] flex flex-col items-center justify-center desktop:p-0">

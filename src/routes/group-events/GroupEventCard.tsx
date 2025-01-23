@@ -2,32 +2,44 @@ import { IoPerson } from "react-icons/io5";
 import { IoMdPricetag } from "react-icons/io";
 import { format } from "date-fns";
 import { useUser } from "../../contexts/UserContext";
+import React from "react";
 
 interface PriceBand {
   price: number;
   type: string;
 }
 
-interface Event {
-  id: number;
+export interface Event {
+  id: string;
   image: string;
-  date: number;
   title: string;
-  description: string;
+  date: string;
   groupName: string;
+  groupId: number;
   duration: string;
-  going: number;
-  availability: number;
-  free: boolean;
   priceBands: PriceBand[];
+  going: number;
+  capacity: number;
+  availability: number;
+  startTime: string;
+  free: boolean;
+  category: string;
+  tags: string[];
+  description: string[];
+  attendeesId: string[];
+  location: Location;
+  approved: boolean;
 }
 
-interface HomeEventsCardProps {
+interface GroupEventCardProps {
   event: Event;
-  handleClick: () => void;
+  handleClick: (id: string) => void;
 }
 
-const GroupEventCard = ({ event, handleClick }) => {
+const GroupEventCard: React.FC<GroupEventCardProps> = ({
+  event,
+  handleClick,
+}) => {
   const { user } = useUser();
   const {
     id,
@@ -35,8 +47,6 @@ const GroupEventCard = ({ event, handleClick }) => {
     date,
     title,
     description,
-    groupName,
-    duration,
     going,
     availability,
     free,
@@ -49,7 +59,8 @@ const GroupEventCard = ({ event, handleClick }) => {
   const isAttending = user?.userEvents?.includes(id);
 
   let filteredDescription = description[0];
-  filteredDescription = filteredDescription.replaceAll("**", "");
+
+  filteredDescription = filteredDescription.replace(/\*\*/g, "");
 
   function getPriceRange(priceArr: PriceBand[]): string {
     if (free) return "Free";

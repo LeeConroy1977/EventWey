@@ -10,7 +10,7 @@ const CreateEventTime = () => {
   const [startTime, setStartTime] = useState<string>("");
   const [durationHours, setDurationHours] = useState<string>("");
   const [durationMinutes, setDurationMinutes] = useState<string>("");
-  const [isValid, setIsValid] = useState<string>("");
+  const [isValid, setIsValid] = useState<boolean | null>(null);
   const { isMobile } = useScreenWidth();
 
   useEffect(() => {

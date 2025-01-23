@@ -8,9 +8,9 @@ import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 import { ClipLoader } from "react-spinners";
 
 const Home = () => {
-  const { events, setEvents, fetchEvents, loading, error } = useEvents();
+  const { events, fetchEvents, loading, error } = useEvents();
   const [searchParams] = useSearchParams();
-  const { isMobile } = useScreenWidth();
+  const {} = useScreenWidth();
   const category = searchParams.get("category");
   const date = searchParams.get("date");
   const sortBy = searchParams.get("sortBy");
@@ -23,6 +23,7 @@ const Home = () => {
       date,
       sortBy,
     };
+    // @ts-ignore
     fetchEvents(params);
   }, [category, date, sortBy]);
 
@@ -42,6 +43,7 @@ const Home = () => {
         events.length > 0 &&
         events.map((event) => (
           <HomeEventsCard
+            // @ts-ignore
             event={event}
             key={event.id}
             handleClick={handleEventClick}

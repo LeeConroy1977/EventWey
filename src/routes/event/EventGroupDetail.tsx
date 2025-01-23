@@ -1,9 +1,33 @@
 import { IoPerson } from "react-icons/io5";
-import { FaUserFriends } from "react-icons/fa";
 import { useUser } from "../../contexts/UserContext";
-import Button from "../../reuseable-components/Button";
+import React from "react";
 
-const EventGroupDetail = ({ eventGroup, handleClick }) => {
+interface Group {
+  id: string;
+  name: string;
+  image: string;
+  groupAdmin: string[];
+  description: string[];
+  openAccess: boolean;
+  location: Location;
+  creationDate: number;
+  eventsCount: number;
+  members: string[];
+  events: string[];
+  messages: string[];
+  category: string;
+  approved: boolean;
+}
+
+interface EventGroupDetailProps {
+  eventGroup: Group;
+  handleClick: (id: string) => void;
+}
+
+const EventGroupDetail: React.FC<EventGroupDetailProps> = ({
+  eventGroup,
+  handleClick,
+}) => {
   const { user } = useUser();
   const { id, name, image, description, members, openAccess } =
     eventGroup || {};
@@ -38,10 +62,7 @@ const EventGroupDetail = ({ eventGroup, handleClick }) => {
           <p className="ml-2 text-[10px] xl-screen:text-[12px] font-semibold text-[#2C3E50]">
             {members && members.length} Members
           </p>
-          {/* <FaUserFriends className="text-primary text-[15px] xl-screen:text-[17px] ml-6" /> */}
-          {/* <p className="ml-2 text-[10px] xl-screen:text-[12px] font-semibold text-[#2C3E50]">
-            {members && members.length} Connections
-          </p> */}
+
           <button
             className={`tablet:w-[88px] tablet:h-[32px] desktop:w-[100px]  desktop:h-[36px]  xl-screen:w-[120px] xl-screen:h-[44px] mt-auto tablet:mb-0 desktop:mb-1 ml-auto  flex items-center justify-center tablet:text-[9px] desktop:text-[10px] xl-screen:text-[11px] font-semibold rounded-lg ${
               isMember
