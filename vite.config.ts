@@ -5,6 +5,7 @@ export default defineConfig({
     "process.env": process.env,
   },
   build: {
+    outDir: "build", // Custom output directory
     rollupOptions: {
       input: {
         main: "./index.html",

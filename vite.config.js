@@ -5,6 +5,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
+      outDir: "dist",
       input: {
         main: "./index.html", // Define the main entry point of the app
       },
