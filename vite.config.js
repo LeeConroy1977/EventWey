@@ -19,7 +19,7 @@ export default defineConfig({
         ".js": "js",
         ".jsx": "jsx",
       },
-      inject: ['import React from "react";'], // Automatically inject React for JSX
+      // inject: ['import React from "react";'], // Automatically inject React for JSX
     },
   },
   // Disable TypeScript type-checking during build
