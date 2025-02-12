@@ -75,32 +75,32 @@ A user can also sign in as an admin user and can approve or reject newly created
 
 ## Test accounts
 
-<U>**User One**</U>
+**User One**
 
 **Email:** mia6@gmail.com<br>
 **Password:** Password#6
 
-<U>**User Two**</U>
+**User Two**
 
 **Email:** john2@gmail.com<br>
 **Password:** Password#2
 
-<U>**User Three**</U>
+**User Three**
 
 **Email:** emma3@gmail.com<br>
 **Password:** Password#3
 
-<U>**Admin User One**</U>
+**Admin User One**
 
 **Email:** lucas5@gmail.com<br>
 **Password:** Password#5
 
-<U>**Admin User Two**</U>
+**Admin User Two**
 
 **Email:** lucy7@gmail.com<br>
 **Password:** Password#7
 
-<U>**Admin User Three**</U>
+**Admin User Three**
 
 **Email:** sophie10@gmail.com<br>
 **Password:** Password#10

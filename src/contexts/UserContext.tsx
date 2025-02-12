@@ -184,7 +184,6 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         return;
       }
 
-      console.log("Fetching event with ID:", eventId);
       const event = await fetchEventById(eventId);
 
       if (!event || !Array.isArray(event.attendees)) {

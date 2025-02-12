@@ -4,10 +4,12 @@ import { useEffect } from "react";
 import useHandleConnectionClick from "../../hooks/useHandleConnectionClick";
 import { useConnections } from "../../contexts/ConnectionsContext";
 import { ClipLoader } from "react-spinners";
+import { useUser } from "../../contexts/UserContext";
 
 const UserConnectionPreview = () => {
   const navigate = useNavigate();
   const { connections, getAllConnections, loading, error } = useConnections();
+  const { user } = useUser();
   const handleConnectionClick = useHandleConnectionClick();
 
   const connectionPreview = [...connections].slice(0, 6);
@@ -15,8 +17,12 @@ const UserConnectionPreview = () => {
   const connectionsLength = connections.length;
 
   useEffect(() => {
-    getAllConnections();
-  }, []);
+    if (user?.id) {
+      getAllConnections(user.id); // Pass user.id as an argument
+    } else {
+      console.warn("User is undefined or missing an ID.");
+    }
+  }, [user]); /// Runs again if `user` updates
 
   function handleNavigation() {
     navigate("/user/my-connections");

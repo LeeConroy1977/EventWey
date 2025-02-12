@@ -5,11 +5,7 @@ import useHandleSignInClick from "./hooks/useHandleSignUpClick";
 import useHandleCreateUserClick from "./hooks/useHandleCreateUserClick";
 import { useUser } from "./contexts/UserContext";
 
-interface PrivateRouteProps {
-  // allowedRoutes: string[];
-  // user: string[];
-  // children: React.ReactNode;
-}
+interface PrivateRouteProps {}
 
 const PrivateRoute: React.FC<PrivateRouteProps> = () => {
   const { showModal, hideModal } = useModal();
@@ -17,7 +13,9 @@ const PrivateRoute: React.FC<PrivateRouteProps> = () => {
   const handleCreateUserClick = useHandleCreateUserClick();
   const handleSignInClick = useHandleSignInClick();
 
-  if (!user) {
+  const isLandingPage = location.pathname.match("/");
+
+  if (!user || (!user && !isLandingPage)) {
     showModal(
       <div className="w-[100%] h-[100%] flex flex-col items-center  ">
         <h1 className="text-[36px] font-bold text-secondary mt-4">EventWey</h1>

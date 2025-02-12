@@ -63,6 +63,7 @@ const SignUp = () => {
   const [isUsernameBlur, setIsUsernameblur] = useState(false);
   const [isEmailBlur, setIsEmailblur] = useState(false);
   const [isPasswordBlur, setIsPasswordblur] = useState(false);
+  const [userExistsMessage, setUserExistsMessage] = useState("");
   const { isMobile } = useScreenWidth();
 
   const usernameRegex = /^.{2,20}$/;
@@ -93,7 +94,7 @@ const SignUp = () => {
     handleEmailValidation(email, emailRegex);
     // @ts-ignore
     handlePasswordValidation(password, passwordRegex);
-  }, [email, username, password]);
+  }, [email, username, password, resetInputs]);
 
   function handleUserNameBlur() {
     setIsUsernameblur(true);
@@ -128,11 +129,24 @@ const SignUp = () => {
     }
   };
 
+  function resetInputs() {
+    setIsUsernameblur(false);
+    setIsEmailblur(false);
+    setIsPasswordblur(false);
+    setUsername("");
+    setEmail("");
+    setPassword("");
+
+    dispatch({ type: "RESET_SIGNUP" });
+  }
+
   const handleSubmit = async (e: any) => {
     if (e) e.preventDefault();
 
     const existingUser = await checkIfUserExists(email);
     if (existingUser) {
+      setUserExistsMessage("Email already in use!");
+      resetInputs();
       return;
     }
 
@@ -143,8 +157,6 @@ const SignUp = () => {
       password: googleId ? null : password,
       googleId: googleId || null,
     };
-
-    console.log("Submitting User Data:", createdUser);
     // @ts-ignore
     createNewUser(createdUser);
     dispatch({
@@ -167,12 +179,17 @@ const SignUp = () => {
           )}
 
           <section className="mobile:w-[100%] tablet:w-[50%] h-[100%] flex flex-col items-center ">
-            <h1 className="text-textPrimary mobile:text-[17px] tablet:text-[20px] desktop:text-[28px] xl-screen:text-[30px] font-bold mobile:mt-2 tablet:mt-6 desktop:mt-12 mobile:mr-auto tablet:mr-0">
+            <h1 className="text-textPrimary mobile:text-[17px] tablet:text-[20px] desktop:text-[28px] xl-screen:text-[30px] font-bold mobile:mt-6 tablet:mt-6 desktop:mt-12 mobile:mr-auto tablet:mr-0">
               Create a new <span className="text-secondary">account...</span>
             </h1>
+            <div className="w-full mobile:h-14 tablet:h-10  flex items-center justify-center">
+              <p className="text-secondary mobile:text-[14px] tablet:text-[13px] desktop:text-[16px]">
+                {userExistsMessage}
+              </p>
+            </div>
             <form
               action="submit"
-              className="mobile:w-[100%] tablet:w-[66%] desktop:w-[56%] desktop:h-[60%] xl-screen:h-[64%] flex flex-col items-center mobile:mt-8 tablet:mt-6 desktop:mt-16"
+              className="mobile:w-[100%] tablet:w-[66%] desktop:w-[56%] desktop:h-[60%] xl-screen:h-[64%] flex flex-col items-center mobile:mt-0 tablet:mt-0 desktop:mt-10"
               onSubmit={handleSubmit}
             >
               {error && (

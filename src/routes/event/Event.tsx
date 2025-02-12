@@ -15,7 +15,7 @@ import { useEventModal } from "../../contexts/EventModelContext";
 const Event = () => {
   const { id } = useParams();
   const { isMobile } = useScreenWidth();
-  const { isUserAttendingEvent } = useUser();
+  const { isUserAttendingEvent, user } = useUser();
   const navigate = useNavigate();
   const {
     event,
@@ -38,6 +38,7 @@ const Event = () => {
   const handleCancelAttendance = () => openEventModal(event, "cancel");
 
   const handleGroupClick = useHandleGroupClick();
+
   // @ts-ignore
   function getPriceRange(priceArr: PriceBand[]): string {
     if (free) return "Free";

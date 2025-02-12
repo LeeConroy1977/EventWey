@@ -4,6 +4,7 @@ import useHandleConnectionClick from "../../hooks/useHandleConnectionClick";
 import HomeConnectionCard from "../group-members/HomeConnectionCard";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 import { ClipLoader } from "react-spinners";
+import { useUser } from "../../contexts/UserContext";
 
 const UserConnection = () => {
   const {
@@ -13,13 +14,18 @@ const UserConnection = () => {
     error,
     filteredConnections,
   } = useConnections();
+  const { user } = useUser();
   const { isMobile } = useScreenWidth();
 
   const handleConnectionClick = useHandleConnectionClick();
 
   useEffect(() => {
-    getAllConnections();
-  }, []);
+    if (user?.id) {
+      getAllConnections(user.id); // Pass user.id as an argument
+    } else {
+      console.warn("User is undefined or missing an ID.");
+    }
+  }, [user]); /// Runs again if `user` updates
 
   return (
     <div className="w-full min-h-screen flex flex-col desktop:flex-row items-start justify-start flex-wrap gap-3 bg-bgPrimary p-6 tablet:p-0 desktop:pl-12 desktop:py-6 desktop:mt-4">

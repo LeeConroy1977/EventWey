@@ -41,7 +41,7 @@ interface ConnectionContextType {
   setConnections: React.Dispatch<React.SetStateAction<Connection[]>>;
   filteredConnections: Connection[];
   setFilteredConnections: React.Dispatch<React.SetStateAction<Connection[]>>;
-  getAllConnections: () => Promise<void>;
+  getAllConnections: (userId: string) => Promise<void>;
   loading: boolean;
   error: string | null;
   handleConnectionQuery: (value: string) => void;
@@ -63,17 +63,19 @@ export const ConnectionsProvider: React.FC<ConnectionsProviderProps> = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const { user } = useUser();
+  // const { user } = useUser();
 
-  const getAllConnections = async () => {
-    if (!user?.id) {
+  const getAllConnections = async (userId: string) => {
+    if (!userId) {
+      console.error("User ID is undefined.");
       setError("User is not defined.");
       return;
     }
+
     setLoading(true);
     setError(null);
     try {
-      const userConnections = await fetchUserConnection(user.id);
+      const userConnections = await fetchUserConnection(userId);
       setConnections(userConnections);
     } catch (err) {
       console.error("Error fetching connections:", err);

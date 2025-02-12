@@ -29,7 +29,7 @@ export const EventModalProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [modalContent, setModalContent] = useState<ReactNode>(null);
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
 
   const openEventModal = (
     event: unknown,

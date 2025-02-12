@@ -97,6 +97,11 @@ const SignIn = () => {
     }
   };
 
+  function resetInputs() {
+    setEmail("");
+    setPassword("");
+  }
+
   async function handleFetchAllUser() {
     const response = await axios.get(`${API}/users`, {
       params: {},
@@ -114,6 +119,7 @@ const SignIn = () => {
     const user = await handleFindUser(email, password);
     if (!user) {
       setErrorMessage("User cannot be found.");
+      resetInputs();
       return;
     }
     // @ts-ignore
@@ -174,11 +180,15 @@ const SignIn = () => {
           </section>
 
           <section className="mobile:w-[100%] tablet:w-[50%] h-[100%] flex flex-col items-center mobile:p-6 tablet:p-0 ">
-            <h1 className="text-textPrimary mobile:text-[17px] tablet:text-[20px] desktop:text-[28px] xl-screen:text-[30px] font-bold mobile:mt-2  tablet:mt-12 mobile:mr-auto tablet:mr-0">
+            <h1 className="text-textPrimary mobile:text-[17px] tablet:text-[20px] desktop:text-[28px] xl-screen:text-[30px] font-bold mobile:mt-6  tablet:mt-12 mobile:mr-auto tablet:mr-0">
               Sign in to your <span className="text-secondary">account...</span>
             </h1>
-            <p>{errorMessage}</p>
-            <form className="mobile:w-[100%] tablet:w-[66%] desktop:w-[56%] desktop:h-[60%] xl-screen:h-[64%] flex flex-col items-center mobile:mt-8 tablet:mt-6 desktop:mt-16">
+            <div className="w-full mobile:h-14 tablet:h-10  flex items-center justify-center">
+              <p className="text-secondary mobile:text-[14px] tablet:text-[13px] desktop:text-[16px]">
+                {errorMessage}
+              </p>
+            </div>
+            <form className="mobile:w-[100%] tablet:w-[66%] desktop:w-[56%] desktop:h-[60%] xl-screen:h-[64%] flex flex-col items-center mobile:mt-0 tablet:mt-0 desktop:mt-10">
               <div className="w-[100%] flex flex-row items-center justify-between mt-3">
                 <label
                   htmlFor="email"
