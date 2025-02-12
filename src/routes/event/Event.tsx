@@ -4,7 +4,6 @@ import { useEvent } from "../../contexts/EventContext";
 import EventGroupDetail from "./EventGroupDetail";
 import EventDetail from "./EventDetail";
 import EventConnectionsContainer from "./EventConnectionsContainer";
-import EventOptionsContainer from "../../layouts/user-layout/EventOptionsContainer";
 import EventMapContainer from "../../components/EventMapContainer";
 import useHandleGroupClick from "../../hooks/useHandleGroupClick";
 import EventWrapper from "./EventWrapper";
