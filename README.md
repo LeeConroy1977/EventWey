@@ -73,6 +73,40 @@ A user can also sign in as an admin user and can approve or reject newly created
 
 ---
 
+## Test accounts
+
+**User One**
+
+Email: mia6@gmail.com
+Password: Password#6
+
+**User Two**
+
+Email: john2@gmail.com
+Password: Password#2
+
+**User Three**
+
+Email: emma3@gmail.com
+Password: Password#3
+
+**Admin User One**
+
+Email: lucas5@gmail.com
+Password: Password#5
+
+**Admin User Two**
+
+Email: lucy7@gmail.com
+Password: Password#7
+
+**Admin User Three**
+
+Email: sophie10@gmail.com
+Password: Password#10
+
+---
+
 ## How to test the app features
 
 1. Sign up as a new user or sign in as an existing user.
