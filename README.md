@@ -77,32 +77,32 @@ A user can also sign in as an admin user and can approve or reject newly created
 
 **User One**
 
-Email: mia6@gmail.com
+Email: mia6@gmail.com<br>  
 Password: Password#6
 
 **User Two**
 
-Email: john2@gmail.com
+Email: john2@gmail.com<br>
 Password: Password#2
 
 **User Three**
 
-Email: emma3@gmail.com
+Email: emma3@gmail.com<br>
 Password: Password#3
 
 **Admin User One**
 
-Email: lucas5@gmail.com
+Email: lucas5@gmail.com<br>
 Password: Password#5
 
 **Admin User Two**
 
-Email: lucy7@gmail.com
+Email: lucy7@gmail.com<br>
 Password: Password#7
 
 **Admin User Three**
 
-Email: sophie10@gmail.com
+Email: sophie10@gmail.com<br>
 Password: Password#10
 
 ---
