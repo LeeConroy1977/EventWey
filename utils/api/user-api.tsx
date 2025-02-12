@@ -19,7 +19,6 @@ export const updateUser = async (id: string, patchObj: any): Promise<any> => {
       `${API}/users/${id}`,
       patchObj
     );
-    console.log("Updated User Data:", updatedUser);
     return updatedUser;
   } catch (error) {
     console.error("Error updating user:", error);
@@ -30,7 +29,6 @@ export const updateUser = async (id: string, patchObj: any): Promise<any> => {
 export const fetchAllUsers = async (): Promise<any[]> => {
   try {
     const response = await axios.get("https://eventwey.glitch.me/users");
-    console.log(response.data, "all users");
     return response.data;
   } catch (error) {
     console.error("Error fetching users:", error);
@@ -45,10 +43,6 @@ export const SignInUser = async (
   try {
     const response = await fetchAllUsers();
     const users = Array.isArray(response) ? response : [];
-
-    console.log("Fetched users:", users);
-    console.log("Input Email:", email);
-    console.log("Input Password:", password);
 
     const user = users.find(
       (user) => user.email === email && user.password === password

@@ -13,7 +13,6 @@ export const fetchAllEvents = async (params: {
   try {
     const response = await axios.get(`${API}/events`);
     let filteredData = response.data;
-    console.log(filteredData, "events data glitch");
     if (params.category) {
       filteredData = filteredData.filter(
         (event: any) => event.category === params.category
@@ -44,7 +43,6 @@ export const fetchEventById = async (id: string): Promise<any> => {
     const response = await axios.get(`${API}/events/${id}`);
     const event = await response.data;
 
-    console.log("Event Data:", event);
     if (!event) {
       throw new Error(`Event not found for ID: ${id}`);
     }
@@ -128,7 +126,6 @@ export const fetchEventGroupById = async (id: string): Promise<any> => {
     const eventResponse = await axios.get(`${API}/events/${id}`);
     const event = eventResponse.data;
 
-    console.log("Event Data:", event);
     if (!event?.groupId) {
       throw new Error(`Group ID not found for event with ID: ${id}`);
     }
@@ -168,8 +165,6 @@ export const fetchSortedEvents = async (sortBy: string): Promise<any[]> => {
     } else {
       sortedEvents = events;
     }
-
-    console.log(sortedEvents, sortBy);
 
     return sortedEvents;
   } catch (error) {

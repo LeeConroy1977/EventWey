@@ -18,7 +18,6 @@ export const fetchAllTags = async (): Promise<any[]> => {
 export const fetchAllCategories = async (): Promise<string[]> => {
   try {
     const categoriesResponse = await axios.get(`${API}/categories`);
-    console.log("Categories Response Data:", categoriesResponse.data); // Debug log
 
     const categories = categoriesResponse.data;
 
@@ -33,7 +32,6 @@ export const fetchAllCategories = async (): Promise<string[]> => {
       return category.category;
     });
 
-    console.log("Mapped Categories Array:", categoryArray); // Debug log
     return categoryArray;
   } catch (error) {
     console.error("Error fetching categories:", error);

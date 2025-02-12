@@ -7,8 +7,6 @@ export const fetchConnectionById = async (id: string): Promise<any> => {
     const response = await axios.get(`${API}/users/${id}`);
     const connection = response.data;
 
-    console.log("Fetched Connection Data:", connection);
-
     if (!connection) {
       throw new Error(`Connection not found for ID: ${id}`);
     }

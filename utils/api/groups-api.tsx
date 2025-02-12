@@ -34,7 +34,6 @@ export const fetchGroupById = async (id: string): Promise<any> => {
     const response = await axios.get(`${API}/groups/${id}`);
     const group = response.data;
 
-    console.log("Group Data:", group);
     if (!group) {
       throw new Error(`Group not found for ID: ${id}`);
     }
@@ -87,8 +86,6 @@ export const fetchGroupEventsById = async (id: string): Promise<any[]> => {
     const groupResponse = await axios.get(`${API}/groups/${id}`);
     const group = groupResponse.data;
 
-    console.log("Group Data:", group);
-
     if (!group?.events || !Array.isArray(group.events)) {
       throw new Error(`Events not found or invalid for group with ID: ${id}`);
     }
@@ -112,8 +109,6 @@ export const fetchGroupMembers = async (id: string): Promise<any[]> => {
     const groupResponse = await axios.get(`${API}/groups/${id}`);
     const group = groupResponse.data;
 
-    console.log("Group Data:", group);
-
     if (!group?.members || !Array.isArray(group.members)) {
       throw new Error(`Members not found or invalid for group with ID: ${id}`);
     }
@@ -121,13 +116,10 @@ export const fetchGroupMembers = async (id: string): Promise<any[]> => {
     const usersResponse = await axios.get(`${API}/users`);
     const users = usersResponse.data;
 
-    console.log("Fetched Users:", users);
-
     const groupMembers = users.filter((user: any) =>
       group.members.includes(String(user.id))
     );
 
-    console.log("Filtered Group Members:", groupMembers);
     return groupMembers;
   } catch (error) {
     throw error;

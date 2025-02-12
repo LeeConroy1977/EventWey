@@ -1,11 +1,12 @@
 import { defineConfig } from "vite";
+
 export default defineConfig({
   define: {
     "process.env": process.env, // Ensure process.env is available globally
   },
   build: {
+    outDir: "dist", // Moved outDir here (correct placement)
     rollupOptions: {
-      outDir: "dist",
       input: {
         main: "./index.html", // Define the main entry point of the app
       },
