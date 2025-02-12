@@ -6,7 +6,6 @@ import React, {
   useEffect,
 } from "react";
 import { fetchUserConnection } from "../../utils/api/user-api";
-import { useUser } from "./UserContext";
 
 interface Connection {
   id: string;
@@ -62,8 +61,6 @@ export const ConnectionsProvider: React.FC<ConnectionsProviderProps> = ({
   );
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-
-  // const { user } = useUser();
 
   const getAllConnections = async (userId: string) => {
     if (!userId) {

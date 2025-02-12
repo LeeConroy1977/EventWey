@@ -15,7 +15,7 @@ import { useEventModal } from "../../contexts/EventModelContext";
 const Event = () => {
   const { id } = useParams();
   const { isMobile } = useScreenWidth();
-  const { isUserAttendingEvent, user } = useUser();
+  const { isUserAttendingEvent } = useUser();
   const navigate = useNavigate();
   const {
     event,

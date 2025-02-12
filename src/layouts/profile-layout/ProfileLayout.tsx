@@ -31,7 +31,8 @@ const ProfileLayout = () => {
 
   useEffect(() => {
     getUserEvents({});
-    getAllConnections();
+    // @ts-ignore
+    getAllConnections(user?.id);
     getUserGroups({});
   }, []);
 
