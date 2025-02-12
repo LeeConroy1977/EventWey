@@ -77,7 +77,7 @@ A user can also sign in as an admin user and can approve or reject newly created
 
 **User One**
 
-Email: mia6@gmail.com<br>  
+Email: mia6@gmail.com<br>
 Password: Password#6
 
 **User Two**
