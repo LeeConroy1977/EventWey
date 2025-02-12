@@ -138,7 +138,7 @@ const Event = () => {
               <EventDetail description={description ?? []} />
             </section>
             <section className="w-full tablet:w-[38%] h-auto flex flex-col items-center justify-start p-0 pl-0 desktop:p-0 tablet:pl-4 desktop:pl-8 gap-y-4 overflow-x-scroll">
-              {!isMobile && <EventOptionsContainer />}
+              {/* {!isMobile && <EventOptionsContainer />} */}
               {isMobile && (
                 <h1 className="text-[14px] desktop:text-[1rem] font-bold text-textPrimary mb-1 mr-auto desktop:mr-0 mt-6 desktop:-mt-0.5">
                   Location

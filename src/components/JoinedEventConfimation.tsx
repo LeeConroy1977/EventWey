@@ -116,7 +116,7 @@ const JoinedEventConfimation: React.FC<JoinedEventConfimationProps> = ({
               <p className="font-bold text-textPrimary mt-4 tablet:text-[11px] desktop:text-[14px] xl-screen:text-[16px] mr-auto ml-2 pr-3">
                 {description[0]}
               </p>
-              <p className="font-medium text-textPrimary mt-4 tablet:text-[11px] deskto:text-[13px] xl-screen:text-[15px] mr-auto ml-2 pr-3">
+              <p className="font-medium text-textPrimary mt-4 tablet:text-[11px] desktop:text-[13px] xl-screen:text-[15px] mr-auto ml-2 pr-3">
                 {description[1]}
               </p>
               <div className="flex items-center mr-auto mt-auto mb-12 pl-4">
