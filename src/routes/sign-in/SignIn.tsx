@@ -1,7 +1,7 @@
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useEffect, useState } from 'react';
 import Button from '../../reuseable-components/Button';
-import { useAuth } from '../../contexts/AuthContext'; // Only use AuthContext
+import { useAuth } from '../../contexts/AuthContext';
 import useHandleCreateUserClick from '../../hooks/useHandleCreateUserClick';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -15,6 +15,12 @@ interface User {
   role?: string;
 }
 
+const API = 'https://eventwey-backend.onrender.com';
+
+// Configure Axios defaults
+axios.defaults.withCredentials = true;
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+
 const SignIn = () => {
   const {
     isEmailValid,
@@ -22,7 +28,7 @@ const SignIn = () => {
     handleEmailValidation,
     handlePasswordValidation,
     handleValidation,
-    isFormValid,
+    isFormValid, // Keep this as per your request
     signIn,
     setError,
   } = useAuth();
@@ -32,13 +38,11 @@ const SignIn = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isEmailBlur, setIsEmailBlur] = useState(false);
   const [isPasswordBlur, setIsPasswordBlur] = useState(false);
-  const [signInUsers, setSignInUsers] = useState<User[] | null>(null); 
-  const [signInAdminUsers, setSignInAdminUsers] = useState<User[] | null>(null); 
+  const [signInUsers, setSignInUsers] = useState<User[] | null>(null);
+  const [signInAdminUsers, setSignInAdminUsers] = useState<User[] | null>(null);
   const handleCreateUserClick = useHandleCreateUserClick();
   const navigate = useNavigate();
-   const {user, setUser } = useUser();
-
-  const API = 'https://eventwey-backend.onrender.com';
+  const { user, setUser } = useUser();
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const passwordRegex = /^.{8,40}$/;
@@ -71,24 +75,18 @@ const SignIn = () => {
 
   const handleGoogleLogin = async (credentialResponse: any) => {
     const token = credentialResponse.credential;
-    const user = parseJwt(token);
+    const userData = parseJwt(token);
 
     try {
-      const response = await axios.post(
-        `${API}/auth/google`,
-        { googleId: user.sub, email: user.email, displayName: user.name },
-        { withCredentials: true }
-      );
-
-      if (!response.data) {
-        setErrorMessage('Google account not registered. Please sign up first.');
-      } else {
-        signIn(user.email, ''); // Use signIn to set user (password not needed for Google)
-        navigate('/user/events');
-      }
+      const response = await axios.get(`${API}/auth/google/callback`, {
+        headers: { Authorization: `Bearer ${token}` }, // Send Google token
+      });
+      const user = response.data;
+      setUser(user); // Update UserContext
+      navigate('/user/events');
     } catch (error) {
       console.error('Google sign-in error:', error);
-      setErrorMessage('An error occurred during Google sign-in. Please try again.');
+      setErrorMessage('Google sign-in failed. Please sign up first or try again.');
     }
   };
 
@@ -108,9 +106,7 @@ const SignIn = () => {
 
   async function handleFetchAllUser() {
     try {
-      const response = await axios.get(`${API}/users`, {
-        withCredentials: true, // Ensure cookie auth
-      });
+      const response = await axios.get(`${API}/users`);
       const users = response?.data;
       setSignInUsers(users?.slice(0, 3));
       const adminUsers = users.filter((user: User) => user.role === 'admin');
@@ -134,16 +130,26 @@ const SignIn = () => {
   async function handleSignInAsUser(id: number) {
     const user = signInUsers?.find((user) => user.id === id);
     if (user) {
-      setUser(user); // Assuming setUser is still needed for this flow
-      navigate('/user/events');
+      try {
+        await signIn(user.email, ''); // Assuming demo users don’t need passwords
+        setUser(user);
+        navigate('/user/events');
+      } catch (error) {
+        setErrorMessage('Failed to sign in as user');
+      }
     }
   }
 
   async function handleSignInAsAdmin(id: number) {
     const user = signInAdminUsers?.find((user) => user.id === id);
     if (user) {
-      setUser(user); // Assuming setUser is still needed for this flow
-      navigate('/user/events');
+      try {
+        await signIn(user.email, ''); // Assuming demo admins don’t need passwords
+        setUser(user);
+        navigate('/user/events');
+      } catch (error) {
+        setErrorMessage('Failed to sign in as admin');
+      }
     }
   }
 
@@ -263,10 +269,13 @@ const SignIn = () => {
                 </Button>
               </div>
               <h3 className="text-textPrimary mobile:text-[14px] desktop:text-[20px] font-bold mobile:mt-6 tablet:mt-6 desktop:mt-12">
-                Or sign up with Google
+                Or sign in with Google
               </h3>
               <div className="mt-8 xl-screen:mt-12">
-                <GoogleLogin onSuccess={handleGoogleLogin} onError={() => {}} />
+                <GoogleLogin
+                  onSuccess={handleGoogleLogin}
+                  onError={() => setErrorMessage('Google login failed')}
+                />
               </div>
             </form>
             <h2 className="text-textPrimary mobile:text-[14px] desktop:text-[16px] xl-screen:text-[18px] font-semibold mobile:mt-6 tablet:mt-12 desktop:mt-6">

@@ -5,6 +5,7 @@ import useHandleGroupClick from "../../hooks/useHandleGroupClick";
 import HomeGroupsCard from "./HomeGroupsCard";
 import { ClipLoader } from "react-spinners";
 
+
 const Home = () => {
   const { groups, fetchGroups, loading, error } = useGroups();
   const [searchParams] = useSearchParams();

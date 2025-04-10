@@ -65,6 +65,10 @@ try {
   formattedDate = "Date unavailable";
 }
 
+const getGroupName = (): string => {
+  return typeof group === "number" ? `Group #${group}` : group.name;
+};
+
   return (
     <div
       className=" w-[100%] tablet:w-[23.5%] tablet:h-[350px] desktop:h-[420px] xl-screen:h-[460px] flex flex-col justify-start bg-bgPrimary rounded-lg cursor-pointer border-[1px] border-gray-200 mb-6 desktop:mb-0"
@@ -88,7 +92,7 @@ try {
               {title}
             </h4>
             <p className="text-[9px] desktop:text-[12px] xl-screen:text-[13px] font-semibold text-textPrimary mt-1">
-              Hosted by: <span className="text-primary ml-1">{group.name}</span>
+              Hosted by: <span className="text-primary ml-1">{getGroupName()}</span>
             </p>
             <p className="text-[10px] tablet:text-[9px] desktop:text-[13px] xl-screen:text-[14px] font-medium text-textPrimary mobile:mt-3 tablet:mt-2 desktop:mt-3 pr-4">
               {filteredDescription}

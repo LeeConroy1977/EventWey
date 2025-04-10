@@ -21,7 +21,7 @@ const HomeGroupsCard: React.FC<HomeGroupsCardProps> = ({
   let filteredDesc = description[0];
   filteredDesc = filteredDesc.replaceAll("**", "");
 
-  const isMember = user?.groups?.includes(id);
+  const isMember = group?.members?.includes(Number(user?.id)) || false;
 
   return (
     <div

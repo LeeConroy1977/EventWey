@@ -1,16 +1,19 @@
-import axios from 'axios';
 
-const API = 'https://eventwey-backend.onrender.com';
+import axios from "axios";
 
-// Define the User type based on your backend response (adjust fields as needed)
-interface User {
+const API = "https://eventwey-backend.onrender.com";
+
+export interface User {
   id: number;
   email: string;
   username?: string;
-  // Add other fields returned by your User entity (e.g., loadRelationIds results)
+
 }
 
-export const SignUpUser = async (
+axios.defaults.withCredentials = true; 
+axios.defaults.headers.common["Content-Type"] = "application/json";
+
+export const signUpUser = async (
   username: string,
   email: string,
   password: string
@@ -18,55 +21,56 @@ export const SignUpUser = async (
   const signUpData = { username, email, password };
 
   try {
-    const response = await axios.post(`${API}/auth/signup`, signUpData, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true, // Send and receive cookies
-    });
-
-    return response.data; // User object only
+    const response = await axios.post(`${API}/auth/signup`, signUpData);
+    return response.data;
   } catch (error) {
-    console.error('Error signing up:', error);
-    throw new Error('Failed to sign up');
+    if (axios.isAxiosError(error) && error.response) {
+      const { status, data } = error.response;
+      if (status === 409) {
+        throw new Error("Email already exists");
+      }
+      throw new Error(data.message || "Failed to sign up");
+    }
+    console.error("Error signing up:", error);
+    throw new Error("Failed to sign up");
   }
 };
 
-export const SignInUser = async (
+export const signInUser = async (
   email: string,
   password: string
 ): Promise<User> => {
   const signInData = { email, password };
 
   try {
-    const response = await axios.post(`${API}/auth/signin`, signInData, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true, // Send and receive cookies
-    });
-
-    return response.data; // User object only
+    const response = await axios.post(`${API}/auth/signin`, signInData, { withCredentials: true });
+    console.log(response, "headers")
+    return response.data;
   } catch (error) {
-    console.error('Error signing in:', error);
-    throw new Error('Failed to sign in');
+    if (axios.isAxiosError(error) && error.response) {
+      const { status, data } = error.response;
+      if (status === 404) {
+        throw new Error("User not found");
+      }
+      if (status === 401) {
+        throw new Error("Invalid password");
+      }
+      throw new Error(data.message || "Failed to sign in");
+    }
+    console.error("Error signing in:", error);
+    throw new Error("Failed to sign in");
   }
 };
 
-export const SignOutUser = async (): Promise<{ message: string }> => {
+export const signOutUser = async (): Promise<{ message: string }> => {
   try {
-    const response = await axios.post(`${API}/auth/signout`, {}, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true, // Ensure cookie is cleared
-    });
-
-    return response.data; // { message: 'Logged out successfully' }
+    const response = await axios.post(`${API}/auth/signout`, {});
+    return response.data;
   } catch (error) {
-    console.error('Error signing out:', error);
-    throw new Error('Failed to sign out');
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message || "Failed to sign out");
+    }
+    console.error("Error signing out:", error);
+    throw new Error("Failed to sign out");
   }
 };
-
-

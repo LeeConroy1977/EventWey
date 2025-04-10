@@ -6,6 +6,8 @@ import {
   fetchGroupEventsById,
   patchGroup,
   deleteGroup,
+  createJoinGroup,
+  createLeaveGroup,
 } from "../../utils/api/groups-api";
 import {User} from '../types/user'
 import {Event} from '../types/event'
@@ -27,6 +29,8 @@ interface GroupContextType {
   updateGroup: (field: keyof Group, value: any) => Promise<void>;
   removeGroup: (id: string) => Promise<void>;
   getGroupMembers: (id: string) => Promise<void>;
+  joinGroup: (id: string) => Promise<void>
+  leaveGroup: (id: string) => Promise<void>
   loading: boolean;
   error: string | null;
 }
@@ -93,6 +97,34 @@ export const GroupProvider: FC<GroupProviderProps> = ({ children }) => {
     }
   };
 
+  const joinGroup = async(id: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const upDatedGroup = await createJoinGroup(id) 
+      setGroup(upDatedGroup) 
+    } catch (err) {
+      console.error(`Error joining group`, err);
+      setError(`Failed to join group`);
+    } finally {
+      setLoading(false);
+    }
+  }
+  
+  const leaveGroup = async(id: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const upDatedGroup = await createLeaveGroup(id) 
+      setGroup(upDatedGroup) 
+    } catch (err) {
+      console.error(`Error leaving group`, err);
+      setError(`Failed to leave group`);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   const updateGroup = async (field: keyof Group, value: any) => {
     try {
       setLoading(true);
@@ -138,6 +170,8 @@ export const GroupProvider: FC<GroupProviderProps> = ({ children }) => {
         loading,
         updateGroup,
         removeGroup,
+        joinGroup,
+        leaveGroup
       }}
     >
       {children}

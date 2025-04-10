@@ -1,6 +1,6 @@
 // contexts/AuthContext.tsx
 import React, { createContext, useContext, useState } from 'react';
-import { SignInUser, SignOutUser } from '../../utils/api/auth-api'
+import { signInUser, signOutUser } from '../../utils/api/auth-api'
 import { useUser } from './UserContext';
 
 
@@ -59,7 +59,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLoading(true);
     setError(null);
     try {
-      const userData = await SignInUser(email, password);
+      const userData = await signInUser(email, password);
       setUser(userData);
     } catch (err) {
       setError('Failed to sign in. Please check your credentials.');
@@ -73,7 +73,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLoading(true);
     setError(null);
     try {
-      await SignOutUser();
+      await signOutUser();
       setUser(null);
     } catch (err) {
       setError('Failed to sign out. Please try again.');

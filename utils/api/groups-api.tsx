@@ -1,7 +1,11 @@
 import axios from "axios";
 import { sortByPopularity, sortByDate } from "../fakeEventSorting";
+import { Group } from "../../src/types/group";
 
 const API = "https://eventwey-backend.onrender.com";
+
+axios.defaults.withCredentials = true;
+axios.defaults.headers.common["Content-Type"] = "application/json";
 
 export const fetchAllGroups = async (params: {
   category?: string;
@@ -55,6 +59,33 @@ export const postGroup = async (groupData: any): Promise<any> => {
     throw error;
   }
 };
+
+export const createJoinGroup = async (id: string): Promise<Group> => {
+  try {
+    const response = await axios.post(`${API}/groups/${id}/join`,{ withCredentials: true });
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      throw new Error("Please log in to join the group");
+    }
+    console.error("Error joining group:", error);
+    throw new Error("Failed to join group");
+  }
+};
+
+export const createLeaveGroup = async (id: string): Promise<Group> => {
+  try {
+    const response = await axios.post(`${API}/groups/${id}/leave`, { withCredentials: true })
+    return response.data
+  }
+  catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      throw new Error("Please log in to leave the group");
+    }
+    console.error("Error leaving group:", error);
+    throw new Error("Failed to leave group");
+  }
+}
 
 export const patchGroup = async (id: string, patchObj: any): Promise<any> => {
   try {
