@@ -1,7 +1,7 @@
 import axios from "axios";
 import { sortByPopularity, sortByDate } from "../fakeEventSorting";
 
-const API = "https://eventwey.glitch.me";
+const API = "https://eventwey-backend.onrender.com"
 
 export const createUser = async (newUser: any): Promise<any> => {
   try {
@@ -28,7 +28,8 @@ export const updateUser = async (id: string, patchObj: any): Promise<any> => {
 
 export const fetchAllUsers = async (): Promise<any[]> => {
   try {
-    const response = await axios.get("https://eventwey.glitch.me/users");
+    const response = await axios.patch(
+      `${API}/users`);
     return response.data;
   } catch (error) {
     console.error("Error fetching users:", error);
@@ -62,15 +63,10 @@ export const SignInUser = async (
 
 export const fetchUserAdminGroupById = async (id: string): Promise<any> => {
   try {
-    const userResponse = await axios.get(`${API}/users/${id}`);
-    const user = userResponse.data;
+    const adminGroupsResponse = await axios.get(`${API}/users/${id}/admin-groups`);
+    const adminGroups = adminGroupsResponse.data;
 
-    const groupsResponse = await axios.get(`${API}/groups`);
-    const groups = groupsResponse.data;
-
-    const adminGroups = groups.filter((group: any) =>
-      group.groupAdmin.includes(user.id)
-    );
+  
 
     return adminGroups;
   } catch (error) {
@@ -84,28 +80,26 @@ export const fetchUserEvents = async (
   params: { category?: string; date?: string; sortBy?: string }
 ): Promise<any[]> => {
   try {
-    const eventsResponse = await axios.get(`${API}/events`);
-    let allEvents = eventsResponse.data;
+    const eventsResponse = await axios.get(`${API}/users/${id}/events`);
+    let userEvents = eventsResponse.data;
 
     if (params.category) {
-      allEvents = allEvents.filter(
+      userEvents = userEvents.filter(
         (event: any) => event.category === params.category
       );
     }
 
     if (params.date) {
-      allEvents = allEvents.filter((event: any) => event.date === params.date);
+      userEvents = userEvents.filter((event: any) => event.date === params.date);
     }
 
     if (params.sortBy === "popular") {
-      allEvents = sortByPopularity(allEvents);
+      userEvents = sortByPopularity(userEvents);
     } else if (params.sortBy === "date") {
-      allEvents = sortByDate(allEvents);
+      userEvents = sortByDate(userEvents);
     }
 
-    const userEvents = allEvents.filter((event: any) =>
-      event.attendees.includes(String(id))
-    );
+   
 
     return userEvents;
   } catch (error) {
@@ -119,24 +113,22 @@ export const fetchUserGroups = async (
   params: { category?: string; sortBy?: string }
 ): Promise<any[]> => {
   try {
-    const groupsResponse = await axios.get(`${API}/groups`);
-    let allGroups = groupsResponse.data;
+    const groupsResponse = await axios.get(`${API}/users/${id}/groups`);
+    let userGroups = groupsResponse.data;
 
     if (params.category) {
-      allGroups = allGroups.filter(
+      userGroups = userGroups.filter(
         (group: any) => group.category === params.category
       );
     }
 
     if (params.sortBy === "popular") {
-      allGroups = sortByPopularity(allGroups);
+      userGroups = sortByPopularity(userGroups);
     } else if (params.sortBy === "date") {
-      allGroups = sortByDate(allGroups);
+      userGroups = sortByDate(userGroups);
     }
 
-    const userGroups = allGroups.filter((group: any) =>
-      group.members.includes(String(id))
-    );
+    
 
     return userGroups;
   } catch (error) {
@@ -147,12 +139,10 @@ export const fetchUserGroups = async (
 
 export const fetchUserConnection = async (id: string): Promise<any[]> => {
   try {
-    const usersResponse = await axios.get(`${API}/users`);
-    const users = usersResponse.data;
+    const usersResponse = await axios.get(`${API}/users/${id}/connections`);
+    const userConnections = usersResponse.data;
 
-    const userConnections = users.filter((user: any) =>
-      user.connections.includes(String(id))
-    );
+   
 
     return userConnections;
   } catch (error) {

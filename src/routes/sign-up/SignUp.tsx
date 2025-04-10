@@ -6,6 +6,7 @@ import signupImage from "../../assets/images/signup.jpg";
 import useHandleSignInClick from "../../hooks/useHandleSignUpClick";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 
+
 const newUser = {
   email: "",
   username: "",
@@ -17,11 +18,12 @@ const newUser = {
   aboutMe: "",
   tags: [],
   connections: [],
-  userGroups: [],
-  userEvents: [],
+  groups: [],
+  events: [],
   messages: [],
+  comments: [],
   receivedMessages: [],
-  groupAdmin: [],
+  adminGroups: [],
   notifications: [],
   viewEventsStatus: "public",
   viewConnectionsStatus: "public",
@@ -309,6 +311,7 @@ const SignUp = () => {
               />
               <div className="w-[100%] flex items-center justify-center mobile:mt-8 desktop:mt-10 xl-screen:mt-12 ">
                 <Button
+                handleClick={handleSubmit}
                   px="px-12"
                   py="py-3"
                   bgColour={state.isFormValid ? "bg-primary" : "bg-gray-300"}

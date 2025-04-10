@@ -12,11 +12,12 @@ import { GroupProvider } from "./contexts/GroupContext";
 import { ConnectionProvider } from "./contexts/ConnectionContext";
 import { CreateGroupProvider } from "./contexts/CreateGroupContext";
 import { CreateUserProvider } from "./contexts/CreateUserContext";
-import { SignInProvider } from "./contexts/SignInContext";
+
 import { ModalProvider } from "./contexts/ModalContext";
 import { CreateEventProvider } from "./contexts/CreateEventContext";
 import { EventModalProvider } from "./contexts/EventModelContext";
 import { ScreenWidthProvider } from "./contexts/ScreenWidthContext";
+import { AuthProvider } from "./contexts/AuthContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 
@@ -36,11 +37,11 @@ root.render(
                           <CreateGroupProvider>
                             <CreateEventProvider>
                               <CreateUserProvider>
-                                <SignInProvider>
+                                <AuthProvider>
                                   <EventModalProvider>
                                     <App />
                                   </EventModalProvider>
-                                </SignInProvider>
+                                </AuthProvider>
                               </CreateUserProvider>
                             </CreateEventProvider>
                           </CreateGroupProvider>

@@ -1,23 +1,8 @@
 import { IoPerson } from "react-icons/io5";
 import { useUser } from "../../contexts/UserContext";
 import React from "react";
+import {Group} from '../../types/group'
 
-interface Group {
-  id: string;
-  name: string;
-  image: string;
-  groupAdmin: string[];
-  description: string[];
-  openAccess: boolean;
-  location: Location;
-  creationDate: number;
-  eventsCount: number;
-  members: string[];
-  events: string[];
-  messages: string[];
-  category: string;
-  approved: boolean;
-}
 
 interface EventGroupDetailProps {
   eventGroup: Group;
@@ -42,7 +27,7 @@ const EventGroupDetail: React.FC<EventGroupDetailProps> = ({
   return (
     <div
       className="w-[100%] tablet:h-[10rem] desktop:h-[11rem] xl-screen:h-[13rem] flex bg-bgPrimary  rounded-lg tablet:px-6 desktop:px-8 tablet:py-4 desktop:py-5 cursor-pointer"
-      onClick={() => handleClick(id)}
+      onClick={() => handleClick(String(id))}
     >
       <img src={image} alt={name} className="w-[31%] h-[100%] rounded-lg" />
       <div className="w-[69%] h-[100%] flex flex-col pl-8 py-1">

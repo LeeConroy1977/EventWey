@@ -1,7 +1,7 @@
 import axios from "axios";
 import { sortByPopularity, sortByDate } from "../fakeEventSorting";
 
-const API = "https://eventwey.glitch.me";
+const API = "https://eventwey-backend.onrender.com";
 
 export const fetchAllGroups = async (params: {
   category?: string;
@@ -83,19 +83,14 @@ export const deleteGroup = async (id: string): Promise<any> => {
 
 export const fetchGroupEventsById = async (id: string): Promise<any[]> => {
   try {
-    const groupResponse = await axios.get(`${API}/groups/${id}`);
-    const group = groupResponse.data;
+    const groupEventsResponse = await axios.get(`${API}/groups/${id}/events`);
+    const groupEvents = groupEventsResponse.data;
 
-    if (!group?.events || !Array.isArray(group.events)) {
+    if (!groupEvents|| !Array.isArray(groupEvents)) {
       throw new Error(`Events not found or invalid for group with ID: ${id}`);
     }
 
-    const eventsResponse = await axios.get(`${API}/events`);
-    const events = eventsResponse.data;
-
-    const groupEvents = events.filter((event: any) =>
-      group.events.includes(String(event.id))
-    );
+  
 
     return groupEvents;
   } catch (error) {
@@ -106,19 +101,16 @@ export const fetchGroupEventsById = async (id: string): Promise<any[]> => {
 
 export const fetchGroupMembers = async (id: string): Promise<any[]> => {
   try {
-    const groupResponse = await axios.get(`${API}/groups/${id}`);
-    const group = groupResponse.data;
+    const groupMembersResponse = await axios.get(`${API}/groups/${id}/members`);
+    const groupMembers = groupMembersResponse.data;
 
-    if (!group?.members || !Array.isArray(group.members)) {
+    console.log(groupMembers, 'group members')
+
+    if (!groupMembers || !Array.isArray(groupMembers)) {
       throw new Error(`Members not found or invalid for group with ID: ${id}`);
     }
 
-    const usersResponse = await axios.get(`${API}/users`);
-    const users = usersResponse.data;
-
-    const groupMembers = users.filter((user: any) =>
-      group.members.includes(String(user.id))
-    );
+   
 
     return groupMembers;
   } catch (error) {

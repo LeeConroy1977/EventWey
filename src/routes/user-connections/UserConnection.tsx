@@ -21,11 +21,11 @@ const UserConnection = () => {
 
   useEffect(() => {
     if (user?.id) {
-      getAllConnections(user.id); // Pass user.id as an argument
+      getAllConnections(String(user.id)); 
     } else {
       console.warn("User is undefined or missing an ID.");
     }
-  }, [user]); /// Runs again if `user` updates
+  }, [user]); 
 
   return (
     <div className="w-full min-h-screen flex flex-col desktop:flex-row items-start justify-start flex-wrap gap-3 bg-bgPrimary p-6 tablet:p-0 desktop:pl-12 desktop:py-6 desktop:mt-4">

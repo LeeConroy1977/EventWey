@@ -25,7 +25,7 @@ const AddBio = () => {
     }
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (isValidBio) {
       patchUser("bio", bio);
     }

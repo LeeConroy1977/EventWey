@@ -8,85 +8,12 @@ import { fetchEventById, patchEvent } from "../../utils/api/events-api";
 import { useModal } from "./ModalContext";
 import { useNavigate } from "react-router-dom";
 import { useEvents } from "./EventsContext";
+import {User} from '../types/user'
+import {Event} from '../types/event'
+import {Group} from '../types/group'
 
-interface User {
-  id: string;
-  email: string;
-  username: string;
-  password: string;
-  googleId: string;
-  authMethod: string;
-  profileBackgroundImage: string;
-  profileImage: string;
-  aboutMe: string;
-  bio: string;
-  tags: string[];
-  connections: string[];
-  groups: string[];
-  userEvents: string[];
-  messages: string[];
-  groupAdmin: string[];
-  notifications: string[];
-  viewEventsStatus: string;
-  viewConnectionsStatus: string;
-  viewGroupsStatus: string;
-  viewTagsStatus: string;
-  viewProfileImage: string;
-  viewBioStatus: string;
-  aboutMeStatus: string;
-  role: string;
-}
 
-interface PriceBand {
-  type: "Early bird" | "Standard" | "VIP";
-  price: string;
-  ticketCount: number;
-}
 
-interface Location {
-  placename: string;
-  lng: number;
-  lat: number;
-}
-
-interface Event {
-  id: string;
-  image: string;
-  title: string;
-  date: string;
-  groupName: string;
-  groupId: number;
-  duration: string;
-  priceBands: PriceBand[];
-  going: number;
-  capacity: number;
-  availability: number;
-  startTime: string;
-  free: boolean;
-  category: string;
-  tags: string[];
-  description: string[];
-  attendees: string[];
-  location: Location;
-  approved: boolean;
-}
-
-interface Group {
-  id: string;
-  name: string;
-  image: string;
-  groupAdmin: string[];
-  description: string[];
-  openAccess: boolean;
-  location: Location;
-  creationDate: number;
-  eventsCount: number;
-  members: string[];
-  events: string[];
-  messages: string[];
-  category: string;
-  approved: boolean;
-}
 
 interface UserContextType {
   user: User | null | undefined;
@@ -100,7 +27,7 @@ interface UserContextType {
   getUserEvents: (params: { [key: string]: string }) => void;
   getUserGroups: (params: { [key: string]: string }) => void;
   getUserTotalGroups: (params: { [key: string]: string }) => void;
-  isUserAttendingEvent: (id: string) => void;
+  isUserAttendingEvent: (id: string) => boolean;
   handleSignOut: () => void;
   patchUser: (field: keyof User, value: any) => Promise<void>;
   joinFreeEvent: (eventId: string) => Promise<void>;
@@ -113,34 +40,6 @@ interface UserProviderProps {
   children: ReactNode;
 }
 
-// const defaultUser = {
-//   id: "1",
-//   email: "mia6@gmail.com",
-//   username: "Mia F",
-//   password: "Password#6",
-//   googleId: null,
-//   authMethod: "email",
-//   profileBackgroundImage: "https://picsum.photos/800/600?random=6",
-//   profileImage: "https://randomuser.me/api/portraits/women/6.jpg",
-//   aboutMe:
-//     "Hi, I’m Mia! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
-//   bio: "Lover of all things creative and tech.",
-//   tags: ["Outdoor Concerts", "Mountain Biking", "Songwriting Circles"],
-//   connections: ["2", "3", "4", "5", "6", "7", "8", "15", "30"],
-//   groups: ["1", "9", "11", "13"],
-//   userEvents: ["1", "2", "5", "10", "22", "23", "24"],
-//   messages: [],
-//   groupAdmin: ["1"],
-//   notifications: [],
-//   viewEventsStatus: "public",
-//   viewConnectionsStatus: "public",
-//   viewGroupsStatus: "public",
-//   viewTagsStatus: "public",
-//   viewProfileImage: "public",
-//   viewBioStatus: "public",
-//   aboutMeStatus: "public",
-//   role: "user",
-// };
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const { setEvents } = useEvents();
@@ -164,7 +63,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     try {
       setLoading(true);
       setError(null);
-      const updatedUser = await updateUser(user?.id!, { [field]: value });
+      const updatedUser = await updateUser(String(user?.id!), { [field]: value });
       setUser(updatedUser);
     } catch (err) {
       console.error(`Error updating user field ${field}:`, err);
@@ -202,8 +101,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         return;
       }
 
-      const updatedUser = await updateUser(user?.id!, {
-        userEvents: [...(user?.userEvents ?? []), eventId],
+      const updatedUser = await updateUser(String(user?.id!), {
+        userEvents: [...(user?.events ?? []), eventId],
       });
 
       const updatedEvent = await patchEvent(eventId, {
@@ -248,7 +147,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       }
 
       const { category = "", date = "", sortBy = "date" } = params;
-      const events = await fetchUserEvents(user?.id!, {
+      const events = await fetchUserEvents(String(user?.id!), {
         category,
         date,
         sortBy,
@@ -277,7 +176,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         throw new Error("User ID is not available.");
       }
 
-      const totalEvents = await fetchUserEvents(user?.id, {});
+      const totalEvents = await fetchUserEvents(String(user?.id!), {});
       setUserTotalEvents(totalEvents);
     } catch (err: any) {
       console.error("Error fetching events:", err.response || err);
@@ -299,7 +198,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
     try {
       const { category, sortBy = "popular" } = params;
-      const groups = await fetchUserGroups(user.id, { category, sortBy });
+      const groups = await fetchUserGroups(String(user?.id!), { category, sortBy });
 
       setUserGroups(groups);
     } catch (err) {
@@ -321,7 +220,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
 
     try {
-      const totalGroups = await fetchUserGroups(user.id, {});
+      const totalGroups = await fetchUserGroups(String(user?.id!), {});
       setUserTotalGroups(totalGroups);
     } catch (err) {
       console.error("Error fetching groups", err);
@@ -332,7 +231,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   };
 
   function isUserAttendingEvent(id: string) {
-    const isAttending = user?.userEvents?.includes(String(id));
+    const isAttending = user?.events?.includes(Number(id));
     return isAttending || false;
   }
 

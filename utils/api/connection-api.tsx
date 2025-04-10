@@ -1,11 +1,13 @@
 import axios from "axios";
 
-const API = "https://eventwey.glitch.me";
+const API = 'https://eventwey-backend.onrender.com';
 
 export const fetchConnectionById = async (id: string): Promise<any> => {
   try {
     const response = await axios.get(`${API}/users/${id}`);
     const connection = response.data;
+
+    console.log(connection, 'connection')
 
     if (!connection) {
       throw new Error(`Connection not found for ID: ${id}`);
@@ -20,14 +22,10 @@ export const fetchConnectionById = async (id: string): Promise<any> => {
 
 export const fetchConnectionEvents = async (id: string): Promise<any[]> => {
   try {
-    const connectionResponse = await axios.get(`${API}/users/${id}`);
-    const connection = connectionResponse.data;
+    const connectionResponse = await axios.get(`${API}/users/${id}/events`);
+    const connectionEvents = connectionResponse.data;
 
-    const eventsResponse = await axios.get(`${API}/events`);
-    const events = eventsResponse.data;
-    const connectionEvents = events.filter((event: any) =>
-      connection?.connections.includes(String(event.id))
-    );
+  
 
     return connectionEvents;
   } catch (error) {
@@ -38,15 +36,10 @@ export const fetchConnectionEvents = async (id: string): Promise<any[]> => {
 
 export const fetchConnectionGroups = async (id: string): Promise<any[]> => {
   try {
-    const connectionResponse = await axios.get(`${API}/users/${id}`);
-    const connection = connectionResponse.data;
+    const connectionResponse = await axios.get(`${API}/users/${id}/groups`);
+    const connectionGroups = connectionResponse.data;
 
-    const groupsResponse = await axios.get(`${API}/groups`);
-    const groups = groupsResponse.data;
-
-    const connectionGroups = groups.filter((group: any) =>
-      connection?.groups.includes(String(group.id))
-    );
+   
 
     return connectionGroups;
   } catch (error) {
@@ -59,15 +52,9 @@ export const fetchConnectionConnections = async (
   id: string
 ): Promise<any[]> => {
   try {
-    const connectionResponse = await axios.get(`${API}/users/${id}`);
-    const connection = connectionResponse.data;
+    const connectionResponse = await axios.get(`${API}/users/${id}connections`);
+    const connectionConnections = connectionResponse.data;
 
-    const usersResponse = await axios.get(`${API}/users/`);
-    const users = usersResponse.data;
-
-    const connectionConnections = users.filter((user: any) =>
-      connection?.connections.includes(String(user.id))
-    );
 
     return connectionConnections;
   } catch (error) {

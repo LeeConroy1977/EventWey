@@ -21,7 +21,7 @@ const CreateEventTime = () => {
     }
   }, [date, startTime, durationHours]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!isValid) {
       return;
     }

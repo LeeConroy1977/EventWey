@@ -6,84 +6,10 @@ import {
   fetchEventGroupById,
   patchEvent,
 } from "../../utils/api/events-api";
+import {User} from '../types/user'
+import {Event} from '../types/event'
+import {Group} from '../types/group'
 
-interface PriceBand {
-  type: "Early bird" | "Standard" | "VIP";
-  price: string;
-  ticketCount: number;
-}
-
-interface Location {
-  placename: string;
-  lng: number;
-  lat: number;
-}
-
-interface Event {
-  id: string;
-  image: string;
-  title: string;
-  date: string;
-  groupName: string;
-  groupId: number;
-  duration: string;
-  priceBands: PriceBand[];
-  startTime: string;
-  going: number;
-  capacity: number;
-  availability: number;
-  free: boolean;
-  category: string;
-  tags: string[];
-  description: string[];
-  attendeesId: string[];
-  location: Location;
-  approved: boolean;
-}
-
-interface Group {
-  id: string;
-  name: string;
-  image: string;
-  groupAdmin: string[];
-  description: string[];
-  openAccess: boolean;
-  location: Location;
-  creationDate: number;
-  eventsCount: number;
-  members: string[];
-  events: string[];
-  messages: string[];
-  category: string;
-  approved: boolean;
-}
-
-interface User {
-  id: string;
-  email: string;
-  username: string;
-  password: string;
-  googleId: string;
-  authMethod: string;
-  profileBackgroundImage: string;
-  profileImage: string;
-  aboutMe: string;
-  tags: string[];
-  connections: string[];
-  groups: string[];
-  userEvents: string[];
-  messages: string[];
-  groupAdmin: string[];
-  notifications: string[];
-  viewEventsStatus: string;
-  viewConnectionsStatus: string;
-  viewGroupsStatus: string;
-  viewTagsStatus: string;
-  viewProfileImage: string;
-  viewBioStatus: string;
-  aboutMeStatus: string;
-  role: string;
-}
 
 interface EventContextType {
   event: Event | null;
@@ -120,6 +46,7 @@ export const EventProvider: React.FC<EventProviderProps> = ({ children }) => {
     try {
       const data = await fetchEventById(id);
       setEvent(data);
+      setEventGroup(data.group)
     } catch (err: any) {
       setError(err.message || "Failed to fetch event");
     } finally {
@@ -132,9 +59,16 @@ export const EventProvider: React.FC<EventProviderProps> = ({ children }) => {
     setError(null);
     try {
       const data = await fetchEventGroupById(id);
-      setEventGroup(data);
+      if (data === null) {
+        setEventGroup(null);
+        console.warn(`No group found for event ${id}`);
+      } else {
+        console.log(data, 'event group xxxxxxxxxxxxxxxx')
+        setEventGroup(data);
+      }
     } catch (err: any) {
       setError(err.message || "Failed to fetch group");
+      setEventGroup(null); 
     } finally {
       setLoading(false);
     }
@@ -146,6 +80,7 @@ export const EventProvider: React.FC<EventProviderProps> = ({ children }) => {
     try {
       // @ts-ignore
       const data = await fetchEventConnections(id);
+      console.log(data, 'xxxxxxxxxxxxxxxxxxxxxxxxxx')
       setEventConnections(data);
     } catch (err: any) {
       setError(err.message || "Failed to fetch connections");
@@ -162,7 +97,7 @@ export const EventProvider: React.FC<EventProviderProps> = ({ children }) => {
     setLoading(true);
     setError(null);
     try {
-      const updatedEvent = await patchEvent(event.id, { [field]: value });
+      const updatedEvent = await patchEvent(String(event.id), { [field]: value });
       setEvent(updatedEvent);
     } catch (err) {
       console.error(`Error updating event field ${field}:`, err);

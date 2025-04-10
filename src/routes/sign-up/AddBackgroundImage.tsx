@@ -34,7 +34,7 @@ const AddBackgroundImage = () => {
     }
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (isValidImage) {
       patchUser("profileBackgroundImage", profileBackgroundImage);
     }

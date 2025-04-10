@@ -33,7 +33,7 @@ const LandingPage = () => {
   return (
     <div className="w-full h-full flex flex-col items-center justify-start bg-bgPrimary mt-0 ">
       <LandingPageWrapper />
-      <main className="w-full tablet:w-[86%] desktop:w-[66%] flex flex-col items-center justify-start pb-8 px-6 tablet:px-0 desktop:mt-8 ">
+      <main className="w-full tablet:w-[86%] desktop:w-[76%] flex flex-col items-center justify-start pb-8 px-6 tablet:px-0 desktop:mt-8 ">
         <EventDisplayContainer
           title="Popular events"
           sortBy="popular"

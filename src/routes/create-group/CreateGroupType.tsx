@@ -19,7 +19,7 @@ const CreateGroupType = () => {
     setGroupCategory(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (groupCategory && groupAccess) {
       setNewGroup((prevGroup) => ({
         ...prevGroup,

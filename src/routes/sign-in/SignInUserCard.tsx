@@ -1,36 +1,11 @@
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
+import {User} from '../../types/user'
 
-interface User {
-  id: string;
-  email: string;
-  username: string;
-  password: string;
-  googleId: string;
-  authMethod: string;
-  profileBackgroundImage: string;
-  profileImage: string;
-  aboutMe: string;
-  bio: string;
-  tags: string[];
-  connections: string[];
-  groups: string[];
-  userEvents: string[];
-  messages: string[];
-  groupAdmin: string[];
-  notifications: string[];
-  viewEventsStatus: string;
-  viewConnectionsStatus: string;
-  viewGroupsStatus: string;
-  viewTagsStatus: string;
-  viewProfileImage: string;
-  viewBioStatus: string;
-  aboutMeStatus: string;
-  role: string;
-}
+
 
 interface SignInUserCardProps {
   user: User;
-  handleClick: (id: string) => void;
+  handleClick: (id: number) => void;
 }
 
 const SignInUserCard: React.FC<SignInUserCardProps> = ({
@@ -47,12 +22,12 @@ const SignInUserCard: React.FC<SignInUserCardProps> = ({
       >
         <img
           className="w-[100%] h-[100%] rounded-tl-lg rounded-tr-lg"
-          src={profileBackgroundImage}
+          src={profileBackgroundImage ?? undefined}
           alt=""
         />
         <img
           className="absolute mobile:top-6  desktop:top-7 mobile:w-[64px] mobile:h-[64px] tablet:w-[60px] tablet:h-[60px] rounded-full border-2 border-textPrimary"
-          src={profileImage}
+          src={profileImage ?? undefined}
           alt=""
         />
       </div>

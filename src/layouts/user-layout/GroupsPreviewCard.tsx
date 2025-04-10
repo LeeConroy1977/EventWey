@@ -1,23 +1,9 @@
 import { IoPerson } from "react-icons/io5";
 import useHandleGroupClick from "../../hooks/useHandleGroupClick";
 import React from "react";
+import { Group } from '../../types/group';
 
-interface Group {
-  id: string;
-  name: string;
-  image: string;
-  groupAdmin: string[];
-  description: string[];
-  openAccess: boolean;
-  location: Location;
-  creationDate: number;
-  eventsCount: number;
-  members: string[];
-  events: string[];
-  messages: string[];
-  category: string;
-  approved: boolean;
-}
+
 
 interface GroupsPreviewCardProps {
   group: Group;
@@ -46,7 +32,7 @@ const GroupsPreviewCard: React.FC<GroupsPreviewCardProps> = ({ group }) => {
         <div className="flex items-center mt-auto mb-1">
           <IoPerson className="text-secondary text-[12px] xl-screen:text-[13px] " />
           <p className="ml-2 text-[8px] xl-screen:text-[10px]  font-semibold text-[#2C3E50]">
-            {members.length} Members
+            {members?.length} Members
           </p>
         </div>
       </div>

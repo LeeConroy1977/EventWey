@@ -2,23 +2,8 @@ import { IoPerson } from "react-icons/io5";
 import { useUser } from "../../contexts/UserContext";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 import React from "react";
+import {Group} from '../../types/group'
 
-interface Group {
-  id: string;
-  name: string;
-  image: string;
-  groupAdmin: string[];
-  description: string[];
-  openAccess: boolean;
-  location: Location;
-  creationDate: number;
-  eventsCount: number;
-  members: string[];
-  events: string[];
-  messages: string[];
-  category: string;
-  approved: boolean;
-}
 
 interface HomeGroupsCardProps {
   group: Group;
@@ -41,7 +26,7 @@ const HomeGroupsCard: React.FC<HomeGroupsCardProps> = ({
   return (
     <div
       className="relative flex flex-col tablet:flex-row items-center w-[100%] tablet:h-[210px] desktop:h-[240px]  xl-screen:h-[280px] bg-white tablet:p-3 desktop:p-4  border-gray-200 rounded-lg mt-4  border-[1px] cursor-pointer"
-      onClick={() => handleClick(id)}
+      onClick={() => handleClick(String(id))}
     >
       <img
         src={image}
@@ -64,7 +49,7 @@ const HomeGroupsCard: React.FC<HomeGroupsCardProps> = ({
           <div className="flex items-center">
             <IoPerson className="text-[#D66E6E] text-[15px] desktop:text-[18px] xl-screen:text-[20px]" />
             <p className="ml-2 text-[10px] desktop:text-[12px] xl-screen:text-[14px] font-semibold text-[#2C3E50]">
-              {members.length} Members
+              {members?.length} Members
             </p>
           </div>
           {!isMobile && (

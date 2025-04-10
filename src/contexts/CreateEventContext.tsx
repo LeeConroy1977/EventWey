@@ -14,39 +14,8 @@ import {
 import { fetchUserAdminGroupById } from "../../utils/api/user-api";
 import { postEvent } from "../../utils/api/events-api";
 import { patchGroup } from "../../utils/api/groups-api";
+import {Event} from '../types/event'
 
-interface EventLocation {
-  placename: string;
-  lng: number;
-  lat: number;
-}
-
-interface PriceBand {
-  type: "Early bird" | "Standard" | "VIP";
-  price: string;
-  ticketCount: number;
-}
-
-interface Event {
-  image: string;
-  date: number;
-  startTime: string;
-  title: string;
-  groupName: string;
-  groupId: string;
-  duration: string;
-  going: number;
-  attendees: string[];
-  capacity: number;
-  availability: number;
-  free: boolean;
-  priceBands: PriceBand[];
-  category: string;
-  tags: string[];
-  description: string[];
-  location: EventLocation;
-  approved: boolean;
-}
 
 interface CreateEventContextType {
   state: CreateEventState;
@@ -58,11 +27,11 @@ interface CreateEventContextType {
   getAllCatgories: () => Promise<void>;
   getTags: () => Promise<void>;
   categoryTags: string[];
-  newEvent: Event;
+  newEvent: Partial<Event>;
   finishCreateEvent: () => void;
   getUserAdminGroups: () => Promise<void>;
   adminGroups: string[];
-  setNewEvent: React.Dispatch<React.SetStateAction<Event>>;
+  setNewEvent: React.Dispatch<React.SetStateAction<Partial<Event>>>;
   startEventCreation: () => void;
   resetEvent: () => void;
   loading: boolean;
@@ -78,30 +47,7 @@ export const CreateEventProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [state, dispatch] = useReducer(CreateEventReducer, initialState);
-  const [newEvent, setNewEvent] = useState<Event>({
-    image: "",
-    date: 0,
-    startTime: "",
-    title: "",
-    groupName: "",
-    groupId: "",
-    duration: "",
-    going: 0,
-    attendees: [],
-    capacity: 0,
-    availability: 0,
-    free: true,
-    priceBands: [],
-    category: "",
-    tags: [],
-    description: [],
-    location: {
-      placename: "",
-      lng: 0,
-      lat: 0,
-    },
-    approved: false,
-  });
+  const [newEvent, setNewEvent] = useState<Partial<Event>>({});
   const { user } = useUser();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);

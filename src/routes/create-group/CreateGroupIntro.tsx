@@ -7,7 +7,7 @@ const CreateGroupIntro = () => {
   const { dispatch } = useCreateGroupContext();
   const { isMobile } = useScreenWidth();
 
-  function handleNextClick() {
+ async function handleNextClick() {
     dispatch({
       type: "START_GROUP_CREATION",
     });

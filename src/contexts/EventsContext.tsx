@@ -1,39 +1,8 @@
 import { createContext, useContext, useState, ReactNode, FC } from "react";
 import { fetchAllEvents } from "../../utils/api/events-api";
+import {Event} from '../types/event'
 
-interface PriceBand {
-  type: "Early bird" | "Standard" | "VIP";
-  price: string;
-  ticketCount: number;
-}
 
-interface Location {
-  placename: string;
-  lng: number;
-  lat: number;
-}
-
-export interface Event {
-  id: string;
-  image: string;
-  title: string;
-  date: string;
-  groupName: string;
-  groupId: number;
-  duration: string;
-  priceBands: PriceBand[];
-  going: number;
-  capacity: number;
-  availability: number;
-  startTime: string;
-  free: boolean;
-  category: string;
-  tags: string[];
-  description: string[];
-  attendees: string[];
-  location: Location;
-  approved: boolean;
-}
 
 interface EventsContextType {
   events: Event[];

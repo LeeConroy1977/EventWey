@@ -18,11 +18,11 @@ const UserConnectionPreview = () => {
 
   useEffect(() => {
     if (user?.id) {
-      getAllConnections(user.id); // Pass user.id as an argument
+      getAllConnections(String(user.id));
     } else {
       console.warn("User is undefined or missing an ID.");
     }
-  }, [user]); /// Runs again if `user` updates
+  }, [user]);
 
   function handleNavigation() {
     navigate("/user/my-connections");

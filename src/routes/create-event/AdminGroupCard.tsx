@@ -1,21 +1,6 @@
 import { IoPerson } from "react-icons/io5";
+import {Group} from '../../types/group'
 
-interface Group {
-  id: string;
-  name: string;
-  image: string;
-  groupAdmin: string[];
-  description: string[];
-  openAccess: boolean;
-  location: Location;
-  creationDate: number;
-  eventsCount: number;
-  members: string[];
-  events: string[];
-  messages: string[];
-  category: string;
-  approved: boolean;
-}
 
 interface AdminGroupCardProps {
   group: Group;
@@ -31,7 +16,7 @@ const AdminGroupCard: React.FC<AdminGroupCardProps> = ({
   return (
     <div
       className="relative flex mobile:flex-col tablet:flex-row items-center w-[100%] tablet:h-[145px] desktop:h-[180px] bg-white mobile:p-0 tablet:p-2 border-[1px] border-gray-200 rounded-lg mt-6 cursor-pointer"
-      onClick={() => handleClick(id)}
+      onClick={() => handleClick(String(id))}
     >
       <img
         src={image}
@@ -51,7 +36,7 @@ const AdminGroupCard: React.FC<AdminGroupCardProps> = ({
           <div className="flex items-center">
             <IoPerson className="text-primary mobile:text-[15px] tablet:text-[14px] desktop:text-[18px]" />
             <p className="ml-2 mobile:text-[10px] desktop:text-[12px] font-semibold text-[#2C3E50]">
-              {members.length} Members
+              {members?.length} Members
             </p>
           </div>
         </div>

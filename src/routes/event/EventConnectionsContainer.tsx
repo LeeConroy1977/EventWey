@@ -4,33 +4,7 @@ import useHandleConnectionClick from "../../hooks/useHandleConnectionClick";
 import ConnectionPreviewCard from "../../layouts/user-layout/ConnectionPreviewCard";
 import Modal from "../../reuseable-components/Modal";
 import HomeConnectionCard from "../group-members/HomeConnectionCard";
-
-interface User {
-  id: string;
-  email: string;
-  username: string;
-  password: string;
-  googleId: string;
-  authMethod: string;
-  profileBackgroundImage: string;
-  profileImage: string;
-  aboutMe: string;
-  tags: string[];
-  connections: string[];
-  groups: string[];
-  userEvents: string[];
-  messages: string[];
-  groupAdmin: string[];
-  notifications: string[];
-  viewEventsStatus: string;
-  viewConnectionsStatus: string;
-  viewGroupsStatus: string;
-  viewTagsStatus: string;
-  viewProfileImage: string;
-  viewBioStatus: string;
-  aboutMeStatus: string;
-  role: string;
-}
+import {User} from '../../types/user'
 
 interface EventConnectionsContainerProps {
   eventConnections: User[] | null;

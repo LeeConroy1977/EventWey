@@ -7,33 +7,9 @@ import React, {
 } from "react";
 import { fetchUserConnection } from "../../utils/api/user-api";
 
-interface Connection {
-  id: string;
-  email: string;
-  username: string;
-  password: string;
-  googleId: string;
-  authMethod: string;
-  profileBackgroundImage: string;
-  profileImage: string;
-  aboutMe: string;
-  bio: string;
-  tags: string[];
-  connections: string[];
-  groups: string[];
-  userEvents: string[];
-  messages: string[];
-  groupAdmin: string[];
-  notifications: string[];
-  viewEventsStatus: string;
-  viewConnectionsStatus: string;
-  viewGroupsStatus: string;
-  viewTagsStatus: string;
-  viewProfileImage: string;
-  viewBioStatus: string;
-  aboutMeStatus: string;
-  role: string;
-}
+import {Connection} from '../types/connection'
+
+
 
 interface ConnectionContextType {
   connections: Connection[];
@@ -84,7 +60,7 @@ export const ConnectionsProvider: React.FC<ConnectionsProviderProps> = ({
 
   const handleConnectionQuery = (value: string) => {
     const filteredArr = connections.filter((connection) =>
-      connection.username.toLowerCase().includes(value.toLowerCase())
+      connection.username?.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredConnections(filteredArr);
   };

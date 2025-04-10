@@ -19,11 +19,17 @@ module.exports = {
       },
     },
     screens: {
-      mobile: "320px",
-      tablet: "640px",
-      laptop: "1020px",
-      desktop: "1600px",
-      "xl-screen": "2400px",
+      mobile: "375px",
+      tablet: "768px",
+      "tablet-portrait": {
+        raw: "(min-width: 768px) and (max-width: 1023px) and (orientation: portrait)",
+      },
+      "tablet-landscape": {
+        raw: "(min-width: 768px) and (max-width: 1023px) and (orientation: landscape)",
+      },
+      laptop: "1024px",
+      desktop: "1280px",
+      "xl-screen": "1600px",
     },
   },
   plugins: [],

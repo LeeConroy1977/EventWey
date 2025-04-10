@@ -3,23 +3,8 @@ import { useUser } from "../../contexts/UserContext";
 import { useParams } from "react-router-dom";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 import React from "react";
+import {Group} from '../../types/group'
 
-interface Group {
-  id: string;
-  name: string;
-  image: string;
-  groupAdmin: string[];
-  description: string[];
-  openAccess: boolean;
-  location: Location;
-  creationDate: number;
-  eventsCount: number;
-  members: string[];
-  events: string[];
-  messages: string[];
-  category: string;
-  approved: boolean;
-}
 
 interface GroupWrapperProps {
   group: Group;

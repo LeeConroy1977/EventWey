@@ -1,30 +1,4 @@
-interface User {
-  id: string;
-  email: string;
-  username: string;
-  password: string;
-  googleId: string;
-  authMethod: string;
-  profileBackgroundImage: string;
-  profileImage: string;
-  aboutMe: string;
-  tags: string[];
-  bio: string;
-  connections: string[];
-  groups: string[];
-  userEvents: string[];
-  messages: string[];
-  groupAdmin: string[];
-  notifications: string[];
-  viewEventsStatus: string;
-  viewConnectionsStatus: string;
-  viewGroupsStatus: string;
-  viewTagsStatus: string;
-  viewProfileImage: string;
-  viewBioStatus: string;
-  aboutMeStatus: string;
-  role: string;
-}
+import {User} from '../../types/user'
 
 interface ConnectionPreviewCardProps {
   connection: User;
@@ -42,7 +16,7 @@ const ConnectionPreviewCard: React.FC<ConnectionPreviewCardProps> = ({
     <div
       className="mobile:w-[100px] h-[180px] tablet:w-[30%] desktop:h-[190px] xl-screen:h-[240px] bg-bgPrimary desktop:bg-bgSecondary rounded-lg flex flex-col items-center justify-start cursor-pointer mt-1 border-[1px] border-gray-200 "
       onClick={() => {
-        handleClick(id);
+        handleClick(String(id));
         handleModalClose?.();
       }}
     >

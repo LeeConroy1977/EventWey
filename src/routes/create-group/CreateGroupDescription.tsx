@@ -82,7 +82,7 @@ const CreateGgroupDescription = () => {
     }
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (isValidIntro !== true) {
       return;
     }
