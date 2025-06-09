@@ -9,7 +9,7 @@ interface ButtonProps {
   fontWeight?: string;
   borderWidth?: string;
   borderColour?: string;
-  handleClick?: () => void;
+  handleClick: (e: React.FormEvent) => Promise<void>;
   isDisabled?: boolean;
 }
 

@@ -1,32 +1,6 @@
 import React from "react";
+import {User} from '../../types/user'
 
-interface User {
-  id: string;
-  email: string;
-  username: string;
-  password: string;
-  googleId: string;
-  authMethod: string;
-  profileBackgroundImage: string;
-  profileImage: string;
-  aboutMe: string;
-  tags: string[];
-  connections: string[];
-  groups: string[];
-  userEvents: string[];
-  bio: string;
-  messages: string[];
-  groupAdmin: string[];
-  notifications: string[];
-  viewEventsStatus: string;
-  viewConnectionsStatus: string;
-  viewGroupsStatus: string;
-  viewTagsStatus: string;
-  viewProfileImage: string;
-  viewBioStatus: string;
-  aboutMeStatus: string;
-  role: string;
-}
 
 interface ConnectionBioProps {
   connection: User | null;

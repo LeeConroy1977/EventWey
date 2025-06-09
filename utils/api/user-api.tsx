@@ -1,7 +1,7 @@
 import axios from "axios";
 import { sortByPopularity, sortByDate } from "../fakeEventSorting";
 
-const API = "https://eventwey.glitch.me";
+const API = "https://eventwey-backend.onrender.com";
 
 export const createUser = async (newUser: any): Promise<any> => {
   try {
@@ -28,7 +28,7 @@ export const updateUser = async (id: string, patchObj: any): Promise<any> => {
 
 export const fetchAllUsers = async (): Promise<any[]> => {
   try {
-    const response = await axios.get("https://eventwey.glitch.me/users");
+    const response = await axios.patch(`${API}/users`);
     return response.data;
   } catch (error) {
     console.error("Error fetching users:", error);
@@ -62,15 +62,10 @@ export const SignInUser = async (
 
 export const fetchUserAdminGroupById = async (id: string): Promise<any> => {
   try {
-    const userResponse = await axios.get(`${API}/users/${id}`);
-    const user = userResponse.data;
-
-    const groupsResponse = await axios.get(`${API}/groups`);
-    const groups = groupsResponse.data;
-
-    const adminGroups = groups.filter((group: any) =>
-      group.groupAdmin.includes(user.id)
+    const adminGroupsResponse = await axios.get(
+      `${API}/users/${id}/admin-groups`
     );
+    const adminGroups = adminGroupsResponse.data;
 
     return adminGroups;
   } catch (error) {
@@ -84,28 +79,26 @@ export const fetchUserEvents = async (
   params: { category?: string; date?: string; sortBy?: string }
 ): Promise<any[]> => {
   try {
-    const eventsResponse = await axios.get(`${API}/events`);
-    let allEvents = eventsResponse.data;
+    const eventsResponse = await axios.get(`${API}/users/${id}/events`);
+    let userEvents = eventsResponse.data;
 
     if (params.category) {
-      allEvents = allEvents.filter(
+      userEvents = userEvents.filter(
         (event: any) => event.category === params.category
       );
     }
 
     if (params.date) {
-      allEvents = allEvents.filter((event: any) => event.date === params.date);
+      userEvents = userEvents.filter(
+        (event: any) => event.date === params.date
+      );
     }
 
     if (params.sortBy === "popular") {
-      allEvents = sortByPopularity(allEvents);
+      userEvents = sortByPopularity(userEvents);
     } else if (params.sortBy === "date") {
-      allEvents = sortByDate(allEvents);
+      userEvents = sortByDate(userEvents);
     }
-
-    const userEvents = allEvents.filter((event: any) =>
-      event.attendees.includes(String(id))
-    );
 
     return userEvents;
   } catch (error) {
@@ -119,24 +112,20 @@ export const fetchUserGroups = async (
   params: { category?: string; sortBy?: string }
 ): Promise<any[]> => {
   try {
-    const groupsResponse = await axios.get(`${API}/groups`);
-    let allGroups = groupsResponse.data;
+    const groupsResponse = await axios.get(`${API}/users/${id}/groups`);
+    let userGroups = groupsResponse.data;
 
     if (params.category) {
-      allGroups = allGroups.filter(
+      userGroups = userGroups.filter(
         (group: any) => group.category === params.category
       );
     }
 
     if (params.sortBy === "popular") {
-      allGroups = sortByPopularity(allGroups);
+      userGroups = sortByPopularity(userGroups);
     } else if (params.sortBy === "date") {
-      allGroups = sortByDate(allGroups);
+      userGroups = sortByDate(userGroups);
     }
-
-    const userGroups = allGroups.filter((group: any) =>
-      group.members.includes(String(id))
-    );
 
     return userGroups;
   } catch (error) {
@@ -147,16 +136,60 @@ export const fetchUserGroups = async (
 
 export const fetchUserConnection = async (id: string): Promise<any[]> => {
   try {
-    const usersResponse = await axios.get(`${API}/users`);
-    const users = usersResponse.data;
-
-    const userConnections = users.filter((user: any) =>
-      user.connections.includes(String(id))
-    );
+    const usersResponse = await axios.get(`${API}/users/${id}/connections`);
+    const userConnections = usersResponse.data;
 
     return userConnections;
   } catch (error) {
     console.error("Error fetching user connections:", error);
+    throw error;
+  }
+};
+
+export const fetchUserNotifications = async (id: string): Promise<any[]> => {
+  try {
+    const response = await axios.get(`${API}/notifications/${id}`);
+    const userNotifications = response.data;
+
+    return userNotifications;
+  } catch (error) {
+    console.error("Error fetching user notifications", error);
+    throw error;
+  }
+};
+
+export const fetchConnetionRequests = async (id: string): Promise<any> => {
+  try {
+    const response = await axios.get(`${API}/connections/${id}/requests`);
+    const requests = response.data;
+
+    return requests;
+  } catch (error) {
+    console.error("Error fetching request", error);
+    throw error;
+  }
+};
+
+export const postAcceptConnetionRequest = async (id: string): Promise<any> => {
+  try {
+    const response = await axios.post(`${API}/connections/accept/${id}`);
+    const responseMessage = response.data;
+
+    return responseMessage;
+  } catch (error) {
+    console.error("Error accepting request", error);
+    throw error;
+  }
+};
+
+export const postRejectConnetionRequest = async (id: string): Promise<any> => {
+  try {
+    const response = await axios.post(`${API}/connections/reject/${id}`);
+    const responseMessage = response.data;
+
+    return responseMessage;
+  } catch (error) {
+    console.error("Error accepting request", error);
     throw error;
   }
 };

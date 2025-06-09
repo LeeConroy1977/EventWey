@@ -30,7 +30,7 @@ const CreateGroupImage = () => {
     }
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (isValidImage) {
       setNewGroup((prevGroup) => ({ ...prevGroup, image: groupImage }));
       nextStep();

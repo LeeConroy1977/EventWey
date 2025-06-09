@@ -12,11 +12,13 @@ import { GroupProvider } from "./contexts/GroupContext";
 import { ConnectionProvider } from "./contexts/ConnectionContext";
 import { CreateGroupProvider } from "./contexts/CreateGroupContext";
 import { CreateUserProvider } from "./contexts/CreateUserContext";
-import { SignInProvider } from "./contexts/SignInContext";
+
 import { ModalProvider } from "./contexts/ModalContext";
 import { CreateEventProvider } from "./contexts/CreateEventContext";
 import { EventModalProvider } from "./contexts/EventModelContext";
 import { ScreenWidthProvider } from "./contexts/ScreenWidthContext";
+import { AuthProvider } from "./contexts/AuthContext";
+import { NotificationsProvider } from "./contexts/NotificationsContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 
@@ -25,26 +27,27 @@ root.render(
     <BrowserRouter>
       <ScreenWidthProvider>
         <ModalProvider>
+        <NotificationsProvider>
           <EventsProvider>
             <UserProvider>
               <EventProvider>
                 <GroupsProvider>
                   <GroupProvider>
                     <ConnectionsProvider>
-                      <ConnectionProvider>
+                      <ConnectionProvider>                                    
                         <UserProvider>
                           <CreateGroupProvider>
                             <CreateEventProvider>
                               <CreateUserProvider>
-                                <SignInProvider>
+                                <AuthProvider>
                                   <EventModalProvider>
                                     <App />
                                   </EventModalProvider>
-                                </SignInProvider>
+                                </AuthProvider>
                               </CreateUserProvider>
                             </CreateEventProvider>
                           </CreateGroupProvider>
-                        </UserProvider>
+                        </UserProvider>                                  
                       </ConnectionProvider>
                     </ConnectionsProvider>
                   </GroupProvider>
@@ -52,6 +55,7 @@ root.render(
               </EventProvider>
             </UserProvider>
           </EventsProvider>
+          </NotificationsProvider>
         </ModalProvider>
       </ScreenWidthProvider>
     </BrowserRouter>

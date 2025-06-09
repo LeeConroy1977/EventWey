@@ -21,12 +21,11 @@ const Event = () => {
     eventGroup,
     eventConnections,
     getEventById,
-    getGroupById,
     getEventConnections,
     updateEvent,
     removeEvent,
   } = useEvent();
-  const { description, free, priceBands, location, approved } = event || {};
+  const { description, free, priceBands, location, approved, group } = event || {};
 
   const { lat, lng, placename } = location || {};
 
@@ -68,7 +67,6 @@ const Event = () => {
   useEffect(() => {
     if (id) {
       getEventById(id);
-      getGroupById(id);
       // @ts-ignore
       getEventConnections(id);
     }

@@ -44,7 +44,7 @@ const CreateEventTickets = () => {
     setPriceBands(updatedBands);
   };
 
-  const handleSubmit = () => {
+   const handleSubmit = async () => {
     if (!isFree) {
       const isValid = priceBands.some(
         (band) => band.price && band.ticketCount > 0

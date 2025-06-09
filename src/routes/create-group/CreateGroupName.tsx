@@ -22,7 +22,7 @@ const CreateGroupName = () => {
     }
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (isValidName) {
       setNewGroup((prevGroup) => ({ ...prevGroup, name }));
       nextStep();

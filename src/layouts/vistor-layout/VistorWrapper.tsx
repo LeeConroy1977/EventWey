@@ -9,7 +9,7 @@ const VistorWrapper = () => {
 
   return (
     <div className="w-[100%] tablet:h-[10rem] desktop:h-[10rem] xl-screen:h-[13rem] flex items-center justify-center   bg-[#F6F7F8]">
-      <div className=" tablet:w-[86%] desktop:w-[66%] h-[100%] flex items-center justify-center">
+      <div className=" tablet:w-[86%] desktop:w-[76%] h-[100%] flex items-center justify-center">
         <h1 className="tablet:text-[22px] desktop:text-[28px] font-bold ml-6 text-textPrimary">
           Welcome to{" "}
           <span className="tablet:text-[24px] desktop:text-[30px] text-primary">

@@ -3,7 +3,11 @@ import { sortByPopularity, sortByDate, sortByFree } from "../fakeEventSorting";
 
 import { eventsDateFilter } from "../eventDateFilter";
 
-const API = "https://eventwey.glitch.me";
+const API = "https://eventwey-backend.onrender.com";
+
+const axiosInstance = axios.create({
+  baseURL: API,
+});
 
 export const fetchAllEvents = async (params: {
   category?: string;
@@ -12,6 +16,7 @@ export const fetchAllEvents = async (params: {
 }): Promise<any[]> => {
   try {
     const response = await axios.get(`${API}/events`);
+
     let filteredData = response.data;
     if (params.category) {
       filteredData = filteredData.filter(
@@ -40,13 +45,12 @@ export const fetchAllEvents = async (params: {
 
 export const fetchEventById = async (id: string): Promise<any> => {
   try {
-    const response = await axios.get(`${API}/events/${id}`);
-    const event = await response.data;
-
+    const response = await axiosInstance.get(`/events/${id}`);
+    const event = response.data;
+    console.log(`Event data for ID ${id}:`, event);
     if (!event) {
       throw new Error(`Event not found for ID: ${id}`);
     }
-
     return event;
   } catch (error) {
     console.error("Error fetching event by ID:", error);
@@ -92,80 +96,38 @@ export const postEvent = async (eventData: any): Promise<any> => {
 // @ts-ignore
 export const fetchEventConnections = async (id: string): Promise<User[]> => {
   try {
-    const eventResponse = await axios.get<Event>(`${API}/events/${id}`);
-    const event = eventResponse?.data;
-    // @ts-ignore
-    if (!event || !Array.isArray(event.attendees)) {
-      throw new Error(
-        `Invalid event data or attendees not found for event with ID: ${id}`
-      );
-    }
-    // @ts-ignore
-    const usersResponse = await axios.get<User[]>(`${API}/users`);
-    const users = usersResponse.data;
+    const eventAttendees = await axios.get(`${API}/events/${id}/attendees`);
 
-    if (!Array.isArray(users)) {
-      throw new Error("Invalid user data received from API");
-    }
-
-    const eventConnections = users.filter((user) =>
-      // @ts-ignore
-      event.attendees.includes(String(user.id))
-    );
-
-    return eventConnections;
+    console.log(eventAttendees);
+    return eventAttendees.data;
   } catch (error) {
     // @ts-ignore
-    console.error("Error fetching event connections:", error.message);
+    console.error("Error fetching event attendees:", error.message);
     throw error;
   }
 };
-
 export const fetchEventGroupById = async (id: string): Promise<any> => {
   try {
-    const eventResponse = await axios.get(`${API}/events/${id}`);
-    const event = eventResponse.data;
+    const eventGroupResponse = await axiosInstance.get(`/events/${id}/group`);
+    const group = eventGroupResponse.data;
 
-    if (!event?.groupId) {
-      throw new Error(`Group ID not found for event with ID: ${id}`);
+    if (group) {
+      console.warn(`No group found for event with ID: ${id}, returning null`);
+      return null;
     }
 
-    const groupId = String(event.groupId);
-
-    const groupResponse = await axios.get(`${API}/groups/${groupId}`);
-
-    return groupResponse.data;
+    return group;
   } catch (error) {
     console.error("Error fetching event group by ID:", error);
     throw error;
   }
 };
-
 export const fetchSortedEvents = async (sortBy: string): Promise<any[]> => {
   try {
-    const eventsResponse = await axios.get(`${API}/events`);
-    const events = eventsResponse.data;
-
-    const randomArray = (array: any[]) => {
-      return array.sort(() => Math.random() - 0.5);
-    };
-
-    let sortedEvents: any[] = [];
-
-    if (sortBy === "popular") {
-      sortedEvents = events.sort((a: any, b: any) => b.going - a.going);
-    } else if (sortBy === "date") {
-      sortedEvents = events.sort(
-        (a: any, b: any) =>
-          new Date(a.date).getTime() - new Date(b.date).getTime()
-      );
-    } else if (sortBy === "free") {
-      // @ts-ignore
-      sortedEvents = randomArray(events.filter((event) => event.free === true));
-    } else {
-      sortedEvents = events;
-    }
-
+    const eventsResponse = await axios.get(`${API}/events`, {
+      params: { sortBy },
+    });
+    const sortedEvents = eventsResponse.data;
     return sortedEvents;
   } catch (error) {
     console.error("Error fetching sorted events:", error);

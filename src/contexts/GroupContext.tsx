@@ -6,85 +6,14 @@ import {
   fetchGroupEventsById,
   patchGroup,
   deleteGroup,
+  createJoinGroup,
+  createLeaveGroup,
 } from "../../utils/api/groups-api";
+import {User} from '../types/user'
+import {Event} from '../types/event'
+import {Group} from '../types/group'
 
-interface PriceBand {
-  type: "Early bird" | "Standard" | "VIP";
-  price: string;
-  ticketCount: number;
-}
 
-interface Location {
-  placename: string;
-  lng: number;
-  lat: number;
-}
-
-interface Event {
-  id: string;
-  image: string;
-  title: string;
-  date: string;
-  groupName: string;
-  groupId: number;
-  duration: string;
-  priceBands: PriceBand[];
-  going: number;
-  capacity: number;
-  availability: number;
-  free: boolean;
-  category: string;
-  tags: string[];
-  description: string[];
-  attendeesId: string[];
-  location: Location;
-  approved: boolean;
-}
-
-interface Group {
-  id: string;
-  name: string;
-  image: string;
-  groupAdmin: string[];
-  description: string[];
-  openAccess: boolean;
-  location: Location;
-  creationDate: number;
-  eventsCount: number;
-  members: string[];
-  events: string[];
-  messages: string[];
-  category: string;
-  approved: boolean;
-}
-
-interface User {
-  id: string;
-  email: string;
-  username: string;
-  password: string;
-  googleId: string;
-  authMethod: string;
-  profileBackgroundImage: string;
-  profileImage: string;
-  aboutMe: string;
-  tags: string[];
-  connections: string[];
-  bio: string;
-  groups: string[];
-  userEvents: string[];
-  messages: string[];
-  groupAdmin: string[];
-  notifications: string[];
-  viewEventsStatus: string;
-  viewConnectionsStatus: string;
-  viewGroupsStatus: string;
-  viewTagsStatus: string;
-  viewProfileImage: string;
-  viewBioStatus: string;
-  aboutMeStatus: string;
-  role: string;
-}
 
 interface GroupContextType {
   group: Group | null;
@@ -100,6 +29,8 @@ interface GroupContextType {
   updateGroup: (field: keyof Group, value: any) => Promise<void>;
   removeGroup: (id: string) => Promise<void>;
   getGroupMembers: (id: string) => Promise<void>;
+  joinGroup: (id: string) => Promise<void>
+  leaveGroup: (id: string) => Promise<void>
   loading: boolean;
   error: string | null;
 }
@@ -124,12 +55,10 @@ export const GroupProvider: FC<GroupProviderProps> = ({ children }) => {
 
     try {
       const data = await fetchGroupById(id);
-      const users = await fetchAllUsers();
+    
 
-      const organisers = users.filter((user) =>
-        data.groupAdmin.includes(user.id)
-      );
-      const organiser = organisers[0] || null;
+     
+      const organiser = data.groupAdmins[0] || null;
 
       setGroup(data);
       setGroupOrganiser(organiser);
@@ -168,11 +97,39 @@ export const GroupProvider: FC<GroupProviderProps> = ({ children }) => {
     }
   };
 
+  const joinGroup = async(id: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const upDatedGroup = await createJoinGroup(id) 
+      setGroup(upDatedGroup) 
+    } catch (err) {
+      console.error(`Error joining group`, err);
+      setError(`Failed to join group`);
+    } finally {
+      setLoading(false);
+    }
+  }
+  
+  const leaveGroup = async(id: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const upDatedGroup = await createLeaveGroup(id) 
+      setGroup(upDatedGroup) 
+    } catch (err) {
+      console.error(`Error leaving group`, err);
+      setError(`Failed to leave group`);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   const updateGroup = async (field: keyof Group, value: any) => {
     try {
       setLoading(true);
       setError(null);
-      const updatedGroup = await patchGroup(group?.id!, { [field]: value });
+      const updatedGroup = await patchGroup(String(group?.id!), { [field]: value });
       setGroup(updatedGroup);
     } catch (err) {
       console.error(`Error updating group field ${field}:`, err);
@@ -213,6 +170,8 @@ export const GroupProvider: FC<GroupProviderProps> = ({ children }) => {
         loading,
         updateGroup,
         removeGroup,
+        joinGroup,
+        leaveGroup
       }}
     >
       {children}

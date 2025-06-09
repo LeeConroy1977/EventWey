@@ -28,7 +28,7 @@ const AddTags = () => {
     }
   }
 
-  function handleSubmit() {
+ async function handleSubmit() {
     if (isValidTags) {
       patchUser("tags", tags);
     }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Button from "../../reuseable-components/Button";
 import createGroup2 from "../../assets/images/createGroup2.jpeg";
 import { useCreateEventContext } from "../../contexts/CreateEventContext";
@@ -30,7 +30,8 @@ const CreateEventImage = () => {
     }
   }
 
-  function handleSubmit() {
+  async function handleSubmit(e: FormEvent) { 
+    e.preventDefault(); 
     if (isValidImage) {
       setNewEvent((prevEvent) => ({ ...prevEvent, image: eventImage }));
       nextStep();

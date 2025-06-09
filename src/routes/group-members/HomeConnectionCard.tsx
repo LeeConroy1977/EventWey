@@ -1,33 +1,6 @@
 import React from "react";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
-
-interface User {
-  id: string;
-  email: string;
-  username: string;
-  password: string;
-  googleId: string;
-  authMethod: string;
-  profileBackgroundImage: string;
-  profileImage: string;
-  aboutMe: string;
-  bio: string;
-  tags: string[];
-  connections: string[];
-  groups: string[];
-  userEvents: string[];
-  messages: string[];
-  groupAdmin: string[];
-  notifications: string[];
-  viewEventsStatus: string;
-  viewConnectionsStatus: string;
-  viewGroupsStatus: string;
-  viewTagsStatus: string;
-  viewProfileImage: string;
-  viewBioStatus: string;
-  aboutMeStatus: string;
-  role: string;
-}
+import {User} from '../../types/user'
 
 interface HomeConnectionCardProps {
   connection: User;
@@ -47,7 +20,7 @@ const HomeConnectionCard: React.FC<HomeConnectionCardProps> = ({
     <div
       className="w-[100px] h-[180px] tablet:w-[23%] desktop:w-[22%] tablet:h-[220px] desktop:h-[260px] xl-screen:h-[290px] bg-bgPrimary rounded-lg flex flex-col items-center justify-start cursor-pointer mt-1 border-[1px] border-gray-200 "
       onClick={() => {
-        handleClick(id);
+        handleClick(String(id));
         handleModalClose?.();
       }}
     >

@@ -3,40 +3,7 @@ import LandingEventCard from "../routes/landing-page/LandingEventCard";
 import { fetchSortedEvents } from "../../utils/api/events-api";
 import useHandleEventClick from "../hooks/useHandleEventClick";
 import { ClipLoader } from "react-spinners";
-
-interface PriceBand {
-  type: "Early bird" | "Standard" | "VIP";
-  price: string;
-  ticketCount: number;
-}
-
-interface Location {
-  placename: string;
-  lng: number;
-  lat: number;
-}
-
-interface Event {
-  id: string;
-  image: string;
-  title: string;
-  date: string;
-  groupName: string;
-  groupId: number;
-  duration: string;
-  priceBands: PriceBand[];
-  startTime: string;
-  going: number;
-  capacity: number;
-  availability: number;
-  free: boolean;
-  category: string;
-  tags: string[];
-  description: string[];
-  attendeesId: string[];
-  location: Location;
-  approved: boolean;
-}
+import { Event } from "../types/event";
 
 interface EventDisplayContainerProps {
   title: string;
@@ -57,9 +24,7 @@ const EventDisplayContainer: React.FC<EventDisplayContainerProps> = ({
 
   const handleEventClick = useHandleEventClick();
 
-  // @ts-ignore
   const handleSelect = (sortBy: string) => {
-    // @ts-ignore
     handleClick({
       target: { value: sortBy },
     } as React.ChangeEvent<HTMLSelectElement>);
@@ -98,9 +63,8 @@ const EventDisplayContainer: React.FC<EventDisplayContainerProps> = ({
               {title}
             </h3>
             <p
-              className="text-[12px] tablet:text-[14px] xl-screen:text-[16px]  text-primary font-semibold cursor-pointer"
-              onClick={() => handleSelect(sortBy)}
-            >
+              className="text-[12px] tablet:text-[14px] desktop:text-[16px]  xl-screen:text-[16px]  text-primary font-semibold cursor-pointer"
+              onClick={() => handleSelect(sortBy)}>
               {`See all ${listName} events`}
             </p>
           </div>

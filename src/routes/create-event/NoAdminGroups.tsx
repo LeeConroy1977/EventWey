@@ -4,7 +4,7 @@ import Button from "../../reuseable-components/Button";
 const NoAdminGroups = () => {
   const handleCreateGroupClick = useHandleCreateGroupClick();
 
-  function handleClick() {
+  async function handleClick() {
     handleCreateGroupClick();
   }
   return (

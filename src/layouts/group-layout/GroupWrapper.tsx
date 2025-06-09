@@ -3,41 +3,31 @@ import { useUser } from "../../contexts/UserContext";
 import { useParams } from "react-router-dom";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 import React from "react";
+import {Group} from '../../types/group'
 
-interface Group {
-  id: string;
-  name: string;
-  image: string;
-  groupAdmin: string[];
-  description: string[];
-  openAccess: boolean;
-  location: Location;
-  creationDate: number;
-  eventsCount: number;
-  members: string[];
-  events: string[];
-  messages: string[];
-  category: string;
-  approved: boolean;
-}
 
 interface GroupWrapperProps {
   group: Group;
   handleRemoveGroup: (id: string) => void;
   handleApproveGroup: (id: string) => void;
+  handleJoinGroup: (id: string) => void;
+  handleLeaveGroup: (id: string) => void;
 }
 
 const GroupWrapper: React.FC<GroupWrapperProps> = ({
   group,
   handleRemoveGroup,
   handleApproveGroup,
+  handleJoinGroup,
+  handleLeaveGroup
 }) => {
   const { user } = useUser();
   const { isMobile } = useScreenWidth();
   const { id } = useParams();
   const { name, image, description, members, openAccess, approved } = group;
   // @ts-ignore
-  const isMember = user?.groups?.includes(id) || false;
+  const isMember = group?.members?.includes(Number(user.id)) || false;
+  console.log(user?.groups, 'user groups')
   const buttonText = isMember
     ? "Member"
     : openAccess
@@ -95,6 +85,7 @@ const GroupWrapper: React.FC<GroupWrapperProps> = ({
           )}
           {!isMobile && approved && (
             <button
+            onClick={!isMember && id ? () => handleJoinGroup(id) : isMember && id ? () => handleLeaveGroup(id) : undefined}
               className={`w-[110px]  desktop:w-[120px] tablet:h-[34px] desktop:h-[40px] xl-screen:w-[140px] xl-screen:h-[44px] mt-auto mb-1 mr-auto  flex items-center justify-center tablet:text-[10px] desktop:text-[11px] xl-screen:text-[12px] font-semibold rounded-lg tablet:mb-3 desktop:mb-1  ${
                 isMember
                   ? "bg-bgPrimary border-2 border-primary text-primary"

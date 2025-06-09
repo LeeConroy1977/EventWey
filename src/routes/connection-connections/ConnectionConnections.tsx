@@ -8,7 +8,7 @@ const ConnectionConnections = () => {
   const handleConnectionClick = useHandleConnectionClick();
 
   const connectionsLength = connectionConnections?.length || undefined;
-  const firstName = connection?.username.split(" ")[0];
+  const firstName = connection?.username?.split(" ")[0];
 
   return (
     <div className="w-[100%] min-h-[8rem] bg-bgPrimary mt-8 rounded-lg p-6 desktop:p-10 pb-10">

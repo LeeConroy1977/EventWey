@@ -3,23 +3,8 @@ import createGroup2 from "../../assets/images/createGroup2.jpeg";
 import { useCreateEventContext } from "../../contexts/CreateEventContext";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 import React from "react";
+import {Group} from '../../types/group'
 
-interface Group {
-  id: string;
-  name: string;
-  image: string;
-  groupAdmin: string[];
-  description: string[];
-  openAccess: boolean;
-  location: Location;
-  creationDate: number;
-  eventsCount: number;
-  members: string[];
-  events: string[];
-  messages: string[];
-  category: string;
-  approved: boolean;
-}
 
 interface CreateEventIntroProps {
   adminGroups: Group[] | undefined;
@@ -31,13 +16,13 @@ const CreateEventIntro: React.FC<CreateEventIntroProps> = ({ adminGroups }) => {
   const { isMobile } = useScreenWidth();
 
   function handleClick(id: string) {
-    const selectedGroup = adminGroups?.find((group: Group) => group.id === id);
+    const selectedGroup = adminGroups?.find((group: Group) => (group!.id) === Number(id));
     setNewEvent(
       (prevEvent) =>
         (prevEvent = {
           ...prevEvent,
-          groupId: selectedGroup!.id,
-          groupName: selectedGroup!.name,
+          group: Number(selectedGroup!.id),
+         
         })
     );
     startEventCreation();

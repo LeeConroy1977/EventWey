@@ -16,6 +16,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ description }) => {
         description.slice(isMobile ? 1 : 0).map((paragraph, i) => {
           return (
             <p
+            key={i}
               className={`${
                 !isMobile && i === 0 ? "font-semibold" : "font-normal"
               } text-textPrimary  mr-auto mt-4 tablet:mt-6 xl-screen:mt-8 text-[12px] tablet:text-[13px] desktop:text-[15px] xl-screen:text-[17px]`}

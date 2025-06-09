@@ -22,7 +22,7 @@ const CreateEventTitle = () => {
     }
   }
 
-  function handleSubmit() {
+ async function handleSubmit() {
     if (isValidTitle) {
       setNewEvent((prevEvent) => ({ ...prevEvent, title }));
       nextStep();

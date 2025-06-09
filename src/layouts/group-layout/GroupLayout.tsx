@@ -7,6 +7,7 @@ import EventMapContainer from "../../components/EventMapContainer";
 import GroupWrapper from "./GroupWrapper";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 import { useUser } from "../../contexts/UserContext";
+import { useGroups } from "../../contexts/GroupsContext";
 
 const GroupLayout = () => {
   const { id } = useParams();
@@ -20,12 +21,17 @@ const GroupLayout = () => {
     getGroupMembers,
     updateGroup,
     removeGroup,
+    joinGroup,
+    leaveGroup
   } = useGroup();
+  const {
+   fetchGroups
+  } = useGroups();
 
   const navigate = useNavigate();
   const { lat, lng, placename } = group?.location || {};
   // @ts-ignore
-  const isMember = user?.groups?.includes(id) || false;
+  const isMember = group?.members?.includes(Number(user.id)) || false;
 
   const buttonText = isMember
     ? "Member"
@@ -43,13 +49,17 @@ const GroupLayout = () => {
     navigate("/user/admin/groups");
   }
 
+
+
+
   useEffect(() => {
     if (id) {
       getGroupById(id);
       getEventsById(id);
       getGroupMembers(id);
+      fetchGroups({})
     }
-  }, [id]);
+  }, [id, isMember]);
   return (
     <div className="w-full min-h-screen flex flex-col items-center bg-bgSecondary">
       {isMobile && !group?.approved && (
@@ -89,6 +99,8 @@ const GroupLayout = () => {
             group={group}
             handleApproveGroup={handleApproveGroup}
             handleRemoveGroup={handleRemoveGroup}
+            handleJoinGroup={joinGroup}
+            handleLeaveGroup={leaveGroup}
           />
           <main className="w-full m-h-screen tablet:w-[94%]  desktop:w-[66%] desktop:h-auto flex flex-col tablet:flex-row items-start justify-center bg-bgPrimary tablet:bg-bgSecondary px-6 mt-0 tablet:mt-0 tablet:px-0 tablet:p-4 pb-[5rem] ">
             <section className="flex flex-col justify-start items-start w-full tablet:w-[62%] h-auto p-0 tablet:p-4">

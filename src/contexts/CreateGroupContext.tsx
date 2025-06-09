@@ -8,37 +8,16 @@ import {
 import { fetchAllCategories } from "../../utils/api/categories-api";
 import { postGroup } from "../../utils/api/groups-api";
 import { useNavigate } from "react-router-dom";
+import {Group} from '../types/group'
 
-interface Location {
-  placename: string;
-  lng: number;
-  lat: number;
-}
-
-interface Group {
-  id: string;
-  name: string;
-  image: string;
-  groupAdmin: string[];
-  description: string[];
-  openAccess: boolean;
-  location: Location;
-  creationDate: number;
-  eventsCount: number;
-  members: string[];
-  events: string[];
-  messages: string[];
-  category: string;
-  approved: boolean;
-}
 
 interface CreateGroupContextType {
   state: CreateGroupState;
   dispatch: React.Dispatch<CreateGroupAction>;
   nextStep: () => void;
   prevStep: () => void;
-  newGroup: Group;
-  setNewGroup: React.Dispatch<React.SetStateAction<Group>>;
+  newGroup: Partial<Group>;
+  setNewGroup: React.Dispatch<React.SetStateAction<Partial<Group>>>;
   categories: string[];
   getAllCategories: () => Promise<void>;
   createGroup: (newGroup: Group) => Promise<Group | null>;
@@ -54,21 +33,8 @@ export const CreateGroupProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [state, dispatch] = useReducer(CreateGroupReducer, initialState);
-  const [newGroup, setNewGroup] = useState<Group>({
-    id: "",
-    name: "",
-    image: "",
-    groupAdmin: [],
-    description: [],
-    openAccess: true,
-    category: "",
-    location: { placename: "", lng: -2.4512, lat: 50.6105 },
-    creationDate: 0,
-    members: [],
-    events: [],
-    messages: [],
-    eventsCount: 0,
-    approved: false,
+  const [newGroup, setNewGroup] = useState<Partial<Group>>({
+  
   });
 
   const [categories, setCategories] = useState<string[]>([]);
@@ -109,10 +75,10 @@ export const CreateGroupProvider: React.FC<{ children: React.ReactNode }> = ({
   const resetGroup = () => {
     dispatch({ type: "RESTART_GROUP_CREATION" });
     setNewGroup({
-      id: "",
+      id: 0,
       name: "",
       image: "",
-      groupAdmin: [],
+      groupAdmins: [],
       description: [],
       openAccess: true,
       category: "",
@@ -120,8 +86,6 @@ export const CreateGroupProvider: React.FC<{ children: React.ReactNode }> = ({
       creationDate: 0,
       members: [],
       events: [],
-      messages: [],
-      eventsCount: 0,
       approved: false,
     });
   };

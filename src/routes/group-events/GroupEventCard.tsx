@@ -3,32 +3,12 @@ import { IoMdPricetag } from "react-icons/io";
 import { format } from "date-fns";
 import { useUser } from "../../contexts/UserContext";
 import React from "react";
+import {Event} from '../../types/event'
 
 interface PriceBand {
-  price: number;
-  type: string;
-}
-
-export interface Event {
-  id: string;
-  image: string;
-  title: string;
-  date: string;
-  groupName: string;
-  groupId: number;
-  duration: string;
-  priceBands: PriceBand[];
-  going: number;
-  capacity: number;
-  availability: number;
-  startTime: string;
-  free: boolean;
-  category: string;
-  tags: string[];
-  description: string[];
-  attendeesId: string[];
-  location: Location;
-  approved: boolean;
+  type: "Early bird" | "Standard" | "VIP";
+  price: string;
+  ticketCount: number;
 }
 
 interface GroupEventCardProps {
@@ -54,9 +34,20 @@ const GroupEventCard: React.FC<GroupEventCardProps> = ({
     startTime,
   } = event;
 
-  const formattedDate = format(new Date(date), "EEE, MMM d, yyyy");
+  let formattedDate: string;
+ try {
+ 
+   const eventDate = typeof date === "number" ? new Date(date) : new Date(parseInt(date, 10));
+   if (isNaN(eventDate.getTime())) {
+     throw new Error("Invalid date");
+   }
+   formattedDate = format(eventDate, "EEE, MMM d, yyyy");
+ } catch (error) {
+   console.warn(`Invalid date for event ${id}: ${date}`);
+   formattedDate = "Date unavailable";
+ }
 
-  const isAttending = user?.userEvents?.includes(id);
+  const isAttending = user?.events?.includes(id);
 
   let filteredDescription = description[0];
 
@@ -66,7 +57,7 @@ const GroupEventCard: React.FC<GroupEventCardProps> = ({
     if (free) return "Free";
     if (!priceArr || priceArr.length === 0) return "No price available";
 
-    const sortedPrice = priceArr.sort((a, b) => a.price - b.price);
+    const sortedPrice = priceArr.sort((a, b) => Number(a.price) - Number(b.price));
     if (priceArr.length === 1) return `${sortedPrice[0].price}`;
 
     return `${sortedPrice[0].price} - ${
@@ -74,11 +65,11 @@ const GroupEventCard: React.FC<GroupEventCardProps> = ({
     }`;
   }
 
-  const eventPrices = getPriceRange(priceBands);
+  const eventPrices = getPriceRange(priceBands || []);
 
   return (
     <div
-      onClick={() => handleClick(id)}
+      onClick={() => handleClick(String(id))}
       className="relative flex flex-col tablet:flex-row items-center w-[100%] h-auto tablet:h-[170px] desktop:h-[190px] xl-screen:h-[220px] bg-white tablet:p-2 desktop:p-4 border-gray-200 rounded-lg mt-6 border-[1px] cursor-pointer"
     >
       <img

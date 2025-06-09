@@ -24,7 +24,7 @@ const AddAboutMe = () => {
     }
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (isValidAboutMe) {
       // @ts-ignore
       patchUser("aboutMe", aboutMe);

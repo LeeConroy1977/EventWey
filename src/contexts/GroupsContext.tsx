@@ -1,28 +1,6 @@
 import { createContext, useContext, useState, ReactNode, FC } from "react";
 import { fetchAllGroups } from "../../utils/api/groups-api";
-
-interface Location {
-  placename: string;
-  lng: number;
-  lat: number;
-}
-
-interface Group {
-  id: string;
-  name: string;
-  image: string;
-  groupAdmin: string[];
-  description: string[];
-  openAccess: boolean;
-  location: Location;
-  creationDate: number;
-  eventsCount: number;
-  members: string[];
-  events: string[];
-  messages: string[];
-  category: string;
-  approved: boolean;
-}
+import {Group} from '../types/group'
 
 interface GroupsContextType {
   groups: Group[];

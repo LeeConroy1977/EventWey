@@ -8,7 +8,9 @@ import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 const LandingPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { isMobile } = useScreenWidth();
-  const [setSortBy] = useState<string>(searchParams.get("sortBy") || "");
+  const [sortBy, setSortBy] = useState<string>(
+    searchParams.get("sortBy") || ""
+  );
 
   const navigate = useNavigate();
 
@@ -24,7 +26,7 @@ const LandingPage = () => {
 
   const handleSortByOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const sortByValue = e.target.value;
-    // @ts-ignore
+
     setSortBy(sortByValue);
     handleParams("sortBy", sortByValue);
     navigate(`/events?sortBy=${sortByValue}`);
@@ -33,7 +35,7 @@ const LandingPage = () => {
   return (
     <div className="w-full h-full flex flex-col items-center justify-start bg-bgPrimary mt-0 ">
       <LandingPageWrapper />
-      <main className="w-full tablet:w-[86%] desktop:w-[66%] flex flex-col items-center justify-start pb-8 px-6 tablet:px-0 desktop:mt-8 ">
+      <main className="w-full tablet:w-[86%] desktop:w-[76%] flex flex-col items-center justify-start pb-8 px-6 tablet:px-0 desktop:mt-8 ">
         <EventDisplayContainer
           title="Popular events"
           sortBy="popular"

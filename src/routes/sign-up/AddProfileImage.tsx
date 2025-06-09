@@ -33,7 +33,7 @@ const AddProfileImage = () => {
     }
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (isValidImage) {
       patchUser("profileImage", profileImage);
     }

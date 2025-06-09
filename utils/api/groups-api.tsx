@@ -1,7 +1,11 @@
 import axios from "axios";
 import { sortByPopularity, sortByDate } from "../fakeEventSorting";
+import { Group } from "../../src/types/group";
 
-const API = "https://eventwey.glitch.me";
+const API = "https://eventwey-backend.onrender.com";
+
+axios.defaults.withCredentials = true;
+axios.defaults.headers.common["Content-Type"] = "application/json";
 
 export const fetchAllGroups = async (params: {
   category?: string;
@@ -56,6 +60,33 @@ export const postGroup = async (groupData: any): Promise<any> => {
   }
 };
 
+export const createJoinGroup = async (id: string): Promise<Group> => {
+  try {
+    const response = await axios.post(`${API}/groups/${id}/join`,{ withCredentials: true });
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      throw new Error("Please log in to join the group");
+    }
+    console.error("Error joining group:", error);
+    throw new Error("Failed to join group");
+  }
+};
+
+export const createLeaveGroup = async (id: string): Promise<Group> => {
+  try {
+    const response = await axios.post(`${API}/groups/${id}/leave`, { withCredentials: true })
+    return response.data
+  }
+  catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      throw new Error("Please log in to leave the group");
+    }
+    console.error("Error leaving group:", error);
+    throw new Error("Failed to leave group");
+  }
+}
+
 export const patchGroup = async (id: string, patchObj: any): Promise<any> => {
   try {
     const { data: updatedGroup } = await axios.patch(
@@ -83,19 +114,14 @@ export const deleteGroup = async (id: string): Promise<any> => {
 
 export const fetchGroupEventsById = async (id: string): Promise<any[]> => {
   try {
-    const groupResponse = await axios.get(`${API}/groups/${id}`);
-    const group = groupResponse.data;
+    const groupEventsResponse = await axios.get(`${API}/groups/${id}/events`);
+    const groupEvents = groupEventsResponse.data;
 
-    if (!group?.events || !Array.isArray(group.events)) {
+    if (!groupEvents|| !Array.isArray(groupEvents)) {
       throw new Error(`Events not found or invalid for group with ID: ${id}`);
     }
 
-    const eventsResponse = await axios.get(`${API}/events`);
-    const events = eventsResponse.data;
-
-    const groupEvents = events.filter((event: any) =>
-      group.events.includes(String(event.id))
-    );
+  
 
     return groupEvents;
   } catch (error) {
@@ -106,19 +132,16 @@ export const fetchGroupEventsById = async (id: string): Promise<any[]> => {
 
 export const fetchGroupMembers = async (id: string): Promise<any[]> => {
   try {
-    const groupResponse = await axios.get(`${API}/groups/${id}`);
-    const group = groupResponse.data;
+    const groupMembersResponse = await axios.get(`${API}/groups/${id}/members`);
+    const groupMembers = groupMembersResponse.data;
 
-    if (!group?.members || !Array.isArray(group.members)) {
+    console.log(groupMembers, 'group members')
+
+    if (!groupMembers || !Array.isArray(groupMembers)) {
       throw new Error(`Members not found or invalid for group with ID: ${id}`);
     }
 
-    const usersResponse = await axios.get(`${API}/users`);
-    const users = usersResponse.data;
-
-    const groupMembers = users.filter((user: any) =>
-      group.members.includes(String(user.id))
-    );
+   
 
     return groupMembers;
   } catch (error) {

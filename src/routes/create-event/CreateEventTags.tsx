@@ -25,7 +25,7 @@ const CreateEventTags = () => {
     }
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (isValidTags) {
       setNewEvent((prevEvent) => ({
         ...prevEvent,
