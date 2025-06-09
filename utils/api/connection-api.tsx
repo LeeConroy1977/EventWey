@@ -7,7 +7,6 @@ export const fetchConnectionById = async (id: string): Promise<any> => {
     const response = await axios.get(`${API}/users/${id}`);
     const connection = response.data;
 
-    console.log(connection, 'connection')
 
     if (!connection) {
       throw new Error(`Connection not found for ID: ${id}`);
@@ -16,6 +15,23 @@ export const fetchConnectionById = async (id: string): Promise<any> => {
     return connection;
   } catch (error) {
     console.error("Error fetching connection by ID:", error);
+    throw error;
+  }
+};
+
+export const fetchUserById = async (id: string): Promise<any> => {
+  try {
+    const response = await axios.get(`${API}/users/${id}`);
+    const user = response.data;
+
+
+    if (!user) {
+      throw new Error(`user not found for ID: ${id}`);
+    }
+
+    return user;
+  } catch (error) {
+    console.error("Error fetching user by ID:", error);
     throw error;
   }
 };

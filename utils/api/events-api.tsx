@@ -3,7 +3,7 @@ import { sortByPopularity, sortByDate, sortByFree } from "../fakeEventSorting";
 
 import { eventsDateFilter } from "../eventDateFilter";
 
-const API = 'https://eventwey-backend.onrender.com';
+const API = "https://eventwey-backend.onrender.com";
 
 const axiosInstance = axios.create({
   baseURL: API,
@@ -16,7 +16,7 @@ export const fetchAllEvents = async (params: {
 }): Promise<any[]> => {
   try {
     const response = await axios.get(`${API}/events`);
- 
+
     let filteredData = response.data;
     if (params.category) {
       filteredData = filteredData.filter(
@@ -97,8 +97,8 @@ export const postEvent = async (eventData: any): Promise<any> => {
 export const fetchEventConnections = async (id: string): Promise<User[]> => {
   try {
     const eventAttendees = await axios.get(`${API}/events/${id}/attendees`);
-   
-console.log(eventAttendees)
+
+    console.log(eventAttendees);
     return eventAttendees.data;
   } catch (error) {
     // @ts-ignore
@@ -111,13 +111,12 @@ export const fetchEventGroupById = async (id: string): Promise<any> => {
     const eventGroupResponse = await axiosInstance.get(`/events/${id}/group`);
     const group = eventGroupResponse.data;
 
-    if (group) { 
+    if (group) {
       console.warn(`No group found for event with ID: ${id}, returning null`);
       return null;
     }
 
-
-    return group
+    return group;
   } catch (error) {
     console.error("Error fetching event group by ID:", error);
     throw error;
@@ -126,9 +125,8 @@ export const fetchEventGroupById = async (id: string): Promise<any> => {
 export const fetchSortedEvents = async (sortBy: string): Promise<any[]> => {
   try {
     const eventsResponse = await axios.get(`${API}/events`, {
-      params: { sortBy }
+      params: { sortBy },
     });
-    console.log('Backend response:', eventsResponse.data); // Log the raw data
     const sortedEvents = eventsResponse.data;
     return sortedEvents;
   } catch (error) {

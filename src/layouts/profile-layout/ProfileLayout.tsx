@@ -79,7 +79,7 @@ const ProfileLayout = () => {
     <div className="w-full flex flex-col items-center bg-bgSecondary">
       {user && <ProfileWrapper user={user} />}
 
-      <main className="w-full tablet:w-[94%] desktop:w-[66%] min-h-screen flex items-start justify-center mobile:bg-bgPrimary tablet:bg-bgSecondary">
+      <main className="w-full tablet:w-[94%] desktop:w-[76%] min-h-screen flex items-start justify-center mobile:bg-bgPrimary tablet:bg-bgSecondary">
         {!isMobile && (
           <>
             <section className="relative tablet:w-[34%] desktop:w-[34%] flex flex-col items-center justify-start  ">

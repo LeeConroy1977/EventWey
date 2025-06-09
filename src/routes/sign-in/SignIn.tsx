@@ -28,7 +28,7 @@ const SignIn = () => {
     handleEmailValidation,
     handlePasswordValidation,
     handleValidation,
-    isFormValid, // Keep this as per your request
+    isFormValid, 
     signIn,
     setError,
   } = useAuth();
@@ -79,10 +79,10 @@ const SignIn = () => {
 
     try {
       const response = await axios.get(`${API}/auth/google/callback`, {
-        headers: { Authorization: `Bearer ${token}` }, // Send Google token
+        headers: { Authorization: `Bearer ${token}` }, 
       });
       const user = response.data;
-      setUser(user); // Update UserContext
+      setUser(user); 
       navigate('/user/events');
     } catch (error) {
       console.error('Google sign-in error:', error);
@@ -108,13 +108,14 @@ const SignIn = () => {
     try {
       const response = await axios.get(`${API}/users`);
       const users = response?.data;
-      setSignInUsers(users?.slice(0, 3));
+      setSignInUsers(users.sort((a,b) => a.id - b.id)?.slice(0, 3));
       const adminUsers = users.filter((user: User) => user.role === 'admin');
       setSignInAdminUsers(adminUsers);
     } catch (error) {
       console.error('Error fetching users:', error);
     }
   }
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -131,7 +132,7 @@ const SignIn = () => {
     const user = signInUsers?.find((user) => user.id === id);
     if (user) {
       try {
-        await signIn(user.email, ''); // Assuming demo users don’t need passwords
+        await signIn(user.email, `Password#${user.id}`); 
         setUser(user);
         navigate('/user/events');
       } catch (error) {
@@ -144,7 +145,7 @@ const SignIn = () => {
     const user = signInAdminUsers?.find((user) => user.id === id);
     if (user) {
       try {
-        await signIn(user.email, ''); // Assuming demo admins don’t need passwords
+        await signIn(user.email, `Password#${user.id}`); 
         setUser(user);
         navigate('/user/events');
       } catch (error) {

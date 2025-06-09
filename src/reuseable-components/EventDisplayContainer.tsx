@@ -3,9 +3,7 @@ import LandingEventCard from "../routes/landing-page/LandingEventCard";
 import { fetchSortedEvents } from "../../utils/api/events-api";
 import useHandleEventClick from "../hooks/useHandleEventClick";
 import { ClipLoader } from "react-spinners";
-import { Event } from '../types/event';
-
-
+import { Event } from "../types/event";
 
 interface EventDisplayContainerProps {
   title: string;
@@ -26,9 +24,7 @@ const EventDisplayContainer: React.FC<EventDisplayContainerProps> = ({
 
   const handleEventClick = useHandleEventClick();
 
-  // @ts-ignore
   const handleSelect = (sortBy: string) => {
-    // @ts-ignore
     handleClick({
       target: { value: sortBy },
     } as React.ChangeEvent<HTMLSelectElement>);
@@ -68,8 +64,7 @@ const EventDisplayContainer: React.FC<EventDisplayContainerProps> = ({
             </h3>
             <p
               className="text-[12px] tablet:text-[14px] desktop:text-[16px]  xl-screen:text-[16px]  text-primary font-semibold cursor-pointer"
-              onClick={() => handleSelect(sortBy)}
-            >
+              onClick={() => handleSelect(sortBy)}>
               {`See all ${listName} events`}
             </p>
           </div>

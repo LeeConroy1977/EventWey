@@ -1,3 +1,6 @@
+
+import { useConnections } from '../../contexts/ConnectionsContext';
+import { useUser } from '../../contexts/UserContext';
 import {User} from '../../types/user'
 
 interface ConnectionPreviewCardProps {
@@ -12,6 +15,11 @@ const ConnectionPreviewCard: React.FC<ConnectionPreviewCardProps> = ({
   handleModalClose,
 }) => {
   const { id, profileBackgroundImage, profileImage, username } = connection;
+  const { connections } = useConnections();
+  const { user } = useUser();
+
+  const isConnection = connections?.some((connection) => connection.id === Number(id))
+
   return (
     <div
       className="mobile:w-[100px] h-[180px] tablet:w-[30%] desktop:h-[190px] xl-screen:h-[240px] bg-bgPrimary desktop:bg-bgSecondary rounded-lg flex flex-col items-center justify-start cursor-pointer mt-1 border-[1px] border-gray-200 "
@@ -39,7 +47,7 @@ const ConnectionPreviewCard: React.FC<ConnectionPreviewCardProps> = ({
         {username}
       </p>
       <button className="w-[80%] py-1 flex justify-center items-center mt-auto mb-3 text-primary text-[9px] desktop:text-[10px] font-medium desktop:font-semibold border-[1px] desktop:border-2 border-primary rounded-lg bg-bgPrimary">
-        Message
+       {user && isConnection ? 'Message' : 'Connect'}
       </button>
     </div>
   );

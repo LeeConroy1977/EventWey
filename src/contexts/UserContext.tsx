@@ -1,19 +1,27 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import {
+  fetchConnetionRequests,
   fetchUserEvents,
   fetchUserGroups,
+  fetchUserNotifications,
+  postAcceptConnetionRequest,
+  postRejectConnetionRequest,
   updateUser,
 } from "../../utils/api/user-api";
 import { fetchEventById, patchEvent } from "../../utils/api/events-api";
 import { useModal } from "./ModalContext";
 import { useNavigate } from "react-router-dom";
 import { useEvents } from "./EventsContext";
-import {User} from '../types/user'
-import {Event} from '../types/event'
-import {Group} from '../types/group'
+import { User } from "../types/user";
+import { Event } from "../types/event";
+import { Group } from "../types/group";
+import { Notifications } from "../types/notifications";
+import { useNotifications } from "./NotificationsContext";
 
-
-
+interface Request {
+  id: number;
+  requester: number;
+}
 
 interface UserContextType {
   user: User | null | undefined;
@@ -21,17 +29,24 @@ interface UserContextType {
   userEvents: Event[];
   userTotalEvents: Event[];
   userGroups: Group[];
+  userNotifications: Notifications[];
   userTotalGroups: Group[];
   loading: boolean;
   error: string | null;
   getUserEvents: (params: { [key: string]: string }) => void;
   getUserGroups: (params: { [key: string]: string }) => void;
+  getUserNotifications: (id: number) => void;
   getUserTotalGroups: (params: { [key: string]: string }) => void;
   isUserAttendingEvent: (id: string) => boolean;
   handleSignOut: () => void;
   patchUser: (field: keyof User, value: any) => Promise<void>;
   joinFreeEvent: (eventId: string) => Promise<void>;
   getUserTotalEvents: () => Promise<void>;
+  acceptConnectionRequest: (id: number) => Promise<void>;
+  rejectConnectionRequest: (id: number) => Promise<void>;
+  isNewConnection: boolean | null | undefined;
+  userConnectionRequests: Request[];
+  getConnectionRequest: (id: number) => void;
 }
 
 const UserContext = createContext<UserContextType | null>(null);
@@ -40,10 +55,10 @@ interface UserProviderProps {
   children: ReactNode;
 }
 
-
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const { setEvents } = useEvents();
   const { hideModal } = useModal();
+  const { setUserNotifications } = useNotifications();
   const [user, setUser] = useState<User | null>();
   const navigate = useNavigate();
   const [userEvents, setUserEvents] = useState<Event[]>([]);
@@ -52,6 +67,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [error, setError] = useState<string | null>(null);
   const [userTotalEvents, setUserTotalEvents] = useState<Event[]>([]);
   const [userTotalGroups, setUserTotalGroups] = useState<Group[]>([]);
+  const [isNewConnection, setIsNewConnection] = useState<boolean>(false);
+  const [userConnectionRequests, setUserConnectionRequests] = useState<[]>([]);
 
   const handleSignOut = () => {
     hideModal();
@@ -63,7 +80,9 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     try {
       setLoading(true);
       setError(null);
-      const updatedUser = await updateUser(String(user?.id!), { [field]: value });
+      const updatedUser = await updateUser(String(user?.id!), {
+        [field]: value,
+      });
       setUser(updatedUser);
     } catch (err) {
       console.error(`Error updating user field ${field}:`, err);
@@ -198,7 +217,10 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
     try {
       const { category, sortBy = "popular" } = params;
-      const groups = await fetchUserGroups(String(user?.id!), { category, sortBy });
+      const groups = await fetchUserGroups(String(user?.id!), {
+        category,
+        sortBy,
+      });
 
       setUserGroups(groups);
     } catch (err) {
@@ -230,6 +252,110 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
   };
 
+  const getUserNotifications = async (id: number) => {
+    setLoading(true);
+    setError(null);
+
+    if (!user?.id) {
+      setError("User is not logged in or doesn't have a valid ID.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const notifictions = await fetchUserNotifications(String(id));
+      const unReadNotifictions = notifictions
+        .filter((notificatons) => !notificatons.isRead)
+        .sort((a, b) => a.createdAt - b.createdAt);
+      const readNotifictions = notifictions
+        .filter((notificatons) => notificatons.isRead)
+        .sort((a, b) => a.createdAt - b.createdAt);
+      setUserNotifications([...unReadNotifictions, ...readNotifictions]);
+    } catch (err) {
+      console.error("Error fetching notifications:", err);
+      setError("Failed to fetch notifications.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // const getUserConnectionRequests = async () => {
+  //   setLoading(true);
+  //   setError(null);
+
+  //   if (!user?.id) {
+  //     setError("User is not logged in or doesn't have a valid ID.");
+  //     setLoading(false);
+  //     return;
+  //   }
+
+  //   try {
+  //     const notifictions = await fetchUserNotifications(id)
+  //     const connectionsRequests = notifictions.filter((notification) => notification.types === '')
+  //     setUserTotalGroups(totalGroups);
+  //   } catch (err) {
+  //     console.error("Error fetching groups", err);
+  //     setError("Failed to fetch groups");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  const getConnectionRequest = async (id: number) => {
+    if (!user?.id) {
+      setError("User is not logged in or doesn't have a valid ID.");
+      setLoading(false);
+      return;
+    }
+    try {
+      const requests = await fetchConnetionRequests(String(id));
+      setUserConnectionRequests(requests);
+    } catch (err) {
+      console.error("Error accepting request", err);
+      setError("Failed to accept request.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const acceptConnectionRequest = async (id: number) => {
+    if (!user?.id) {
+      setError("User is not logged in or doesn't have a valid ID.");
+      setLoading(false);
+      return;
+    }
+    try {
+      const acceptMessage = await postAcceptConnetionRequest(String(id));
+      if (acceptMessage) {
+        setIsNewConnection(true);
+      }
+    } catch (err) {
+      console.error("Error accepting request", err);
+      setError("Failed to accept request.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const rejectConnectionRequest = async (id: number) => {
+    if (!user?.id) {
+      setError("User is not logged in or doesn't have a valid ID.");
+      setLoading(false);
+      return;
+    }
+    try {
+      const rejectMessage = await postRejectConnetionRequest(String(id));
+      if (rejectMessage) {
+        setIsNewConnection(false);
+      }
+    } catch (err) {
+      console.error("Error rejecting request", err);
+      setError("Failed to reject request.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   function isUserAttendingEvent(id: string) {
     const isAttending = user?.events?.includes(Number(id));
     return isAttending || false;
@@ -254,8 +380,12 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         userTotalGroups,
         getUserTotalGroups,
         isUserAttendingEvent,
-      }}
-    >
+        getUserNotifications,
+        acceptConnectionRequest,
+        userConnectionRequests,
+        getConnectionRequest,
+        rejectConnectionRequest,
+      }}>
       {children}
     </UserContext.Provider>
   );

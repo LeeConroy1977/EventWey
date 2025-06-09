@@ -1,6 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Messages from "./routes/messages/Messages";
-import Notifications from "./routes/notifications/Notifications";
 import UserEvents from "./routes/user-events/UserEvents";
 import ConnectionRequests from "./routes/connection-requests/ConnectionRequests";
 import Event from "./routes/event/Event";
@@ -32,6 +31,7 @@ import Events from "./routes/events/Events";
 import Groups from "./routes/groups/Groups";
 import AdminGroups from "./routes/user-admin-groups/AdminGroups";
 import AdminEvents from "./routes/user-admin-events/AdminEvents";
+import NotificationWindow from "./routes/notifications/NotificationsWindow";
 
 function App() {
   return (
@@ -52,6 +52,8 @@ function App() {
               <Route path="groups" element={<Groups />} />
               <Route path="my-events" element={<UserEvents />} />
               <Route path="my-groups" element={<UserGroups />} />
+              <Route path="/user/messages" element={<Messages />} />
+          <Route path="/user/notifications" element={<NotificationWindow />} />
               <Route path="my-connections" element={<UserConnection />} />
               <Route
                 path="my-connections/requests"
@@ -75,8 +77,7 @@ function App() {
             </Route>
           </Route>
 
-          <Route path="messages" element={<Messages />} />
-          <Route path="notifications" element={<Notifications />} />
+          
 
           <Route path="/user/groups/:id" element={<PrivateRoute />}>
             <Route element={<GroupLayout />}>

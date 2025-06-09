@@ -1,12 +1,12 @@
 export interface Connection {
-  id: number;
+  id: number | undefined;
   email: string;
   username?: string;
   password?: string;
   googleId?: string;
   authMethod?: string;
   profileImage?: string | undefined;
-  profileBackgroundImage?: string |  undefined;
+  profileBackgroundImage?: string | undefined;
   aboutMe?: string;
   bio?: string;
   tags?: string[];

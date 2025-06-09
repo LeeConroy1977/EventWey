@@ -7,22 +7,31 @@ import { CgProfile } from "react-icons/cg";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdClose } from "react-icons/md";
+import { useNotifications } from "../../contexts/NotificationsContext";
 
 const NavBar: React.FC<{
   setIsMobileNavOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isMobileNavOpen: boolean;
 }> = ({ setIsMobileNavOpen, isMobileNavOpen }) => {
   const { user, handleSignOut } = useUser();
+  const { userNotifications } = useNotifications();
   const { isMobile } = useScreenWidth();
   const location = useLocation();
   const handleCreateUserClick = useHandleCreateUserClick();
   const handleCreateGroupClick = useHandleCreateGroupClick();
+  const isNotificationPageActive = location.pathname.startsWith(
+    "/user/notifications"
+  );
 
   const isHomeActive =
     location.pathname.startsWith("/user/events") ||
     location.pathname.startsWith("/user/groups") ||
     location.pathname.startsWith("/user/messages") ||
     location.pathname.startsWith("/user/notifications");
+
+  const notificationsCount = userNotifications?.filter(
+    (notification) => notification.isRead === false
+  );
 
   return (
     <nav className="w-screen tablet-w-[100%] h-[4rem] tablet:w-[100%] tablet:h-[4.6rem] xl-screen:h-[5rem]   fixed top-0 left-0 flex items-center justify-between bg-bgPrimary border-b-2 border-gray-100 z-20 xl-screen:px-[8rem]">
@@ -65,8 +74,7 @@ const NavBar: React.FC<{
                 px="px-6"
                 py="py-1.5"
                 fontSize="text-[13px]"
-                fontWeight="font-semibold"
-              >
+                fontWeight="font-semibold">
                 Sign up
               </Button>
             </div>
@@ -83,8 +91,7 @@ const NavBar: React.FC<{
             <ul className="flex items-center tablet:gap-6 desktop:gap-10 tablet:text-[13px] desktop:text-[16px] tablet:pr-6 desktop:pr-0 ">
               <li
                 className="p-2 pl-4 pr-4 bg-bgPrimary border-2 border-[#2C3E50] text-textPrimary rounded-lg tablet:text-[12px] desktop:text-[14px] font-semibold cursor-pointer"
-                onClick={handleCreateGroupClick}
-              >
+                onClick={handleCreateGroupClick}>
                 Create a group
               </li>
               {user ? (
@@ -95,8 +102,7 @@ const NavBar: React.FC<{
                       isHomeActive || isActive
                         ? "font-semibold text-primary"
                         : "font-semibold text-textPrimary"
-                    }
-                  >
+                    }>
                     <li className="cursor-pointer">Home</li>
                   </NavLink>
                   <NavLink
@@ -105,9 +111,35 @@ const NavBar: React.FC<{
                       isActive
                         ? "font-semibold text-primary"
                         : "font-semibold text-textPrimary"
-                    }
-                  >
+                    }>
                     <li className="cursor-pointer">Profile</li>
+                  </NavLink>
+                  <NavLink
+                    to="/user/messages"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "font-semibold text-primary"
+                        : "font-semibold text-textPrimary"
+                    }>
+                    <li className="cursor-pointer">Messages</li>
+                  </NavLink>
+                  <NavLink
+                    to="/user/notifications"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "font-semibold text-primary"
+                        : "font-semibold text-textPrimary"
+                    }>
+                    <div className="relative">
+                      {!isNotificationPageActive &&
+                        notificationsCount?.length > 0 && (
+                          <div className="absolute flex justify-center items-center size-4 text-[11px] bg-secondary text-white bottom-6">
+                            {notificationsCount.length}
+                          </div>
+                        )}
+
+                      <li className="cursor-pointer">Notifications</li>
+                    </div>
                   </NavLink>
 
                   <NavLink
@@ -117,8 +149,7 @@ const NavBar: React.FC<{
                       isActive
                         ? "font-semibold text-primary"
                         : "font-semibold text-textPrimary"
-                    }
-                  >
+                    }>
                     <li className="cursor-pointer">Sign out</li>
                   </NavLink>
                 </>
@@ -130,8 +161,7 @@ const NavBar: React.FC<{
                       isActive
                         ? "font-semibold text-primary"
                         : "font-semibold text-textPrimary"
-                    }
-                  >
+                    }>
                     <li className="cursor-pointer">Events</li>
                   </NavLink>
                   <NavLink
@@ -140,8 +170,7 @@ const NavBar: React.FC<{
                       isActive
                         ? "font-semibold text-primary"
                         : "font-semibold text-textPrimary"
-                    }
-                  >
+                    }>
                     <li className="cursor-pointer">Groups</li>
                   </NavLink>
                   <NavLink
@@ -150,8 +179,7 @@ const NavBar: React.FC<{
                       isActive
                         ? "font-semibold text-primary"
                         : "font-semibold text-textPrimary"
-                    }
-                  >
+                    }>
                     <li className="font-semibold text-textPrimary cursor-pointer">
                       Log in
                     </li>

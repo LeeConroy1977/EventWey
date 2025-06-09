@@ -4,6 +4,7 @@ import {
   fetchConnectionConnections,
   fetchConnectionEvents,
   fetchConnectionGroups,
+  fetchUserById,
 } from "../../utils/api/connection-api";
 import {User} from '../types/user'
 import {Event} from '../types/event'
@@ -13,6 +14,7 @@ import {Group} from '../types/group'
 
 interface ConnectionContextType {
   connection: User | null;
+  user: User | null;
   setConnection: (user: User) => void;
   connectionGroups: Group[] | null;
   setConnectionGroups: (groups: Group[]) => void;
@@ -24,6 +26,7 @@ interface ConnectionContextType {
   getConnectionConnections: (id: string) => Promise<void>;
   getConnectionEvents: (id: string) => Promise<void>;
   getConnectionGroups: (id: string) => Promise<void>;
+  getUserById: (id: string) => Promise<void>;
   loading: boolean;
   error: string | null;
 }
@@ -38,6 +41,7 @@ export const ConnectionProvider: React.FC<ConnectionProviderProps> = ({
   children,
 }) => {
   const [connection, setConnection] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [connectionEvents, setConnectionEvents] = useState<Event[] | null>(
     null
   );
@@ -49,6 +53,23 @@ export const ConnectionProvider: React.FC<ConnectionProviderProps> = ({
   >(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
+  const getUserById = async (id: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await fetchUserById(id);
+      setUser(data);
+    } catch (err) {
+      const errorMessage =
+        (err as Error).message || "Failed to fetch connection";
+      setError(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
 
   const getConnectionById = async (id: string) => {
     setLoading(true);
@@ -111,6 +132,7 @@ export const ConnectionProvider: React.FC<ConnectionProviderProps> = ({
   return (
     <ConnectionContext.Provider
       value={{
+        user,
         connection,
         connectionGroups,
         connectionEvents,
@@ -125,6 +147,7 @@ export const ConnectionProvider: React.FC<ConnectionProviderProps> = ({
         setConnectionGroups,
         setConnectionEvents,
         setConnectionConnections,
+        getUserById
       }}
     >
       {children}
