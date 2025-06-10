@@ -35,48 +35,19 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
   return (
     <ModalContext.Provider value={{ showModal, hideModal }}>
       {children}
-      {isVisible && (
-        <div style={overlayStyles}>
-          <div style={modalStyles}>
+      {isVisible && modalContent && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[1000]">
+          <div className="w-2/3 h-4/5 bg-white p-12 rounded-lg relative overflow-y-auto">
             {modalContent}
-            <button style={closeButtonStyles} onClick={hideModal}>
-              <IoIosCloseCircle className="text-primary text-[36px] m-4" />
+            <button
+              className="absolute top-2 right-2 bg-transparent border-none cursor-pointer"
+              onClick={hideModal}
+              aria-label="Close modal">
+              <IoIosCloseCircle className="text-primary text-4xl m-4" />
             </button>
           </div>
         </div>
       )}
     </ModalContext.Provider>
   );
-};
-
-const overlayStyles: React.CSSProperties = {
-  position: "fixed",
-  top: 0,
-  left: 0,
-  width: "100%",
-  height: "100%",
-  backgroundColor: "rgba(0, 0, 0, 0.5)",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  zIndex: 1000,
-};
-
-const modalStyles: React.CSSProperties = {
-  width: "66%",
-  height: "80%",
-  background: "white",
-  padding: "50px",
-  borderRadius: "8px",
-  position: "relative",
-  overflowY: "auto",
-};
-
-const closeButtonStyles: React.CSSProperties = {
-  position: "absolute",
-  top: "10px",
-  right: "10px",
-  background: "transparent",
-  border: "none",
-  cursor: "pointer",
 };

@@ -7,6 +7,7 @@ const useIsGroupMember = (groupId: number) => {
   const [error, setError] = useState<string | null>(null);
 
   const checkIsGroupMember = async () => {
+    console.log(isMember, "context");
     try {
       setError(null);
       const memberStatus = await isUserGroupMember(groupId);

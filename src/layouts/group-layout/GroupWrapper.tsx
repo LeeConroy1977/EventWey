@@ -6,6 +6,9 @@ import React, { useEffect } from "react";
 import { Group } from "../../types/group";
 import useIsGroupMember from "../../hooks/useIsGroupMember";
 import { useModal } from "../../contexts/ModalContext";
+import LeaveGroupConfirmation from "../../components/LeaveGroupConfirmation";
+import { useGroup } from "../../contexts/GroupContext";
+import { useGroups } from "../../contexts/GroupsContext";
 
 interface GroupWrapperProps {
   group: Group;
@@ -13,6 +16,10 @@ interface GroupWrapperProps {
   handleApproveGroup: (id: string) => void;
   handleJoinGroup: (id: string) => void;
   handleLeaveGroup: (id: string) => void;
+  isLoading: boolean;
+  isMember: boolean;
+  isLocalMember: boolean;
+  setIsMember: () => void;
 }
 
 const GroupWrapper: React.FC<GroupWrapperProps> = ({
@@ -21,22 +28,53 @@ const GroupWrapper: React.FC<GroupWrapperProps> = ({
   handleApproveGroup,
   handleJoinGroup,
   handleLeaveGroup,
+  isLoading,
+  isMember,
+  isLocalMember,
+  setIsMember,
 }) => {
   const { user } = useUser();
   const { showModal, hideModal } = useModal();
   const { isMobile } = useScreenWidth();
   const { id } = useParams();
   const { name, image, description, members, openAccess, approved } = group;
+  const { fetchGroups, loading } = useGroups();
+  const { getGroupById } = useGroup();
   const [membersCount, setMembersCount] = React.useState(
     group?.members?.length
   );
   // @ts-ignore
-  const { isMember } = useIsGroupMember(group.id);
+
   const buttonText = isMember ? "Leave Group" : "Join Group";
 
   useEffect(() => {
     setMembersCount(group?.members?.length);
   }, [group?.members?.length]);
+
+  function handleClick() {
+    if (!user?.id) return;
+
+    if (!isMember) {
+      setMembersCount((count) => count + 1);
+      handleJoinGroup(group?.id.toString());
+    }
+
+    if (isMember && group) {
+      showModal(
+        <LeaveGroupConfirmation
+          group={group}
+          onLeave={handleLeaveGroup}
+          onLoading={loading}
+          onFetchGroups={fetchGroups}
+          onGetGroupById={getGroupById}
+          setIsMember={setIsMember}
+          user={user}
+          isLoading={isLoading}
+          isLocalMember={isLocalMember}
+        />
+      );
+    }
+  }
 
   return (
     <div className="w-[100%] h-auto tablet:h-[18rem] desktop:h-[21rem] xl-screen:h-[25rem] flex flex-col tablet:flex-row items-center justify-center  bg-bgPrimary border-b-2 border-gray-200 p-6 desktop:p-8">
@@ -87,20 +125,7 @@ const GroupWrapper: React.FC<GroupWrapperProps> = ({
           )}
           {!isMobile && approved && group && (
             <button
-              onClick={
-                !isMember && user?.id
-                  ? () => {
-                      setMembersCount((count) => count + 1);
-                      handleJoinGroup(group?.id);
-                    }
-                  : isMember && user?.id
-                  ? () => showModal(<div>Modal</div>)
-                  : //  {
-                    //   setMembersCount((count) => count - 1);
-                    //   handleLeaveGroup(group?.id);
-                    // }
-                    undefined
-              }
+              onClick={() => handleClick()}
               className={`w-[110px]  desktop:w-[120px] tablet:h-[34px] desktop:h-[40px] xl-screen:w-[140px] xl-screen:h-[44px] mt-auto mb-1 mr-auto  flex items-center justify-center tablet:text-[10px] desktop:text-[11px] xl-screen:text-[12px] font-semibold rounded-lg tablet:mb-3 desktop:mb-1  ${
                 isMember
                   ? "bg-bgPrimary border-2 border-primary text-primary"

@@ -26,37 +26,35 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <ScreenWidthProvider>
-        <ModalProvider>
-          <NotificationsProvider>
-            <GroupsProvider>
-              <GroupProvider>
+        <GroupProvider>
+          <ModalProvider>
+            <NotificationsProvider>
+              <GroupsProvider>
                 <EventsProvider>
                   <EventProvider>
                     <UserProvider>
                       <ConnectionsProvider>
                         <ConnectionProvider>
-                          <UserProvider>
-                            <CreateGroupProvider>
-                              <CreateEventProvider>
-                                <CreateUserProvider>
-                                  <AuthProvider>
-                                    <EventModalProvider>
-                                      <App />
-                                    </EventModalProvider>
-                                  </AuthProvider>
-                                </CreateUserProvider>
-                              </CreateEventProvider>
-                            </CreateGroupProvider>
-                          </UserProvider>
+                          <CreateGroupProvider>
+                            <CreateEventProvider>
+                              <CreateUserProvider>
+                                <AuthProvider>
+                                  <EventModalProvider>
+                                    <App />
+                                  </EventModalProvider>
+                                </AuthProvider>
+                              </CreateUserProvider>
+                            </CreateEventProvider>
+                          </CreateGroupProvider>
                         </ConnectionProvider>
                       </ConnectionsProvider>
                     </UserProvider>
                   </EventProvider>
                 </EventsProvider>
-              </GroupProvider>
-            </GroupsProvider>
-          </NotificationsProvider>
-        </ModalProvider>
+              </GroupsProvider>
+            </NotificationsProvider>
+          </ModalProvider>
+        </GroupProvider>
       </ScreenWidthProvider>
     </BrowserRouter>
   </React.StrictMode>

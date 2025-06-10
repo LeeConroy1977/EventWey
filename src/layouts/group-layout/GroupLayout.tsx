@@ -1,7 +1,7 @@
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import GroupNav from "./GroupNav";
 import { useGroup } from "../../contexts/GroupContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import GroupOrganiserContainer from "./GroupOrganiserContainer";
 import EventMapContainer from "../../components/EventMapContainer";
 import GroupWrapper from "./GroupWrapper";
@@ -23,12 +23,15 @@ const GroupLayout = () => {
     getGroupMembers,
     updateGroup,
     removeGroup,
+    setGroup,
   } = useGroup();
   const { fetchGroups, setGroups } = useGroups();
   const { isMember, setIsMember, refreshMembership } = useIsGroupMember(
     group?.id
   );
   const { showModal, hideModal } = useModal();
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
   const { lat, lng, placename } = group?.location || {};
   // @ts-ignore
@@ -54,11 +57,20 @@ const GroupLayout = () => {
   }
 
   async function handleLeaveGroup(groupId: number) {
-    await leaveGroup(groupId);
-    setIsMember(false);
-    getGroupMembers(groupId.toString());
-    getGroupById(groupId.toString());
-    fetchGroups({});
+    setIsLoading(true);
+    try {
+      await leaveGroup(groupId);
+      setIsMember(false);
+      await getGroupById(groupId.toString());
+      await getGroupMembers(groupId.toString()),
+        await fetchGroups({}),
+        console.log("handleLeaveGroup succeeded, isMember:", false);
+    } catch (error) {
+      console.error("Failed to leave group or fetch data:", error);
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -69,6 +81,7 @@ const GroupLayout = () => {
       fetchGroups({});
     }
   }, [id]);
+
   return (
     <div className="w-full min-h-screen flex flex-col items-center bg-bgSecondary">
       {isMobile && !group?.approved && (
@@ -94,7 +107,7 @@ const GroupLayout = () => {
                 ? () => handleJoinGroup(group?.id)
                 : isMember && user?.id
                 ? () => showModal(<div>Modal</div>)
-                : // () => handleLeaveGroup(group?.id)
+                : 
                   undefined
             }
             className={`w-[110px] h-[36px] ml-auto flex items-center justify-center text-[11px] font-semibold rounded-lg ${
@@ -115,6 +128,9 @@ const GroupLayout = () => {
             handleRemoveGroup={handleRemoveGroup}
             handleJoinGroup={handleJoinGroup}
             handleLeaveGroup={handleLeaveGroup}
+            isLoading={isLoading}
+            isMember={isMember}
+            setIsMember={setIsMember}
           />
           <main className="w-full m-h-screen tablet:w-[94%]  desktop:w-[66%] desktop:h-auto flex flex-col tablet:flex-row items-start justify-center bg-bgPrimary tablet:bg-bgSecondary px-6 mt-0 tablet:mt-0 tablet:px-0 tablet:p-4 pb-[5rem] ">
             <section className="flex flex-col justify-start items-start w-full tablet:w-[62%] h-auto p-0 tablet:p-4">
