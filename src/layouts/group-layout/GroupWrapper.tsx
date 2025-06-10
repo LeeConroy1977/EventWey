@@ -5,6 +5,7 @@ import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 import React, { useEffect } from "react";
 import { Group } from "../../types/group";
 import useIsGroupMember from "../../hooks/useIsGroupMember";
+import { useModal } from "../../contexts/ModalContext";
 
 interface GroupWrapperProps {
   group: Group;
@@ -22,6 +23,7 @@ const GroupWrapper: React.FC<GroupWrapperProps> = ({
   handleLeaveGroup,
 }) => {
   const { user } = useUser();
+  const { showModal, hideModal } = useModal();
   const { isMobile } = useScreenWidth();
   const { id } = useParams();
   const { name, image, description, members, openAccess, approved } = group;
@@ -92,11 +94,12 @@ const GroupWrapper: React.FC<GroupWrapperProps> = ({
                       handleJoinGroup(group?.id);
                     }
                   : isMember && user?.id
-                  ? () => {
-                      setMembersCount((count) => count - 1);
-                      handleLeaveGroup(group?.id);
-                    }
-                  : undefined
+                  ? () => showModal(<div>Modal</div>)
+                  : //  {
+                    //   setMembersCount((count) => count - 1);
+                    //   handleLeaveGroup(group?.id);
+                    // }
+                    undefined
               }
               className={`w-[110px]  desktop:w-[120px] tablet:h-[34px] desktop:h-[40px] xl-screen:w-[140px] xl-screen:h-[44px] mt-auto mb-1 mr-auto  flex items-center justify-center tablet:text-[10px] desktop:text-[11px] xl-screen:text-[12px] font-semibold rounded-lg tablet:mb-3 desktop:mb-1  ${
                 isMember

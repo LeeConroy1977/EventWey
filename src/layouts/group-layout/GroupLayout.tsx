@@ -9,6 +9,7 @@ import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 import { useUser } from "../../contexts/UserContext";
 import { useGroups } from "../../contexts/GroupsContext";
 import useIsGroupMember from "../../hooks/useIsGroupMember";
+import { useModal } from "../../contexts/ModalContext";
 
 const GroupLayout = () => {
   const { id } = useParams();
@@ -27,6 +28,7 @@ const GroupLayout = () => {
   const { isMember, setIsMember, refreshMembership } = useIsGroupMember(
     group?.id
   );
+  const { showModal, hideModal } = useModal();
   const navigate = useNavigate();
   const { lat, lng, placename } = group?.location || {};
   // @ts-ignore
@@ -46,7 +48,7 @@ const GroupLayout = () => {
   async function handleJoinGroup(groupId: number) {
     await joinGroup(groupId);
     setIsMember(true);
-
+    getGroupMembers(groupId.toString());
     getGroupById(groupId.toString());
     fetchGroups({});
   }
@@ -54,7 +56,7 @@ const GroupLayout = () => {
   async function handleLeaveGroup(groupId: number) {
     await leaveGroup(groupId);
     setIsMember(false);
-
+    getGroupMembers(groupId.toString());
     getGroupById(groupId.toString());
     fetchGroups({});
   }
@@ -87,6 +89,14 @@ const GroupLayout = () => {
       {isMobile && group?.approved && (
         <div className="fixed flex flex-row items-center justify-between bottom-0 left-0 w-screen h-[4.4rem] bg-bgSecondary px-6 z-50 border-t-[1px] border-t-gray-100">
           <button
+            onClick={
+              !isMember && user?.id
+                ? () => handleJoinGroup(group?.id)
+                : isMember && user?.id
+                ? () => showModal(<div>Modal</div>)
+                : // () => handleLeaveGroup(group?.id)
+                  undefined
+            }
             className={`w-[110px] h-[36px] ml-auto flex items-center justify-center text-[11px] font-semibold rounded-lg ${
               isMember
                 ? "bg-bgPrimary border-2 border-primary text-primary"
