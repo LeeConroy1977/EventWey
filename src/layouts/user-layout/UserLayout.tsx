@@ -58,8 +58,6 @@ const UserLayout: React.FC = () => {
     setMainNotification(notification);
   }
 
-  console.log(userNotifications);
-
   return (
     <div className="w-full min-h-screen flex flex-col items-center bg-bgSecondary mt-0 tablet:mt-6">
       {!isMobile && <UserWrapper />}

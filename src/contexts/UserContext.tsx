@@ -1,11 +1,10 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import {
-  fetchConnetionRequests,
   fetchUserEvents,
   fetchUserGroups,
   fetchUserNotifications,
-  postAcceptConnetionRequest,
-  postRejectConnetionRequest,
+  postJoinGroup,
+  postLeaveGroup,
   updateUser,
 } from "../../utils/api/user-api";
 import { fetchEventById, patchEvent } from "../../utils/api/events-api";
@@ -17,6 +16,8 @@ import { Event } from "../types/event";
 import { Group } from "../types/group";
 import { Notifications } from "../types/notifications";
 import { useNotifications } from "./NotificationsContext";
+import { fetchGroupById } from "../../utils/api/groups-api";
+import { useGroups } from "./GroupsContext";
 
 interface Request {
   id: number;
@@ -47,6 +48,9 @@ interface UserContextType {
   isNewConnection: boolean | null | undefined;
   userConnectionRequests: Request[];
   getConnectionRequest: (id: number) => void;
+  isUserGroupMember: (groupId: number) => Promise<boolean>;
+  joinGroup: (groupId: number) => Promise<void>;
+  leaveGroup: (groupId: number) => Promise<void>;
 }
 
 const UserContext = createContext<UserContextType | null>(null);
@@ -57,6 +61,7 @@ interface UserProviderProps {
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const { setEvents } = useEvents();
+  const { groups, setGroups } = useGroups();
   const { hideModal } = useModal();
   const { setUserNotifications } = useNotifications();
   const [user, setUser] = useState<User | null>();
@@ -205,6 +210,65 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
   };
 
+  const joinGroup = async (groupId: number): Promise<void> => {
+    const prevGroups = [...groups];
+
+    if (!user?.id) {
+      throw new Error("User not authenticated. Please log in.");
+    }
+
+    const optimisticGroups = groups.map((group) =>
+      group.id === groupId
+        ? { ...group, members: [...group?.members, user.id] }
+        : group
+    );
+    setGroups(optimisticGroups);
+
+    try {
+      const groupJoined = await postJoinGroup(groupId.toString());
+      setGroups((prev) =>
+        prev.map((group) => (group.id === groupJoined.id ? groupJoined : group))
+      );
+    } catch (error) {
+      setGroups(prevGroups);
+      console.error(`Error joining group ${groupId}:`, error);
+      throw error;
+    }
+  };
+
+  const leaveGroup = async (groupId: number) => {
+    const prevGroups = [...groups];
+
+    if (!user?.id) {
+      throw new Error("User not authenticated. Please log in.");
+    }
+
+    const optimisticGroups = groups.map((group) =>
+      group.id === groupId
+        ? { ...group, members: group?.members?.filter((id) => id !== user.id) }
+        : group
+    );
+    setGroups(optimisticGroups);
+
+    try {
+      setLoading(true);
+      setError(null);
+      const upDatedGroup = await postLeaveGroup(groupId.toString());
+
+      setGroups((prev) =>
+        prev.map((group) =>
+          group.id === upDatedGroup.id ? upDatedGroup : group
+        )
+      );
+    } catch (err) {
+      setGroups(prevGroups);
+      console.error(`Error leaving group`, err);
+      setError(`Failed to leave group`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const getUserGroups = async (params: { [key: string]: string }) => {
     setLoading(true);
     setError(null);
@@ -250,6 +314,19 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const isUserGroupMember = async (groupId: number): Promise<boolean> => {
+    if (!user?.id) {
+      console.log("No user ID available");
+      return false;
+    }
+    const group = groups.find((group) => group.id === groupId);
+    if (!group) {
+      console.log("Group not found:", groupId);
+      return false;
+    }
+    return group.members.includes(user.id);
   };
 
   const getUserNotifications = async (id: number) => {
@@ -385,6 +462,9 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         userConnectionRequests,
         getConnectionRequest,
         rejectConnectionRequest,
+        isUserGroupMember,
+        joinGroup,
+        leaveGroup,
       }}>
       {children}
     </UserContext.Provider>

@@ -27,34 +27,34 @@ root.render(
     <BrowserRouter>
       <ScreenWidthProvider>
         <ModalProvider>
-        <NotificationsProvider>
-          <EventsProvider>
-            <UserProvider>
-              <EventProvider>
-                <GroupsProvider>
-                  <GroupProvider>
-                    <ConnectionsProvider>
-                      <ConnectionProvider>                                    
-                        <UserProvider>
-                          <CreateGroupProvider>
-                            <CreateEventProvider>
-                              <CreateUserProvider>
-                                <AuthProvider>
-                                  <EventModalProvider>
-                                    <App />
-                                  </EventModalProvider>
-                                </AuthProvider>
-                              </CreateUserProvider>
-                            </CreateEventProvider>
-                          </CreateGroupProvider>
-                        </UserProvider>                                  
-                      </ConnectionProvider>
-                    </ConnectionsProvider>
-                  </GroupProvider>
-                </GroupsProvider>
-              </EventProvider>
-            </UserProvider>
-          </EventsProvider>
+          <NotificationsProvider>
+            <GroupsProvider>
+              <GroupProvider>
+                <EventsProvider>
+                  <EventProvider>
+                    <UserProvider>
+                      <ConnectionsProvider>
+                        <ConnectionProvider>
+                          <UserProvider>
+                            <CreateGroupProvider>
+                              <CreateEventProvider>
+                                <CreateUserProvider>
+                                  <AuthProvider>
+                                    <EventModalProvider>
+                                      <App />
+                                    </EventModalProvider>
+                                  </AuthProvider>
+                                </CreateUserProvider>
+                              </CreateEventProvider>
+                            </CreateGroupProvider>
+                          </UserProvider>
+                        </ConnectionProvider>
+                      </ConnectionsProvider>
+                    </UserProvider>
+                  </EventProvider>
+                </EventsProvider>
+              </GroupProvider>
+            </GroupsProvider>
           </NotificationsProvider>
         </ModalProvider>
       </ScreenWidthProvider>

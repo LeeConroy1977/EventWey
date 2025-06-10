@@ -1,19 +1,14 @@
 import { createContext, useContext, useState, ReactNode, FC } from "react";
-import { fetchAllUsers } from "../../utils/api/user-api";
 import {
   fetchGroupById,
   fetchGroupMembers,
   fetchGroupEventsById,
   patchGroup,
   deleteGroup,
-  createJoinGroup,
-  createLeaveGroup,
 } from "../../utils/api/groups-api";
-import {User} from '../types/user'
-import {Event} from '../types/event'
-import {Group} from '../types/group'
-
-
+import { User } from "../types/user";
+import { Event } from "../types/event";
+import { Group } from "../types/group";
 
 interface GroupContextType {
   group: Group | null;
@@ -29,8 +24,6 @@ interface GroupContextType {
   updateGroup: (field: keyof Group, value: any) => Promise<void>;
   removeGroup: (id: string) => Promise<void>;
   getGroupMembers: (id: string) => Promise<void>;
-  joinGroup: (id: string) => Promise<void>
-  leaveGroup: (id: string) => Promise<void>
   loading: boolean;
   error: string | null;
 }
@@ -55,9 +48,7 @@ export const GroupProvider: FC<GroupProviderProps> = ({ children }) => {
 
     try {
       const data = await fetchGroupById(id);
-    
 
-     
       const organiser = data.groupAdmins[0] || null;
 
       setGroup(data);
@@ -97,39 +88,13 @@ export const GroupProvider: FC<GroupProviderProps> = ({ children }) => {
     }
   };
 
-  const joinGroup = async(id: string) => {
-    try {
-      setLoading(true);
-      setError(null);
-      const upDatedGroup = await createJoinGroup(id) 
-      setGroup(upDatedGroup) 
-    } catch (err) {
-      console.error(`Error joining group`, err);
-      setError(`Failed to join group`);
-    } finally {
-      setLoading(false);
-    }
-  }
-  
-  const leaveGroup = async(id: string) => {
-    try {
-      setLoading(true);
-      setError(null);
-      const upDatedGroup = await createLeaveGroup(id) 
-      setGroup(upDatedGroup) 
-    } catch (err) {
-      console.error(`Error leaving group`, err);
-      setError(`Failed to leave group`);
-    } finally {
-      setLoading(false);
-    }
-  }
-
   const updateGroup = async (field: keyof Group, value: any) => {
     try {
       setLoading(true);
       setError(null);
-      const updatedGroup = await patchGroup(String(group?.id!), { [field]: value });
+      const updatedGroup = await patchGroup(String(group?.id!), {
+        [field]: value,
+      });
       setGroup(updatedGroup);
     } catch (err) {
       console.error(`Error updating group field ${field}:`, err);
@@ -170,10 +135,7 @@ export const GroupProvider: FC<GroupProviderProps> = ({ children }) => {
         loading,
         updateGroup,
         removeGroup,
-        joinGroup,
-        leaveGroup
-      }}
-    >
+      }}>
       {children}
     </GroupContext.Provider>
   );

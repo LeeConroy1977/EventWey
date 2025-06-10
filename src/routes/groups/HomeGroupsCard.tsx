@@ -1,9 +1,9 @@
 import { IoPerson } from "react-icons/io5";
 import { useUser } from "../../contexts/UserContext";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
-import React from "react";
-import {Group} from '../../types/group'
-
+import React, { useEffect, useState } from "react";
+import { Group } from "../../types/group";
+import useIsGroupMember from "../../hooks/useIsGroupMember";
 
 interface HomeGroupsCardProps {
   group: Group;
@@ -16,18 +16,16 @@ const HomeGroupsCard: React.FC<HomeGroupsCardProps> = ({
 }) => {
   const { user } = useUser();
   const { isMobile } = useScreenWidth();
-  const { id, name, image, description, members, openAccess, approved } = group;
+  const { id, name, image, description, members, openAccess } = group;
+  const { isMember } = useIsGroupMember(id);
 
   let filteredDesc = description[0];
   filteredDesc = filteredDesc.replaceAll("**", "");
 
-  const isMember = group?.members?.includes(Number(user?.id)) || false;
-
   return (
     <div
       className="relative flex flex-col tablet:flex-row items-center w-[100%] tablet:h-[210px] desktop:h-[240px]  xl-screen:h-[280px] bg-white tablet:p-3 desktop:p-4  border-gray-200 rounded-lg mt-4  border-[1px] cursor-pointer"
-      onClick={() => handleClick(String(id))}
-    >
+      onClick={() => handleClick(String(id))}>
       <img
         src={image}
         alt=""
@@ -55,12 +53,11 @@ const HomeGroupsCard: React.FC<HomeGroupsCardProps> = ({
           {!isMobile && (
             <button
               className={`tablet:w-[74px] tablet:h-[30px] desktop:w-[100px] xl-screen:w-[120px]  desktop:h-[34px]  xl-screen:h-[40px] ml-auto flex items-center justify-center tablet:text-[9px] desktop:text-[11px] xl-screen:text-[13px] desktop:mr-4  font-semibold rounded-lg ${
-                isMember
-                  ? "bg-bgPrimary border-2 border-primary text-primary"
-                  : "bg-[#5D9B9B] text-white"
-              }`}
-            >
-              {!approved ? "Review Group" : isMember ? "Member" : "Join group"}
+                !user || !isMember
+                  ? "bg-[#5D9B9B] text-white"
+                  : "bg-bgPrimary border-2 border-primary text-primary"
+              }`}>
+              {!user ? "Join group" : isMember ? "Member" : "Join group"}
             </button>
           )}
         </div>

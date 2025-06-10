@@ -4,10 +4,12 @@ import { useGroups } from "../../contexts/GroupsContext";
 import useHandleGroupClick from "../../hooks/useHandleGroupClick";
 import HomeGroupsCard from "./HomeGroupsCard";
 import { ClipLoader } from "react-spinners";
+import { useUser } from "../../contexts/UserContext";
 
 
 const Home = () => {
   const { groups, fetchGroups, loading, error } = useGroups();
+  const { isUserGroupMember } = useUser();
   const [searchParams] = useSearchParams();
   const category = searchParams.get("category");
   const sortBy = searchParams.get("sortBy");
