@@ -53,7 +53,10 @@ function App() {
               <Route path="my-events" element={<UserEvents />} />
               <Route path="my-groups" element={<UserGroups />} />
               <Route path="/user/messages" element={<Messages />} />
-          <Route path="/user/notifications" element={<NotificationWindow />} />
+              <Route
+                path="/user/notifications"
+                element={<NotificationWindow />}
+              />
               <Route path="my-connections" element={<UserConnection />} />
               <Route
                 path="my-connections/requests"
@@ -77,8 +80,6 @@ function App() {
             </Route>
           </Route>
 
-          
-
           <Route path="/user/groups/:id" element={<PrivateRoute />}>
             <Route element={<GroupLayout />}>
               <Route index element={<Navigate to="details" replace />} />
@@ -87,7 +88,7 @@ function App() {
               <Route path="members" element={<GroupMembers />} />
             </Route>
           </Route>
-          <Route path="user/events/:id" element={<Event />} />
+          <Route path="/user/events/:id" element={<Event />} />
 
           <Route path="/connection/:id" element={<PrivateRoute />}>
             <Route element={<ConnectionLayout />}>

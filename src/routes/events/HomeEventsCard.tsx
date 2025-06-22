@@ -20,7 +20,7 @@ const HomeEventsCard: React.FC<HomeEventsCardProps> = ({
   event,
   handleClick,
 }) => {
-  const { isUserAttendingEvent } = useUser();
+  const { isUserEventAttendee } = useUser();
   const { isMobile } = useScreenWidth();
   const {
     id,
@@ -49,7 +49,10 @@ try {
   formattedDate = "Date unavailable";
 }
 
-  const isAttending = isUserAttendingEvent(String(event?.id));
+
+
+
+  const isAttending = isUserEventAttendee(event?.id);
   let filteredDescription = description[0];
 
   function getPriceRange(priceArr: PriceBand[]): string {

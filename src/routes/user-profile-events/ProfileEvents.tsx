@@ -1,12 +1,21 @@
+import { useEffect } from "react";
 import { useUser } from "../../contexts/UserContext";
 import useHandleEventClick from "../../hooks/useHandleEventClick";
 import HomeEventsCard from "../events/HomeEventsCard";
 import { ClipLoader } from "react-spinners";
+import { useEvents } from "../../contexts/EventsContext";
 
 const ProfileEvents = () => {
-  const { userEvents, loading, error } = useUser();
+  const { userEvents, loading, error, getUserEvents } = useUser();
+  const { fetchEvents } = useEvents();
   const handleEventClick = useHandleEventClick();
   const eventsLength = userEvents?.length;
+
+  useEffect(() => {
+    fetchEvents({});
+    getUserEvents({});
+  }, []);
+
   return (
     <div className="w-[100%] min-h-[8rem] bg-bgPrimary mt-8 rounded-lg p-6 desktop:p-10 pb-10">
       <h3 className="font-bold text-textPrimary mobile:text-[14px] tablet:text-[1rem] xl-screen:text-[18px] mb-8">

@@ -3,6 +3,7 @@ import axios, { AxiosError } from "axios";
 import { sortByPopularity, sortByDate } from "../fakeEventSorting";
 import { Group } from "../../src/types/group";
 import { User } from "../../src/types/user";
+import { Event } from "../../src/types/event";
 
 const API = "https://eventwey-backend.onrender.com";
 
@@ -92,6 +93,43 @@ export const fetchUserEvents = async (
     throw error;
   }
 };
+
+export const postJoinEvent = async (
+  eventId: string,
+  ticketType?: string
+): Promise<Event> => {
+  const token = localStorage.getItem("token");
+
+  try {
+    const url = ticketType
+      ? `${API}/events/${eventId}/join?ticketType=${encodeURIComponent(
+          ticketType
+        )}`
+      : `${API}/events/${eventId}/join`;
+
+    const response = await axios.post(
+      url,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data as Event;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      const { status, data } = error.response;
+      if (status === 401) {
+        throw new Error("Unauthorized. Please log in.");
+      }
+      throw new Error(data.message || "Failed to join event");
+    }
+    console.error("Error joining event:", error);
+    throw error;
+  }
+};
+
 export const postJoinGroup = async (groupId: string): Promise<Group> => {
   const token = localStorage.getItem("token");
 
@@ -203,6 +241,29 @@ export const fetchUserNotifications = async (id: string): Promise<any[]> => {
     return response.data;
   } catch (error) {
     console.error("Error fetching user notifications:", error);
+    throw error;
+  }
+};
+
+export const postMakeConnectionRequest = async (
+  userId: string,
+  recipientId: string
+): Promise<any> => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.post(
+      `${API}/connections/${userId}/request/${recipientId}`,
+      {},
+      {
+        withCredentials: true,
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error requesting connection request:", error);
     throw error;
   }
 };

@@ -6,10 +6,9 @@ import {
   fetchEventGroupById,
   patchEvent,
 } from "../../utils/api/events-api";
-import {User} from '../types/user'
-import {Event} from '../types/event'
-import {Group} from '../types/group'
-
+import { User } from "../types/user";
+import { Event } from "../types/event";
+import { Group } from "../types/group";
 
 interface EventContextType {
   event: Event | null;
@@ -22,7 +21,7 @@ interface EventContextType {
   getGroupById: (id: string) => Promise<void>;
   updateEvent: (field: keyof Event, value: any) => Promise<void>;
   removeEvent: (id: string) => Promise<void>;
-  getEventConnections: (id: number) => Promise<void>;
+  getEventConnections: (id: string) => Promise<void>;
   loading: boolean;
   error: string | null;
 }
@@ -46,7 +45,7 @@ export const EventProvider: React.FC<EventProviderProps> = ({ children }) => {
     try {
       const data = await fetchEventById(id);
       setEvent(data);
-      setEventGroup(data.group)
+      setEventGroup(data.group);
     } catch (err: any) {
       setError(err.message || "Failed to fetch event");
     } finally {
@@ -63,25 +62,24 @@ export const EventProvider: React.FC<EventProviderProps> = ({ children }) => {
         setEventGroup(null);
         console.warn(`No group found for event ${id}`);
       } else {
-        console.log(data, 'event group xxxxxxxxxxxxxxxx')
         setEventGroup(data);
       }
     } catch (err: any) {
       setError(err.message || "Failed to fetch group");
-      setEventGroup(null); 
+      setEventGroup(null);
     } finally {
       setLoading(false);
     }
   };
 
-  const getEventConnections = async (id: number) => {
+  const getEventConnections = async (id: string) => {
     setLoading(true);
     setError(null);
     try {
       // @ts-ignore
       const data = await fetchEventConnections(id);
-      console.log(data, 'xxxxxxxxxxxxxxxxxxxxxxxxxx')
       setEventConnections(data);
+      console.log(eventConnections, "connections");
     } catch (err: any) {
       setError(err.message || "Failed to fetch connections");
     } finally {
@@ -97,7 +95,9 @@ export const EventProvider: React.FC<EventProviderProps> = ({ children }) => {
     setLoading(true);
     setError(null);
     try {
-      const updatedEvent = await patchEvent(String(event.id), { [field]: value });
+      const updatedEvent = await patchEvent(String(event.id), {
+        [field]: value,
+      });
       setEvent(updatedEvent);
     } catch (err) {
       console.error(`Error updating event field ${field}:`, err);
@@ -137,8 +137,7 @@ export const EventProvider: React.FC<EventProviderProps> = ({ children }) => {
         getEventConnections,
         loading,
         error,
-      }}
-    >
+      }}>
       {children}
     </EventContext.Provider>
   );

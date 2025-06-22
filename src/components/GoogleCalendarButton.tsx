@@ -1,36 +1,4 @@
-interface PriceBand {
-  type: "Early bird" | "Standard" | "VIP";
-  price: string;
-  ticketCount: number;
-}
-
-interface Location {
-  placename: string;
-  lng: number;
-  lat: number;
-}
-
-interface Event {
-  id: string;
-  image: string;
-  title: string;
-  date: string;
-  groupName: string;
-  groupId: number;
-  duration: string;
-  priceBands: PriceBand[];
-  startTime?: string;
-  going: number;
-  capacity: number;
-  availability: number;
-  free: boolean;
-  category: string;
-  tags: string[];
-  description: string[];
-  attendeesId: string[];
-  location: Location;
-  approved: boolean;
-}
+import { Event } from "../types/event";
 
 const GoogleCalendarButton = ({ eventDetails }: { eventDetails: Event }) => {
   function addToGoogleCalendar(event: Event) {
@@ -75,12 +43,11 @@ const GoogleCalendarButton = ({ eventDetails }: { eventDetails: Event }) => {
   }
 
   return (
-    <div className="flex items-center mt-auto mb-12">
-      <div className="mt-auto mb-12">
+    <div className="flex items-center mt-auto ">
+      <div className="mt-auto ">
         <button
           onClick={() => addToGoogleCalendar(eventDetails)}
-          className="py-3 px-6 bg-primary text-white mobile:text-[14px] font-semibold rounded-lg"
-        >
+          className="py-3 px-6 bg-primary text-white mobile:text-[14px] font-semibold rounded-lg border-2 border-primary">
           Add to Google Calendar
         </button>
       </div>{" "}

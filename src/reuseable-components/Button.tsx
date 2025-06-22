@@ -3,6 +3,7 @@ interface ButtonProps {
   px?: string;
   py?: string;
   ml?: string;
+  mt?: string;
   bgColour?: string;
   textColour?: string;
   fontSize?: string;
@@ -18,6 +19,7 @@ const Button: React.FC<ButtonProps> = ({
   px = "px-4",
   py = "py-2",
   ml,
+  mt,
   bgColour = "bg-primary",
   textColour = "text-textSecondary",
   fontSize = "text-[14px]",
@@ -31,8 +33,7 @@ const Button: React.FC<ButtonProps> = ({
     <button
       disabled={isDisabled}
       onClick={handleClick}
-      className={`${px} ${py} ${ml} ${bgColour} ${textColour} ${fontSize} ${fontWeight} ${borderWidth} ${borderColour} flex justify-center items-center rounded-lg`}
-    >
+      className={`${px} ${py} ${ml} ${mt} ${bgColour} ${textColour} ${fontSize} ${fontWeight} ${borderWidth} ${borderColour} flex justify-center items-center rounded-lg`}>
       {children}
     </button>
   );

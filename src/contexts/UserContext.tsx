@@ -1,13 +1,18 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import {
+  fetchConnectionRequests,
   fetchUserEvents,
   fetchUserGroups,
   fetchUserNotifications,
+  postAcceptConnectionRequest,
+  postJoinEvent,
   postJoinGroup,
   postLeaveGroup,
+  postMakeConnectionRequest,
+  postRejectConnectionRequest,
   updateUser,
 } from "../../utils/api/user-api";
-import { fetchEventById, patchEvent } from "../../utils/api/events-api";
+
 import { useModal } from "./ModalContext";
 import { useNavigate } from "react-router-dom";
 import { useEvents } from "./EventsContext";
@@ -16,8 +21,9 @@ import { Event } from "../types/event";
 import { Group } from "../types/group";
 import { Notifications } from "../types/notifications";
 import { useNotifications } from "./NotificationsContext";
-import { fetchGroupById } from "../../utils/api/groups-api";
 import { useGroups } from "./GroupsContext";
+import { useEvent } from "./EventContext";
+import { fetchEventById } from "../../utils/api/events-api";
 
 interface Request {
   id: number;
@@ -49,8 +55,10 @@ interface UserContextType {
   userConnectionRequests: Request[];
   getConnectionRequest: (id: number) => void;
   isUserGroupMember: (groupId: number) => Promise<boolean>;
+  isUserEventAttendee: (eventId: number) => Promise<boolean>;
   joinGroup: (groupId: number) => Promise<void>;
   leaveGroup: (groupId: number) => Promise<void>;
+  createConnectionRequest: (recipientId: number) => void;
 }
 
 const UserContext = createContext<UserContextType | null>(null);
@@ -60,7 +68,8 @@ interface UserProviderProps {
 }
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const { setEvents } = useEvents();
+  const { events, setEvents, fetchEvents } = useEvents();
+  const { getEventConnections, setEvent } = useEvent();
   const { groups, setGroups } = useGroups();
   const { hideModal } = useModal();
   const { setUserNotifications } = useNotifications();
@@ -97,67 +106,37 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
   };
 
-  const joinFreeEvent = async (eventId: string | undefined) => {
+  const joinFreeEvent = async (
+    eventId: string | undefined,
+    ticketType: string | undefined
+  ) => {
+    setLoading(true);
+    setError(null);
+
+    if (!eventId) {
+      setError("Invalid event ID.");
+      console.error("No event ID provided to joinFreeEvent.");
+      setLoading(false);
+      return;
+    }
+
     try {
-      setError(null);
+      await postJoinEvent(eventId, ticketType);
+      const updatedEvent = await fetchEventById(eventId);
+      console.log("Updated event fetched:", updatedEvent);
+      setEvent(updatedEvent);
+      await fetchEvents({});
+      await getEventConnections(eventId);
 
-      if (!eventId) {
-        setError("Invalid event ID.");
-        console.error("No event ID provided to joinFreeEvent.");
-        return;
-      }
-
-      const event = await fetchEventById(eventId);
-
-      if (!event || !Array.isArray(event.attendees)) {
-        setError("Event not found or has invalid data.");
-        console.error("Invalid event data:", event);
-        return;
-      }
-
-      if (event.availability <= 0) {
-        setError("Event is fully booked.");
-        return;
-      }
-
-      if (event.attendees.includes(user?.id || "")) {
-        setError("You have already joined this event.");
-        return;
-      }
-
-      const updatedUser = await updateUser(String(user?.id!), {
-        userEvents: [...(user?.events ?? []), eventId],
-      });
-
-      const updatedEvent = await patchEvent(eventId, {
-        attendees: [...event.attendees, user?.id || ""],
-        going: event.going + 1,
-        availability: event.availability - 1,
-      });
-
-      setUser(updatedUser);
-
-      (setEvents as any)((prevEvents: any) => {
-        const eventExists = prevEvents.some((e: any) => e.id === eventId);
-
-        if (eventExists) {
-          return prevEvents.map((e: any) =>
-            e.id === eventId ? updatedEvent : e
-          );
-        } else {
-          return [...prevEvents, updatedEvent];
-        }
-      });
+      setLoading(false);
     } catch (err: unknown) {
+      setLoading(false);
+      let errorMessage = "Failed to join event.";
       if (err instanceof Error) {
-        console.error(`Error joining event ${eventId || "undefined"}:`, err);
-        setError(err.message || "Failed to join the event.");
-      } else {
-        console.error(
-          `Unknown error occurred while joining event ${eventId || "undefined"}`
-        );
-        setError("Failed to join the event.");
+        errorMessage = err.message;
       }
+      setError(errorMessage);
+      console.error("Error joining event:", err);
     }
   };
 
@@ -329,6 +308,20 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     return group.members.includes(user.id);
   };
 
+  function isUserEventAttendee(eventId: number) {
+    if (!user?.id) {
+      console.log("No user ID available");
+      return false;
+    }
+    const event = events.find((event) => event.id === eventId);
+    if (!event) {
+      console.log("Event not found:", eventId);
+      return false;
+    }
+
+    return event.attendees.includes(user.id);
+  }
+
   const getUserNotifications = async (id: number) => {
     setLoading(true);
     setError(null);
@@ -377,7 +370,35 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   //     setLoading(false);
   //   }
   // };
+  const createConnectionRequest = async (recipientId: number) => {
+    if (!user?.id) {
+      setError("User is not logged in or has no valid ID.");
+      return;
+    }
 
+    if (user.id === recipientId) {
+      setError("You can't connect with yourself.");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const result = await postMakeConnectionRequest(
+        String(user.id),
+        String(recipientId)
+      );
+      console.log("Connection request sent:", result);
+    } catch (err: any) {
+      console.error("Connection request failed:", err);
+      const message =
+        err?.response?.data?.message || "Failed to send connection request.";
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
+  };
   const getConnectionRequest = async (id: number) => {
     if (!user?.id) {
       setError("User is not logged in or doesn't have a valid ID.");
@@ -385,7 +406,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       return;
     }
     try {
-      const requests = await fetchConnetionRequests(String(id));
+      const requests = await fetchConnectionRequests(String(id));
       setUserConnectionRequests(requests);
     } catch (err) {
       console.error("Error accepting request", err);
@@ -402,7 +423,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       return;
     }
     try {
-      const acceptMessage = await postAcceptConnetionRequest(String(id));
+      const acceptMessage = await postAcceptConnectionRequest(String(id));
       if (acceptMessage) {
         setIsNewConnection(true);
       }
@@ -421,7 +442,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       return;
     }
     try {
-      const rejectMessage = await postRejectConnetionRequest(String(id));
+      const rejectMessage = await postRejectConnectionRequest(String(id));
       if (rejectMessage) {
         setIsNewConnection(false);
       }
@@ -433,10 +454,10 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
   };
 
-  function isUserAttendingEvent(id: string) {
-    const isAttending = user?.events?.includes(Number(id));
-    return isAttending || false;
-  }
+  // function isUserAttendingEvent(id: string) {
+  //   const isAttending = user?.events?.includes(Number(id));
+  //   return isAttending || false;
+  // }
 
   return (
     <UserContext.Provider
@@ -456,7 +477,6 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         userTotalEvents,
         userTotalGroups,
         getUserTotalGroups,
-        isUserAttendingEvent,
         getUserNotifications,
         acceptConnectionRequest,
         userConnectionRequests,
@@ -465,6 +485,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         isUserGroupMember,
         joinGroup,
         leaveGroup,
+        createConnectionRequest,
+        isUserEventAttendee,
       }}>
       {children}
     </UserContext.Provider>

@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 import React, { useEffect } from "react";
 import { Group } from "../../types/group";
-import useIsGroupMember from "../../hooks/useIsGroupMember";
 import { useModal } from "../../contexts/ModalContext";
 import LeaveGroupConfirmation from "../../components/LeaveGroupConfirmation";
 import { useGroup } from "../../contexts/GroupContext";

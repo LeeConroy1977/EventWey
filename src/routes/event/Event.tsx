@@ -10,11 +10,12 @@ import EventWrapper from "./EventWrapper";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 import { useUser } from "../../contexts/UserContext";
 import { useEventModal } from "../../contexts/EventModelContext";
+import EventOptionsContainer from "../../layouts/user-layout/EventOptionsContainer";
 
 const Event = () => {
   const { id } = useParams();
   const { isMobile } = useScreenWidth();
-  const { isUserAttendingEvent } = useUser();
+  const { isUserEventAttendee } = useUser();
   const navigate = useNavigate();
   const {
     event,
@@ -25,7 +26,8 @@ const Event = () => {
     updateEvent,
     removeEvent,
   } = useEvent();
-  const { description, free, priceBands, location, approved, group } = event || {};
+  const { description, free, priceBands, location, approved, group } =
+    event || {};
 
   const { lat, lng, placename } = location || {};
 
@@ -52,7 +54,7 @@ const Event = () => {
   // @ts-ignore
   const eventPrices = getPriceRange(priceBands);
   // @ts-ignore
-  const isAttending = isUserAttendingEvent(event?.id) || false;
+  const isAttending = isUserEventAttendee(event?.id) || false;
 
   function handleApproveEvent() {
     updateEvent("approved", true);
@@ -68,7 +70,7 @@ const Event = () => {
     if (id) {
       getEventById(id);
       // @ts-ignore
-      getEventConnections(id);
+      getEventConnections(id.toString());
     }
   }, [id]);
 
@@ -86,15 +88,13 @@ const Event = () => {
             <div className="fixed flex flex-row items-center justify-around bottom-0 left-0 w-screen h-[4.4rem] bg-bgSecondary px-6 z-50 border-t-[1px] border-t-gray-100">
               <button
                 onClick={handleApproveEvent}
-                className="w-[120px] h-[40px]  text-[11px] flex items-center justify-center font-semibold rounded-lg  text-white bg-primary "
-              >
+                className="w-[120px] h-[40px]  text-[11px] flex items-center justify-center font-semibold rounded-lg  text-white bg-primary ">
                 Approve Event
               </button>
               <button
                 // @ts-ignore
                 onClick={() => handleRemoveEvent(id)}
-                className="w-[120px] h-[40px] text-[11px] flex items-center justify-center font-semibold rounded-lg  text-white bg-secondary "
-              >
+                className="w-[120px] h-[40px] text-[11px] flex items-center justify-center font-semibold rounded-lg  text-white bg-secondary ">
                 Reject Event
               </button>
             </div>
@@ -116,8 +116,7 @@ const Event = () => {
                   isAttending
                     ? "bg-bgPrimary border-2 border-primary text-primary"
                     : "bg-secondary text-white"
-                }`}
-              >
+                }`}>
                 {isAttending ? "Going" : free ? "Join Event" : "Get Tickets"}
               </button>
             </div>
@@ -135,7 +134,7 @@ const Event = () => {
               <EventDetail description={description ?? []} />
             </section>
             <section className="w-full tablet:w-[38%] h-auto flex flex-col items-center justify-start p-0 pl-0 desktop:p-0 tablet:pl-4 desktop:pl-8 gap-y-4 overflow-x-scroll">
-              {/* {!isMobile && <EventOptionsContainer />} */}
+              {!isMobile && <EventOptionsContainer />}
               {isMobile && (
                 <h1 className="text-[14px] desktop:text-[1rem] font-bold text-textPrimary mb-1 mr-auto desktop:mr-0 mt-6 desktop:-mt-0.5">
                   Location

@@ -1,13 +1,14 @@
 import { createContext, useState, useContext, ReactNode, FC } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
-
-import JoinedEventConfimation from "../components/JoinedEventConfimation";
-import CancelAttendance from "../components/CancelAttendance";
+import CancelFreeEvent from "../components/CancelFreeEvent";
+import CancelPaidEvent from "../components/CancelPaidEvent";
+import JoinedFreeEventConfimation from "../components/JoinedFreeEventConfimation";
+import JoinedPaidEventConfirmation from "../components/joinedPaidEventConfirmation";
 
 interface EventModalContextProps {
   openEventModal: (
     event: unknown,
-    action: "join" | "tickets" | "cancel"
+    action: "join" | "tickets" | "cancelFreeEvent" | "cancelPaidEvent"
   ) => void;
   closeEventModal: () => void;
   isVisible: boolean;
@@ -33,21 +34,25 @@ export const EventModalProvider: FC<{ children: ReactNode }> = ({
 
   const openEventModal = (
     event: unknown,
-    action: "join" | "tickets" | "cancel"
+    action: "join" | "tickets" | "cancelFreeEvent" | "cancelPaidEvent"
   ) => {
     let content: ReactNode;
     switch (action) {
       case "join":
         // @ts-ignore
-        content = <JoinedEventConfimation event={event} />;
+        content = <JoinedFreeEventConfimation event={event} />;
         break;
       case "tickets":
         // @ts-ignore
-        content = <JoinedEventConfimation event={event} />;
+        content = <JoinedPaidEventConfirmation event={event} />;
         break;
-      case "cancel":
+      case "cancelFreeEvent":
         // @ts-ignore
-        content = <CancelAttendance event={event} />;
+        content = <CancelFreeEvent event={event} />;
+        break;
+      case "cancelPaidEvent":
+        // @ts-ignore
+        content = <CancelPaidEvent event={event} />;
         break;
       default:
         content = null;
@@ -64,8 +69,7 @@ export const EventModalProvider: FC<{ children: ReactNode }> = ({
 
   return (
     <EventModalContext.Provider
-      value={{ openEventModal, closeEventModal, isVisible }}
-    >
+      value={{ openEventModal, closeEventModal, isVisible }}>
       {children}
       {isVisible && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
@@ -73,8 +77,7 @@ export const EventModalProvider: FC<{ children: ReactNode }> = ({
             {modalContent}
             <button
               className="absolute top-3 right-3 text-transparent bg-none text-2xl cursor-pointer"
-              onClick={closeEventModal}
-            >
+              onClick={closeEventModal}>
               <IoIosCloseCircle className="text-primary tablet:text-[36px] " />
             </button>
           </div>

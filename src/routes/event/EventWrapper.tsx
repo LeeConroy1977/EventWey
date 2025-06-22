@@ -5,7 +5,8 @@ import { useEventModal } from "../../contexts/EventModelContext";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 import EventOptionsContainer from "../../layouts/user-layout/EventOptionsContainer";
 import useHandleGroupClick from "../../hooks/useHandleGroupClick";
-import { Event } from '../../types/event';
+import { Event } from "../../types/event";
+import { IoPerson } from "react-icons/io5";
 
 interface EventWrapperProps {
   event: Event;
@@ -18,7 +19,7 @@ const EventWrapper: React.FC<EventWrapperProps> = ({
   handleApproveEvent,
   handleRemoveEvent,
 }) => {
-  const { isUserAttendingEvent } = useUser();
+  const { isUserEventAttendee } = useUser();
   const { isMobile } = useScreenWidth();
   const handleGroupClick = useHandleGroupClick();
   const { id } = useParams();
@@ -32,28 +33,32 @@ const EventWrapper: React.FC<EventWrapperProps> = ({
     startTime,
     approved,
     group,
+    attendees,
   } = event;
   const { openEventModal } = useEventModal();
 
-   let formattedDate: string;
- try {
- 
-   const eventDate = typeof date === "number" ? new Date(date) : new Date(parseInt(date, 10));
-   if (isNaN(eventDate.getTime())) {
-     throw new Error("Invalid date");
-   }
-   formattedDate = format(eventDate, "EEE, MMM d, yyyy");
- } catch (error) {
-   console.warn(`Invalid date for event ${id}: ${date}`);
-   formattedDate = "Date unavailable";
- }
+  let formattedDate: string;
+  try {
+    const eventDate =
+      typeof date === "number" ? new Date(date) : new Date(parseInt(date, 10));
+    if (isNaN(eventDate.getTime())) {
+      throw new Error("Invalid date");
+    }
+    formattedDate = format(eventDate, "EEE, MMM d, yyyy");
+  } catch (error) {
+    console.warn(`Invalid date for event ${id}: ${date}`);
+    formattedDate = "Date unavailable";
+  }
 
   const handleJoinEvent = () => openEventModal(event, "join");
   const handleGetTickets = () => openEventModal(event, "tickets");
-  const handleCancelAttendance = () => openEventModal(event, "cancel");
+  const handleCancelFreeAttendance = () =>
+    openEventModal(event, "cancelFreeEvent");
+  const handleCancePaidlAttendance = () =>
+    openEventModal(event, "cancelPaidEvent");
 
   // Fix: Explicitly type as boolean and ensure return value
-  const isAttending: boolean = isUserAttendingEvent(id ?? "") || false;
+  const isAttending: boolean = isUserEventAttendee(event.id ?? "") || false;
 
   // Helper functions for group
   const getGroupId = (): string => {
@@ -63,9 +68,6 @@ const EventWrapper: React.FC<EventWrapperProps> = ({
   const getGroupName = (): string => {
     return typeof group === "number" ? `Group #${group}` : group.name;
   };
-
- 
-
 
   return (
     <div className="w-[100%] h-auto tablet:h-[18rem] desktop:h-[21rem] xl-screen:h-[25rem] flex flex-col tablet:flex-row items-center justify-center bg-bgPrimary border-b-2 border-gray-200 p-6 desktop:p-8">
@@ -89,8 +91,7 @@ const EventWrapper: React.FC<EventWrapperProps> = ({
               Hosted by:
               <span
                 onClick={() => handleGroupClick(getGroupId())}
-                className="font-semibold text-primary ml-2"
-              >
+                className="font-semibold text-primary ml-2">
                 {getGroupName()}
               </span>
             </p>
@@ -104,19 +105,23 @@ const EventWrapper: React.FC<EventWrapperProps> = ({
           <p className="mt-3 desktop:mt-3 text-[12px] desktop:text-[14px] xl-screen:text-[16px] font-semibold mr-auto">
             {description[0]}
           </p>
+          <div className="w-full flex items-center mt-6 desktop:mt-auto desktop:mr-auto  ">
+            <IoPerson className="text-primary text-[16px] xl-screen:text-[18px]" />
+            <p className="ml-2 text-[12px] xl-screen:text-[16px] font-semibold text-[#2C3E50]">
+              {attendees?.length} Going
+            </p>
+          </div>
           {isMobile && <EventOptionsContainer />}
           {!isMobile && !approved && (
             <div className="flex mr-auto mt-auto mb-1 desktop:h-[66px]">
-             erv              <button
+              <button
                 onClick={handleApproveEvent}
-                className="w-[110px] desktop:w-[120px] tablet:h-[34px] desktop:h-[40px] xl-screen:w-[140px] xl-screen:h-[44px] mt-auto mb-1 mr-auto flex items-center justify-center tablet:text-[10px] desktop:text-[11px] xl-screen:text-[12px] font-semibold rounded-lg tablet:mb-3 desktop:mb-1 bg-primary text-white"
-              >
+                className="w-[110px] desktop:w-[120px] tablet:h-[34px] desktop:h-[40px] xl-screen:w-[140px] xl-screen:h-[44px] mt-auto mb-1 mr-auto flex items-center justify-center tablet:text-[10px] desktop:text-[11px] xl-screen:text-[12px] font-semibold rounded-lg tablet:mb-3 desktop:mb-1 bg-primary text-white">
                 Approve Group
               </button>
               <button
                 onClick={handleRemoveEvent}
-                className="w-[110px] desktop:w-[120px] tablet:h-[34px] desktop:h-[40px] xl-screen:w-[140px] xl-screen:h-[44px] mt-auto mb-1 mr-auto flex items-center justify-center tablet:text-[10px] desktop:text-[11px] xl-screen:text-[12px] font-semibold rounded-lg tablet:mb-3 desktop:mb-1 bg-secondary text-white tablet:ml-8"
-              >
+                className="w-[110px] desktop:w-[120px] tablet:h-[34px] desktop:h-[40px] xl-screen:w-[140px] xl-screen:h-[44px] mt-auto mb-1 mr-auto flex items-center justify-center tablet:text-[10px] desktop:text-[11px] xl-screen:text-[12px] font-semibold rounded-lg tablet:mb-3 desktop:mb-1 bg-secondary text-white tablet:ml-8">
                 Reject Group
               </button>
             </div>
@@ -124,9 +129,11 @@ const EventWrapper: React.FC<EventWrapperProps> = ({
           {!isMobile && approved && (
             <button
               onClick={
-                isAttending
-                  ? handleCancelAttendance
-                  : free
+                isAttending && free
+                  ? handleCancelFreeAttendance
+                  : isAttending && !free
+                  ? handleCancePaidlAttendance
+                  : !isAttending && free
                   ? handleJoinEvent
                   : handleGetTickets
               }
@@ -136,8 +143,7 @@ const EventWrapper: React.FC<EventWrapperProps> = ({
                   : free
                   ? "bg-secondary text-white"
                   : "bg-secondary text-white"
-              }`}
-            >
+              }`}>
               {isAttending ? "Going" : free ? "Join Event" : "Get Tickets"}
             </button>
           )}

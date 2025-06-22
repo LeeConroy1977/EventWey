@@ -13,26 +13,32 @@ export const fetchAllEvents = async (params: {
   category?: string;
   date?: string;
   sortBy?: string;
+  limit?: number;
+  page?: number;
 }): Promise<any[]> => {
   try {
-    const response = await axios.get(`${API}/events`);
+    const { category, date, sortBy, limit = 15, page = 1 } = params;
+    const response = await axios.get(`${API}/events`, {
+      params: { category, date, sortBy, limit, page },
+    });
 
     let filteredData = response.data;
-    if (params.category) {
+
+    if (category) {
       filteredData = filteredData.filter(
-        (event: any) => event.category === params.category
+        (event: any) => event.category === category
       );
     }
 
-    if (params.date) {
-      filteredData = eventsDateFilter(filteredData, params.date);
+    if (date) {
+      filteredData = eventsDateFilter(filteredData, date);
     }
 
-    if (params.sortBy === "popular") {
+    if (sortBy === "popular") {
       filteredData = sortByPopularity(filteredData);
-    } else if (params.sortBy === "date") {
+    } else if (sortBy === "date") {
       filteredData = sortByDate(filteredData);
-    } else if (params.sortBy === "free") {
+    } else if (sortBy === "free") {
       filteredData = sortByFree(filteredData);
     }
 
@@ -97,8 +103,7 @@ export const postEvent = async (eventData: any): Promise<any> => {
 export const fetchEventConnections = async (id: string): Promise<User[]> => {
   try {
     const eventAttendees = await axios.get(`${API}/events/${id}/attendees`);
-
-    console.log(eventAttendees);
+    console.log(eventAttendees, "api");
     return eventAttendees.data;
   } catch (error) {
     // @ts-ignore
