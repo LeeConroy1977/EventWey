@@ -14,7 +14,8 @@ const JoinedFreeEventConfimation = () => {
   const [uiState, setUiState] = useState<
     "idle" | "loading" | "joined" | "error"
   >("idle");
-  const [isJoining, setIsJoining] = useState(false); 
+  const [isJoining, setIsJoining] = useState(false);
+  const [ticketType, setTicketType] = useState("");
   const { isMobile } = useScreenWidth();
   const { closeEventModal } = useEventModal();
   const { joinFreeEvent, isUserEventAttendee } = useUser();
@@ -68,11 +69,11 @@ const JoinedFreeEventConfimation = () => {
       setUiState("error");
       return;
     }
-    setIsJoining(true); // Start join process
+    setIsJoining(true);
     setUiState("loading");
     console.log("Set uiState to loading");
     try {
-      await Promise.all([joinFreeEvent(String(event.id))]);
+      await Promise.all([joinFreeEvent(String(event.id), ticketType, {})]);
       const updatedEvent = await fetchEventById(String(event.id));
       setEvent(updatedEvent);
       setUiState("joined");
@@ -82,7 +83,7 @@ const JoinedFreeEventConfimation = () => {
       setUiState("error");
       console.log("Set uiState to error");
     } finally {
-      setIsJoining(false); // End join process
+      setIsJoining(false);
     }
   }
 

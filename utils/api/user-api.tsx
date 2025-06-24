@@ -96,7 +96,8 @@ export const fetchUserEvents = async (
 
 export const postJoinEvent = async (
   eventId: string,
-  ticketType?: string
+  ticketType?: string,
+  body?: {}
 ): Promise<Event> => {
   const token = localStorage.getItem("token");
 
@@ -106,6 +107,38 @@ export const postJoinEvent = async (
           ticketType
         )}`
       : `${API}/events/${eventId}/join`;
+
+    const response = await axios.post(url, body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data as Event;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      const { status, data } = error.response;
+      if (status === 401) {
+        throw new Error("Unauthorized. Please log in.");
+      }
+      throw new Error(data.message || "Failed to join event");
+    }
+    console.error("Error joining event:", error);
+    throw error;
+  }
+};
+
+export const postLeaveEvent = async (
+  eventId: string,
+  ticketType?: string
+): Promise<Event> => {
+  const token = localStorage.getItem("token");
+
+  try {
+    const url = ticketType
+      ? `${API}/events/${eventId}/leave?ticketType=${encodeURIComponent(
+          ticketType
+        )}`
+      : `${API}/events/${eventId}/leave`;
 
     const response = await axios.post(
       url,
@@ -123,9 +156,33 @@ export const postJoinEvent = async (
       if (status === 401) {
         throw new Error("Unauthorized. Please log in.");
       }
-      throw new Error(data.message || "Failed to join event");
+      throw new Error(data.message || "Failed to leave event");
     }
-    console.error("Error joining event:", error);
+    console.error("Error leaving event:", error);
+    throw error;
+  }
+};
+
+export const postBackFillTickets = async () => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw new Error("No authentication token found. Please log in.");
+  }
+
+  try {
+    const response = await axios.post(
+      `${API}/events/backfill-payment-intents`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error backfilling events tickets:", error);
     throw error;
   }
 };

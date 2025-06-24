@@ -57,10 +57,10 @@ const EventWrapper: React.FC<EventWrapperProps> = ({
   const handleCancePaidlAttendance = () =>
     openEventModal(event, "cancelPaidEvent");
 
-  // Fix: Explicitly type as boolean and ensure return value
+
   const isAttending: boolean = isUserEventAttendee(event.id ?? "") || false;
 
-  // Helper functions for group
+
   const getGroupId = (): string => {
     return typeof group === "number" ? String(group) : String(group.id);
   };
@@ -99,7 +99,7 @@ const EventWrapper: React.FC<EventWrapperProps> = ({
           <p className="text-[12px] desktop:text-[14px] xl-screen:text-[18px] font-semibold mt-2 mr-auto">
             Location:
             <span className="font-semibold text-textPrimary desktop:text-primary ml-2">
-              {location.placename}
+              {location?.placename}
             </span>
           </p>
           <p className="mt-3 desktop:mt-3 text-[12px] desktop:text-[14px] xl-screen:text-[16px] font-semibold mr-auto">

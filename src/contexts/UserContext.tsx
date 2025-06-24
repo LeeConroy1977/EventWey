@@ -7,6 +7,7 @@ import {
   postAcceptConnectionRequest,
   postJoinEvent,
   postJoinGroup,
+  postLeaveEvent,
   postLeaveGroup,
   postMakeConnectionRequest,
   postRejectConnectionRequest,
@@ -23,7 +24,7 @@ import { Notifications } from "../types/notifications";
 import { useNotifications } from "./NotificationsContext";
 import { useGroups } from "./GroupsContext";
 import { useEvent } from "./EventContext";
-import { fetchEventById } from "../../utils/api/events-api";
+
 
 interface Request {
   id: number;
@@ -47,7 +48,11 @@ interface UserContextType {
   isUserAttendingEvent: (id: string) => boolean;
   handleSignOut: () => void;
   patchUser: (field: keyof User, value: any) => Promise<void>;
-  joinFreeEvent: (eventId: string) => Promise<void>;
+  joinFreeEvent: (
+    eventId: string,
+    ticketType: string,
+    body: {}
+  ) => Promise<void>;
   getUserTotalEvents: () => Promise<void>;
   acceptConnectionRequest: (id: number) => Promise<void>;
   rejectConnectionRequest: (id: number) => Promise<void>;
@@ -58,6 +63,7 @@ interface UserContextType {
   isUserEventAttendee: (eventId: number) => Promise<boolean>;
   joinGroup: (groupId: number) => Promise<void>;
   leaveGroup: (groupId: number) => Promise<void>;
+  leaveFreeEvent: (eventId: string, ticketType: string) => Promise<void>;
   createConnectionRequest: (recipientId: number) => void;
 }
 
@@ -76,6 +82,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>();
   const navigate = useNavigate();
   const [userEvents, setUserEvents] = useState<Event[]>([]);
+  const [refund, setRefund] = useState({});
   const [userGroups, setUserGroups] = useState<Group[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -108,8 +115,10 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
   const joinFreeEvent = async (
     eventId: string | undefined,
-    ticketType: string | undefined
+    ticketType: string | undefined,
+    body: {}
   ) => {
+    const prevEvents = [...events];
     setLoading(true);
     setError(null);
 
@@ -120,23 +129,110 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       return;
     }
 
+    const eventIdNum = Number(eventId);
+    if (isNaN(eventIdNum)) {
+      setError("Invalid event ID format.");
+      console.error("Invalid event ID format:", eventId);
+      setLoading(false);
+      return;
+    }
+
+    const optimisticEvents = events.map((event) => {
+      if (event.id === eventIdNum) {
+        const updatedAttendees = [...(event.attendees ?? []), user?.id].filter(
+          Boolean
+        );
+        return { ...event, attendees: updatedAttendees };
+      }
+      return { ...event };
+    });
+    console.log("Optimistic events:", optimisticEvents); 
+    setEvents(optimisticEvents);
+
     try {
-      await postJoinEvent(eventId, ticketType);
-      const updatedEvent = await fetchEventById(eventId);
-      console.log("Updated event fetched:", updatedEvent);
-      setEvent(updatedEvent);
-      await fetchEvents({});
-      await getEventConnections(eventId);
+      const eventJoined = await postJoinEvent(eventId, ticketType, body);
+      console.log("Server response:", eventJoined); 
+  
+      setEvents((prev) =>
+        prev.map((event) =>
+          event.id === eventJoined.id ? { ...eventJoined } : { ...event }
+        )
+      );
+      setEvent({ ...eventJoined });
+      await Promise.all([
+        fetchEvents({}),
+        getEventConnections(eventId),
+        fetchUserEvents(String(user?.id!), {}),
+      ]);
 
       setLoading(false);
     } catch (err: unknown) {
-      setLoading(false);
-      let errorMessage = "Failed to join event.";
-      if (err instanceof Error) {
-        errorMessage = err.message;
-      }
-      setError(errorMessage);
       console.error("Error joining event:", err);
+      setEvents([...prevEvents]);
+      setLoading(false);
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to join event.";
+      setError(errorMessage);
+    }
+  };
+
+  const leaveFreeEvent = async (
+    eventId: string | undefined,
+    ticketType: string | undefined
+  ) => {
+    const prevEvents = [...events];
+
+    if (!user?.id) {
+      throw new Error("User not authenticated. Please log in.");
+    }
+
+    const optimisticEvents = events.map((event) =>
+      String(event.id) === String(eventId)
+        ? {
+            ...event,
+            attendees: event?.attendees?.filter((id) => id !== user.id),
+          }
+        : event
+    );
+    setEvents(optimisticEvents);
+
+    try {
+      setLoading(true);
+      setError(null);
+      if (ticketType !== "") {
+        const upDatedEvent = await postLeaveEvent(String(eventId), ticketType);
+        const { updatedEvent, refund } = upDatedEvent;
+        setEvents((prev) =>
+          prev.map((event) =>
+            event.id === updatedEvent.id ? updatedEvent : event
+          )
+        );
+        setRefund(refund);
+        setEvent(updatedEvent);
+        await fetchEvents({});
+        await getEventConnections(eventId);
+        await fetchUserEvents(String(user?.id!), {});
+      }
+      if (ticketType === "") {
+        const upDatedEvent = await postLeaveEvent(String(eventId), ticketType);
+
+        setEvents((prev) =>
+          prev.map((event) =>
+            event.id === upDatedEvent.id ? upDatedEvent : event
+          )
+        );
+        setRefund(refund);
+        setEvent(upDatedEvent);
+        await fetchEvents({});
+        await getEventConnections(eventId);
+        await fetchUserEvents(String(user?.id!), {});
+      }
+    } catch (err) {
+      setEvents(prevEvents);
+      console.error(`Error leaving event`, err);
+      setError(`Failed to leave event`);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -487,6 +583,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         leaveGroup,
         createConnectionRequest,
         isUserEventAttendee,
+        leaveFreeEvent,
+        refund,
       }}>
       {children}
     </UserContext.Provider>

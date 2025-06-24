@@ -71,8 +71,9 @@ const Event = () => {
       getEventById(id);
       // @ts-ignore
       getEventConnections(id.toString());
+      isUserEventAttendee(event?.id);
     }
-  }, [id]);
+  }, [event?.id, isAttending]);
 
   return (
     <div className="w-full h-screen tablet:h-auto flex flex-col items-center justify-start bg-bgSecondary">
