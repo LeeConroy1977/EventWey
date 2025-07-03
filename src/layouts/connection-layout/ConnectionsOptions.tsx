@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useConnections } from "../../contexts/ConnectionsContext";
 import { NavLink } from "react-router-dom";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
+import { useUserConnection } from "../../contexts/UserConnectionContext";
 
 const ConnectionsOptions = () => {
   const [input, setInput] = useState("");
   const { isMobile } = useScreenWidth();
-  const { handleConnectionQuery } = useConnections();
+  const { handleConnectionQuery } = useUserConnection();
 
   useEffect(() => {
     handleConnectionQuery(input);

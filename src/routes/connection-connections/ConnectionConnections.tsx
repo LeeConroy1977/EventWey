@@ -7,9 +7,9 @@ const ConnectionConnections = () => {
   const { connection, connectionConnections, loading, error } = useConnection();
   const handleConnectionClick = useHandleConnectionClick();
 
-  const connectionsLength = connectionConnections?.length || undefined;
+  const connectionsLength = connectionConnections?.length || 0;
   const firstName = connection?.username?.split(" ")[0];
-
+  console.log(connectionConnections, "connections");
   return (
     <div className="w-[100%] min-h-[8rem] bg-bgPrimary mt-8 rounded-lg p-6 desktop:p-10 pb-10">
       <h3 className="font-bold text-textPrimary text-[1rem] xl-screen:text-[18px] mb-8">
@@ -21,8 +21,6 @@ const ConnectionConnections = () => {
         <div className="w-full flex justify-center items-center h-[100px]">
           <ClipLoader size={50} color={"#5d9b9b"} />
         </div>
-      ) : error ? (
-        <div className="w-full text-red-500 text-center mt-4">{error}</div>
       ) : (connectionsLength ?? 0) > 0 ? (
         <div className="flex flex-row items-start justify-start gap-3 flex-wrap">
           {connectionConnections?.map((connection) => (

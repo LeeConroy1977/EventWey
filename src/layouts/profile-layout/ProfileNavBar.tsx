@@ -10,8 +10,7 @@ const ProfileNavBar = () => {
             isActive
               ? "font-semibold text-primary"
               : "font-semibold text-textPrimary"
-          }
-        >
+          }>
           Events
         </NavLink>
         <NavLink
@@ -20,8 +19,7 @@ const ProfileNavBar = () => {
             isActive
               ? "font-semibold text-primary"
               : "font-semibold text-textPrimary"
-          }
-        >
+          }>
           Groups
         </NavLink>
         <NavLink
@@ -30,9 +28,26 @@ const ProfileNavBar = () => {
             isActive
               ? "font-semibold text-primary"
               : "font-semibold text-textPrimary"
-          }
-        >
+          }>
           Connections
+        </NavLink>
+        <NavLink
+          to={`/user/profile/view-requests`}
+          className={({ isActive }) =>
+            isActive
+              ? "font-semibold text-primary"
+              : "font-semibold text-textPrimary"
+          }>
+          View Requests
+        </NavLink>
+        <NavLink
+          to={`/user/profile/sent-requests`}
+          className={({ isActive }) =>
+            isActive
+              ? "font-semibold text-primary"
+              : "font-semibold text-textPrimary"
+          }>
+          Sent Requests
         </NavLink>
         <NavLink
           to={`/user/profile/settings`}
@@ -40,8 +55,7 @@ const ProfileNavBar = () => {
             isActive
               ? "font-semibold text-primary"
               : "font-semibold text-textPrimary"
-          }
-        >
+          }>
           Settings
         </NavLink>
       </ul>

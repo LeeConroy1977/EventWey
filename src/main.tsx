@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
-import { ConnectionsProvider } from "./contexts/ConnectionsContext";
+
 import { GroupsProvider } from "./contexts/GroupsContext";
 import { EventProvider } from "./contexts/EventContext";
 import { EventsProvider } from "./contexts/EventsContext";
@@ -19,6 +19,7 @@ import { EventModalProvider } from "./contexts/EventModelContext";
 import { ScreenWidthProvider } from "./contexts/ScreenWidthContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { NotificationsProvider } from "./contexts/NotificationsContext";
+import { UserConnectionProvider } from "./contexts/UserConnectionContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 
@@ -32,9 +33,9 @@ root.render(
               <GroupsProvider>
                 <EventsProvider>
                   <EventProvider>
-                    <UserProvider>
-                      <ConnectionsProvider>
-                        <ConnectionProvider>
+                    <ConnectionProvider>
+                      <UserProvider>
+                        <UserConnectionProvider>
                           <CreateGroupProvider>
                             <CreateEventProvider>
                               <CreateUserProvider>
@@ -46,9 +47,9 @@ root.render(
                               </CreateUserProvider>
                             </CreateEventProvider>
                           </CreateGroupProvider>
-                        </ConnectionProvider>
-                      </ConnectionsProvider>
-                    </UserProvider>
+                        </UserConnectionProvider>
+                      </UserProvider>
+                    </ConnectionProvider>
                   </EventProvider>
                 </EventsProvider>
               </GroupsProvider>

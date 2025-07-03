@@ -1,12 +1,20 @@
 import axios from "axios";
 
-const API = 'https://eventwey-backend.onrender.com';
+const API = "https://eventwey-backend.onrender.com";
+
+axios.defaults.withCredentials = true;
+axios.defaults.headers.common["Content-Type"] = "application/json";
 
 export const fetchConnectionById = async (id: string): Promise<any> => {
   try {
-    const response = await axios.get(`${API}/users/${id}`);
+    const token = localStorage.getItem("token");
+    const response = await axios.get(`${API}/users/${id}`, {
+      withCredentials: true,
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+    });
     const connection = response.data;
-
 
     if (!connection) {
       throw new Error(`Connection not found for ID: ${id}`);
@@ -21,12 +29,17 @@ export const fetchConnectionById = async (id: string): Promise<any> => {
 
 export const fetchUserById = async (id: string): Promise<any> => {
   try {
-    const response = await axios.get(`${API}/users/${id}`);
+    const token = localStorage.getItem("token");
+    const response = await axios.get(`${API}/users/${id}`, {
+      withCredentials: true,
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+    });
     const user = response.data;
 
-
     if (!user) {
-      throw new Error(`user not found for ID: ${id}`);
+      throw new Error(`User not found for ID: ${id}`);
     }
 
     return user;
@@ -38,10 +51,14 @@ export const fetchUserById = async (id: string): Promise<any> => {
 
 export const fetchConnectionEvents = async (id: string): Promise<any[]> => {
   try {
-    const connectionResponse = await axios.get(`${API}/users/${id}/events`);
-    const connectionEvents = connectionResponse.data;
-
-  
+    const token = localStorage.getItem("token");
+    const response = await axios.get(`${API}/users/${id}/events`, {
+      withCredentials: true,
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+    });
+    const connectionEvents = response.data;
 
     return connectionEvents;
   } catch (error) {
@@ -52,10 +69,14 @@ export const fetchConnectionEvents = async (id: string): Promise<any[]> => {
 
 export const fetchConnectionGroups = async (id: string): Promise<any[]> => {
   try {
-    const connectionResponse = await axios.get(`${API}/users/${id}/groups`);
-    const connectionGroups = connectionResponse.data;
-
-   
+    const token = localStorage.getItem("token");
+    const response = await axios.get(`${API}/users/${id}/groups`, {
+      withCredentials: true,
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+    });
+    const connectionGroups = response.data;
 
     return connectionGroups;
   } catch (error) {
@@ -68,9 +89,14 @@ export const fetchConnectionConnections = async (
   id: string
 ): Promise<any[]> => {
   try {
-    const connectionResponse = await axios.get(`${API}/users/${id}connections`);
-    const connectionConnections = connectionResponse.data;
-
+    const token = localStorage.getItem("token");
+    const response = await axios.get(`${API}/users/${id}/connections`, {
+      withCredentials: true,
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+    });
+    const connectionConnections = response.data;
 
     return connectionConnections;
   } catch (error) {

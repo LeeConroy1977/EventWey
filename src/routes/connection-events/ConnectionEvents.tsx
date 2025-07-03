@@ -22,8 +22,6 @@ const ConnectionEvents = () => {
         <div className="w-full flex justify-center items-center h-[100px]">
           <ClipLoader size={80} color={"#5d9b9b"} />
         </div>
-      ) : error ? (
-        <div className="w-full text-red-500 text-center mt-4">{error}</div>
       ) : (eventsLength ?? 0) > 0 ? (
         <div className="flex flex-col gap-4">
           {connectionEvents?.map((event, index) => (

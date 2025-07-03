@@ -341,6 +341,24 @@ export const fetchConnectionRequests = async (id: string): Promise<any[]> => {
   }
 };
 
+export const fetchSentConnectionRequests = async (
+  id: string
+): Promise<any[]> => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.get(`${API}/connections/${id}/sent-requests`, {
+      withCredentials: true,
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching sent-requests:", error);
+    throw error;
+  }
+};
+
 export const postAcceptConnectionRequest = async (id: string): Promise<any> => {
   try {
     const token = localStorage.getItem("token");
@@ -377,6 +395,60 @@ export const postRejectConnectionRequest = async (id: string): Promise<any> => {
     return response.data;
   } catch (error) {
     console.error("Error rejecting connection request:", error);
+    throw error;
+  }
+};
+
+export const cancelConnectionRequest = async (
+  senderId: number,
+  recipientId: number
+): Promise<{ message: string; requestId?: number }> => {
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      throw new Error("No authentication token found");
+    }
+    const response = await axios.delete(
+      `${API}/connections/${senderId}/cancel/${recipientId}`,
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error: any) {
+    console.error(
+      `Error cancelling connection request for sender ${senderId} to recipient ${recipientId}:`,
+      error
+    );
+    throw new Error(
+      error?.response?.data?.message ||
+        `Failed to cancel connection request: ${error.message}`
+    );
+  }
+};
+
+export const removeConnection = async (
+  userId: string,
+  recipientId: string
+): Promise<any> => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.delete(
+      `${API}/connections/${userId}/remove/${recipientId}`,
+
+      {
+        withCredentials: true,
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error removing connection:", error);
     throw error;
   }
 };

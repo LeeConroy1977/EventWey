@@ -21,8 +21,6 @@ const ConnectionGroups = () => {
         <div className="w-full flex justify-center items-center h-[100px]">
           <ClipLoader size={80} color={"#5d9b9b"} />
         </div>
-      ) : error ? (
-        <div className="w-full text-red-500 text-center mt-4">{error}</div>
       ) : (groupsLength ?? 0) > 0 ? (
         <div className="flex flex-row items-start justify-start gap-3 flex-wrap">
           {connectionGroups?.map((group) => (

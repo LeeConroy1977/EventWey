@@ -4,7 +4,6 @@ import ProfileWrapper from "./ProfileWrapper";
 import ProfileBio from "./ProfileBio";
 import ProfileAboutMe from "./ProfileAboutMe";
 import ProfileNavBar from "./ProfileNavBar";
-import { useConnections } from "../../contexts/ConnectionsContext";
 import { useEffect, useState } from "react";
 import ProfileTags from "./ProfileTags";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
@@ -16,12 +15,16 @@ import HomeGroupsCard from "../../routes/groups/HomeGroupsCard";
 import useHandleGroupClick from "../../hooks/useHandleGroupClick";
 import useHandleConnectionClick from "../../hooks/useHandleConnectionClick";
 import HomeConnectionCard from "../../routes/group-members/HomeConnectionCard";
+import { useUserConnection } from "../../contexts/UserConnectionContext";
 
 const ProfileLayout = () => {
   const { user, getUserEvents, getUserGroups, userEvents, userGroups } =
     useUser();
   const { isMobile } = useScreenWidth();
-  const { getAllConnections, filteredConnections } = useConnections();
+  const {
+    userConnectionState: { filteredConnections },
+    getAllConnections,
+  } = useUserConnection();
   const handleEventClick = useHandleEventClick();
   const handleGroupClick = useHandleGroupClick();
   const handleConnectionClick = useHandleConnectionClick();
@@ -122,8 +125,7 @@ const ProfileLayout = () => {
               <div key={sectionKey} className="mt-6 w-full flex flex-col">
                 <div
                   className="w-full h-[50px] flex items-center justify-between cursor-pointer"
-                  onClick={() => toggleSection(sectionKey)}
-                >
+                  onClick={() => toggleSection(sectionKey)}>
                   <h2 className="font-bold text-textPrimary mobile:text-[14px]">
                     {title}
                   </h2>

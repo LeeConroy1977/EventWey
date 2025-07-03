@@ -2,13 +2,16 @@ import { useNavigate } from "react-router-dom";
 import ConnectionPreviewCard from "./ConnectionPreviewCard";
 import { useEffect } from "react";
 import useHandleConnectionClick from "../../hooks/useHandleConnectionClick";
-import { useConnections } from "../../contexts/ConnectionsContext";
 import { ClipLoader } from "react-spinners";
 import { useUser } from "../../contexts/UserContext";
+import { useUserConnection } from "../../contexts/UserConnectionContext";
 
 const UserConnectionPreview = () => {
   const navigate = useNavigate();
-  const { connections, getAllConnections, loading, error } = useConnections();
+  const {
+    userConnectionState: { loading, error, connections },
+    getAllConnections,
+  } = useUserConnection();
   const { user } = useUser();
   const handleConnectionClick = useHandleConnectionClick();
 
@@ -18,7 +21,7 @@ const UserConnectionPreview = () => {
 
   useEffect(() => {
     if (user?.id) {
-      getAllConnections(String(user.id));
+      getAllConnections(Number(user.id));
     } else {
       console.warn("User is undefined or missing an ID.");
     }
@@ -37,8 +40,7 @@ const UserConnectionPreview = () => {
         </h3>
         <p
           className="text-[12px] xl-screen:text-[14px] font-semibold text-primary cursor-pointer"
-          onClick={handleNavigation}
-        >
+          onClick={handleNavigation}>
           Show all
         </p>
       </div>

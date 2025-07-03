@@ -2,9 +2,9 @@ import { useNotifications } from "../../contexts/NotificationsContext";
 import { useUser } from "../../contexts/UserContext";
 import { User } from "../../types/user";
 import NotificationConnectionCard from "./NotificationConnectionCard";
-import { useConnections } from "../../contexts/ConnectionsContext";
 import useHandleConnectionClick from "../../hooks/useHandleConnectionClick";
 import { useEffect } from "react";
+import { useUserConnection } from "../../contexts/UserConnectionContext";
 
 interface ConnectionRequestNotificationProps {
   connection: User;
@@ -14,16 +14,21 @@ interface ConnectionRequestNotificationProps {
 const ConnectionRequestNotification: React.FC<
   ConnectionRequestNotificationProps
 > = ({ connection, handleClick }) => {
+  const { user } = useUser();
+
   const {
-    user,
+    userConnectionState: {
+      loading: connectionLoading,
+      error: connectionError,
+      userConnectionRequests,
+      connections,
+    },
     acceptConnectionRequest,
     rejectConnectionRequest,
-    userConnectionRequests,
     getConnectionRequest,
-  } = useUser();
+  } = useUserConnection();
 
   const { mainNotification } = useNotifications();
-  const { connections } = useConnections();
   const handleConnectionClick = useHandleConnectionClick();
   const requester =
     userConnectionRequests && mainNotification
@@ -50,7 +55,7 @@ const ConnectionRequestNotification: React.FC<
     if (user) {
       getConnectionRequest(user?.id);
     }
-  }, [acceptConnectionRequest, rejectConnectionRequest]);
+  }, []);
 
   return (
     <div className="w-full h-full p-10 flex">
@@ -82,12 +87,12 @@ const ConnectionRequestNotification: React.FC<
           {isConnectionRequest ? (
             <>
               <button
-                onClick={() => acceptConnectionRequest(requestId)}
+                onClick={() => acceptConnectionRequest(requestId, user?.id)}
                 className="w-[70%] py-2 xl-screen:py-3 flex justify-center items-center mt-auto mb-6 text-primary mobile:text-[8px] tablet:text-[9px] desktop:text-[14px] font-medium desktop:font-semibold border-[1px] desktop:border-2 border-primary rounded-lg bg-bgPrimary">
                 Accept request
               </button>
               <button
-                onClick={() => rejectConnectionRequest(requestId)}
+                onClick={() => rejectConnectionRequest(requestId, user?.id)}
                 className="w-[70%] py-2 xl-screen:py-3 flex justify-center items-center mt-3 mb-6 text-secondary mobile:text-[8px] tablet:text-[9px] desktop:text-[14px] font-medium desktop:font-semibold border-[1px] desktop:border-2 border-secondary rounded-lg bg-bgPrimary">
                 Reject request
               </button>

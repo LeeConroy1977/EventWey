@@ -1,51 +1,78 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNotifications } from "../../contexts/NotificationsContext";
 import ConnectionRequestNotification from "./ConnectionRequestNotification";
 import { useConnection } from "../../contexts/ConnectionContext";
 import useHandleConnectionClick from "../../hooks/useHandleConnectionClick";
 import { useUser } from "../../contexts/UserContext";
-import { useConnections } from "../../contexts/ConnectionsContext";
+import { useUserConnection } from "../../contexts/UserConnectionContext";
 import { ClipLoader } from "react-spinners";
 
 const NotificationWindow: React.FC = () => {
   const { mainNotification } = useNotifications();
-  const { connection, getConnectionById, loading } = useConnection();
-  const { getAllConnections } = useConnections();
+  const { connection, getConnectionById } = useConnection();
+  const { getAllConnections } = useUserConnection();
+  const { user } = useUser();
   const {
-    user,
+    userConnectionState: { loading: connectionLoading, error: connectionError },
     getConnectionRequest,
-    acceptConnectionRequest,
-    rejectConnectionRequest,
-  } = useUser();
+  } = useUserConnection();
   const handleConnectionClick = useHandleConnectionClick();
 
   useEffect(() => {
     if (
-      user &&
+      user?.id &&
+      !isNaN(user.id) &&
       mainNotification &&
       (mainNotification.type === "connection_request" ||
         mainNotification.type === "connection_accepted")
     ) {
-      getConnectionRequest(user?.id);
-      getAllConnections(user?.id);
-      getConnectionById(mainNotification?.senderId);
+      const fetchData = async () => {
+        try {
+          await Promise.all([
+            getConnectionRequest(user.id),
+            getAllConnections(user.id),
+            mainNotification.senderId &&
+              getConnectionById(String(mainNotification.senderId)),
+          ]);
+        } catch (error) {
+          console.error("Error fetching notification data:", error);
+        }
+      };
+      fetchData();
     }
-  }, [mainNotification, user]);
+  }, [mainNotification, user?.id]);
 
-  if (!mainNotification) return null;
+  if (!mainNotification) {
+    return (
+      <div className="w-full h-[600px] bg-white mt-4 flex justify-center items-center text-gray-500">
+        No notifications to show...
+      </div>
+    );
+  }
+
   return (
     <div className="w-full h-[600px] bg-white mt-4">
-      {loading ? (
-        <div className="flex justify-center items-center tablet:h-[350px] desktop:h-[390px] xl-screen:h-[420px] ">
-          <ClipLoader size={50} color={"#5d9b9b"} />
+      {connectionLoading ? (
+        <div className="flex justify-center items-center tablet:h-[350px] desktop:h-[390px] xl-screen:h-[420px]">
+          <ClipLoader size={50} color="#5d9b9b" />
+        </div>
+      ) : connectionError ? (
+        <div className="w-full text-red-500 text-center mt-4">
+          {connectionError}
+        </div>
+      ) : mainNotification.type === "connection_request" ? (
+        <ConnectionRequestNotification
+          connection={connection}
+          handleClick={handleConnectionClick}
+        />
+      ) : mainNotification.type === "connection_accepted" ? (
+        <div className="w-full text-center mt-4 text-primary">
+          Connection accepted with {connection?.username || "user"}!
         </div>
       ) : (
-        mainNotification.type === "connection_request" && (
-          <ConnectionRequestNotification
-            connection={connection}
-            handleClick={handleConnectionClick}
-          />
-        )
+        <div className="w-full text-gray-500 text-center mt-4">
+          Unknown notification type
+        </div>
       )}
     </div>
   );

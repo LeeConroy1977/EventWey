@@ -1,7 +1,6 @@
-
-import { useConnections } from '../../contexts/ConnectionsContext';
-import { useUser } from '../../contexts/UserContext';
-import {User} from '../../types/user'
+import { useUserConnection } from "../../contexts/UserConnectionContext";
+import { useUser } from "../../contexts/UserContext";
+import { User } from "../../types/user";
 
 interface ConnectionPreviewCardProps {
   connection: User;
@@ -15,10 +14,14 @@ const ConnectionPreviewCard: React.FC<ConnectionPreviewCardProps> = ({
   handleModalClose,
 }) => {
   const { id, profileBackgroundImage, profileImage, username } = connection;
-  const { connections } = useConnections();
+  const {
+    userConnectionState: { connections },
+  } = useUserConnection();
   const { user } = useUser();
 
-  const isConnection = connections?.some((connection) => connection.id === Number(id))
+  const isConnection = connections?.some(
+    (connection) => connection.id === Number(id)
+  );
 
   return (
     <div
@@ -26,12 +29,10 @@ const ConnectionPreviewCard: React.FC<ConnectionPreviewCardProps> = ({
       onClick={() => {
         handleClick(String(id));
         handleModalClose?.();
-      }}
-    >
+      }}>
       <div
         className="relative w-[100%] h-[30%]  flex items-center justify-center
-      "
-      >
+      ">
         <img
           className="w-[100%] h-[100%] rounded-tl-lg rounded-tr-lg"
           src={profileBackgroundImage}
@@ -47,7 +48,7 @@ const ConnectionPreviewCard: React.FC<ConnectionPreviewCardProps> = ({
         {username}
       </p>
       <button className="w-[80%] py-1 flex justify-center items-center mt-auto mb-3 text-primary text-[9px] desktop:text-[10px] font-medium desktop:font-semibold border-[1px] desktop:border-2 border-primary rounded-lg bg-bgPrimary">
-       {user && isConnection ? 'Message' : 'Connect'}
+        {user && isConnection ? "Message" : "Connect"}
       </button>
     </div>
   );

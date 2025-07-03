@@ -9,10 +9,18 @@ import { useEffect } from "react";
 import { useUser } from "../../contexts/UserContext";
 import { useNotifications } from "../../contexts/NotificationsContext";
 import NotificationsPreview from "./NotificationsPreview";
+import { useUserConnection } from "../../contexts/UserConnectionContext";
 
 const UserLayout: React.FC = () => {
   const { isMobile } = useScreenWidth();
-  const { getUserNotifications, user, getConnectionRequest } = useUser();
+  const {
+    getUserNotifications,
+    user,
+  } = useUser();
+   const {
+    getConnectionRequest,
+    getSentConnectionRequest,
+  } = useUserConnection();
   const {
     mainNotification,
     setMainNotification,
@@ -32,6 +40,8 @@ const UserLayout: React.FC = () => {
   useEffect(() => {
     if (user) {
       getUserNotifications(user?.id);
+      getConnectionRequest(Number(user.id)),
+        getSentConnectionRequest(Number(user?.id));
     }
   }, [user]);
 

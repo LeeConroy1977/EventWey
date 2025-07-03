@@ -32,6 +32,8 @@ import Groups from "./routes/groups/Groups";
 import AdminGroups from "./routes/user-admin-groups/AdminGroups";
 import AdminEvents from "./routes/user-admin-events/AdminEvents";
 import NotificationWindow from "./routes/notifications/NotificationsWindow";
+import ProfileViewRequests from "./routes/user-profile-view-requests/ProfileViewRequests";
+import ProfileSentRequests from "./routes/user-profile-sent-requests/ProfileSentRequests";
 
 function App() {
   return (
@@ -76,6 +78,8 @@ function App() {
               <Route path="events" element={<ProfileEvents />} />
               <Route path="groups" element={<ProfileGroups />} />
               <Route path="connections" element={<ProfileConnections />} />
+              <Route path="view-requests" element={<ProfileViewRequests />} />
+              <Route path="sent-requests" element={<ProfileSentRequests />} />
               <Route path="settings" element={<ProfileSettings />} />
             </Route>
           </Route>

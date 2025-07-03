@@ -1,10 +1,12 @@
 import HomeConnectionCard from "../group-members/HomeConnectionCard";
-import { useConnections } from "../../contexts/ConnectionsContext";
 import useHandleConnectionClick from "../../hooks/useHandleConnectionClick";
 import { ClipLoader } from "react-spinners";
+import { useUserConnection } from "../../contexts/UserConnectionContext";
 
 const ProfileConnections = () => {
-  const { connections, loading, error } = useConnections();
+  const {
+    userConnectionState: { connections, error, loading },
+  } = useUserConnection();
   const handleConnectionClick = useHandleConnectionClick();
   const connectionsLength = connections?.length;
 

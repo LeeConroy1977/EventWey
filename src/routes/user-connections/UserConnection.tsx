@@ -5,15 +5,13 @@ import HomeConnectionCard from "../group-members/HomeConnectionCard";
 import { useScreenWidth } from "../../contexts/ScreenWidthContext";
 import { ClipLoader } from "react-spinners";
 import { useUser } from "../../contexts/UserContext";
+import { useUserConnection } from "../../contexts/UserConnectionContext";
 
 const UserConnection = () => {
   const {
-    connections,
+    userConnectionState: { connections, filteredConnections, error, loading },
     getAllConnections,
-    loading,
-    error,
-    filteredConnections,
-  } = useConnections();
+  } = useUserConnection();
   const { user } = useUser();
   const { isMobile } = useScreenWidth();
 
@@ -21,11 +19,11 @@ const UserConnection = () => {
 
   useEffect(() => {
     if (user?.id) {
-      getAllConnections(String(user.id)); 
+      getAllConnections(Number(user.id));
     } else {
       console.warn("User is undefined or missing an ID.");
     }
-  }, [user]); 
+  }, [user]);
 
   return (
     <div className="w-full min-h-screen flex flex-col desktop:flex-row items-start justify-start flex-wrap gap-3 bg-bgPrimary p-6 tablet:p-0 desktop:pl-12 desktop:py-6 desktop:mt-4">
