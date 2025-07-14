@@ -35,7 +35,7 @@ export const updateUser = async (
 
 export const fetchAllUsers = async (): Promise<User[]> => {
   try {
-    const response = await axios.get(`${API}/users`); // Fixed from PATCH
+    const response = await axios.get(`${API}/users`); 
     return response.data as User[];
   } catch (error) {
     console.error("Error fetching users:", error);
@@ -286,21 +286,7 @@ export const fetchUserConnection = async (id: string): Promise<User[]> => {
   }
 };
 
-export const fetchUserNotifications = async (id: string): Promise<any[]> => {
-  try {
-    const token = localStorage.getItem("token");
-    const response = await axios.get(`${API}/notifications/${id}`, {
-      withCredentials: true,
-      headers: {
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching user notifications:", error);
-    throw error;
-  }
-};
+
 
 export const postMakeConnectionRequest = async (
   userId: string,

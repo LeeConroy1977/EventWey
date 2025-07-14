@@ -10,7 +10,6 @@ import {
 import { Event } from "../types/event";
 import { fetchAllEvents } from "../../utils/api/events-api";
 
-// Debounce utility
 const debounce = <F extends (...args: any[]) => any>(fn: F, delay: number) => {
   let timeoutId: NodeJS.Timeout;
   return (...args: Parameters<F>) => {
@@ -54,10 +53,8 @@ export const EventsProvider: FC<EventsProviderProps> = ({ children }) => {
     sortBy?: string | null;
   }>({});
 
-  // Track fetched pages
   const fetchedPages = useRef<Set<number>>(new Set());
 
-  // Debounced fetchEvents
   const debouncedFetchEvents = debounce(
     async (params: {
       category?: string | null;
@@ -82,7 +79,6 @@ export const EventsProvider: FC<EventsProviderProps> = ({ children }) => {
       }
 
       if (fetchedPages.current.has(page)) {
-        console.log(`Page ${page} already fetched, skipping`);
         return;
       }
 
@@ -90,13 +86,6 @@ export const EventsProvider: FC<EventsProviderProps> = ({ children }) => {
       setError(null);
 
       try {
-        console.log("Fetching events with params:", {
-          category,
-          date,
-          sortBy,
-          page,
-          limit,
-        });
         let allApprovedEvents: Event[] = [];
         let currentPage = page;
         let totalFetched = 0;
@@ -111,19 +100,11 @@ export const EventsProvider: FC<EventsProviderProps> = ({ children }) => {
             limit,
             page: currentPage,
           });
-          console.log(
-            "Raw events from API:",
-            eventsData.length,
-            eventsData.map((e: Event) => e.id)
-          );
+
           const approvedEvents = eventsData.filter(
             (event: Event) => event.approved === true
           );
-          console.log(
-            "Approved events:",
-            approvedEvents.length,
-            approvedEvents.map((e: Event) => e.id)
-          );
+
           allApprovedEvents.push(...approvedEvents);
           totalFetched += eventsData.length;
           fetchedPages.current.add(currentPage);
@@ -136,19 +117,11 @@ export const EventsProvider: FC<EventsProviderProps> = ({ children }) => {
           const prevIds = new Set(prevEvents.map((e) => e.id));
           const newEvents = newApprovedEvents.filter((e) => !prevIds.has(e.id));
           const updatedEvents = [...prevEvents, ...newEvents];
-          console.log(
-            "Total events after append:",
-            updatedEvents.length,
-            updatedEvents.map((e) => e.id)
-          );
+
           return updatedEvents;
         });
 
         setHasMore(
-          allApprovedEvents.length >= limit && totalFetched < maxFetch
-        );
-        console.log(
-          "hasMore set to:",
           allApprovedEvents.length >= limit && totalFetched < maxFetch
         );
       } catch (err) {
@@ -166,20 +139,9 @@ export const EventsProvider: FC<EventsProviderProps> = ({ children }) => {
     setLoading(true);
     setError(null);
     try {
-      console.log("Fetching review events with params:", params);
       const eventsData = await fetchAllEvents(params);
-      console.log(
-        "Review events raw data:",
-        eventsData.length,
-        eventsData.map((e: Event) => e.id)
-      );
       const reviewEvents = eventsData.filter(
         (event: Event) => event.approved === false
-      );
-      console.log(
-        "Review events filtered:",
-        reviewEvents.length,
-        reviewEvents.map((e: Event) => e.id)
       );
       setReviewEvents(reviewEvents);
     } catch (err) {

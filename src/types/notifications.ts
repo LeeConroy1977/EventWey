@@ -1,6 +1,6 @@
 import { User } from "./user";
 
-export interface Notifications {
+export interface Notification {
   id: number;
   user: User;
   senderId: number;

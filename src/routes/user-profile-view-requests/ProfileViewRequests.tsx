@@ -20,7 +20,6 @@ const ProfileViewRequests = () => {
 
   useEffect(() => {
     if (user?.id && !isNaN(Number(user.id))) {
-      console.log("Fetching connection requests for user.id:", user.id);
       getConnectionRequest(Number(user.id));
     }
   }, [user?.id]);
@@ -37,11 +36,12 @@ const ProfileViewRequests = () => {
           <ClipLoader size={80} color={"#5d9b9b"} />
         </div>
       ) : connectionError ? (
-        <div className="w-full text-red-500 text-center mt-4">{connectionError}</div>
+        <div className="w-full text-red-500 text-center mt-4">
+          {connectionError}
+        </div>
       ) : userConnectionRequestsObjects?.length > 0 ? (
         <div className="flex flex-row items-start justify-start gap-3 flex-wrap">
           {userConnectionRequestsObjects.map((connection, index) => {
-            console.log("Rendering HomeConnectionCard for:", connection);
             return (
               <HomeConnectionCard
                 connection={connection}

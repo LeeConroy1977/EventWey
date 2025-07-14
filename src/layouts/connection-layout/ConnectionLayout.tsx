@@ -18,8 +18,8 @@ import { useUser } from "../../contexts/UserContext";
 import { useUserConnection } from "../../contexts/UserConnectionContext";
 
 const moreOptionsArr = [
-  { title: "Invite", value: "invite" },
-  { title: "Remove", value: "remove" },
+  { title: "Invite Connection", value: "invite" },
+  { title: "Remove Connection", value: "remove" },
 ];
 
 const ConnectionLayout = () => {
@@ -209,19 +209,19 @@ const ConnectionLayout = () => {
                           isOptionsOpen
                             ? "rounded-tl-lg rounded-tr-lg"
                             : "rounded-lg"
-                        } w-[160px] h-[50px] flex flex-row justify-center items-center mt-auto text-primary text-[14px] font-semibold border-2 border-primary bg-bgPrimary`}
+                        } w-[200px] h-[50px] flex flex-row justify-center items-center mt-auto text-primary text-[14px] font-semibold border-2 border-primary bg-bgPrimary`}
                         role="button"
                         aria-expanded={isOptionsOpen}
                         aria-label="More options"
                         onClick={() => setIsOptionOpen(!isOptionsOpen)}>
-                        <p>More</p>
+                        <p>More options</p>
                       </div>
                       {isOptionsOpen && (
                         <div className="absolute top-[50px]">
                           {moreOptionsArr.map((option, i) => (
                             <div
                               key={i}
-                              className="w-[160px] h-[50px]  flex justify-center items-center text-primary text-[14px] font-semibold border-2 border-t-0 border-primary bg-bgPrimary hover:bg-gray-100 "
+                              className="w-[200px] h-[50px]  flex justify-center items-center text-primary text-[14px] font-semibold border-2 border-t-0 border-primary bg-bgPrimary hover:bg-primary hover:text-white"
                               role="button"
                               aria-label={option.title}
                               onClick={() => handleOptionClick(option)}>
@@ -232,17 +232,22 @@ const ConnectionLayout = () => {
                       )}
                     </div>
                   )}
-                  {connectionStatus === "recieved_pending" ||
-                    (connectionStatus === "sent_pending" && (
-                      <button
-                        onClick={handleActionButton}
-                        className="flex justify-center items-center mt-auto text-secondary text-[14px] font-semibold border-2 border-secondary rounded-lg bg-bgPrimary py-3 px-12 mr-6"
-                        disabled={localLoading}>
-                        {connectionStatus === "recieved_pending"
-                          ? "Reject Request"
-                          : "Cancel Request"}
-                      </button>
-                    ))}
+                  {(connectionStatus === "recieved_pending" ||
+                    connectionStatus === "sent_pending") && (
+                    <button
+                      onClick={handleActionButton}
+                      className="flex justify-center items-center mt-auto text-secondary text-[14px] font-semibold border-2 border-secondary rounded-lg bg-bgPrimary py-3 px-12 mr-6"
+                      disabled={localLoading}
+                      aria-label={
+                        connectionStatus === "recieved_pending"
+                          ? "Reject connection request"
+                          : "Cancel connection request"
+                      }>
+                      {connectionStatus === "recieved_pending"
+                        ? "Reject Request"
+                        : "Cancel Request"}
+                    </button>
+                  )}
                   <button
                     onClick={handleConnectionRequest}
                     className={`flex justify-center items-center mt-auto text-[14px] font-semibold border-2 border-primary rounded-lg py-3 px-12 ${

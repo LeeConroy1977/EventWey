@@ -228,6 +228,7 @@ export const UserConnectionProvider: React.FC<UserConnectionProviderProps> = ({
     }
 
     try {
+      console.log("this ran");
       const userRequests = await fetchConnectionRequests(String(userId));
       const request = userRequests.find((req) => req.requester === requesterId);
       if (!request) {

@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
 import {
   fetchUserEvents,
   fetchUserGroups,
@@ -9,6 +15,7 @@ import {
   postLeaveGroup,
   updateUser,
 } from "../../utils/api/user-api";
+import { fetchUser } from "../../utils/api/auth-api";
 
 import { useModal } from "./ModalContext";
 import { useNavigate } from "react-router-dom";
@@ -16,8 +23,6 @@ import { useEvents } from "./EventsContext";
 import { User } from "../types/user";
 import { Event } from "../types/event";
 import { Group } from "../types/group";
-import { Notifications } from "../types/notifications";
-import { useNotifications } from "./NotificationsContext";
 import { useGroups } from "./GroupsContext";
 import { useEvent } from "./EventContext";
 
@@ -33,7 +38,7 @@ interface UserContextType {
   error: string | null;
   getUserEvents: (params: { [key: string]: string }) => void;
   getUserGroups: (params: { [key: string]: string }) => void;
-  getUserNotifications: (id: number) => void;
+
   getUserTotalGroups: (params: { [key: string]: string }) => void;
   isUserAttendingEvent: (id: string) => boolean;
   handleSignOut: () => void;
@@ -63,7 +68,6 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const { getEventConnections, setEvent } = useEvent();
   const { groups, setGroups } = useGroups();
   const { hideModal } = useModal();
-  const { setUserNotifications } = useNotifications();
   const [user, setUser] = useState<User | null>();
   const navigate = useNavigate();
   const [userEvents, setUserEvents] = useState<Event[]>([]);
@@ -73,6 +77,59 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [error, setError] = useState<string | null>(null);
   const [userTotalEvents, setUserTotalEvents] = useState<Event[]>([]);
   const [userTotalGroups, setUserTotalGroups] = useState<Group[]>([]);
+
+  // Delete when finished with fake user
+  // useEffect(() => {
+  //   const isDev = process.env.NODE_ENV === "development";
+  //   if (isDev) {
+  //     const fakeUser: User = {
+  //       tags: ["Live Music", "Hiking Trails", "Craft Beer"],
+  //       id: 3,
+  //       email: "freddie@gmail.com",
+  //       username: "Freddie Jacobs",
+  //       password:
+  //         "$2b$10$OF12Acneof6gfiNUeKsA.eqV4iZtxo8eiD6x1x7J9b/TpEoPv0dam",
+  //       googleId: null,
+  //       authMethod: "email",
+  //       profileBackgroundImage: "https://picsum.photos/800/600?random=3",
+  //       profileImage: "https://randomuser.me/api/portraits/men/3.jpg",
+  //       aboutMe:
+  //         "Hi, I’m Freddie! I’m passionate about connecting with people and exploring new experiences. Whether it’s attending community events, learning a new skill, or just enjoying a fun day out, I love being part of activities that bring people together. My interests include tech, sustainability, and trying out unique workshops.",
+  //       bio: "Enjoy watching bands, hiking and real ale",
+  //       viewEventsStatus: "public",
+  //       viewConnectionsStatus: "public",
+  //       viewGroupsStatus: "public",
+  //       viewTagsStatus: "public",
+  //       viewProfileImage: "public",
+  //       viewBioStatus: "public",
+  //       aboutMeStatus: "public",
+  //       role: "user",
+  //       adminGroups: [4],
+  //       groups: [4],
+  //       events: [2, 5, 7, 11, 13, 19, 21, 23, 25],
+  //       connections: [7],
+  //       sentConnections: [],
+  //       receivedConnections: [],
+  //       notifications: [
+  //         37, 10, 25, 2, 5, 30, 34, 58, 72, 75, 108, 100, 109, 78, 81, 107,
+  //       ],
+  //       comments: [],
+  //       likes: [],
+  //       sentMessages: [],
+  //       receivedMessages: [],
+  //     };
+  //     setUser(fakeUser);
+  //     localStorage.setItem(
+  //       "token",
+  //       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJmcmVkZGllQGdtYWlsLmNvbSIsImlhdCI6MTc1MTU3Mzc5MSwiZXhwIjoxNzUxNjYwMTkxfQ.CdKWwX9sC8EHZPWMTCDDIX73ZxBJ3c1dKW7OjyMRZQU"
+  //     );
+  //   } else {
+  //     // Fetch real user data in production
+  //     fetchUser().then((fetchedUser) => {
+  //       setUser(fetchedUser);
+  //     });
+  //   }
+  // }, []);
 
   const handleSignOut = () => {
     hideModal();
@@ -400,33 +457,6 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     return event.attendees.includes(user.id);
   }
 
-  const getUserNotifications = async (id: number) => {
-    setLoading(true);
-    setError(null);
-
-    if (!user?.id) {
-      setError("User is not logged in or doesn't have a valid ID.");
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const notifictions = await fetchUserNotifications(String(id));
-      const unReadNotifictions = notifictions
-        .filter((notificatons) => !notificatons.isRead)
-        .sort((a, b) => a.createdAt - b.createdAt);
-      const readNotifictions = notifictions
-        .filter((notificatons) => notificatons.isRead)
-        .sort((a, b) => a.createdAt - b.createdAt);
-      setUserNotifications([...unReadNotifictions, ...readNotifictions]);
-    } catch (err) {
-      console.error("Error fetching notifications:", err);
-      setError("Failed to fetch notifications.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <UserContext.Provider
       value={{
@@ -445,7 +475,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         userTotalEvents,
         userTotalGroups,
         getUserTotalGroups,
-        getUserNotifications,
+
         isUserGroupMember,
         joinGroup,
         leaveGroup,

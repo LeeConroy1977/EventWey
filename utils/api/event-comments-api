@@ -1,7 +1,4 @@
 import axios from "axios";
-import { sortByPopularity, sortByDate, sortByFree } from "../fakeEventSorting";
-
-import { eventsDateFilter } from "../eventDateFilter";
 
 const API = "https://eventwey-backend.onrender.com";
 
@@ -9,7 +6,7 @@ const axiosInstance = axios.create({
   baseURL: API,
 });
 
-export const fetchAllEvents = async (params: {
+export const fetchComments = async (params: {
   category?: string;
   date?: string;
   sortBy?: string;
@@ -17,7 +14,7 @@ export const fetchAllEvents = async (params: {
   page?: number;
 }): Promise<any[]> => {
   try {
-    const { category, date, sortBy, limit = 15, page = 1 } = params;
+    const { eventId: number, page: number = 1, limit: number = 4 } = params;
     const response = await axios.get(`${API}/events`, {
       params: { category, date, sortBy, limit, page },
     });

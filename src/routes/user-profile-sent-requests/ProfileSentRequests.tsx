@@ -20,7 +20,6 @@ const ProfileSentRequests = () => {
 
   useEffect(() => {
     if (user?.id && !isNaN(Number(user.id))) {
-      console.log("Fetching connection requests for user.id:", user.id);
       getSentConnectionRequest(Number(user.id));
     }
   }, [user?.id]);

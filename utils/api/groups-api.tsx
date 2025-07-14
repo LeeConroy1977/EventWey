@@ -62,7 +62,9 @@ export const postGroup = async (groupData: any): Promise<any> => {
 
 export const createJoinGroup = async (id: string): Promise<Group> => {
   try {
-    const response = await axios.post(`${API}/groups/${id}/join`,{ withCredentials: true });
+    const response = await axios.post(`${API}/groups/${id}/join`, {
+      withCredentials: true,
+    });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response?.status === 401) {
@@ -75,17 +77,18 @@ export const createJoinGroup = async (id: string): Promise<Group> => {
 
 export const createLeaveGroup = async (id: string): Promise<Group> => {
   try {
-    const response = await axios.post(`${API}/groups/${id}/leave`, { withCredentials: true })
-    return response.data
-  }
-  catch (error) {
+    const response = await axios.post(`${API}/groups/${id}/leave`, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
     if (axios.isAxiosError(error) && error.response?.status === 401) {
       throw new Error("Please log in to leave the group");
     }
     console.error("Error leaving group:", error);
     throw new Error("Failed to leave group");
   }
-}
+};
 
 export const patchGroup = async (id: string, patchObj: any): Promise<any> => {
   try {
@@ -117,11 +120,9 @@ export const fetchGroupEventsById = async (id: string): Promise<any[]> => {
     const groupEventsResponse = await axios.get(`${API}/groups/${id}/events`);
     const groupEvents = groupEventsResponse.data;
 
-    if (!groupEvents|| !Array.isArray(groupEvents)) {
+    if (!groupEvents || !Array.isArray(groupEvents)) {
       throw new Error(`Events not found or invalid for group with ID: ${id}`);
     }
-
-  
 
     return groupEvents;
   } catch (error) {
@@ -135,13 +136,9 @@ export const fetchGroupMembers = async (id: string): Promise<any[]> => {
     const groupMembersResponse = await axios.get(`${API}/groups/${id}/members`);
     const groupMembers = groupMembersResponse.data;
 
-    console.log(groupMembers, 'group members')
-
     if (!groupMembers || !Array.isArray(groupMembers)) {
       throw new Error(`Members not found or invalid for group with ID: ${id}`);
     }
-
-   
 
     return groupMembers;
   } catch (error) {

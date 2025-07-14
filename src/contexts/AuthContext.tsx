@@ -1,7 +1,7 @@
 // contexts/AuthContext.tsx
-import React, { createContext, useContext, useState } from 'react';
-import { signInUser, signOutUser } from '../../utils/api/auth-api';
-import { useUser } from './UserContext';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { signInUser, signOutUser, fetchUser } from "../../utils/api/auth-api";
+import { useUser } from "./UserContext";
 
 interface AuthContextType {
   isEmailValid: boolean | null;
@@ -19,13 +19,27 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [isEmailValid, setIsEmailValid] = useState<boolean | null>(null);
   const [isPasswordValid, setIsPasswordValid] = useState<boolean | null>(null);
   const [isFormValid, setIsFormValid] = useState<boolean | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const { setUser } = useUser();
+
+  // Delete when finished with fake user
+  // useEffect(() => {
+  //   const isDev = process.env.NODE_ENV === "development";
+  //   if (isDev && localStorage.getItem("token")) {
+  //     fetchUser().then((userData) => {
+  //       if (userData) {
+  //         setUser(userData);
+  //       }
+  //     });
+  //   }
+  // }, [setUser]);
 
   const handleEmailValidation = (email: string, regex: RegExp) => {
     if (email.length === 0) {
@@ -59,11 +73,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser(userData);
     } catch (err: any) {
       const errorMessage =
-        err.message === 'User not found'
-          ? 'User not found. Please check your email.'
-          : err.message === 'Invalid password'
-          ? 'Invalid password. Please try again.'
-          : 'Failed to sign in. Please check your credentials.';
+        err.message === "User not found"
+          ? "User not found. Please check your email."
+          : err.message === "Invalid password"
+          ? "Invalid password. Please try again."
+          : "Failed to sign in. Please check your credentials.";
       setError(errorMessage);
       throw err;
     } finally {
@@ -77,9 +91,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       await signOutUser();
       setUser(null);
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
     } catch (err: any) {
-      setError(err.message || 'Failed to sign out. Please try again.');
+      setError(err.message || "Failed to sign out. Please try again.");
       throw err;
     } finally {
       setLoading(false);
@@ -100,8 +114,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         signIn,
         signOut,
         setError,
-      }}
-    >
+      }}>
       {children}
     </AuthContext.Provider>
   );
@@ -110,7 +123,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };

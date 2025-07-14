@@ -60,7 +60,7 @@ export const EventProvider: React.FC<EventProviderProps> = ({ children }) => {
       const data = await fetchEventGroupById(id);
       if (data === null) {
         setEventGroup(null);
-        console.warn(`No group found for event ${id}`);
+        console.error(`No group found for event ${id}`);
       } else {
         setEventGroup(data);
       }
@@ -79,7 +79,6 @@ export const EventProvider: React.FC<EventProviderProps> = ({ children }) => {
       // @ts-ignore
       const data = await fetchEventConnections(id);
       setEventConnections(data);
-      console.log(eventConnections, "connections");
     } catch (err: any) {
       setError(err.message || "Failed to fetch connections");
     } finally {

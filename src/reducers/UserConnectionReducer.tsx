@@ -51,6 +51,7 @@ export interface UserConnectionState {
   loading: boolean;
   error: string | null;
   isNewConnection: boolean;
+  hasFetchedRequests: boolean;
 }
 
 export const initialUserConnectionState: UserConnectionState = {
@@ -63,6 +64,7 @@ export const initialUserConnectionState: UserConnectionState = {
   loading: false,
   error: null,
   isNewConnection: false,
+  hasFetchedRequests: false,
 };
 
 interface UserConnectionAction {
@@ -121,7 +123,7 @@ export const UserConnectionReducer = (
         error: action.payload.error,
       };
     case UserConnectionActionTypes.CREATE_CONNECTION_FAILURE:
-      return { ...state, error: action.payload };
+      return { ...state, error: action.payload, hasFetchedRequests: true };
     case UserConnectionActionTypes.FETCH_CONNECTION_REQUESTS:
       return { ...state, loading: true, error: null };
     case UserConnectionActionTypes.FETCH_CONNECTION_REQUESTS_SUCCESS:
@@ -131,6 +133,7 @@ export const UserConnectionReducer = (
         userConnectionRequestsObjects: action.payload.users,
         loading: false,
         error: null,
+        hasFetchedRequests: true,
       };
     case UserConnectionActionTypes.FETCH_CONNECTION_REQUESTS_FAILURE:
       return { ...state, loading: false, error: action.payload };

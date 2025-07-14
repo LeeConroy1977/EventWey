@@ -6,11 +6,9 @@ import {
   fetchConnectionGroups,
   fetchUserById,
 } from "../../utils/api/connection-api";
-import {User} from '../types/user'
-import {Event} from '../types/event'
-import {Group} from '../types/group'
-
-
+import { User } from "../types/user";
+import { Event } from "../types/event";
+import { Group } from "../types/group";
 
 interface ConnectionContextType {
   connection: User | null;
@@ -69,14 +67,13 @@ export const ConnectionProvider: React.FC<ConnectionProviderProps> = ({
     }
   };
 
-
-
   const getConnectionById = async (id: string) => {
     setLoading(true);
     setError(null);
     try {
       const data = await fetchConnectionById(id);
       setConnection(data);
+      setLoading(false);
     } catch (err) {
       const errorMessage =
         (err as Error).message || "Failed to fetch connection";
@@ -147,9 +144,8 @@ export const ConnectionProvider: React.FC<ConnectionProviderProps> = ({
         setConnectionGroups,
         setConnectionEvents,
         setConnectionConnections,
-        getUserById
-      }}
-    >
+        getUserById,
+      }}>
       {children}
     </ConnectionContext.Provider>
   );

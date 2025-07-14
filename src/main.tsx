@@ -29,12 +29,12 @@ root.render(
       <ScreenWidthProvider>
         <GroupProvider>
           <ModalProvider>
-            <NotificationsProvider>
-              <GroupsProvider>
-                <EventsProvider>
-                  <EventProvider>
-                    <ConnectionProvider>
-                      <UserProvider>
+            <GroupsProvider>
+              <EventsProvider>
+                <EventProvider>
+                  <ConnectionProvider>
+                    <UserProvider>
+                      <NotificationsProvider>
                         <UserConnectionProvider>
                           <CreateGroupProvider>
                             <CreateEventProvider>
@@ -48,12 +48,12 @@ root.render(
                             </CreateEventProvider>
                           </CreateGroupProvider>
                         </UserConnectionProvider>
-                      </UserProvider>
-                    </ConnectionProvider>
-                  </EventProvider>
-                </EventsProvider>
-              </GroupsProvider>
-            </NotificationsProvider>
+                      </NotificationsProvider>
+                    </UserProvider>
+                  </ConnectionProvider>
+                </EventProvider>
+              </EventsProvider>
+            </GroupsProvider>
           </ModalProvider>
         </GroupProvider>
       </ScreenWidthProvider>
