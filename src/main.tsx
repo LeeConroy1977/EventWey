@@ -20,6 +20,7 @@ import { ScreenWidthProvider } from "./contexts/ScreenWidthContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { NotificationsProvider } from "./contexts/NotificationsContext";
 import { UserConnectionProvider } from "./contexts/UserConnectionContext";
+import { EventCommentsProvider } from "./contexts/EventCommentsContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 
@@ -34,21 +35,23 @@ root.render(
                 <EventProvider>
                   <ConnectionProvider>
                     <UserProvider>
-                      <NotificationsProvider>
-                        <UserConnectionProvider>
-                          <CreateGroupProvider>
-                            <CreateEventProvider>
-                              <CreateUserProvider>
-                                <AuthProvider>
-                                  <EventModalProvider>
-                                    <App />
-                                  </EventModalProvider>
-                                </AuthProvider>
-                              </CreateUserProvider>
-                            </CreateEventProvider>
-                          </CreateGroupProvider>
-                        </UserConnectionProvider>
-                      </NotificationsProvider>
+                      <EventCommentsProvider>
+                        <NotificationsProvider>
+                          <UserConnectionProvider>
+                            <CreateGroupProvider>
+                              <CreateEventProvider>
+                                <CreateUserProvider>
+                                  <AuthProvider>
+                                    <EventModalProvider>
+                                      <App />
+                                    </EventModalProvider>
+                                  </AuthProvider>
+                                </CreateUserProvider>
+                              </CreateEventProvider>
+                            </CreateGroupProvider>
+                          </UserConnectionProvider>
+                        </NotificationsProvider>
+                      </EventCommentsProvider>
                     </UserProvider>
                   </ConnectionProvider>
                 </EventProvider>

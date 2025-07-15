@@ -12,7 +12,15 @@ import {
   EventCommentsReducer,
   initialEventCommentsState,
 } from "../reducers/EventCommentsReducer";
-import axios from "axios";
+import {
+  deleteCommentLike,
+  deleteEventComment,
+  getEventComments,
+  getEventCommentsReplies,
+  patchEventComment,
+  postCommentLike,
+  postEventComment,
+} from "../../utils/api/event-comments-api";
 
 interface EventCommentsContextType {
   eventCommentsState: {
@@ -65,16 +73,10 @@ export const EventCommentsProvider: React.FC<EventCommentsProviderProps> = ({
     }
     dispatch({ type: EventCommentsActionTypes.CREATE_EVENT_COMMENT });
     try {
-      const response = await axios.post(
-        "/comments",
-        { eventId, content },
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      );
+      const comment = await postEventComment(eventId, content);
       dispatch({
         type: EventCommentsActionTypes.CREATE_EVENT_COMMENT_SUCCESS,
-        payload: { eventComment: response.data },
+        payload: { eventComment: comment },
       });
     } catch (error) {
       dispatch({
@@ -97,16 +99,10 @@ export const EventCommentsProvider: React.FC<EventCommentsProviderProps> = ({
     }
     dispatch({ type: EventCommentsActionTypes.CREATE_EVENT_COMMENT_REPLY });
     try {
-      const response = await axios.post(
-        `/comments/${commentId}/reply`,
-        { content },
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      );
+      const commentReply = await postEventComment(commentId, content);
       dispatch({
         type: EventCommentsActionTypes.CREATE_EVENT_COMMENT_REPLY_SUCCESS,
-        payload: { eventCommentReply: response.data },
+        payload: { eventCommentReply: commentReply },
       });
     } catch (error) {
       dispatch({
@@ -123,12 +119,10 @@ export const EventCommentsProvider: React.FC<EventCommentsProviderProps> = ({
   ) => {
     dispatch({ type: EventCommentsActionTypes.FETCH_EVENT_COMMENTS });
     try {
-      const response = await axios.get(`/comments/event/${eventId}`, {
-        params: { page, limit },
-      });
+      const eventComments = await getEventComments(eventId, page, limit);
       dispatch({
         type: EventCommentsActionTypes.FETCH_EVENT_COMMENTS_SUCCESS,
-        payload: { eventComments: response.data.comments },
+        payload: { eventComments: eventComments },
       });
     } catch (error) {
       dispatch({
@@ -141,10 +135,10 @@ export const EventCommentsProvider: React.FC<EventCommentsProviderProps> = ({
   const fetchEventCommentsReplies = async (commentId: number) => {
     dispatch({ type: EventCommentsActionTypes.FETCH_EVENT_COMMENT_REPLIES });
     try {
-      const response = await axios.get(`/comments/${commentId}/replies`);
+      const eventCommentReplies = await getEventCommentsReplies(commentId);
       dispatch({
         type: EventCommentsActionTypes.FETCH_EVENT_COMMENT_REPLIES_SUCCESS,
-        payload: { eventCommentsReplies: response.data },
+        payload: { eventCommentsReplies: eventCommentReplies },
       });
     } catch (error) {
       dispatch({
@@ -164,16 +158,10 @@ export const EventCommentsProvider: React.FC<EventCommentsProviderProps> = ({
     }
     dispatch({ type: EventCommentsActionTypes.UPDATE_EVENT_COMMENT });
     try {
-      const response = await axios.patch(
-        `/comments/${commentId}`,
-        { content },
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      );
+      const comment = await patchEventComment(commentId, content);
       dispatch({
         type: EventCommentsActionTypes.UPDATE_EVENT_COMMENT_SUCCESS,
-        payload: { eventComment: response.data },
+        payload: { eventComment: comment },
       });
     } catch (error) {
       dispatch({
@@ -193,9 +181,7 @@ export const EventCommentsProvider: React.FC<EventCommentsProviderProps> = ({
     }
     dispatch({ type: EventCommentsActionTypes.REMOVE_EVENT_COMMENT });
     try {
-      await axios.delete(`/comments/${commentId}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      await deleteEventComment(commentId);
       dispatch({
         type: EventCommentsActionTypes.REMOVE_EVENT_COMMENT_SUCCESS,
         payload: { commentId },
@@ -218,16 +204,10 @@ export const EventCommentsProvider: React.FC<EventCommentsProviderProps> = ({
     }
     dispatch({ type: EventCommentsActionTypes.CREATE_EVENT_COMMENT_LIKE });
     try {
-      const response = await axios.post(
-        `/comments/${commentId}/like`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      );
+      const comment = await postCommentLike(commentId)
       dispatch({
         type: EventCommentsActionTypes.CREATE_EVENT_COMMENT_LIKE_SUCCESS,
-        payload: { commentId, likes: response.data.likes },
+        payload: { commentId, likes: comment.likes },
       });
     } catch (error) {
       dispatch({
@@ -247,12 +227,10 @@ export const EventCommentsProvider: React.FC<EventCommentsProviderProps> = ({
     }
     dispatch({ type: EventCommentsActionTypes.REMOVE_EVENT_COMMENT_LIKE });
     try {
-      const response = await axios.delete(`/comments/${commentId}/like`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      const comment = await deleteCommentLike(commentId)
       dispatch({
         type: EventCommentsActionTypes.REMOVE_EVENT_COMMENT_LIKE_SUCCESS,
-        payload: { commentId, likes: response.data.likes },
+        payload: { commentId, likes: comment.likes },
       });
     } catch (error) {
       dispatch({
